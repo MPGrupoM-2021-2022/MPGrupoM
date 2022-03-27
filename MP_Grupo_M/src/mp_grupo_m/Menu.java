@@ -2,6 +2,7 @@ package mp_grupo_m;
 
 import mp_grupo_m.Factorias.FactoriaVampiros;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Menu {
@@ -54,7 +55,6 @@ public class Menu {
     private void selectorFactoria() {
         Scanner sc = new Scanner(System.in);
         int opcion = sc.nextInt();
-        boolean correctValue;
         switch (opcion) {
             case 1:
                 crearVampiro();
@@ -68,7 +68,10 @@ public class Menu {
     }
 
     private void crearVampiro() {
-        boolean correctValue;
+        boolean rightValue;
+        boolean[] rightWeapon;
+        boolean[] aux1 = new boolean[]{true, true};
+        boolean[] aux2 = new boolean[]{true, false};
         FactoriaVampiros FV = new FactoriaVampiros();
         FV.preguntarNombre();
         FV.inicializarNombre();
@@ -76,11 +79,40 @@ public class Menu {
         FV.inicializarNombreHabilidad();
         do {
             FV.preguntarAtaqueHabilidad();
-            correctValue = FV.inicializarAtaqueHabilidad();
-        } while (!correctValue);
+            rightValue = FV.inicializarAtaqueHabilidad();
+        } while (!rightValue);
         do {
             FV.preguntarDefensaHabilidad();
-            correctValue = FV.inicializarDefensaHabilidad();
-        } while (!correctValue);
+            rightValue = FV.inicializarDefensaHabilidad();
+        } while (!rightValue);
+        FV.preguntarNumArmas();
+        int numArmas = FV.numArmas();
+        for (int iterator = 1; iterator <= numArmas; iterator++){
+            FV.preguntarNombreArma();
+            FV.inicializarnNombreArma();
+            do {
+                FV.preguntarAtaqueArma();
+                rightValue = FV.inicializarAtaqueArma();
+            } while (!rightValue);
+            do {
+                FV.preguntarDefensaArma();
+                rightValue = FV.inicializarDefensaArma();
+            } while (!rightValue);
+            do {
+                FV.peguntarSingleHandArma();
+                rightValue = FV.inicializarSingleHandArma();
+            } while (!rightValue);
+            FV.addArma();
+        }
+        do {
+            FV.mostrarArmas();
+            rightWeapon = FV.addArmaActiva();
+        } while (!Arrays.equals(rightWeapon,aux1) && !Arrays.equals(rightWeapon,aux2));
+        if (Arrays.equals(rightWeapon,aux1)){
+            do {
+                FV.otroArma();
+                rightValue = FV.addArmaActiva2();
+            } while(!rightValue);
+        }
     }
 }
