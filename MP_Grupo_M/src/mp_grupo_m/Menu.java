@@ -85,8 +85,13 @@ public class Menu {
             FV.preguntarDefensaHabilidad();
             rightValue = FV.inicializarDefensaHabilidad();
         } while (!rightValue);
+        do {
+            FV.preguntarCosteHabilidad();
+            rightValue = FV.inicializarCosteHabilidad();
+        } while (!rightValue);
+        FV.setHabilidad();
         FV.preguntarNumArmas();
-        int numArmas = FV.numArmas();
+        int numArmas = FV.askNum();
         for (int iterator = 1; iterator <= numArmas; iterator++){
             FV.preguntarNombreArma();
             FV.inicializarnNombreArma();
@@ -104,6 +109,7 @@ public class Menu {
             } while (!rightValue);
             FV.addArma();
         }
+        FV.setArmas();
         do {
             FV.mostrarArmas();
             rightWeapon = FV.addArmaActiva();
@@ -114,5 +120,59 @@ public class Menu {
                 rightValue = FV.addArmaActiva2();
             } while(!rightValue);
         }
+        FV.setArmasActivas();
+
+        FV.preguntarNumArmaduras();
+        int numArmaduras = FV.askNum();
+        for (int iterator = 1; iterator <= numArmaduras; iterator++){
+            FV.preguntarNombreArmadura();
+            FV.inicializarnNombreArmadura();
+            do {
+                FV.preguntarDefensaArmadura();
+                rightValue = FV.inicializarDefensaArmadura();
+            } while (!rightValue);
+            do {
+                FV.preguntarAtaqueArmadura();
+                rightValue = FV.inicializarAtaqueArmadura();
+            } while (!rightValue);
+            FV.addArmadura();
+        }
+        FV.setArmaduras();
+        do {
+            FV.mostrarArmaduras();
+            rightValue = FV.addArmaduraActiva();
+        } while (!rightValue);
+        do{
+            FV.preguntarOro();
+            rightValue = FV.inicializarOro();
+        } while (!rightValue);
+        do{
+            FV.preguntarHP();
+            rightValue = FV.inicializarHP();
+        } while (!rightValue);
+        do{
+            FV.preguntarPoder();
+            rightValue = FV.inicializarPoder();
+        } while (!rightValue);
+        FV.peguntarNumDebilidades();
+        int numDebilidades = FV.askNum();
+        for (int iterator = 1; iterator <= numDebilidades; iterator++){
+            FV.preguntarNombreDebilidad();
+            FV.inicializarNombreDebilidad();
+            FV.preguntarValorDebilidad();
+            FV.inicializarValorDebilidad();
+            FV.addDebilidad();
+        }
+        FV.setDebilidades();
+        FV.peguntarNumFortalezas();
+        int numFortalezas = FV.askNum();
+        for (int iterator = 1; iterator <= numFortalezas; iterator++){
+            FV.preguntarNombreFortaleza();
+            FV.inicializarNombreFortaleza();
+            FV.preguntarValorFortaleza();
+            FV.inicializarValorFortaleza();
+            FV.addFortaleza();
+        }
+        FV.setFortalezas();
     }
 }

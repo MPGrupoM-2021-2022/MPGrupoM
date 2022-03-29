@@ -1,8 +1,6 @@
 package mp_grupo_m.Factorias;
 
-import mp_grupo_m.Entidades.Arma;
-import mp_grupo_m.Entidades.Disciplina;
-import mp_grupo_m.Entidades.Vampiro;
+import mp_grupo_m.Entidades.*;
 
 
 import java.util.List;
@@ -14,6 +12,12 @@ public class FactoriaVampiros {
     private List<Arma> armas;
     private Arma arma;
     private List<Arma> armasActivas;
+    private Armadura armadura;
+    private List<Armadura> armaduras;
+    private Debilidad debilidad;
+    private Fortaleza fortaleza;
+    private List<Debilidad> debilidades;
+    private List<Fortaleza> fortalezas;
 
     public Vampiro getVampiro() {
         return vampiro;
@@ -67,11 +71,29 @@ public class FactoriaVampiros {
         return true;
     }
 
+    public void preguntarCosteHabilidad(){
+        System.out.println("Introduce el coste de la habilidad:");
+    }
+
+    public boolean inicializarCosteHabilidad(){
+        Scanner sc = new Scanner(System.in);
+        int coste = sc.nextInt();
+        if ((coste < 1) || (coste > 3)) {
+            return false;
+        }
+        disciplina.setCoste(coste);
+        return true;
+    }
+
+    public void setHabilidad(){
+        vampiro.setHabilidad(disciplina);
+    }
+
     public void preguntarNumArmas() {
         System.out.println("Introduce el numero de armas que vas a introducir:");
     }
 
-    public int numArmas() {
+    public int askNum() {
         Scanner sc = new Scanner(System.in);
         return sc.nextInt();
     }
@@ -138,6 +160,10 @@ public class FactoriaVampiros {
         armas.add(arma);
     }
 
+    public void setArmas(){
+        vampiro.setArmas(armas);
+    }
+
     public void mostrarArmas() {
         System.out.println("Que arma quieres equipar?");
         for (int iterator = 0; iterator < armas.size(); iterator++) {
@@ -180,6 +206,184 @@ public class FactoriaVampiros {
             return true;
         }
         return false;
+    }
+
+    public void setArmasActivas(){
+        vampiro.setArmasActivas(armasActivas);
+    }
+
+    public void preguntarNumArmaduras() {
+        System.out.println("Introduce el numero de armaduras que vas a introducir:");
+    }
+
+    public void preguntarNombreArmadura() {
+        System.out.println("Introduce el nombre de tu armadura:");
+    }
+
+    public void inicializarnNombreArmadura() {
+        Scanner sc = new Scanner(System.in);
+        String nombre = sc.nextLine();
+        armadura.setNombre(nombre);
+    }
+
+    public void preguntarDefensaArmadura() {
+        System.out.println("Introduce la defensa de tu armadura:");
+    }
+
+    public boolean inicializarDefensaArmadura() {
+        Scanner sc = new Scanner(System.in);
+        int defensa = sc.nextInt();
+        if ((defensa < 1) || (defensa > 3)) {
+            return false;
+        }
+        armadura.setModDefensa(defensa);
+        return true;
+    }
+
+    public void preguntarAtaqueArmadura() {
+        System.out.println("Introduce el ataque de tu armadura (escribe 0 si no tiene):");
+    }
+
+    public boolean inicializarAtaqueArmadura() {
+        Scanner sc = new Scanner(System.in);
+        int ataque = sc.nextInt();
+        if ((ataque < 0) || (ataque > 3)) {
+            return false;
+        }
+        arma.setModAtaque(ataque);
+        return true;
+    }
+
+    public void addArmadura() {
+        armaduras.add(armadura);
+    }
+
+    public void setArmaduras(){
+        vampiro.setArmaduras(armaduras);
+    }
+
+    public void mostrarArmaduras() {
+        System.out.println("Que arma quieres equipar?");
+        for (int iterator = 0; iterator < armaduras.size(); iterator++) {
+            System.out.println(iterator + 1 + ": " + armaduras.get(iterator).getNombre());
+        }
+    }
+
+    public boolean addArmaduraActiva() {
+        Scanner sc = new Scanner(System.in);
+        int opcion = sc.nextInt();
+        if ((opcion < 1) || (opcion > armas.size() + 1)) {
+            return false;
+        }
+        armadura = armaduras.get(opcion - 1);
+        vampiro.setArmaduraActiva(armadura);
+        return true;
+    }
+
+    public void preguntarOro(){
+        System.out.println("Introduce su cantidad de oro  (>0):");
+    }
+
+    public boolean inicializarOro(){
+        Scanner sc = new Scanner(System.in);
+        int oro = sc.nextInt();
+        if (oro < 0){
+            return false;
+        }
+        vampiro.setOro(oro);
+        return true;
+    }
+
+    public void preguntarHP(){
+        System.out.println("Introduce su cantidad de vida (0-5):");
+    }
+
+    public boolean inicializarHP(){
+        Scanner sc = new Scanner(System.in);
+        int hp = sc.nextInt();
+        if (hp < 0 || hp > 5) {
+            return false;
+        }
+        vampiro.setHp(hp);
+        return true;
+    }
+
+    public void preguntarPoder(){
+        System.out.println("Introduce su poder (1-5):");
+    }
+
+    public boolean inicializarPoder(){
+        Scanner sc = new Scanner(System.in);
+        int poder = sc.nextInt();
+        if (poder < 1 || poder > 5) {
+            return false;
+        }
+        vampiro.setPoder(poder);
+        return true;
+    }
+
+    public void peguntarNumDebilidades(){
+        System.out.println("Introduce el numero de debilidades que vas a sumar:");
+    }
+
+    public void preguntarNombreDebilidad(){
+        System.out.println("Introduce el nombre de tu debilidad:");
+    }
+
+    public void inicializarNombreDebilidad(){
+        Scanner sc = new Scanner(System.in);
+        String nombre = sc.nextLine();
+        debilidad.setNombre(nombre);
+    }
+
+    public void preguntarValorDebilidad(){
+        System.out.println("Introduce el valor de tu debilidad:");
+    }
+
+    public void inicializarValorDebilidad(){
+        Scanner sc = new Scanner(System.in);
+        int valor = sc.nextInt();
+        debilidad.setValor(valor);
+    }
+
+    public void addDebilidad(){
+        debilidades.add(debilidad);
+    }
+
+    public void setDebilidades(){
+        vampiro.setDebilidades(debilidades);
+    }
+
+    public void peguntarNumFortalezas(){
+        System.out.println("Introduce el numero de fortalezas que vas a sumar:");
+    }
+
+    public void preguntarNombreFortaleza(){
+        System.out.println("Introduce el nombre de tu fortaleza:");
+    }
+
+    public void inicializarNombreFortaleza(){
+        Scanner sc = new Scanner(System.in);
+        String nombre = sc.nextLine();
+        fortaleza.setNombre(nombre);
+    }
+
+    public void preguntarValorFortaleza(){
+        System.out.println("Introduce el valor de tu fortaleza:");
+    }
+
+    public void inicializarValorFortaleza(){
+        Scanner sc = new Scanner(System.in);
+        int valor = sc.nextInt();
+        fortaleza.setValor(valor);
+    }
+
+    public void addFortaleza(){
+        fortalezas.add(fortaleza);
+    }
+
+    public void setFortalezas(){
+        vampiro.setFortalezas(fortalezas);
     }
 
 }
