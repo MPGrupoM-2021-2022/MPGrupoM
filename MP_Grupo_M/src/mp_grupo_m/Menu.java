@@ -1,178 +1,178 @@
 package mp_grupo_m;
 
+import mp_grupo_m.Entidades.*;
 import mp_grupo_m.Factorias.FactoriaVampiros;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class Menu {
 
-    public void mostrar() {
-        System.out.println("************MENU************");
-        System.out.println("1. REGISTRAR PERSONAJE");
-        System.out.println("2. ELIMINAR PERSONAJE");
-        System.out.println("3. SELECCIONAR EQUIPO");
-        System.out.println("4. DESAFIAR");
-        System.out.println("5. CONSULTAR COMBATES");
-        System.out.println("6. CONSULTAR RANKING GLOBAL");
-        System.out.println("7. SALIR");
-        System.out.println("****************************");
-        selector();
-    }
-
-    private void selector() {
+    public void selector() {
+        Terminal terminal = new Terminal();
         Scanner sc = new Scanner(System.in);
         int opcion = sc.nextInt();
         switch (opcion) {
             case 1:
                 //comprobar que el usuario no tiene un personaje ya creado, mandar un mensaje en dicho caso
-                mostrarFactorias();
+                terminal.mostrarFactorias();
+                selectorFactoria();
             case 2:
-                System.out.println("En desarrollo...");
+                terminal.WIP();
             case 3:
-                System.out.println("En desarrollo...");
+                terminal.WIP();
             case 4:
-                System.out.println("En desarrollo...");
+                terminal.WIP();
             case 5:
-                System.out.println("En desarrollo...");
+                terminal.WIP();
             case 6:
-                System.out.println("En desarrollo...");
+                terminal.WIP();
             case 7:
-                System.out.println("Saliendo...");
+                terminal.WIP();
             default:
-                System.out.println("ERROR");
+                terminal.WIP();
         }
     }
 
-    private void mostrarFactorias() {
-        System.out.println("Seleccione que tipo de personaje quiere crear:");
-        System.out.println("1. Vampiro");
-        System.out.println("2. Licantropo");
-        System.out.println("3. Cazador");
-        selectorFactoria();
-    }
-
     private void selectorFactoria() {
+        Terminal terminal = new Terminal();
         Scanner sc = new Scanner(System.in);
         int opcion = sc.nextInt();
         switch (opcion) {
             case 1:
                 crearVampiro();
             case 2:
-                System.out.println("En desarrollo...");
+                terminal.WIP();
             case 3:
-                System.out.println("En desarrollo...");
+                terminal.WIP();
             default:
-                System.out.println("ERROR");
+                terminal.error();
         }
     }
 
     private void crearVampiro() {
+
         boolean rightValue;
         boolean[] rightWeapon;
         boolean[] aux1 = new boolean[]{true, true};
         boolean[] aux2 = new boolean[]{true, false};
-        FactoriaVampiros FV = new FactoriaVampiros();
-        FV.preguntarNombre();
-        FV.inicializarNombre();
-        FV.preguntarNombreHabilidad();
-        FV.inicializarNombreHabilidad();
-        do {
-            FV.preguntarAtaqueHabilidad();
-            rightValue = FV.inicializarAtaqueHabilidad();
-        } while (!rightValue);
-        do {
-            FV.preguntarDefensaHabilidad();
-            rightValue = FV.inicializarDefensaHabilidad();
-        } while (!rightValue);
-        do {
-            FV.preguntarCosteHabilidad();
-            rightValue = FV.inicializarCosteHabilidad();
-        } while (!rightValue);
-        FV.setHabilidad();
-        FV.preguntarNumArmas();
-        int numArmas = FV.askNum();
-        for (int iterator = 1; iterator <= numArmas; iterator++){
-            FV.preguntarNombreArma();
-            FV.inicializarnNombreArma();
-            do {
-                FV.preguntarAtaqueArma();
-                rightValue = FV.inicializarAtaqueArma();
-            } while (!rightValue);
-            do {
-                FV.preguntarDefensaArma();
-                rightValue = FV.inicializarDefensaArma();
-            } while (!rightValue);
-            do {
-                FV.peguntarSingleHandArma();
-                rightValue = FV.inicializarSingleHandArma();
-            } while (!rightValue);
-            FV.addArma();
-        }
-        FV.setArmas();
-        do {
-            FV.mostrarArmas();
-            rightWeapon = FV.addArmaActiva();
-        } while (!Arrays.equals(rightWeapon,aux1) && !Arrays.equals(rightWeapon,aux2));
-        if (Arrays.equals(rightWeapon,aux1)){
-            do {
-                FV.otroArma();
-                rightValue = FV.addArmaActiva2();
-            } while(!rightValue);
-        }
-        FV.setArmasActivas();
 
-        FV.preguntarNumArmaduras();
-        int numArmaduras = FV.askNum();
-        for (int iterator = 1; iterator <= numArmaduras; iterator++){
-            FV.preguntarNombreArmadura();
-            FV.inicializarnNombreArmadura();
-            do {
-                FV.preguntarDefensaArmadura();
-                rightValue = FV.inicializarDefensaArmadura();
-            } while (!rightValue);
-            do {
-                FV.preguntarAtaqueArmadura();
-                rightValue = FV.inicializarAtaqueArmadura();
-            } while (!rightValue);
-            FV.addArmadura();
-        }
-        FV.setArmaduras();
+        FactoriaVampiros FV = new FactoriaVampiros();
+        Terminal terminal = new Terminal();
+        Vampiro vampiro = new Vampiro();
+        Disciplina disciplina = new Disciplina();
+        Arma arma = new Arma();
+        ArrayList<Arma> armas = new ArrayList<>();
+        ArrayList<Arma> armasActivas = new ArrayList<>();
+        Armadura armadura = new Armadura();
+        ArrayList<Armadura> armaduras = new ArrayList<>();
+        Debilidad debilidad = new Debilidad();
+        Fortaleza fortaleza = new Fortaleza();
+        ArrayList<Debilidad> debilidades = new ArrayList<>();
+        ArrayList<Fortaleza> fortalezas = new ArrayList<>();
+
+        terminal.preguntarNombre();
+        FV.inicializarNombre(vampiro);
+        terminal.preguntarNombreHabilidad();
+        FV.inicializarNombreHabilidad(disciplina);
         do {
-            FV.mostrarArmaduras();
-            rightValue = FV.addArmaduraActiva();
+            terminal.preguntarAtaqueHabilidad();
+            rightValue = FV.inicializarAtaqueHabilidad(disciplina);
         } while (!rightValue);
-        do{
-            FV.preguntarOro();
-            rightValue = FV.inicializarOro();
+        do {
+            terminal.preguntarDefensaHabilidad();
+            rightValue = FV.inicializarDefensaHabilidad(disciplina);
         } while (!rightValue);
-        do{
-            FV.preguntarHP();
-            rightValue = FV.inicializarHP();
+        do {
+            terminal.preguntarCosteHabilidad();
+            rightValue = FV.inicializarCosteHabilidad(disciplina);
         } while (!rightValue);
-        do{
-            FV.preguntarPoder();
-            rightValue = FV.inicializarPoder();
+        FV.setHabilidad(vampiro, disciplina);
+        terminal.preguntarNumArmas();
+        int numArmas = FV.askNum();
+        for (int iterator = 1; iterator <= numArmas; iterator++) {
+            terminal.preguntarNombreArma();
+            FV.inicializarnNombreArma(arma);
+            do {
+                terminal.preguntarAtaqueArma();
+                rightValue = FV.inicializarAtaqueArma(arma);
+            } while (!rightValue);
+            do {
+                terminal.preguntarDefensaArma();
+                rightValue = FV.inicializarDefensaArma(arma);
+            } while (!rightValue);
+            do {
+                terminal.peguntarSingleHandArma();
+                rightValue = FV.inicializarSingleHandArma(arma);
+            } while (!rightValue);
+            FV.addArma(armas, arma);
+        }
+        FV.setArmas(vampiro, armas);
+        do {
+            terminal.mostrarArmas(armas);
+            rightWeapon = FV.addArmaActiva(arma, armas, armasActivas);
+        } while (!Arrays.equals(rightWeapon, aux1) && !Arrays.equals(rightWeapon, aux2));
+        if (Arrays.equals(rightWeapon, aux1)) {
+            do {
+                terminal.otroArma(armas);
+                rightValue = FV.addArmaActiva2(arma, armas, armasActivas);
+            } while (!rightValue);
+        }
+        FV.setArmasActivas(vampiro, armasActivas);
+
+        terminal.preguntarNumArmaduras();
+        int numArmaduras = FV.askNum();
+        for (int iterator = 1; iterator <= numArmaduras; iterator++) {
+            terminal.preguntarNombreArmadura();
+            FV.inicializarnNombreArmadura(armadura);
+            do {
+                terminal.preguntarDefensaArmadura();
+                rightValue = FV.inicializarDefensaArmadura(armadura);
+            } while (!rightValue);
+            do {
+                terminal.preguntarAtaqueArmadura();
+                rightValue = FV.inicializarAtaqueArmadura(arma);
+            } while (!rightValue);
+            FV.addArmadura(armadura, armaduras);
+        }
+        FV.setArmaduras(vampiro, armaduras);
+        do {
+            terminal.mostrarArmaduras(armaduras);
+            rightValue = FV.addArmaduraActiva(vampiro, armadura, armaduras);
         } while (!rightValue);
-        FV.peguntarNumDebilidades();
+        do {
+            terminal.preguntarOro();
+            rightValue = FV.inicializarOro(vampiro);
+        } while (!rightValue);
+        do {
+            terminal.preguntarHP();
+            rightValue = FV.inicializarHP(vampiro);
+        } while (!rightValue);
+        do {
+            terminal.preguntarPoder();
+            rightValue = FV.inicializarPoder(vampiro);
+        } while (!rightValue);
+        terminal.peguntarNumDebilidades();
         int numDebilidades = FV.askNum();
-        for (int iterator = 1; iterator <= numDebilidades; iterator++){
-            FV.preguntarNombreDebilidad();
-            FV.inicializarNombreDebilidad();
-            FV.preguntarValorDebilidad();
-            FV.inicializarValorDebilidad();
-            FV.addDebilidad();
+        for (int iterator = 1; iterator <= numDebilidades; iterator++) {
+            terminal.preguntarNombreDebilidad();
+            FV.inicializarNombreDebilidad(debilidad);
+            terminal.preguntarValorDebilidad();
+            FV.inicializarValorDebilidad(debilidad);
+            FV.addDebilidad(debilidades, debilidad);
         }
-        FV.setDebilidades();
-        FV.peguntarNumFortalezas();
+        FV.setDebilidades(vampiro, debilidades);
+        terminal.peguntarNumFortalezas();
         int numFortalezas = FV.askNum();
-        for (int iterator = 1; iterator <= numFortalezas; iterator++){
-            FV.preguntarNombreFortaleza();
-            FV.inicializarNombreFortaleza();
-            FV.preguntarValorFortaleza();
-            FV.inicializarValorFortaleza();
-            FV.addFortaleza();
+        for (int iterator = 1; iterator <= numFortalezas; iterator++) {
+            terminal.preguntarNombreFortaleza();
+            FV.inicializarNombreFortaleza(fortaleza);
+            terminal.preguntarValorFortaleza();
+            FV.inicializarValorFortaleza(fortaleza);
+            FV.addFortaleza(fortalezas, fortaleza);
         }
-        FV.setFortalezas();
+        FV.setFortalezas(vampiro, fortalezas);
     }
 }

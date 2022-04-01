@@ -3,9 +3,11 @@ package mp_grupo_m;
 public class MP_Grupo_M {
 
     public static void main(String[] args) {
-        Inicio inicio = new Inicio();
+        Terminal terminal = new Terminal();
+        Sistema sistema = new Sistema();
         while (true) {
-            inicio.mostrar();
+            terminal.mostrarInicio();
+            sistema.selector();
         }
     }
 }
