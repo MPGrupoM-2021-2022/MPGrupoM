@@ -16,6 +16,7 @@ public class Terminal {
         System.out.println("5. CONSULTAR COMBATES");
         System.out.println("6. CONSULTAR RANKING GLOBAL");
         System.out.println("7. SALIR");
+        System.out.println("8. BORRAR CUENTA");
         System.out.println("****************************");
     }
 
@@ -24,11 +25,11 @@ public class Terminal {
         System.out.println("2. INICIAR SESION");
     }
 
-    public void error(){
+    public void error() {
         System.out.println("ERROR");
     }
 
-    public void WIP(){
+    public void WIP() {
         System.out.println("En desarrollo...");
     }
 
@@ -55,7 +56,7 @@ public class Terminal {
         System.out.println("Introduce el valor de defensa de la habilidad (entre 1 y 3):");
     }
 
-    public void preguntarCosteHabilidad(){
+    public void preguntarCosteHabilidad() {
         System.out.println("Introduce el coste de la habilidad:");
     }
 
@@ -121,39 +122,78 @@ public class Terminal {
         }
     }
 
-    public void preguntarOro(){
+    public void preguntarOro() {
         System.out.println("Introduce su cantidad de oro  (>0):");
     }
 
-    public void preguntarHP(){
-        System.out.println("Introduce su cantidad de vida (0-5):");
+    public void preguntarHP() {
+        System.out.println("Introduce su cantidad de vida:");
     }
 
-    public void preguntarPoder(){
+    public void preguntarPoder() {
         System.out.println("Introduce su poder (1-5):");
     }
 
-    public void peguntarNumDebilidades(){
+    public void peguntarNumDebilidades() {
         System.out.println("Introduce el numero de debilidades que vas a sumar:");
     }
 
-    public void preguntarNombreDebilidad(){
+    public void preguntarNombreDebilidad() {
         System.out.println("Introduce el nombre de tu debilidad:");
     }
 
-    public void preguntarValorDebilidad(){
+    public void preguntarValorDebilidad() {
         System.out.println("Introduce el valor de tu debilidad:");
     }
 
-    public void peguntarNumFortalezas(){
+    public void peguntarNumFortalezas() {
         System.out.println("Introduce el numero de fortalezas que vas a sumar:");
     }
 
-    public void preguntarNombreFortaleza(){
+    public void preguntarNombreFortaleza() {
         System.out.println("Introduce el nombre de tu fortaleza:");
     }
 
-    public void preguntarValorFortaleza(){
+    public void preguntarValorFortaleza() {
         System.out.println("Introduce el valor de tu fortaleza:");
+    }
+
+    public void preguntarEdadVampiro() {
+        System.out.println("Introduce la edad de tu vampiro:");
+    }
+
+    public void preguntarTipoEsbirro() {
+        System.out.println("Selecciona tu tipo de esbirro:");
+        System.out.println("1. Humano");
+        System.out.println("2. Ghoul");
+        System.out.println("3. Demonio");
+        System.out.println("4. Ninguno");
+    }
+
+    public void errorHumano() {
+        System.out.println("Al ser un vampiro no puedes tener humanos esbirros, prueba con otro esbirro");
+    }
+
+    public void preguntarNombreEsbirro() {
+        System.out.println("Introduce el nombre de tu esbirro:");
+    }
+
+    public void preguntarLealtad() {
+        System.out.println("Introduce la lealtad de tu humano:");
+        System.out.println("1. Alta");
+        System.out.println("2. Media");
+        System.out.println("3. Baja");
+    }
+
+    public void preguntarDependencia() {
+        System.out.println("Introduce la dependencia de tu ghoul (1-5):");
+    }
+
+    public void preguntarPacto() {
+        System.out.println("Introduce aqui el pacto del demonio:");
+    }
+
+    public void preguntarNumEsbirros() {
+        System.out.println("Introduce el numero de esbirros que vas a querer:");
     }
 }
