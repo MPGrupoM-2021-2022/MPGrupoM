@@ -1,0 +1,5 @@
+***** USUARIO Nº01 *****
+Nombre: SERGIO
+Nick: 123
+Password: 123
+Registro: [C@4783da3f
