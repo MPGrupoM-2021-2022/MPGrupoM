@@ -1,6 +1,6 @@
 package mp_grupo_m.Entidades;
 
-public class Ghoul extends EsbirrosComposite {
+public class Ghoul extends Esbirro{
     private int dependencia;
 
     public int getDependencia() {

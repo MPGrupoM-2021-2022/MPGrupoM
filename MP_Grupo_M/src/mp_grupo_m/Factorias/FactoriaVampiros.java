@@ -4,6 +4,7 @@ import mp_grupo_m.Entidades.*;
 
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class FactoriaVampiros {
@@ -139,7 +140,7 @@ public class FactoriaVampiros {
         vampiro.setArmasActivas(armasActivas);
     }
 
-    public void inicializarnNombreArmadura(Armadura armadura) {
+    public void inicializarNombreArmadura(Armadura armadura) {
         Scanner sc = new Scanner(System.in);
         String nombre = sc.nextLine();
         armadura.setNombre(nombre);
@@ -155,13 +156,13 @@ public class FactoriaVampiros {
         return true;
     }
 
-    public boolean inicializarAtaqueArmadura(Armadura armadura) {
+    public boolean inicializarAtaqueArmadura(Arma arma) {
         Scanner sc = new Scanner(System.in);
         int ataque = sc.nextInt();
         if ((ataque < 0) || (ataque > 3)) {
             return false;
         }
-        armadura.setModAtaque(ataque);
+        arma.setModAtaque(ataque);
         return true;
     }
 
@@ -254,9 +255,4 @@ public class FactoriaVampiros {
         vampiro.setFortalezas(fortalezas);
     }
 
-    public void setEdad(Vampiro vampiro) {
-        Scanner sc = new Scanner(System.in);
-        int edad = sc.nextInt();
-        vampiro.setEdad(edad);
-    }
 }

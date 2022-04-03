@@ -1,7 +1,5 @@
 package mp_grupo_m;
 
-import mp_grupo_m.Entidades.Cliente;
-
 import java.util.Scanner;
 
 public class Sistema {
@@ -15,11 +13,9 @@ public class Sistema {
                 terminal.WIP();
             case 2 -> {
                 Menu menu = new Menu();
-                //Cambiar todo esto
                 terminal.WIP();
-                Cliente cliente = new Cliente();
-                //Hasta aqui
-                menu.selector(cliente);
+                terminal.mostrarMenu();
+                menu.selector();
 
             }
             default ->

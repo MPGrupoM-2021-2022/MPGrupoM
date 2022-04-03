@@ -1,17 +1,13 @@
 package mp_grupo_m.Entidades;
 
-public class Humano extends EsbirrosComposite {
-    private Lealtad lealtad;
+public class Humano extends Esbirro{
+    private int lealtad;
 
-    public enum Lealtad{
-        ALTA, MEDIA, BAJA
-    }
-
-    public Lealtad getLealtad() {
+    public int getLealtad() {
         return lealtad;
     }
 
-    public void setLealtad(Lealtad lealtad) {
+    public void setLealtad(int lealtad) {
         this.lealtad = lealtad;
     }
 }

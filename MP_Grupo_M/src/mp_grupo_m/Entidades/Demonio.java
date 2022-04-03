@@ -1,11 +1,10 @@
 package mp_grupo_m.Entidades;
 
-import java.util.ArrayList;
+import java.util.List;
 
-
-public class Demonio extends EsbirrosComposite {
+public class Demonio extends Esbirro{
     private String descripcion;
-    private ArrayList<EsbirrosComposite> esbirrosComposites;
+    private List<Esbirro> esbirros;
 
     public String getDescripcion() {
         return descripcion;
@@ -15,11 +14,11 @@ public class Demonio extends EsbirrosComposite {
         this.descripcion = descripcion;
     }
 
-    public ArrayList<EsbirrosComposite> getEsbirrosComposites() {
-        return esbirrosComposites;
+    public List<Esbirro> getEsbirros() {
+        return esbirros;
     }
 
-    public void setEsbirrosComposites(ArrayList<EsbirrosComposite> esbirrosComposites) {
-        this.esbirrosComposites = esbirrosComposites;
+    public void setEsbiros(List<Esbirro> esbirros) {
+        this.esbirros = esbirros;
     }
 }
