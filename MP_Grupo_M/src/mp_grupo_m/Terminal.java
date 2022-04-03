@@ -41,7 +41,7 @@ public class Terminal {
     }
 
     public void preguntarNombre() {
-        System.out.println("Introduce el nombre del vampiro:");
+        System.out.println("Introduce el nombre del personaje:");
     }
 
     public void preguntarNombreHabilidad() {
@@ -195,5 +195,13 @@ public class Terminal {
 
     public void preguntarNumEsbirros() {
         System.out.println("Introduce el numero de esbirros que vas a querer:");
+    }
+
+    public void preguntarEdadHabilidad() {
+        System.out.println("Introduce la edad a la que el cazador adquirio el talento:");
+    }
+
+    public void preguntarRabiaHabilidad() {
+        System.out.println("Introduce el valor minimo para activar la rabia:");
     }
 }

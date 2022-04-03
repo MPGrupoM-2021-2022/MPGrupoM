@@ -55,10 +55,10 @@ public class Menu {
                 cliente.crearVampiro();
                 break;
             case 2:
-                terminal.WIP();
+                cliente.crearLicantropo();
                 break;
             case 3:
-                cliente.crearCazador();
+                terminal.WIP();
                 break;
             default:
                 terminal.error();
