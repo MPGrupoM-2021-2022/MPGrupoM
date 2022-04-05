@@ -1,7 +1,5 @@
 package mp_grupo_m.Entidades;
 
-import mp_grupo_m.Entidades.*;
-
 import java.util.List;
 
 public class Personaje {
@@ -11,7 +9,7 @@ public class Personaje {
     private List<Arma> armasActivas;
     private List<Armadura> armaduras;
     private Armadura armaduraActiva;
-    private List<Esbirro> esbirros;
+    private List<EsbirrosComposite> esbirrosComposites;
     private int oro;
     private int hp;
     private int poder;
@@ -67,12 +65,12 @@ public class Personaje {
         this.armaduraActiva = armaduraActiva;
     }
 
-    public List<Esbirro> getEsbirros() {
-        return esbirros;
+    public List<EsbirrosComposite> getEsbirros() {
+        return esbirrosComposites;
     }
 
-    public void setEsbirros(List<Esbirro> esbirros) {
-        this.esbirros = esbirros;
+    public void setEsbirros(List<EsbirrosComposite> esbirrosComposites) {
+        this.esbirrosComposites = esbirrosComposites;
     }
 
     public int getOro() {

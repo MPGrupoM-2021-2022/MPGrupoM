@@ -1,49 +1,26 @@
 package mp_grupo_m.Factorias;
 
-import mp_grupo_m.Entidades.Arma;
-import mp_grupo_m.Entidades.Disciplina;
-import mp_grupo_m.Entidades.Vampiro;
+import mp_grupo_m.Entidades.*;
 
 
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class FactoriaVampiros {
-    private Vampiro vampiro;
-    private Disciplina disciplina;
-    private List<Arma> armas;
-    private Arma arma;
-    private List<Arma> armasActivas;
 
-    public Vampiro getVampiro() {
-        return vampiro;
-    }
-
-    public void preguntarNombre() {
-        System.out.println("Introduce el nombre del vampiro:");
-    }
-
-    public void inicializarNombre() {
+    public void inicializarNombre(Vampiro vampiro) {
         Scanner sc = new Scanner(System.in);
         String nombre = sc.nextLine();
         vampiro.setNombre(nombre);
     }
 
-    public void preguntarNombreHabilidad() {
-        System.out.println("Introduce el nombre de la disciplina:");
-    }
-
-    public void inicializarNombreHabilidad() {
+    public void inicializarNombreHabilidad(Disciplina disciplina) {
         Scanner sc = new Scanner(System.in);
         String nombre = sc.nextLine();
         disciplina.setNombre(nombre);
     }
 
-    public void preguntarAtaqueHabilidad() {
-        System.out.println("Introduce el valor de ataque de la habilidad (entre 1 y 3):");
-    }
-
-    public boolean inicializarAtaqueHabilidad() {
+    public boolean inicializarAtaqueHabilidad(Disciplina disciplina) {
         Scanner sc = new Scanner(System.in);
         int ataque = sc.nextInt();
         if ((ataque < 1) || (ataque > 3)) {
@@ -53,11 +30,7 @@ public class FactoriaVampiros {
         return true;
     }
 
-    public void preguntarDefensaHabilidad() {
-        System.out.println("Introduce el valor de defensa de la habilidad (entre 1 y 3):");
-    }
-
-    public boolean inicializarDefensaHabilidad() {
+    public boolean inicializarDefensaHabilidad(Disciplina disciplina) {
         Scanner sc = new Scanner(System.in);
         int defensa = sc.nextInt();
         if ((defensa < 1) || (defensa > 3)) {
@@ -67,30 +40,32 @@ public class FactoriaVampiros {
         return true;
     }
 
-    public void preguntarNumArmas() {
-        System.out.println("Introduce el numero de armas que vas a introducir:");
+    public boolean inicializarCosteHabilidad(Disciplina disciplina) {
+        Scanner sc = new Scanner(System.in);
+        int coste = sc.nextInt();
+        if ((coste < 1) || (coste > 3)) {
+            return false;
+        }
+        disciplina.setCoste(coste);
+        return true;
     }
 
-    public int numArmas() {
+    public void setHabilidad(Vampiro vampiro, Disciplina disciplina) {
+        vampiro.setHabilidad(disciplina);
+    }
+
+    public int askNum() {
         Scanner sc = new Scanner(System.in);
         return sc.nextInt();
     }
 
-    public void preguntarNombreArma() {
-        System.out.println("Introduce el nombre de tu arma:");
-    }
-
-    public void inicializarnNombreArma() {
+    public void inicializarnNombreArma(Arma arma) {
         Scanner sc = new Scanner(System.in);
         String nombre = sc.nextLine();
         arma.setNombre(nombre);
     }
 
-    public void preguntarAtaqueArma() {
-        System.out.println("Introduce el ataque de tu arma:");
-    }
-
-    public boolean inicializarAtaqueArma() {
+    public boolean inicializarAtaqueArma(Arma arma) {
         Scanner sc = new Scanner(System.in);
         int ataque = sc.nextInt();
         if ((ataque < 1) || (ataque > 3)) {
@@ -100,11 +75,7 @@ public class FactoriaVampiros {
         return true;
     }
 
-    public void preguntarDefensaArma() {
-        System.out.println("Introduce la defensa de tu arma (escribe 0 si no tiene):");
-    }
-
-    public boolean inicializarDefensaArma() {
+    public boolean inicializarDefensaArma(Arma arma) {
         Scanner sc = new Scanner(System.in);
         int defensa = sc.nextInt();
         if ((defensa < 0) || (defensa > 3)) {
@@ -114,13 +85,7 @@ public class FactoriaVampiros {
         return true;
     }
 
-    public void peguntarSingleHandArma() {
-        System.out.println("El arma se puede usar con un sola mano?");
-        System.out.println("1. Si");
-        System.out.println("2. No");
-    }
-
-    public boolean inicializarSingleHandArma() {
+    public boolean inicializarSingleHandArma(Arma arma) {
         Scanner sc = new Scanner(System.in);
         int opcion = sc.nextInt();
         switch (opcion) {
@@ -129,23 +94,21 @@ public class FactoriaVampiros {
                 return true;
             case 2:
                 arma.setSingleHand(false);
+                return true;
             default:
                 return false;
         }
     }
 
-    public void addArma() {
+    public void addArma(ArrayList<Arma> armas, Arma arma) {
         armas.add(arma);
     }
 
-    public void mostrarArmas() {
-        System.out.println("Que arma quieres equipar?");
-        for (int iterator = 0; iterator < armas.size(); iterator++) {
-            System.out.println(iterator + 1 + ": " + armas.get(iterator).getNombre());
-        }
+    public void setArmas(Vampiro vampiro, ArrayList<Arma> armas) {
+        vampiro.setArmas(armas);
     }
 
-    public boolean[] addArmaActiva() {
+    public boolean[] addArmaActiva(Arma arma, ArrayList<Arma> armas, ArrayList<Arma> armasActivas) {
         Scanner sc = new Scanner(System.in);
         int opcion = sc.nextInt();
         if ((opcion < 1) || (opcion > armas.size() + 1)) {
@@ -156,17 +119,7 @@ public class FactoriaVampiros {
         return new boolean[]{true, armas.get(opcion - 1).isSingleHand()};
     }
 
-    public void otroArma() {
-        System.out.println("Quiere equipar otro arma de una sola mano?");
-        System.out.println("0: NO");
-        for (int iterator = 0; iterator < armas.size(); iterator++) {
-            if (armas.get(iterator).isSingleHand()) {
-                System.out.println(iterator + 1 + ": " + armas.get(iterator).getNombre());
-            }
-        }
-    }
-
-    public boolean addArmaActiva2() {
+    public boolean addArmaActiva2(Arma arma, ArrayList<Arma> armas, ArrayList<Arma> armasActivas) {
         Scanner sc = new Scanner(System.in);
         int opcion = sc.nextInt();
         if ((opcion < 0) || (opcion > armas.size() + 1)) {
@@ -182,4 +135,128 @@ public class FactoriaVampiros {
         return false;
     }
 
+    public void setArmasActivas(Vampiro vampiro, ArrayList<Arma> armasActivas) {
+        vampiro.setArmasActivas(armasActivas);
+    }
+
+    public void inicializarnNombreArmadura(Armadura armadura) {
+        Scanner sc = new Scanner(System.in);
+        String nombre = sc.nextLine();
+        armadura.setNombre(nombre);
+    }
+
+    public boolean inicializarDefensaArmadura(Armadura armadura) {
+        Scanner sc = new Scanner(System.in);
+        int defensa = sc.nextInt();
+        if ((defensa < 1) || (defensa > 3)) {
+            return false;
+        }
+        armadura.setModDefensa(defensa);
+        return true;
+    }
+
+    public boolean inicializarAtaqueArmadura(Armadura armadura) {
+        Scanner sc = new Scanner(System.in);
+        int ataque = sc.nextInt();
+        if ((ataque < 0) || (ataque > 3)) {
+            return false;
+        }
+        armadura.setModAtaque(ataque);
+        return true;
+    }
+
+    public void addArmadura(Armadura armadura, ArrayList<Armadura> armaduras) {
+        armaduras.add(armadura);
+    }
+
+    public void setArmaduras(Vampiro vampiro, ArrayList<Armadura> armaduras) {
+        vampiro.setArmaduras(armaduras);
+    }
+
+    public boolean addArmaduraActiva(Vampiro vampiro, Armadura armadura, ArrayList<Armadura> armaduras) {
+        Scanner sc = new Scanner(System.in);
+        int opcion = sc.nextInt();
+        if ((opcion < 1) || (opcion > armaduras.size() + 1)) {
+            return false;
+        }
+        armadura = armaduras.get(opcion - 1);
+        vampiro.setArmaduraActiva(armadura);
+        return true;
+    }
+
+    public boolean inicializarOro(Vampiro vampiro) {
+        Scanner sc = new Scanner(System.in);
+        int oro = sc.nextInt();
+        if (oro < 0) {
+            return false;
+        }
+        vampiro.setOro(oro);
+        return true;
+    }
+
+    public boolean inicializarHP(Vampiro vampiro) {
+        Scanner sc = new Scanner(System.in);
+        int hp = sc.nextInt();
+        if (hp < 0 || hp > 5) {
+            return false;
+        }
+        vampiro.setHp(hp);
+        return true;
+    }
+
+    public boolean inicializarPoder(Vampiro vampiro) {
+        Scanner sc = new Scanner(System.in);
+        int poder = sc.nextInt();
+        if (poder < 1 || poder > 5) {
+            return false;
+        }
+        vampiro.setPoder(poder);
+        return true;
+    }
+
+    public void inicializarNombreDebilidad(Debilidad debilidad) {
+        Scanner sc = new Scanner(System.in);
+        String nombre = sc.nextLine();
+        debilidad.setNombre(nombre);
+    }
+
+    public void inicializarValorDebilidad(Debilidad debilidad) {
+        Scanner sc = new Scanner(System.in);
+        int valor = sc.nextInt();
+        debilidad.setValor(valor);
+    }
+
+    public void addDebilidad(ArrayList<Debilidad> debilidades, Debilidad debilidad) {
+        debilidades.add(debilidad);
+    }
+
+    public void setDebilidades(Vampiro vampiro, ArrayList<Debilidad> debilidades) {
+        vampiro.setDebilidades(debilidades);
+    }
+
+    public void inicializarNombreFortaleza(Fortaleza fortaleza) {
+        Scanner sc = new Scanner(System.in);
+        String nombre = sc.nextLine();
+        fortaleza.setNombre(nombre);
+    }
+
+    public void inicializarValorFortaleza(Fortaleza fortaleza) {
+        Scanner sc = new Scanner(System.in);
+        int valor = sc.nextInt();
+        fortaleza.setValor(valor);
+    }
+
+    public void addFortaleza(ArrayList<Fortaleza> fortalezas, Fortaleza fortaleza) {
+        fortalezas.add(fortaleza);
+    }
+
+    public void setFortalezas(Vampiro vampiro, ArrayList fortalezas) {
+        vampiro.setFortalezas(fortalezas);
+    }
+
+    public void setEdad(Vampiro vampiro) {
+        Scanner sc = new Scanner(System.in);
+        int edad = sc.nextInt();
+        vampiro.setEdad(edad);
+    }
 }

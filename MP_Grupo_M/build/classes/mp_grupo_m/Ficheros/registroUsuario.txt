@@ -1,0 +1,5 @@
+***** USUARIO *****
+NOMBRE: null
+NICK: null
+PASSWORD: null
+NUMERO REGISTRO: null
