@@ -1,6 +1,7 @@
 package mp_grupo_m;
 
 import mp_grupo_m.Entidades.Cliente;
+import mp_grupo_m.Entidades.Personaje;
 
 import java.util.Scanner;
 
@@ -49,16 +50,17 @@ public class Menu {
     private void selectorFactoria(Cliente cliente) {
         Terminal terminal = new Terminal();
         Scanner sc = new Scanner(System.in);
+        Personaje personaje;
         int opcion = sc.nextInt();
         switch (opcion) {
             case 1:
-                cliente.crearVampiro();
+                personaje = cliente.crearVampiro();
                 break;
             case 2:
                 terminal.WIP();
                 break;
             case 3:
-                cliente.crearCazador();
+                personaje = cliente.crearCazador();
                 break;
             default:
                 terminal.error();
