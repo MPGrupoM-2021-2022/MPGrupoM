@@ -212,4 +212,5 @@ public class Terminal {
         System.out.println("1. SÍ ");
         System.out.println("2. NO ");
     }
+
 }
