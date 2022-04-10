@@ -57,7 +57,7 @@ public class Menu {
                 personaje = cliente.crearVampiro();
                 break;
             case 2:
-                terminal.WIP();
+                personaje = cliente.crearLicantropo();
                 break;
             case 3:
                 personaje = cliente.crearCazador();
@@ -76,5 +76,13 @@ public class Menu {
     private void consultarRanking() {
         Terminal terminal = new Terminal();
         terminal.WIP();
+    }
+
+    void selector() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    void selector() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

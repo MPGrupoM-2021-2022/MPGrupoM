@@ -200,4 +200,17 @@ public class Terminal {
     public void preguntarEdadHabilidad() {
         System.out.println("Introduce la edad a la que el cazador adquirio el talento:");
     }
+
+    public void preguntarRabiaHabilidad() {
+        System.out.println("Introduce el valor minimo para activar la rabia:");
+    }
+
+    public void menuRegistroUsuario() {
+        System.out.println("REGISTRO DE USUARIO NUEVO: ");
+        System.out.println("****************");
+        System.out.println("¿Desea registrar un usuario nuevo? ");
+        System.out.println("1. SÍ ");
+        System.out.println("2. NO ");
+    }
+
 }
