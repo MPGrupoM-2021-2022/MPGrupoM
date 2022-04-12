@@ -3,14 +3,25 @@ package mp_grupo_m.Entidades;
 import mp_grupo_m.Factorias.FactoriaCazadores;
 import mp_grupo_m.Factorias.FactoriaVampiros;
 import mp_grupo_m.Factorias.FactoriaLicantropos;
+import mp_grupo_m.Sistema;
 import mp_grupo_m.Terminal;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class Cliente extends User{
 
     private String registro;
+    private Personaje personaje;
+
+    public Personaje getPersonaje() {
+        return personaje;
+    }
+
+    public void setPersonaje(Personaje personaje) {
+        this.personaje = personaje;
+    }
 
     public String getRegistro() {
         return registro;
@@ -330,7 +341,7 @@ public class Cliente extends User{
         FL.inicializarNombre(licantropo);
         terminal.preguntarNombreHabilidad();
         FL.inicializarNombreHabilidad(don);
-        FL.inicializarRabia(licantropo);
+        licantropo.setRabia(0);
         do {
             terminal.preguntarRabiaHabilidad();
             rightValue = FL.inicializarRabiaHabilidad(don);
@@ -443,9 +454,33 @@ public class Cliente extends User{
         terminal.WIP();
     }
 
-    public void desafiar() {
+    public void desafiar(ArrayList<Cliente> listaClientes, Cliente cliente, Sistema sistema) {
         Terminal terminal = new Terminal();
-        terminal.WIP();
+        terminal.bienvenidaDesafio();
+        int contrincante = -1;
+        int oro = -1;
+        if (listaClientes.size() == 1){         //Habría que indicar tambien que tienen que tener un personaje creado de alguna manera
+            terminal.noHayContrincantes();
+        } else{
+            terminal.mostrarPosiblesContrincantes(listaClientes);
+            do {
+                terminal.numValido();
+                contrincante = askNum();
+            } while(contrincante < 0 || contrincante > listaClientes.size() + 1);
+            terminal.preguntarCantidadApostar();
+            do {
+                terminal.numValido();
+                oro = askNum();
+            } while(oro <= 0 && oro > cliente.getPersonaje().getOro());
+            cliente.getPersonaje().setOro(cliente.getPersonaje().getOro() - oro);
+            sistema.avisarAdmin(cliente, contrincante, oro, listaClientes);
+            terminal.desafioCreado();
+        }
+    }
+
+    public int askNum() {
+        Scanner sc = new Scanner(System.in);
+        return sc.nextInt();
     }
 
     public void eliminarCuenta() {
