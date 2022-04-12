@@ -3,11 +3,12 @@ package mp_grupo_m;
 import mp_grupo_m.Entidades.Cliente;
 import mp_grupo_m.Entidades.Personaje;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Menu {
 
-    public void selector(Cliente cliente) {
+    public void selector(Cliente cliente, Sistema sistema) {
         Terminal terminal = new Terminal();
         Scanner sc = new Scanner(System.in);
         int opcion;
@@ -27,7 +28,9 @@ public class Menu {
                     cliente.seleccionarEquipo();
                     break;
                 case 4:
-                    cliente.desafiar();
+                    //Llamada a lectura del fichero de todos los clientes
+                    ArrayList<Cliente> listaClientes = new ArrayList<>();
+                    cliente.desafiar(listaClientes, cliente, sistema);
                     break;
                 case 5:
                     consultarCombates();
@@ -50,7 +53,7 @@ public class Menu {
     private void selectorFactoria(Cliente cliente) {
         Terminal terminal = new Terminal();
         Scanner sc = new Scanner(System.in);
-        Personaje personaje;
+        Personaje personaje = null;
         int opcion = sc.nextInt();
         switch (opcion) {
             case 1:
@@ -66,6 +69,7 @@ public class Menu {
                 terminal.error();
                 break;
         }
+        cliente.setPersonaje(personaje);
     }
 
     private void consultarCombates() {
@@ -76,13 +80,5 @@ public class Menu {
     private void consultarRanking() {
         Terminal terminal = new Terminal();
         terminal.WIP();
-    }
-
-    void selector() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    void selector() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

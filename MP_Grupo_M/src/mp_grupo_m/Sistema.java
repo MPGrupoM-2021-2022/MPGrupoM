@@ -1,8 +1,11 @@
 package mp_grupo_m;
 
+import mp_grupo_m.Entidades.Cliente;
+
+import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Sistema extends Terminal{
+public class Sistema{
 
     public void selector() {
         Terminal terminal = new Terminal();
@@ -20,8 +23,8 @@ public class Sistema extends Terminal{
                 //INICIO DE SESION
                 Menu menu = new Menu();
                 terminal.WIP();
-                terminal.mostrarMenu();
-                menu.selector();
+                Cliente cliente = new Cliente();
+                menu.selector(cliente, this);
 
             }
             default:
@@ -29,4 +32,8 @@ public class Sistema extends Terminal{
         }
     }
 
+    public void avisarAdmin(Cliente cliente, int contrincante, int oro, ArrayList<Cliente> listaClientes) {
+        Terminal terminal = new Terminal();
+        terminal.WIP();
+    }
 }

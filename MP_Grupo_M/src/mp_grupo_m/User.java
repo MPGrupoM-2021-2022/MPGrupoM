@@ -67,10 +67,10 @@ public class User {
             Scanner scannerNombre = new Scanner(System.in);
             System.out.println("Nombre: ");
             nombreUsuario = scannerNombre.nextLine();
-            bw.write("Nombre: " + cliente.nombre);
+            bw.write("Nombre: " + cliente.getNombre());
             bw.newLine();
 
-            Scanner scannerNombre = new Scanner(System.in);
+            scannerNombre = new Scanner(System.in);
             System.out.println("Nombre: ");
             nombreUsuario = scannerNombre.nextLine();
             bw.write("Nombre: " + nombreUsuario);

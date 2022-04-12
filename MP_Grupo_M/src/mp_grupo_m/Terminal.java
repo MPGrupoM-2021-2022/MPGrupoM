@@ -2,7 +2,9 @@ package mp_grupo_m;
 
 import mp_grupo_m.Entidades.Arma;
 import mp_grupo_m.Entidades.Armadura;
+import mp_grupo_m.Entidades.Cliente;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Terminal {
@@ -213,4 +215,31 @@ public class Terminal {
         System.out.println("2. NO ");
     }
 
+    public void bienvenidaDesafio() {
+        System.out.println("Bienvenido al menu de desafios, elija a su contrincante:");
+    }
+
+    public void noHayContrincantes() {
+        System.out.println("No hay contincantes disponibles, volviendo al menu...");
+    }
+
+    public void mostrarPosiblesContrincantes(ArrayList<Cliente> listaClientes) {
+        System.out.println("0: Cancelar");
+        for (int i = 0; i <= listaClientes.size(); i++){
+            System.out.println((i+1) + ": " + listaClientes.get(i).getNick());
+        }
+    }
+
+    public void numValido() {
+        System.out.println("Escoge un numero valido");
+    }
+
+    public void preguntarCantidadApostar() {
+        System.out.println("Introduce la cantidad de oro que quieres apostar:");
+    }
+
+    public void desafioCreado() {
+        System.out.println("Desafio creado y pendiente de validacion por parte de un admin...");
+        System.out.println("Volviendo al menu...");
+    }
 }
