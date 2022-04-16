@@ -1,6 +1,7 @@
 package mp_grupo_m;
 
 import mp_grupo_m.Entidades.Cliente;
+import mp_grupo_m.Entidades.Desafio;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -32,7 +33,7 @@ public class Sistema{
         }
     }
 
-    public void avisarAdmin(Cliente cliente, int contrincante, int oro, ArrayList<Cliente> listaClientes) {
+    public void avisarAdmin(Desafio desafio) {
         Terminal terminal = new Terminal();
         terminal.WIP();
     }

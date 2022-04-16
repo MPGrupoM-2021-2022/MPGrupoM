@@ -17,15 +17,18 @@ public class Menu {
             opcion = sc.nextInt();
             switch (opcion) {
                 case 1:
-                    //comprobar que el usuario no tiene un personaje ya creado, mandar un mensaje en dicho caso
-                    terminal.mostrarFactorias();
-                    selectorFactoria(cliente);
+                    if (cliente.getPersonaje() == null) {
+                        terminal.mostrarFactorias();
+                        selectorFactoria(cliente);
+                    } else {
+                        terminal.eliminarPersonaje();
+                    }
                     break;
                 case 2:
-                    cliente.eliminarPersonaje();
+                    cliente.eliminarPersonaje(cliente);
                     break;
                 case 3:
-                    cliente.seleccionarEquipo();
+                    cliente.seleccionarEquipo(cliente);
                     break;
                 case 4:
                     //Llamada a lectura del fichero de todos los clientes
@@ -39,9 +42,11 @@ public class Menu {
                     consultarRanking();
                     break;
                 case 7:
+                    terminal.cerrarSesion();
+                    sistema.selector();
                     break;
                 case 8:
-                    cliente.eliminarCuenta();
+                    cliente.eliminarCuenta(cliente, sistema);
                     break;
                 default:
                     terminal.WIP();

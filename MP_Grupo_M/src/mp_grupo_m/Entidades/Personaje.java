@@ -1,20 +1,21 @@
 package mp_grupo_m.Entidades;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Personaje {
     private String nombre;
     private Habilidad habilidad;
-    private List<Arma> armas;
-    private List<Arma> armasActivas;
-    private List<Armadura> armaduras;
+    private ArrayList<Arma> armas;
+    private ArrayList<Arma> armasActivas;
+    private ArrayList<Armadura> armaduras;
     private Armadura armaduraActiva;
-    private List<EsbirrosComposite> esbirrosComposites;
+    private ArrayList<EsbirrosComposite> esbirrosComposites;
     private int oro;
     private int hp;
     private int poder;
-    private List<Debilidad> debilidades;
-    private List<Fortaleza> fortalezas;
+    private ArrayList<Debilidad> debilidades;
+    private ArrayList<Fortaleza> fortalezas;
     private String userNick;
 
     public String getNombre() {
@@ -33,27 +34,27 @@ public class Personaje {
         this.habilidad = habilidad;
     }
 
-    public List<Arma> getArmas() {
+    public ArrayList<Arma> getArmas() {
         return armas;
     }
 
-    public void setArmas(List<Arma> armas) {
+    public void setArmas(ArrayList<Arma> armas) {
         this.armas = armas;
     }
 
-    public List<Arma> getArmasActivas() {
+    public ArrayList<Arma> getArmasActivas() {
         return armasActivas;
     }
 
-    public void setArmasActivas(List<Arma> armasActivas) {
+    public void setArmasActivas(ArrayList<Arma> armasActivas) {
         this.armasActivas = armasActivas;
     }
 
-    public List<Armadura> getArmaduras() {
+    public ArrayList<Armadura> getArmaduras() {
         return armaduras;
     }
 
-    public void setArmaduras(List<Armadura> armaduras) {
+    public void setArmaduras(ArrayList<Armadura> armaduras) {
         this.armaduras = armaduras;
     }
 
@@ -65,11 +66,11 @@ public class Personaje {
         this.armaduraActiva = armaduraActiva;
     }
 
-    public List<EsbirrosComposite> getEsbirros() {
+    public ArrayList<EsbirrosComposite> getEsbirros() {
         return esbirrosComposites;
     }
 
-    public void setEsbirros(List<EsbirrosComposite> esbirrosComposites) {
+    public void setEsbirros(ArrayList<EsbirrosComposite> esbirrosComposites) {
         this.esbirrosComposites = esbirrosComposites;
     }
 
@@ -97,19 +98,19 @@ public class Personaje {
         this.poder = poder;
     }
 
-    public List<Debilidad> getDebilidades() {
+    public ArrayList<Debilidad> getDebilidades() {
         return debilidades;
     }
 
-    public void setDebilidades(List<Debilidad> debilidades) {
+    public void setDebilidades(ArrayList<Debilidad> debilidades) {
         this.debilidades = debilidades;
     }
 
-    public List<Fortaleza> getFortalezas() {
+    public ArrayList<Fortaleza> getFortalezas() {
         return fortalezas;
     }
 
-    public void setFortalezas(List<Fortaleza> fortalezas) {
+    public void setFortalezas(ArrayList<Fortaleza> fortalezas) {
         this.fortalezas = fortalezas;
     }
 
