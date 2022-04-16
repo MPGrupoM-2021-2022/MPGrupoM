@@ -228,7 +228,9 @@ public class Terminal {
     public void mostrarPosiblesContrincantes(ArrayList<Cliente> listaClientes) {
         System.out.println("0: Cancelar");
         for (int i = 0; i <= listaClientes.size(); i++){
-            System.out.println((i+1) + ": " + listaClientes.get(i).getNick());
+            if (listaClientes.get(i).getPersonaje() != null) {
+                System.out.println((i + 1) + ": " + listaClientes.get(i).getNick());
+            }
         }
     }
 
@@ -265,5 +267,32 @@ public class Terminal {
     }
     public void nickExistente() {
         System.out.println("El nick introducido ya existe");
+      
+    public void confirmarDelete() {
+        System.out.println("Seguro que desea eliminar la cuenta?");
+        System.out.println("1. SI");
+        System.out.println("2. NO");
+    }
+
+    public void eliminarPersonaje() {
+        System.out.println("Para crear un personaje nuevo antes tienes que eliminar el existente");
+    }
+
+    public void cerrarSesion() {
+        System.out.println("Cerrando sesion...");
+    }
+
+    public void confirmarDeletePersonaje() {
+        System.out.println("Seguro que desea eliminar el personaje?");
+        System.out.println("1. SI");
+        System.out.println("2. NO");
+    }
+
+    public void personajeEliminado() {
+        System.out.println("Personaje eliminado correctamente...");
+    }
+
+    public void finishEquipar() {
+        System.out.println("Arma(s) y armadura equipadas correctamente...");
     }
 }

@@ -3,7 +3,7 @@ package mp_grupo_m;
 import mp_grupo_m.Entidades.Cazador;
 import mp_grupo_m.Entidades.Cliente;
 import mp_grupo_m.Entidades.Operador;
-
+import mp_grupo_m.Entidades.Desafio;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
@@ -211,5 +211,8 @@ public class Sistema{
 //        }else{
 //            return false;
 //        }
+    public void avisarAdmin(Desafio desafio) {
+        Terminal terminal = new Terminal();
+        terminal.WIP();
     }
 }

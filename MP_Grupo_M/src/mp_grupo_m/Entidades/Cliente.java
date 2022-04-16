@@ -14,6 +14,15 @@ import java.util.Scanner;
 public class Cliente extends User{
 
     private String registro;
+    private Personaje personaje;
+
+    public Personaje getPersonaje() {
+        return personaje;
+    }
+
+    public void setPersonaje(Personaje personaje) {
+        this.personaje = personaje;
+    }
 
     private Personaje personaje;
 
@@ -343,7 +352,7 @@ public class Cliente extends User{
         FL.inicializarNombre(licantropo);
         terminal.preguntarNombreHabilidad();
         FL.inicializarNombreHabilidad(don);
-        FL.inicializarRabia(licantropo);
+        licantropo.setRabia(0);
         do {
             terminal.preguntarRabiaHabilidad();
             rightValue = FL.inicializarRabiaHabilidad(don);
@@ -446,48 +455,104 @@ public class Cliente extends User{
         return licantropo;
     }
 
-    public void eliminarPersonaje() {
+    public void eliminarPersonaje(Cliente cliente) {
         Terminal terminal = new Terminal();
-        terminal.WIP();
-    }
-
-    public void seleccionarEquipo() {
-        Terminal terminal = new Terminal();
-        terminal.WIP();
-    }
-
-    public void desafiar(ArrayList<Cliente> listaClientes, Cliente cliente, Sistema sistema) {
-        Terminal terminal = new Terminal();
-        terminal.bienvenidaDesafio();
-        int contrincante = -1;
-        int oro = -1;
-        if (listaClientes.size() == 1){         //Habría que indicar tambien que tienen que tener un personaje creado de alguna manera
-            terminal.noHayContrincantes();
-        } else{
-            terminal.mostrarPosiblesContrincantes(listaClientes);
-            do {
-                terminal.numValido();
-                contrincante = askNum();
-            } while(contrincante < 0 || contrincante > listaClientes.size() + 1);
-            terminal.preguntarCantidadApostar();
-            do {
-                terminal.numValido();
-                oro = askNum();
-            } while(oro <= 0 && oro > cliente.getPersonaje().getOro());
-            cliente.getPersonaje().setOro(cliente.getPersonaje().getOro() - oro);
-            sistema.avisarAdmin(cliente, contrincante, oro, listaClientes);
-            terminal.desafioCreado();
+        terminal.confirmarDeletePersonaje();
+        Scanner sc = new Scanner(System.in);
+        boolean delete = sc.nextInt() == 1;
+        if (delete){
+            cliente.setPersonaje(null);
+            terminal.personajeEliminado();
         }
     }
 
-    public int askNum() {
-        Scanner sc = new Scanner(System.in);
-        return sc.nextInt();
+    public void seleccionarEquipo(Cliente cliente) {
+
+        boolean rightValue;
+        boolean[] rightWeapon;
+        boolean[] aux1 = new boolean[]{true, true};
+        boolean[] aux2 = new boolean[]{true, false};
+
+        ArrayList<Arma> armasActivas = new ArrayList<>();
+        Terminal terminal = new Terminal();
+        do {
+            terminal.mostrarArmas(cliente.getPersonaje().getArmas());
+            rightWeapon = addArmaActiva(cliente.getPersonaje().getArmas(), armasActivas);
+        } while (!Arrays.equals(rightWeapon, aux1) && !Arrays.equals(rightWeapon, aux2));
+        if (Arrays.equals(rightWeapon, aux1)) {
+            do {
+                terminal.otroArma(cliente.getPersonaje().getArmas());
+                rightValue = addArmaActiva2(cliente.getPersonaje().getArmas(), armasActivas);
+            } while (!rightValue);
+        }
+        cliente.getPersonaje().setArmasActivas(armasActivas);
+        do {
+            terminal.mostrarArmaduras(cliente.getPersonaje().getArmaduras());
+            rightValue = addArmaduraActiva(cliente.getPersonaje(), cliente.getPersonaje().getArmaduras());
+        } while (!rightValue);
+        terminal.finishEquipar();
     }
 
-    public void eliminarCuenta() {
+    public void desafiar(ArrayList<Cliente> listaClientes, Cliente cliente, Sistema sistema) {
+        Desafio desafio = new Desafio();
+        desafio.crearDesafio(listaClientes, cliente, sistema);
+    }
+
+    public void eliminarCuenta(Cliente cliente, Sistema sistema) {
         Terminal terminal = new Terminal();
-        terminal.WIP();
+        Scanner sc = new Scanner(System.in);
+        terminal.confirmarDelete();
+        boolean delete = sc.nextInt() == 1;
+        if (delete){
+            //leer fichero de clientes
+            ArrayList<Cliente> listaClientes = new ArrayList<>();
+            listaClientes.add(cliente);
+            for (int i = 0; i <= listaClientes.size(); i++){
+                if (listaClientes.get(i).getRegistro().equals(cliente.getRegistro())) {
+                    listaClientes.remove(i);
+                }
+            }
+            //sobreescribir fichero
+            terminal.cerrarSesion();
+            sistema.selector();
+        }
+    }
+
+    private boolean[] addArmaActiva(ArrayList<Arma> armas, ArrayList<Arma> armasActivas) {
+        Scanner sc = new Scanner(System.in);
+        int opcion = sc.nextInt();
+        if ((opcion < 1) || (opcion > armas.size() + 1)) {
+            return new boolean[]{false, false};
+        }
+        armasActivas.add(armas.get(opcion - 1));
+        return new boolean[]{true, armas.get(opcion - 1).isSingleHand()};
+    }
+
+    private boolean addArmaActiva2(ArrayList<Arma> armas, ArrayList<Arma> armasActivas) {
+        Scanner sc = new Scanner(System.in);
+        int opcion = sc.nextInt();
+        if ((opcion < 0) || (opcion > armas.size() + 1)) {
+            return false;
+        }
+        if (opcion == 0) {
+            return true;
+        }
+        if (!armas.get(opcion + 1).getNombre().equals(armasActivas.get(0).getNombre()) && armas.get(opcion + 1).isSingleHand()) {
+            armasActivas.add(armas.get(opcion - 1));
+            return true;
+        }
+        return false;
+    }
+
+    private boolean addArmaduraActiva(Personaje personaje, ArrayList<Armadura> armaduras) {
+        Scanner sc = new Scanner(System.in);
+        int opcion = sc.nextInt();
+        if ((opcion < 1) || (opcion > armaduras.size() + 1)) {
+            return false;
+        }
+        Armadura armadura = armaduras.get(opcion - 1);
+        personaje.setArmaduraActiva(armadura);
+        return true;
     }
 
     public String generarNumerRegistro() {

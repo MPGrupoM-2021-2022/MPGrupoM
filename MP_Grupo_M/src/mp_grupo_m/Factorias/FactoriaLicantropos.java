@@ -13,10 +13,6 @@ public class FactoriaLicantropos {
         licantropo.setNombre(nombre);
     }
 
-    public void inicializarRabia(Licantropo licantropo){
-        licantropo.setRabia(0);
-    }
-
     public void inicializarNombreHabilidad(Don don) {
         Scanner sc = new Scanner(System.in);
         String nombre = sc.nextLine();
