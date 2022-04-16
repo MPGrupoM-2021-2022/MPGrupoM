@@ -18,7 +18,6 @@ public class User {
     Terminal terminal = new Terminal();
 
     public void selector() {
-
         Scanner sc = new Scanner(System.in);
         int opcion = sc.nextInt();
         switch (opcion) {

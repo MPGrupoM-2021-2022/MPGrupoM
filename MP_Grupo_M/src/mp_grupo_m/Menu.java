@@ -1,6 +1,8 @@
 package mp_grupo_m;
 
 import mp_grupo_m.Entidades.Cliente;
+
+import mp_grupo_m.Entidades.Operador;
 import mp_grupo_m.Entidades.Personaje;
 
 import java.util.ArrayList;
@@ -75,6 +77,11 @@ public class Menu {
                 break;
         }
         cliente.setPersonaje(personaje);
+    }
+
+    public void selectorOperador(Operador operador, Sistema sistema) {
+        Terminal terminal = new Terminal();
+        terminal.WIP();
     }
 
     private void consultarCombates() {

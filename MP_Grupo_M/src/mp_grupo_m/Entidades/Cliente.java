@@ -24,6 +24,16 @@ public class Cliente extends User{
         this.personaje = personaje;
     }
 
+    private Personaje personaje;
+
+    public Personaje getPersonaje() {
+        return personaje;
+    }
+
+    public void setPersonaje(Personaje personaje) {
+        this.personaje = personaje;
+    }
+
     public String getRegistro() {
         return registro;
     }
@@ -543,5 +553,39 @@ public class Cliente extends User{
         Armadura armadura = armaduras.get(opcion - 1);
         personaje.setArmaduraActiva(armadura);
         return true;
+    }
+
+    public String generarNumerRegistro() {
+        boolean valido = false;
+        Cliente cliente = new Cliente();
+        ArrayList<Cliente> lista = new ArrayList<>();
+        lista.add(cliente);
+        String strBuilder = null;
+        //crear del fichero lista de clientes para coger sus registros y comparar
+        while(!valido) {
+            strBuilder = String.valueOf(getLetra()) +
+                    getNumber() +
+                    getNumber() +
+                    getLetra() +
+                    getLetra();
+            for (Cliente value : lista) {
+                if (!(value.getRegistro().equals(strBuilder))) {
+                    valido = true;
+                } else {
+                    strBuilder = null;
+                }
+            }
+        }
+        return strBuilder;
+    }
+
+    public char getLetra() {
+        char paramChar = (char) (Math.random() * 26 + 'a');
+        return paramChar;
+    }
+
+    public char getNumber() {
+        int N = (int) (Math.random() * 10 + '0');
+        return (char) N;
     }
 }

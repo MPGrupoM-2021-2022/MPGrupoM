@@ -24,7 +24,8 @@ public class Terminal {
 
     public void mostrarInicio() {
         System.out.println("1. REGISTRARSE");
-        System.out.println("2. INICIAR SESION");
+        System.out.println("2. INICIAR SESION CLIENTE");
+        System.out.println("3. INICIAR SESION ADMIN");
     }
 
     public void error() {
@@ -210,9 +211,10 @@ public class Terminal {
     public void menuRegistroUsuario() {
         System.out.println("REGISTRO DE USUARIO NUEVO: ");
         System.out.println("****************");
-        System.out.println("¿Desea registrar un usuario nuevo? ");
-        System.out.println("1. SÍ ");
-        System.out.println("2. NO ");
+        System.out.println("¿Cómo se quiere registrar? ");
+        System.out.println("1. Cliente ");
+        System.out.println("2. Operador ");
+        System.out.println("3. Salir");
     }
 
     public void bienvenidaDesafio() {
@@ -245,6 +247,27 @@ public class Terminal {
         System.out.println("Volviendo al menu...");
     }
 
+    public void preguntarNombreUser() {
+        System.out.println("Introduce tu nombre y apellidos");
+    }
+
+    public void preguntarNick() {
+        System.out.println("Introduce tu nick de usuario");
+    }
+
+    public void preguntarPassword() {
+        System.out.println("Introduce la password de tu cuenta");
+    }
+    public void errorPassword() {
+        System.out.println("Password incorrecta, pruebe de nuevo");
+    }
+
+    public void confirmarPassword() {
+        System.out.println("Confirme la password introducida");
+    }
+    public void nickExistente() {
+        System.out.println("El nick introducido ya existe");
+      
     public void confirmarDelete() {
         System.out.println("Seguro que desea eliminar la cuenta?");
         System.out.println("1. SI");
