@@ -2,7 +2,9 @@ package mp_grupo_m;
 
 import mp_grupo_m.Entidades.Arma;
 import mp_grupo_m.Entidades.Armadura;
+import mp_grupo_m.Entidades.Cliente;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Terminal {
@@ -22,7 +24,8 @@ public class Terminal {
 
     public void mostrarInicio() {
         System.out.println("1. REGISTRARSE");
-        System.out.println("2. INICIAR SESION");
+        System.out.println("2. INICIAR SESION CLIENTE");
+        System.out.println("3. INICIAR SESION ADMIN");
     }
 
     public void error() {
@@ -203,5 +206,64 @@ public class Terminal {
 
     public void preguntarRabiaHabilidad() {
         System.out.println("Introduce el valor minimo para activar la rabia:");
+    }
+
+    public void menuRegistroUsuario() {
+        System.out.println("REGISTRO DE USUARIO NUEVO: ");
+        System.out.println("****************");
+        System.out.println("¿Cómo se quiere registrar? ");
+        System.out.println("1. Cliente ");
+        System.out.println("2. Operador ");
+        System.out.println("3. Salir");
+    }
+
+    public void bienvenidaDesafio() {
+        System.out.println("Bienvenido al menu de desafios, elija a su contrincante:");
+    }
+
+    public void noHayContrincantes() {
+        System.out.println("No hay contincantes disponibles, volviendo al menu...");
+    }
+
+    public void mostrarPosiblesContrincantes(ArrayList<Cliente> listaClientes) {
+        System.out.println("0: Cancelar");
+        for (int i = 0; i <= listaClientes.size(); i++){
+            System.out.println((i+1) + ": " + listaClientes.get(i).getNick());
+        }
+    }
+
+    public void numValido() {
+        System.out.println("Escoge un numero valido");
+    }
+
+    public void preguntarCantidadApostar() {
+        System.out.println("Introduce la cantidad de oro que quieres apostar:");
+    }
+
+    public void desafioCreado() {
+        System.out.println("Desafio creado y pendiente de validacion por parte de un admin...");
+        System.out.println("Volviendo al menu...");
+    }
+
+    public void preguntarNombreUser() {
+        System.out.println("Introduce tu nombre y apellidos");
+    }
+
+    public void preguntarNick() {
+        System.out.println("Introduce tu nick de usuario");
+    }
+
+    public void preguntarPassword() {
+        System.out.println("Introduce la password de tu cuenta");
+    }
+    public void errorPassword() {
+        System.out.println("Password incorrecta, pruebe de nuevo");
+    }
+
+    public void confirmarPassword() {
+        System.out.println("Confirme la password introducida");
+    }
+    public void nickExistente() {
+        System.out.println("El nick introducido ya existe");
     }
 }
