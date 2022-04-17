@@ -55,6 +55,7 @@ public class Sistema {
                 cliente.setRegistro("REGISTRO_SERGIO");
                 personaje.setNombre("Nombre Personaje");
                 ficheroUsuario.registroUsuario(cliente, personaje);
+                ficheroUsuario.lecturaFichero();
                 // ficheroUsuario.registroPersonaje(cliente, personaje);
                 //mensaje de USUARIO NUEVO REGISTRADO
                 //terminal.usuarioRegistrado();

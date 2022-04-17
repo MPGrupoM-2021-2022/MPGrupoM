@@ -6,7 +6,10 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import static javax.management.Query.lt;
 import mp_grupo_m.Entidades.Cliente;
 import mp_grupo_m.Entidades.Personaje;
 
@@ -53,7 +56,6 @@ public class RegistroFichero {
 //            }
 //        }
 //    }
-
 //        try {
 //            do {
 //                File file = new File("src/mp_grupo_m/Ficheros/registroUsuario.txt");
@@ -124,30 +126,38 @@ public class RegistroFichero {
             FileWriter fw = new FileWriter(file.getAbsoluteFile(), true); //opción append habilitada!
             BufferedWriter bw = new BufferedWriter(fw);
 
-            bw.write("***** USUARIO "+ cliente.getNumeroUsuario() +" *****");
+            bw.write("***** USUARIO *****");
             bw.newLine();
 
             bw.write("NOMBRE: " + cliente.getNombre());
             bw.newLine();
-            
             bw.write("NICK: " + cliente.getNick());
             bw.newLine();
-            
             bw.write("PASSWORD: " + cliente.getPassword());
             bw.newLine();
-            
-            bw.write("REGISTRO: " + cliente.getRegistro());
-            bw.newLine();
-            
-            bw.write("NOMBRE PERSONAJE: " + personaje.getNombre());
+            bw.write("FIN USUARIO");
             bw.newLine();
 
+//            bw.write("NOMBRE: ");
+//            bw.newLine();
+//            bw.write(cliente.getNombre());
+//            bw.newLine();
+//            bw.write("NICK: ");
+//            bw.newLine();
+//            bw.write(cliente.getNick());
+//            bw.newLine();
+//            bw.write("PASSWORD: ");
+//            bw.newLine();
+//            bw.write(cliente.getPassword());
+//            bw.newLine();
+//            bw.write("REGISTRO: ");
+//            bw.newLine();
+//            bw.write(cliente.getRegistro());
+//            bw.newLine();
             bw.newLine();
             bw.close();
 
         } catch (Exception e) {
-            Terminal terminal = new Terminal();
-            terminal.exceptionTerminal();
             Sistema sistema = new Sistema();
             sistema.selector();
             e.printStackTrace();
@@ -270,8 +280,6 @@ public class RegistroFichero {
             bw.close();
 
         } catch (Exception e) {
-            Terminal terminal = new Terminal();
-            terminal.exceptionTerminal();
             Sistema sistema = new Sistema();
             sistema.selector();
             e.printStackTrace();
@@ -284,6 +292,61 @@ public class RegistroFichero {
     }
 
     public void personajeLicantropo(Cliente cliente) {
+
+    }
+
+    public ArrayList<Cliente> lecturaFichero() {
+        Cliente cliente = new Cliente();
+        File archivo = null;
+        FileReader fr = null;
+        BufferedReader br = null;
+        System.out.println("ppepee");
+
+        try {
+            archivo = new File("src/mp_grupo_m/Ficheros/registroUsuario.txt");
+            fr = new FileReader(archivo);
+            br = new BufferedReader(fr);
+
+            // Lectura del fichero
+            String linea;
+            String alineados;
+            String nombreUsuario;
+
+            
+            while ((linea = br.readLine()) != "FIN USUARIO") {
+                linea = br.readLine();
+                System.out.println(linea);
+                String[] textoSeparado = linea.split(": ");
+                
+               if (textoSeparado[0].equals("NOMBRE")){
+                   cliente.setNombre(textoSeparado[1]);
+                   System.out.println("HEMOS NOMBRE");
+               } else if (textoSeparado[0].equals("NICK")){
+                   cliente.setNick(textoSeparado[1]);
+                   System.out.println("HEMOS NICK");
+               }else if (textoSeparado[0].equals("PASSWORD")){
+                   cliente.setPassword(textoSeparado[1]);
+                   System.out.println("HEMOS PASSWORD");
+               }
+
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // En el finally cerramos el fichero, para asegurarnos
+            // que se cierra tanto si todo va bien como si salta 
+            // una excepcion.
+            try {
+                if (null != fr) {
+                    fr.close();
+                }
+            } catch (Exception e2) {
+                e2.printStackTrace();
+            }
+        }
+        return null; //devolver la lista de cliente
 
     }
 
