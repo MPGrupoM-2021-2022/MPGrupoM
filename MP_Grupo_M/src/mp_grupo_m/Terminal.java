@@ -2,7 +2,9 @@ package mp_grupo_m;
 
 import mp_grupo_m.Entidades.Arma;
 import mp_grupo_m.Entidades.Armadura;
+import mp_grupo_m.Entidades.Cliente;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Terminal {
@@ -212,13 +214,62 @@ public class Terminal {
         System.out.println("1. SÍ ");
         System.out.println("2. NO ");
     }
-    public void exceptionTerminal(){
-        System.out.println("No se ha podido generar el fichero en el sistema."
-                + "pruebe mas tarde."
-                + "El error producido ha sido 'printStackTrace'");
-        
+
+    public void bienvenidaDesafio() {
+        System.out.println("Bienvenido al menu de desafios, elija a su contrincante:");
     }
 
-    void usuarioRegistrado() {
-        System.out.println("USUARIO REGISTRADO!!!");}
+    public void noHayContrincantes() {
+        System.out.println("No hay contincantes disponibles, volviendo al menu...");
+    }
+
+    public void mostrarPosiblesContrincantes(ArrayList<Cliente> listaClientes) {
+        System.out.println("0: Cancelar");
+        for (int i = 0; i <= listaClientes.size(); i++){
+            if (listaClientes.get(i).getPersonaje() != null) {
+                System.out.println((i + 1) + ": " + listaClientes.get(i).getNick());
+            }
+        }
+    }
+
+    public void numValido() {
+        System.out.println("Escoge un numero valido");
+    }
+
+    public void preguntarCantidadApostar() {
+        System.out.println("Introduce la cantidad de oro que quieres apostar:");
+    }
+
+    public void desafioCreado() {
+        System.out.println("Desafio creado y pendiente de validacion por parte de un admin...");
+        System.out.println("Volviendo al menu...");
+    }
+
+    public void confirmarDelete() {
+        System.out.println("Seguro que desea eliminar la cuenta?");
+        System.out.println("1. SI");
+        System.out.println("2. NO");
+    }
+
+    public void eliminarPersonaje() {
+        System.out.println("Para crear un personaje nuevo antes tienes que eliminar el existente");
+    }
+
+    public void cerrarSesion() {
+        System.out.println("Cerrando sesion...");
+    }
+
+    public void confirmarDeletePersonaje() {
+        System.out.println("Seguro que desea eliminar el personaje?");
+        System.out.println("1. SI");
+        System.out.println("2. NO");
+    }
+
+    public void personajeEliminado() {
+        System.out.println("Personaje eliminado correctamente...");
+    }
+
+    public void finishEquipar() {
+        System.out.println("Arma(s) y armadura equipadas correctamente...");
+    }
 }

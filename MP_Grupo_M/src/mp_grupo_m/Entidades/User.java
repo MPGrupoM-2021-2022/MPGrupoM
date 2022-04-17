@@ -5,6 +5,7 @@ public class User {
     private String nombre;
     private String nick;
     private String password;
+    private Integer numeroUsuario;
 
     public String getNombre() {
         return nombre;
@@ -29,4 +30,15 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+    
+    
+    public Integer getNumeroUsuario() {
+        return numeroUsuario;
+    }
+
+    public void setNumeroUsuario(Integer numeroUsuario) {
+        this.numeroUsuario = numeroUsuario;
+    }
+
+   
 }

@@ -1,13 +1,17 @@
 package mp_grupo_m;
 
+import java.io.IOException;
 import mp_grupo_m.Entidades.Cliente;
+import mp_grupo_m.Entidades.Personaje;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Menu {
-
-    public void selector(Cliente cliente) {
+    
+    public void selector(Cliente cliente, Sistema sistema) throws IOException {
         Terminal terminal = new Terminal();
+        
         Scanner sc = new Scanner(System.in);
         int opcion;
         do {
@@ -15,18 +19,23 @@ public class Menu {
             opcion = sc.nextInt();
             switch (opcion) {
                 case 1:
-                    //comprobar que el usuario no tiene un personaje ya creado, mandar un mensaje en dicho caso
-                    terminal.mostrarFactorias();
-                    selectorFactoria(cliente);
+                    if (cliente.getPersonaje() == null) {
+                        terminal.mostrarFactorias();
+                        selectorFactoria(cliente);
+                    } else {
+                        terminal.eliminarPersonaje();
+                    }
                     break;
                 case 2:
-                    cliente.eliminarPersonaje();
+                    cliente.eliminarPersonaje(cliente);
                     break;
                 case 3:
-                    cliente.seleccionarEquipo();
+                    cliente.seleccionarEquipo(cliente);
                     break;
                 case 4:
-                    cliente.desafiar();
+                    //Llamada a lectura del fichero de todos los clientes
+                    ArrayList<Cliente> listaClientes = new ArrayList<>();
+                    cliente.desafiar(listaClientes, cliente, sistema);
                     break;
                 case 5:
                     consultarCombates();
@@ -35,9 +44,11 @@ public class Menu {
                     consultarRanking();
                     break;
                 case 7:
+                    terminal.cerrarSesion();
+                    sistema.selector();
                     break;
                 case 8:
-                    cliente.eliminarCuenta();
+                    cliente.eliminarCuenta(cliente, sistema);
                     break;
                 default:
                     terminal.WIP();
@@ -49,21 +60,23 @@ public class Menu {
     private void selectorFactoria(Cliente cliente) {
         Terminal terminal = new Terminal();
         Scanner sc = new Scanner(System.in);
+        Personaje personaje = null;
         int opcion = sc.nextInt();
         switch (opcion) {
             case 1:
-                cliente.crearVampiro();
+                personaje = cliente.crearVampiro();
                 break;
             case 2:
-                cliente.crearLicantropo();
+                personaje = cliente.crearLicantropo();
                 break;
             case 3:
-                terminal.WIP();
+                personaje = cliente.crearCazador();
                 break;
             default:
                 terminal.error();
                 break;
         }
+        cliente.setPersonaje(personaje);
     }
 
     private void consultarCombates() {
@@ -75,6 +88,4 @@ public class Menu {
         Terminal terminal = new Terminal();
         terminal.WIP();
     }
-
-
 }
