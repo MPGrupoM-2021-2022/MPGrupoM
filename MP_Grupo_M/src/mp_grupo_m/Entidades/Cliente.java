@@ -11,19 +11,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class Cliente extends User{
+public class Cliente extends User {
 
     private String registro;
-    private Personaje personaje;
-
-    public Personaje getPersonaje() {
-        return personaje;
-    }
-
-    public void setPersonaje(Personaje personaje) {
-        this.personaje = personaje;
-    }
-
     private Personaje personaje;
 
     public Personaje getPersonaje() {
@@ -177,7 +167,7 @@ public class Cliente extends User{
         vampiro.setSangre(0);
         terminal.preguntarNumEsbirros();
         int numEsbirros = factoriaVampiros.askNum();
-        for (int iterator = 1; iterator <= numEsbirros; iterator++){
+        for (int iterator = 1; iterator <= numEsbirros; iterator++) {
             EsbirrosComposite esbirro = new EsbirrosComposite();
             esbirro = esbirro.crearEsbirro(true);
             esbirros.add(esbirro);
@@ -316,7 +306,7 @@ public class Cliente extends User{
         factoriaCazadores.setFortalezas(cazador, fortalezas);
         terminal.preguntarNumEsbirros();
         int numEsbirros = factoriaCazadores.askNum();
-        for (int iterator = 1; iterator <= numEsbirros; iterator++){
+        for (int iterator = 1; iterator <= numEsbirros; iterator++) {
             EsbirrosComposite esbirro = new EsbirrosComposite();
             esbirro = esbirro.crearEsbirro(false);
             esbirros.add(esbirro);
@@ -446,7 +436,7 @@ public class Cliente extends User{
         FL.setFortalezas(licantropo, fortalezas);
         terminal.preguntarNumEsbirros();
         int numEsbirros = FL.askNum();
-        for (int iterator = 1; iterator <= numEsbirros; iterator++){
+        for (int iterator = 1; iterator <= numEsbirros; iterator++) {
             EsbirrosComposite esbirro = new EsbirrosComposite();
             esbirro = esbirro.crearEsbirro(true);
             esbirros.add(esbirro);
@@ -460,7 +450,7 @@ public class Cliente extends User{
         terminal.confirmarDeletePersonaje();
         Scanner sc = new Scanner(System.in);
         boolean delete = sc.nextInt() == 1;
-        if (delete){
+        if (delete) {
             cliente.setPersonaje(null);
             terminal.personajeEliminado();
         }
@@ -503,11 +493,11 @@ public class Cliente extends User{
         Scanner sc = new Scanner(System.in);
         terminal.confirmarDelete();
         boolean delete = sc.nextInt() == 1;
-        if (delete){
+        if (delete) {
             //leer fichero de clientes
             ArrayList<Cliente> listaClientes = new ArrayList<>();
             listaClientes.add(cliente);
-            for (int i = 0; i <= listaClientes.size(); i++){
+            for (int i = 0; i <= listaClientes.size(); i++) {
                 if (listaClientes.get(i).getRegistro().equals(cliente.getRegistro())) {
                     listaClientes.remove(i);
                 }
@@ -562,7 +552,7 @@ public class Cliente extends User{
         lista.add(cliente);
         String strBuilder = null;
         //crear del fichero lista de clientes para coger sus registros y comparar
-        while(!valido) {
+        while (!valido) {
             strBuilder = String.valueOf(getLetra()) +
                     getNumber() +
                     getNumber() +
@@ -588,4 +578,29 @@ public class Cliente extends User{
         int N = (int) (Math.random() * 10 + '0');
         return (char) N;
     }
+
+    public void consultarRanking() {
+        Terminal terminal = new Terminal();
+        terminal.ranking();
+        Cliente cliente = new Cliente();
+        ArrayList<Cliente> lista = new ArrayList<>();
+        //coger lista clientes de ficheros y guardarlos en lista
+        ArrayList<Cliente> listaAux = new ArrayList<>();
+
+        for (int i = 0; i < lista.size(); i++) {
+            boolean encontrado = false;
+            for (int j = 0; j < listaAux.size(); j++) {
+                if (lista.get(i).getPersonaje() != null && lista.get(i).getPersonaje().getOro() > listaAux.get(j).getPersonaje().getOro()) {
+                    encontrado = true;
+                    listaAux.add(j, lista.get(i));
+                    break;
+                }
+            }
+            if (!encontrado) {
+                listaAux.add(lista.get(i));
+            }
+        }
+        terminal.mostrarRanking(listaAux);
+    }
 }
+
