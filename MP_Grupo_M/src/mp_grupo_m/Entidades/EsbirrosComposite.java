@@ -54,11 +54,8 @@ public class EsbirrosComposite {
             }
             case 3: {
                 ArrayList<EsbirrosComposite> esbirros = new ArrayList<>();
-                Demonio demonio = crearDemonio(esbirros);
+                Demonio demonio = crearDemonio(esbirros, isVampiro);
                 return demonio;
-            }
-            case 4: {
-                return null;
             }
             default: {
                 terminal.error();
@@ -124,12 +121,11 @@ public class EsbirrosComposite {
         return  ghoul;
     }
 
-    private Demonio crearDemonio(ArrayList<EsbirrosComposite> esbirros) {
+    private Demonio crearDemonio(ArrayList<EsbirrosComposite> esbirros, boolean isVampiro) {
         Terminal terminal = new Terminal();
         Demonio demonio = new Demonio();
         Scanner sc = new Scanner(System.in);
         int hp;
-        int opcionEsbirro;
 
         terminal.preguntarNombreEsbirro();
         String nombre = sc.nextLine();
@@ -143,23 +139,19 @@ public class EsbirrosComposite {
         Scanner sc2 = new Scanner(System.in);
         String pacto = sc2.nextLine();
         demonio.setDescripcion(pacto);
-        do{
-            terminal.preguntarTipoEsbirro();
-            opcionEsbirro = sc.nextInt();
-        } while(opcionEsbirro < 1 || opcionEsbirro > 4);
-        if (opcionEsbirro == 1){
-            Humano humano = crearHumano();
-            esbirros.add(humano);
-        }
-        else if (opcionEsbirro == 2){
-            Ghoul ghoul = crearGhoul();
-            esbirros.add(ghoul);
-        }
-        else if (opcionEsbirro == 3){
-            Demonio auxDemonio = crearDemonio(esbirros);
-            esbirros.add(auxDemonio);
+        terminal.preguntarNumEsbirros();
+        int numEsbirros = askNum();
+        for (int iterator = 1; iterator <= numEsbirros; iterator++) {
+            EsbirrosComposite esbirro = new EsbirrosComposite();
+            esbirro = esbirro.crearEsbirro(isVampiro);
+            esbirros.add(esbirro);
         }
         demonio.setEsbirrosComposites(esbirros);
         return demonio;
+    }
+
+    public int askNum() {
+        Scanner sc = new Scanner(System.in);
+        return sc.nextInt();
     }
 }

@@ -60,7 +60,7 @@ public class Terminal {
     }
 
     public void preguntarCosteHabilidad() {
-        System.out.println("Introduce el coste de la habilidad:");
+        System.out.println("Introduce el coste de la habilidad (entre 1 y 3):");
     }
 
     public void preguntarNumArmas() {
@@ -72,11 +72,11 @@ public class Terminal {
     }
 
     public void preguntarAtaqueArma() {
-        System.out.println("Introduce el ataque de tu arma:");
+        System.out.println("Introduce el ataque de tu arma (entre 1 y 3):");
     }
 
     public void preguntarDefensaArma() {
-        System.out.println("Introduce la defensa de tu arma (escribe 0 si no tiene):");
+        System.out.println("Introduce la defensa de tu arma (escribe 0 si no tiene, max 3):");
     }
 
     public void peguntarSingleHandArma() {
@@ -111,11 +111,11 @@ public class Terminal {
     }
 
     public void preguntarDefensaArmadura() {
-        System.out.println("Introduce la defensa de tu armadura:");
+        System.out.println("Introduce la defensa de tu armadura (entre 1 y 3):");
     }
 
     public void preguntarAtaqueArmadura() {
-        System.out.println("Introduce el ataque de tu armadura (escribe 0 si no tiene):");
+        System.out.println("Introduce el ataque de tu armadura (escribe 0 si no tiene, max 3):");
     }
 
     public void mostrarArmaduras(List<Armadura> armaduras) {
@@ -126,7 +126,7 @@ public class Terminal {
     }
 
     public void preguntarOro() {
-        System.out.println("Introduce su cantidad de oro  (>0):");
+        System.out.println("Introduce su cantidad de oro  (>= 0):");
     }
 
     public void preguntarHP() {
@@ -170,7 +170,6 @@ public class Terminal {
         System.out.println("1. Humano");
         System.out.println("2. Ghoul");
         System.out.println("3. Demonio");
-        System.out.println("4. Ninguno");
     }
 
     public void errorHumano() {

@@ -27,7 +27,10 @@ public class Menu {
                     }
                     break;
                 case 2:
-                    cliente.eliminarPersonaje(cliente);
+                    if (cliente.getPersonaje() != null) {
+                        cliente.eliminarPersonaje(cliente);
+                    } else
+                        terminal.error();
                     break;
                 case 3:
                     cliente.seleccionarEquipo(cliente);

@@ -242,12 +242,15 @@ public class Cliente extends User {
         factoriaCazadores.setArmas(cazador, armas);
         do {
             terminal.mostrarArmas(armas);
-            rightWeapon = factoriaCazadores.addArmaActiva(arma, armas, armasActivas);
+            rightWeapon = factoriaCazadores.addArmaActiva(armas, armasActivas);
         } while (!Arrays.equals(rightWeapon, aux1) && !Arrays.equals(rightWeapon, aux2));
         if (Arrays.equals(rightWeapon, aux1)) {
             do {
                 terminal.otroArma(armas, armasActivas.get(0));
-                rightValue = factoriaCazadores.addArmaActiva2(arma, armas, armasActivas);
+                rightValue = factoriaCazadores.addArmaActiva2(armas, armasActivas);
+                if (!rightValue){
+                    terminal.ErrNumSelec();
+                }
             } while (!rightValue);
         }
         factoriaCazadores.setArmasActivas(cazador, armasActivas);
@@ -374,15 +377,17 @@ public class Cliente extends User {
         FL.setArmas(licantropo, armas);
         do {
             terminal.mostrarArmas(armas);
-            rightWeapon = FL.addArmaActiva(arma, armas, armasActivas);
+            rightWeapon = FL.addArmaActiva(armas, armasActivas);
         } while (!Arrays.equals(rightWeapon, aux1) && !Arrays.equals(rightWeapon, aux2));
         if (Arrays.equals(rightWeapon, aux1)) {
             do {
                 terminal.otroArma(armas, armasActivas.get(0));
-                rightValue = FL.addArmaActiva2(arma, armas, armasActivas);
+                rightValue = FL.addArmaActiva2(armas, armasActivas);
+                if (!rightValue){
+                    terminal.ErrNumSelec();
+                }
             } while (!rightValue);
         }
-        FL.setArmasActivas(licantropo, armasActivas);
 
         terminal.preguntarNumArmaduras();
         int numArmaduras = FL.askNum();
@@ -441,7 +446,7 @@ public class Cliente extends User {
         int numEsbirros = FL.askNum();
         for (int iterator = 1; iterator <= numEsbirros; iterator++) {
             EsbirrosComposite esbirro = new EsbirrosComposite();
-            esbirro = esbirro.crearEsbirro(true);
+            esbirro = esbirro.crearEsbirro(false);
             esbirros.add(esbirro);
         }
         licantropo.setEsbirros(esbirros);

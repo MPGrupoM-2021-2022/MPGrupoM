@@ -1,7 +1,6 @@
 package mp_grupo_m.Entidades;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Personaje {
     private String nombre;
@@ -16,7 +15,7 @@ public class Personaje {
     private int poder;
     private ArrayList<Debilidad> debilidades;
     private ArrayList<Fortaleza> fortalezas;
-    private String userNick;
+    private String tipo;
 
     public String getNombre() {
         return nombre;
@@ -114,11 +113,11 @@ public class Personaje {
         this.fortalezas = fortalezas;
     }
 
-    public String getUserNick() {
-        return userNick;
+    public String getTipo() {
+        return tipo;
     }
 
-    public void setUserNick(String userNick) {
-        this.userNick = userNick;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 }
