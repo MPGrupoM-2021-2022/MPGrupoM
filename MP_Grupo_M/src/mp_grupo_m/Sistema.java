@@ -139,6 +139,8 @@ public class Sistema{
         Cliente cliente = new Cliente();
         int aux = -1;
         ArrayList<Cliente> lista = new ArrayList<>();
+        cliente.setNick("pepe");
+        cliente.setPassword("123");
         lista.add(cliente);
         //coger lista clientes ficheros
         terminal.preguntarNick();
@@ -162,7 +164,9 @@ public class Sistema{
             String password = sc.nextLine();
             //comparar password asociada al nick
             passCorrect = lista.get(aux).getPassword().equals(password);
-            terminal.errorPassword();
+            if(!passCorrect) {
+                terminal.errorPassword();
+            }
         } while (!passCorrect);
         return passCorrect;
         //devolver el valor de la password (se que hay intentos infinitos pero por si se quitan y se limitan los intentos)
@@ -178,22 +182,23 @@ public class Sistema{
         Terminal terminal = new Terminal();
         Operador operador = new Operador();
         ArrayList<Operador> lista = new ArrayList<>();
+        operador.setNick("pepe");
+        operador.setPassword("123");
         lista.add(operador);
         //coger lista operadores ficheros
         terminal.preguntarNick();
         String nick = sc.nextLine();
         boolean encontrado = false;
-        int aux  = -1;
+        int aux = -1;
         //comparar nick con lista operadores ficheros
-        for(int i = 0; i< lista.size(); i++)
-        {
-            if (lista.get(i).getNick().equals(nick)){
+        for (int i = 0; i < lista.size(); i++) {
+            if (lista.get(i).getNick().equals(nick)) {
                 encontrado = true;
                 aux = i;
                 i = lista.size();
             }
         }
-        if (!encontrado){
+        if (!encontrado) {
             return false;
         }
         boolean passCorrect = false;
@@ -205,13 +210,14 @@ public class Sistema{
             terminal.errorPassword();
         } while (!passCorrect);
         return passCorrect;
+    }
         //devolver el valor de la password (se que hay intentos infinitos pero por si se quitan y se limitan los intentos)
 //        if(passCorrect){
 //            return true;
 //        }else{
 //            return false;
 //        }
-    public void avisarAdmin(Desafio desafio) {
+    public void avisarAdmin (Desafio desafio) {
         Terminal terminal = new Terminal();
         terminal.WIP();
     }

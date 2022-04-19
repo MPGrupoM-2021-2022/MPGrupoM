@@ -41,7 +41,7 @@ public class Menu {
                     consultarCombates();
                     break;
                 case 6:
-                    consultarRanking();
+                    consultarRanking(cliente);
                     break;
                 case 7:
                     terminal.cerrarSesion();
@@ -89,8 +89,7 @@ public class Menu {
         terminal.WIP();
     }
 
-    private void consultarRanking() {
-        Terminal terminal = new Terminal();
-        terminal.WIP();
+    private void consultarRanking(Cliente cliente) {
+        cliente.consultarRanking();
     }
 }

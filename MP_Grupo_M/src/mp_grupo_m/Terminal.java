@@ -92,11 +92,11 @@ public class Terminal {
         }
     }
 
-    public void otroArma(List<Arma> armas) {
+    public void otroArma(List<Arma> armas, Arma arma) {
         System.out.println("Quiere equipar otro arma de una sola mano?");
         System.out.println("0: NO");
         for (int iterator = 0; iterator < armas.size(); iterator++) {
-            if (armas.get(iterator).isSingleHand()) {
+            if (armas.get(iterator).isSingleHand() && armas.get(iterator) != arma) {
                 System.out.println(iterator + 1 + ": " + armas.get(iterator).getNombre());
             }
         }
@@ -307,6 +307,10 @@ public class Terminal {
         for (int i = 0; i < lista.size(); i++) {
             System.out.println(i + 1 + ": " + lista.get(i).getNick() + "\t\t" + lista.get(i).getPersonaje().getOro() + " Oro");
         }
+    }
+
+    public void ErrNumSelec() {
+        System.out.println("El numero introducido no es correcto");
     }
 }
 

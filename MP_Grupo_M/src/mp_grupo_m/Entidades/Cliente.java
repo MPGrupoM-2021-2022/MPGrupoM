@@ -97,12 +97,15 @@ public class Cliente extends User {
         factoriaVampiros.setArmas(vampiro, armas);
         do {
             terminal.mostrarArmas(armas);
-            rightWeapon = factoriaVampiros.addArmaActiva(arma, armas, armasActivas);
+            rightWeapon = factoriaVampiros.addArmaActiva(armas, armasActivas);
         } while (!Arrays.equals(rightWeapon, aux1) && !Arrays.equals(rightWeapon, aux2));
         if (Arrays.equals(rightWeapon, aux1)) {
             do {
-                terminal.otroArma(armas);
-                rightValue = factoriaVampiros.addArmaActiva2(arma, armas, armasActivas);
+                terminal.otroArma(armas, armasActivas.get(0));
+                rightValue = factoriaVampiros.addArmaActiva2(armas, armasActivas);
+                if (!rightValue){
+                    terminal.ErrNumSelec();
+                }
             } while (!rightValue);
         }
         factoriaVampiros.setArmasActivas(vampiro, armasActivas);
@@ -243,7 +246,7 @@ public class Cliente extends User {
         } while (!Arrays.equals(rightWeapon, aux1) && !Arrays.equals(rightWeapon, aux2));
         if (Arrays.equals(rightWeapon, aux1)) {
             do {
-                terminal.otroArma(armas);
+                terminal.otroArma(armas, armasActivas.get(0));
                 rightValue = factoriaCazadores.addArmaActiva2(arma, armas, armasActivas);
             } while (!rightValue);
         }
@@ -375,7 +378,7 @@ public class Cliente extends User {
         } while (!Arrays.equals(rightWeapon, aux1) && !Arrays.equals(rightWeapon, aux2));
         if (Arrays.equals(rightWeapon, aux1)) {
             do {
-                terminal.otroArma(armas);
+                terminal.otroArma(armas, armasActivas.get(0));
                 rightValue = FL.addArmaActiva2(arma, armas, armasActivas);
             } while (!rightValue);
         }
@@ -471,7 +474,7 @@ public class Cliente extends User {
         } while (!Arrays.equals(rightWeapon, aux1) && !Arrays.equals(rightWeapon, aux2));
         if (Arrays.equals(rightWeapon, aux1)) {
             do {
-                terminal.otroArma(cliente.getPersonaje().getArmas());
+                terminal.otroArma(cliente.getPersonaje().getArmas(), cliente.getPersonaje().getArmasActivas().get(0));
                 rightValue = addArmaActiva2(cliente.getPersonaje().getArmas(), armasActivas);
             } while (!rightValue);
         }
