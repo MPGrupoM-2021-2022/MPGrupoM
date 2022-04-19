@@ -176,6 +176,7 @@ public class Cliente extends User {
             esbirros.add(esbirro);
         }
         vampiro.setEsbirros(esbirros);
+        vampiro.setTipo("vampiro");
         return vampiro;
     }
 
@@ -319,6 +320,7 @@ public class Cliente extends User {
         }
         cazador.setEsbirros(esbirros);
         cazador.setVoluntad(3);
+        cazador.setTipo("cazador");
         return cazador;
     }
 
@@ -450,6 +452,7 @@ public class Cliente extends User {
             esbirros.add(esbirro);
         }
         licantropo.setEsbirros(esbirros);
+        licantropo.setTipo("licantropo");
         return licantropo;
     }
 
