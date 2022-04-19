@@ -1,5 +1,6 @@
 package mp_grupo_m;
 
+import mp_grupo_m.Ficheros.controlFicheroUsuarios;
 import java.io.IOException;
 import mp_grupo_m.Entidades.Personaje;
 
@@ -7,21 +8,43 @@ import mp_grupo_m.Entidades.Cliente;
 import mp_grupo_m.Entidades.Desafio;
 
 import java.util.Scanner;
+import mp_grupo_m.Entidades.Disciplina;
+import mp_grupo_m.Entidades.Habilidad;
 import mp_grupo_m.Entidades.User;
+import mp_grupo_m.Entidades.Vampiro;
 
 public class Sistema {
 
-    RegistroFichero ficheroUsuario = new RegistroFichero();
+    controlFicheroUsuarios ficheroUsuario = new controlFicheroUsuarios();
     Terminal terminal = new Terminal();
     Cliente cliente = new Cliente();
     Personaje personaje = new Personaje();
+    Vampiro vampiro = new Vampiro();
+    Habilidad habilidad = new Habilidad();
+    Disciplina disciplina = new Disciplina();
     Menu menu = new Menu();
 
-    public void selector() throws IOException{
+    public void selector() throws IOException {
         Scanner sc = new Scanner(System.in);
         int opcion = sc.nextInt();
         switch (opcion) {
             case 1: {//REGISTRO DE SESION
+                
+                cliente.setNombre("SERGIO");
+                cliente.setNick("NICK");
+                cliente.setPassword("passqrod");
+                cliente.setRegistro("REGISTRO123123");
+                personaje.setTipo("VAMPIRO");
+                vampiro.setNombre("NOMBRE_VAMPIRO");
+                habilidad.setAtaque(3);
+                habilidad.setDefensa(3);
+                disciplina.setCosteSangre(3);
+                
+                
+                
+                
+                
+                
                 terminal.menuRegistroUsuario();
                 selectorRegistro(cliente, personaje);
                 terminal.menuRegistroUsuario();
@@ -41,19 +64,13 @@ public class Sistema {
         }
     }
 
-    private void selectorRegistro(Cliente cliente, Personaje personaje) throws IOException  {
+    private void selectorRegistro(Cliente cliente, Personaje personaje) throws IOException {
 
         Scanner sc = new Scanner(System.in);
         int opcion = sc.nextInt();
         switch (opcion) {
             case 1:
                 //REGISTRO DE USUARIO
-                cliente.setNumeroUsuario(1);
-                cliente.setNombre("SERGIO");
-                cliente.setNick("NICK_SERGIO");
-                cliente.setPassword("CONTRASEÑA_SERGIO");
-                cliente.setRegistro("REGISTRO_SERGIO");
-                personaje.setNombre("Nombre Personaje");
                 ficheroUsuario.registroUsuario(cliente, personaje);
                 ficheroUsuario.lecturaFichero();
                 // ficheroUsuario.registroPersonaje(cliente, personaje);

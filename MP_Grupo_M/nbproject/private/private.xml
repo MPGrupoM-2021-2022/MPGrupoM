@@ -3,10 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/octavio/Documents/SERGIO/UNIVERSIDAD/MP/PRACTICA/MPGrupoM-main/MP_Grupo_M/src/mp_grupo_m/RegistroFichero.java</file>
-            <file>file:/C:/Users/octavio/Documents/SERGIO/UNIVERSIDAD/MP/PRACTICA/MPGrupoM-main/MP_Grupo_M/src/mp_grupo_m/MP_Grupo_M.java</file>
-            <file>file:/C:/Users/octavio/Documents/SERGIO/UNIVERSIDAD/MP/PRACTICA/MPGrupoM-main/MP_Grupo_M/src/mp_grupo_m/Terminal.java</file>
-            <file>file:/C:/Users/octavio/Documents/SERGIO/UNIVERSIDAD/MP/PRACTICA/MPGrupoM-main/MP_Grupo_M/src/mp_grupo_m/Sistema.java</file>
+            <file>file:/C:/Users/octavio/Desktop/MPGrupoM-octavio/MPGrupoM-octavio/MP_Grupo_M/src/mp_grupo_m/Entidades/Personaje.java</file>
+            <file>file:/C:/Users/octavio/Desktop/MPGrupoM-octavio/MPGrupoM-octavio/MP_Grupo_M/src/mp_grupo_m/Entidades/Disciplina.java</file>
+            <file>file:/C:/Users/octavio/Desktop/MPGrupoM-octavio/MPGrupoM-octavio/MP_Grupo_M/src/mp_grupo_m/Entidades/Arma.java</file>
+            <file>file:/C:/Users/octavio/Desktop/MPGrupoM-octavio/MPGrupoM-octavio/MP_Grupo_M/src/mp_grupo_m/Entidades/Habilidad.java</file>
+            <file>file:/C:/Users/octavio/Desktop/MPGrupoM-octavio/MPGrupoM-octavio/MP_Grupo_M/src/mp_grupo_m/MP_Grupo_M.java</file>
+            <file>file:/C:/Users/octavio/Desktop/MPGrupoM-octavio/MPGrupoM-octavio/MP_Grupo_M/src/mp_grupo_m/Factorias/FactoriaVampiros.java</file>
+            <file>file:/C:/Users/octavio/Desktop/MPGrupoM-octavio/MPGrupoM-octavio/MP_Grupo_M/src/mp_grupo_m/Sistema.java</file>
+            <file>file:/C:/Users/octavio/Desktop/MPGrupoM-octavio/MPGrupoM-octavio/MP_Grupo_M/src/mp_grupo_m/RegistroFichero.java</file>
         </group>
     </open-files>
 </project-private>

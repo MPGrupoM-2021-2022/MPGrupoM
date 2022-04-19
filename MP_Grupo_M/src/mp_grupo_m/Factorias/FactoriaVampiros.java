@@ -46,7 +46,7 @@ public class FactoriaVampiros {
         if ((coste < 1) || (coste > 3)) {
             return false;
         }
-        disciplina.setCoste(coste);
+        disciplina.setCosteSangre(coste);
         return true;
     }
 
