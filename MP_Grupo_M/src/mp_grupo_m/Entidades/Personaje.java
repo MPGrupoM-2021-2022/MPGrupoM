@@ -1,7 +1,6 @@
 package mp_grupo_m.Entidades;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Personaje {
     private String nombre;

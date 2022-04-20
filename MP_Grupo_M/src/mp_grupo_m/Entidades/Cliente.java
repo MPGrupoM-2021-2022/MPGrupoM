@@ -1,6 +1,5 @@
 package mp_grupo_m.Entidades;
 
-import java.io.IOException;
 import mp_grupo_m.Factorias.FactoriaCazadores;
 import mp_grupo_m.Factorias.FactoriaVampiros;
 import mp_grupo_m.Factorias.FactoriaLicantropos;
@@ -12,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class Cliente extends User{
+public class Cliente extends User {
 
     private String registro;
     private Personaje personaje;
@@ -98,12 +97,15 @@ public class Cliente extends User{
         factoriaVampiros.setArmas(vampiro, armas);
         do {
             terminal.mostrarArmas(armas);
-            rightWeapon = factoriaVampiros.addArmaActiva(arma, armas, armasActivas);
+            rightWeapon = factoriaVampiros.addArmaActiva(armas, armasActivas);
         } while (!Arrays.equals(rightWeapon, aux1) && !Arrays.equals(rightWeapon, aux2));
         if (Arrays.equals(rightWeapon, aux1)) {
             do {
-                terminal.otroArma(armas);
-                rightValue = factoriaVampiros.addArmaActiva2(arma, armas, armasActivas);
+                terminal.otroArma(armas, armasActivas.get(0));
+                rightValue = factoriaVampiros.addArmaActiva2(armas, armasActivas);
+                if (!rightValue){
+                    terminal.ErrNumSelec();
+                }
             } while (!rightValue);
         }
         factoriaVampiros.setArmasActivas(vampiro, armasActivas);
@@ -168,12 +170,13 @@ public class Cliente extends User{
         vampiro.setSangre(0);
         terminal.preguntarNumEsbirros();
         int numEsbirros = factoriaVampiros.askNum();
-        for (int iterator = 1; iterator <= numEsbirros; iterator++){
+        for (int iterator = 1; iterator <= numEsbirros; iterator++) {
             EsbirrosComposite esbirro = new EsbirrosComposite();
             esbirro = esbirro.crearEsbirro(true);
             esbirros.add(esbirro);
         }
         vampiro.setEsbirros(esbirros);
+        vampiro.setTipo("vampiro");
         return vampiro;
     }
 
@@ -240,12 +243,15 @@ public class Cliente extends User{
         factoriaCazadores.setArmas(cazador, armas);
         do {
             terminal.mostrarArmas(armas);
-            rightWeapon = factoriaCazadores.addArmaActiva(arma, armas, armasActivas);
+            rightWeapon = factoriaCazadores.addArmaActiva(armas, armasActivas);
         } while (!Arrays.equals(rightWeapon, aux1) && !Arrays.equals(rightWeapon, aux2));
         if (Arrays.equals(rightWeapon, aux1)) {
             do {
-                terminal.otroArma(armas);
-                rightValue = factoriaCazadores.addArmaActiva2(arma, armas, armasActivas);
+                terminal.otroArma(armas, armasActivas.get(0));
+                rightValue = factoriaCazadores.addArmaActiva2(armas, armasActivas);
+                if (!rightValue){
+                    terminal.ErrNumSelec();
+                }
             } while (!rightValue);
         }
         factoriaCazadores.setArmasActivas(cazador, armasActivas);
@@ -307,13 +313,14 @@ public class Cliente extends User{
         factoriaCazadores.setFortalezas(cazador, fortalezas);
         terminal.preguntarNumEsbirros();
         int numEsbirros = factoriaCazadores.askNum();
-        for (int iterator = 1; iterator <= numEsbirros; iterator++){
+        for (int iterator = 1; iterator <= numEsbirros; iterator++) {
             EsbirrosComposite esbirro = new EsbirrosComposite();
             esbirro = esbirro.crearEsbirro(false);
             esbirros.add(esbirro);
         }
         cazador.setEsbirros(esbirros);
         cazador.setVoluntad(3);
+        cazador.setTipo("cazador");
         return cazador;
     }
 
@@ -372,15 +379,17 @@ public class Cliente extends User{
         FL.setArmas(licantropo, armas);
         do {
             terminal.mostrarArmas(armas);
-            rightWeapon = FL.addArmaActiva(arma, armas, armasActivas);
+            rightWeapon = FL.addArmaActiva(armas, armasActivas);
         } while (!Arrays.equals(rightWeapon, aux1) && !Arrays.equals(rightWeapon, aux2));
         if (Arrays.equals(rightWeapon, aux1)) {
             do {
-                terminal.otroArma(armas);
-                rightValue = FL.addArmaActiva2(arma, armas, armasActivas);
+                terminal.otroArma(armas, armasActivas.get(0));
+                rightValue = FL.addArmaActiva2(armas, armasActivas);
+                if (!rightValue){
+                    terminal.ErrNumSelec();
+                }
             } while (!rightValue);
         }
-        FL.setArmasActivas(licantropo, armasActivas);
 
         terminal.preguntarNumArmaduras();
         int numArmaduras = FL.askNum();
@@ -437,12 +446,13 @@ public class Cliente extends User{
         FL.setFortalezas(licantropo, fortalezas);
         terminal.preguntarNumEsbirros();
         int numEsbirros = FL.askNum();
-        for (int iterator = 1; iterator <= numEsbirros; iterator++){
+        for (int iterator = 1; iterator <= numEsbirros; iterator++) {
             EsbirrosComposite esbirro = new EsbirrosComposite();
-            esbirro = esbirro.crearEsbirro(true);
+            esbirro = esbirro.crearEsbirro(false);
             esbirros.add(esbirro);
         }
         licantropo.setEsbirros(esbirros);
+        licantropo.setTipo("licantropo");
         return licantropo;
     }
 
@@ -451,7 +461,7 @@ public class Cliente extends User{
         terminal.confirmarDeletePersonaje();
         Scanner sc = new Scanner(System.in);
         boolean delete = sc.nextInt() == 1;
-        if (delete){
+        if (delete) {
             cliente.setPersonaje(null);
             terminal.personajeEliminado();
         }
@@ -472,7 +482,7 @@ public class Cliente extends User{
         } while (!Arrays.equals(rightWeapon, aux1) && !Arrays.equals(rightWeapon, aux2));
         if (Arrays.equals(rightWeapon, aux1)) {
             do {
-                terminal.otroArma(cliente.getPersonaje().getArmas());
+                terminal.otroArma(cliente.getPersonaje().getArmas(), cliente.getPersonaje().getArmasActivas().get(0));
                 rightValue = addArmaActiva2(cliente.getPersonaje().getArmas(), armasActivas);
             } while (!rightValue);
         }
@@ -489,16 +499,16 @@ public class Cliente extends User{
         desafio.crearDesafio(listaClientes, cliente, sistema);
     }
 
-    public void eliminarCuenta(Cliente cliente, Sistema sistema) throws IOException {
+    public void eliminarCuenta(Cliente cliente, Sistema sistema) {
         Terminal terminal = new Terminal();
         Scanner sc = new Scanner(System.in);
         terminal.confirmarDelete();
         boolean delete = sc.nextInt() == 1;
-        if (delete){
+        if (delete) {
             //leer fichero de clientes
             ArrayList<Cliente> listaClientes = new ArrayList<>();
             listaClientes.add(cliente);
-            for (int i = 0; i <= listaClientes.size(); i++){
+            for (int i = 0; i <= listaClientes.size(); i++) {
                 if (listaClientes.get(i).getRegistro().equals(cliente.getRegistro())) {
                     listaClientes.remove(i);
                 }
@@ -546,5 +556,62 @@ public class Cliente extends User{
         return true;
     }
 
- 
+    public String generarNumerRegistro() {
+        boolean valido = false;
+        Cliente cliente = new Cliente();
+        ArrayList<Cliente> lista = new ArrayList<>();
+        lista.add(cliente);
+        String strBuilder = null;
+        //crear del fichero lista de clientes para coger sus registros y comparar
+        while (!valido) {
+            strBuilder = String.valueOf(getLetra()) +
+                    getNumber() +
+                    getNumber() +
+                    getLetra() +
+                    getLetra();
+            for (Cliente value : lista) {
+                if (!(value.getRegistro().equals(strBuilder))) {
+                    valido = true;
+                } else {
+                    strBuilder = null;
+                }
+            }
+        }
+        return strBuilder;
+    }
+
+    public char getLetra() {
+        char paramChar = (char) (Math.random() * 26 + 'a');
+        return paramChar;
+    }
+
+    public char getNumber() {
+        int N = (int) (Math.random() * 10 + '0');
+        return (char) N;
+    }
+
+    public void consultarRanking() {
+        Terminal terminal = new Terminal();
+        terminal.ranking();
+        Cliente cliente = new Cliente();
+        ArrayList<Cliente> lista = new ArrayList<>();
+        //coger lista clientes de ficheros y guardarlos en lista
+        ArrayList<Cliente> listaAux = new ArrayList<>();
+
+        for (int i = 0; i < lista.size(); i++) {
+            boolean encontrado = false;
+            for (int j = 0; j < listaAux.size(); j++) {
+                if (lista.get(i).getPersonaje() != null && lista.get(i).getPersonaje().getOro() > listaAux.get(j).getPersonaje().getOro()) {
+                    encontrado = true;
+                    listaAux.add(j, lista.get(i));
+                    break;
+                }
+            }
+            if (!encontrado) {
+                listaAux.add(lista.get(i));
+            }
+        }
+        terminal.mostrarRanking(listaAux);
+    }
 }
+

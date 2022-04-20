@@ -87,18 +87,17 @@ public class FactoriaLicantropos {
         licantropo.setArmas(armas);
     }
 
-    public boolean[] addArmaActiva(Arma arma, ArrayList<Arma> armas, ArrayList<Arma> armasActivas) {
+    public boolean[] addArmaActiva(ArrayList<Arma> armas, ArrayList<Arma> armasActivas) {
         Scanner sc = new Scanner(System.in);
         int opcion = sc.nextInt();
         if ((opcion < 1) || (opcion > armas.size() + 1)) {
             return new boolean[]{false, false};
         }
         armasActivas.add(armas.get(opcion - 1));
-        arma = armas.get(opcion - 1);
         return new boolean[]{true, armas.get(opcion - 1).isSingleHand()};
     }
 
-    public boolean addArmaActiva2(Arma arma, ArrayList<Arma> armas, ArrayList<Arma> armasActivas) {
+    public boolean addArmaActiva2(ArrayList<Arma> armas, ArrayList<Arma> armasActivas) {
         Scanner sc = new Scanner(System.in);
         int opcion = sc.nextInt();
         if ((opcion < 0) || (opcion > armas.size() + 1)) {
@@ -107,7 +106,7 @@ public class FactoriaLicantropos {
         if (opcion == 0) {
             return true;
         }
-        if (armas.get(opcion + 1) != arma && armas.get(opcion + 1).isSingleHand()) {
+        if (armas.get(opcion - 1) != armasActivas.get(0) && armas.get(opcion - 1).isSingleHand()) {
             armasActivas.add(armas.get(opcion - 1));
             return true;
         }

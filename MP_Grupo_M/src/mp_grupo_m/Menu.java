@@ -1,17 +1,17 @@
 package mp_grupo_m;
 
-import java.io.IOException;
 import mp_grupo_m.Entidades.Cliente;
+
+import mp_grupo_m.Entidades.Operador;
 import mp_grupo_m.Entidades.Personaje;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Menu {
-    
-    public void selector(Cliente cliente, Sistema sistema) throws IOException {
+
+    public void selector(Cliente cliente, Sistema sistema) {
         Terminal terminal = new Terminal();
-        
         Scanner sc = new Scanner(System.in);
         int opcion;
         do {
@@ -27,7 +27,10 @@ public class Menu {
                     }
                     break;
                 case 2:
-                    cliente.eliminarPersonaje(cliente);
+                    if (cliente.getPersonaje() != null) {
+                        cliente.eliminarPersonaje(cliente);
+                    } else
+                        terminal.error();
                     break;
                 case 3:
                     cliente.seleccionarEquipo(cliente);
@@ -41,7 +44,7 @@ public class Menu {
                     consultarCombates();
                     break;
                 case 6:
-                    consultarRanking();
+                    consultarRanking(cliente);
                     break;
                 case 7:
                     terminal.cerrarSesion();
@@ -79,13 +82,17 @@ public class Menu {
         cliente.setPersonaje(personaje);
     }
 
+    public void selectorOperador(Operador operador, Sistema sistema) {
+        Terminal terminal = new Terminal();
+        terminal.WIP();
+    }
+
     private void consultarCombates() {
         Terminal terminal = new Terminal();
         terminal.WIP();
     }
 
-    private void consultarRanking() {
-        Terminal terminal = new Terminal();
-        terminal.WIP();
+    private void consultarRanking(Cliente cliente) {
+        cliente.consultarRanking();
     }
 }

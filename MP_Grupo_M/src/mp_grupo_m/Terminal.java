@@ -24,7 +24,8 @@ public class Terminal {
 
     public void mostrarInicio() {
         System.out.println("1. REGISTRARSE");
-        System.out.println("2. INICIAR SESION");
+        System.out.println("2. INICIAR SESION CLIENTE");
+        System.out.println("3. INICIAR SESION ADMIN");
     }
 
     public void error() {
@@ -59,7 +60,7 @@ public class Terminal {
     }
 
     public void preguntarCosteHabilidad() {
-        System.out.println("Introduce el coste de la habilidad:");
+        System.out.println("Introduce el coste de la habilidad (entre 1 y 3):");
     }
 
     public void preguntarNumArmas() {
@@ -71,11 +72,11 @@ public class Terminal {
     }
 
     public void preguntarAtaqueArma() {
-        System.out.println("Introduce el ataque de tu arma:");
+        System.out.println("Introduce el ataque de tu arma (entre 1 y 3):");
     }
 
     public void preguntarDefensaArma() {
-        System.out.println("Introduce la defensa de tu arma (escribe 0 si no tiene):");
+        System.out.println("Introduce la defensa de tu arma (escribe 0 si no tiene, max 3):");
     }
 
     public void peguntarSingleHandArma() {
@@ -91,11 +92,11 @@ public class Terminal {
         }
     }
 
-    public void otroArma(List<Arma> armas) {
+    public void otroArma(List<Arma> armas, Arma arma) {
         System.out.println("Quiere equipar otro arma de una sola mano?");
         System.out.println("0: NO");
         for (int iterator = 0; iterator < armas.size(); iterator++) {
-            if (armas.get(iterator).isSingleHand()) {
+            if (armas.get(iterator).isSingleHand() && armas.get(iterator) != arma) {
                 System.out.println(iterator + 1 + ": " + armas.get(iterator).getNombre());
             }
         }
@@ -110,11 +111,11 @@ public class Terminal {
     }
 
     public void preguntarDefensaArmadura() {
-        System.out.println("Introduce la defensa de tu armadura:");
+        System.out.println("Introduce la defensa de tu armadura (entre 1 y 3):");
     }
 
     public void preguntarAtaqueArmadura() {
-        System.out.println("Introduce el ataque de tu armadura (escribe 0 si no tiene):");
+        System.out.println("Introduce el ataque de tu armadura (escribe 0 si no tiene, max 3):");
     }
 
     public void mostrarArmaduras(List<Armadura> armaduras) {
@@ -125,7 +126,7 @@ public class Terminal {
     }
 
     public void preguntarOro() {
-        System.out.println("Introduce su cantidad de oro  (>0):");
+        System.out.println("Introduce su cantidad de oro  (>= 0):");
     }
 
     public void preguntarHP() {
@@ -169,7 +170,6 @@ public class Terminal {
         System.out.println("1. Humano");
         System.out.println("2. Ghoul");
         System.out.println("3. Demonio");
-        System.out.println("4. Ninguno");
     }
 
     public void errorHumano() {
@@ -210,9 +210,10 @@ public class Terminal {
     public void menuRegistroUsuario() {
         System.out.println("REGISTRO DE USUARIO NUEVO: ");
         System.out.println("****************");
-        System.out.println("¿Desea registrar un usuario nuevo? ");
-        System.out.println("1. SÍ ");
-        System.out.println("2. NO ");
+        System.out.println("¿Cómo se quiere registrar? ");
+        System.out.println("1. Cliente ");
+        System.out.println("2. Operador ");
+        System.out.println("3. Salir");
     }
 
     public void bienvenidaDesafio() {
@@ -225,7 +226,7 @@ public class Terminal {
 
     public void mostrarPosiblesContrincantes(ArrayList<Cliente> listaClientes) {
         System.out.println("0: Cancelar");
-        for (int i = 0; i <= listaClientes.size(); i++){
+        for (int i = 0; i <= listaClientes.size(); i++) {
             if (listaClientes.get(i).getPersonaje() != null) {
                 System.out.println((i + 1) + ": " + listaClientes.get(i).getNick());
             }
@@ -243,6 +244,30 @@ public class Terminal {
     public void desafioCreado() {
         System.out.println("Desafio creado y pendiente de validacion por parte de un admin...");
         System.out.println("Volviendo al menu...");
+    }
+
+    public void preguntarNombreUser() {
+        System.out.println("Introduce tu nombre y apellidos");
+    }
+
+    public void preguntarNick() {
+        System.out.println("Introduce tu nick de usuario");
+    }
+
+    public void preguntarPassword() {
+        System.out.println("Introduce la password de tu cuenta");
+    }
+
+    public void errorPassword() {
+        System.out.println("Password incorrecta, pruebe de nuevo");
+    }
+
+    public void confirmarPassword() {
+        System.out.println("Confirme la password introducida");
+    }
+
+    public void nickExistente() {
+        System.out.println("El nick introducido ya existe");
     }
 
     public void confirmarDelete() {
@@ -272,4 +297,19 @@ public class Terminal {
     public void finishEquipar() {
         System.out.println("Arma(s) y armadura equipadas correctamente...");
     }
+
+    public void ranking() {
+        System.out.println("Este es el ranking de oro actual");
+    }
+
+    public void mostrarRanking(ArrayList<Cliente> lista) {
+        for (int i = 0; i < lista.size(); i++) {
+            System.out.println(i + 1 + ": " + lista.get(i).getNick() + "\t\t" + lista.get(i).getPersonaje().getOro() + " Oro");
+        }
+    }
+
+    public void ErrNumSelec() {
+        System.out.println("El numero introducido no es correcto");
+    }
 }
+

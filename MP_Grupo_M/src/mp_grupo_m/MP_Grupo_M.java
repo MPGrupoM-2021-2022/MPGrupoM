@@ -1,10 +1,8 @@
 package mp_grupo_m;
 
-import java.io.IOException;
-
 public class MP_Grupo_M {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         Terminal terminal = new Terminal();
         Sistema sistema = new Sistema();
         while (true) {
