@@ -196,6 +196,7 @@ public class LecturaFicheroUsuario {
 
                     vampiro.getArmas().add(arma);
                 }
+
                 //NUMERO DE ARMAS ACTIVAS
                 for (int i = 0; i < (Integer.parseInt(textoSeparado[1])); i++) {
 
@@ -223,14 +224,14 @@ public class LecturaFicheroUsuario {
                     vampiro.getArmasActivas().add(arma);
                 }
 
-                // NUMERO DE ARMADURAS
+                //ARMADURAS
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
                 for (int i = 0; i < (Integer.parseInt(textoSeparado[1])); i++) {
 
                     Armadura armadura = new Armadura();
 
-                    //NOMBRE ARMADURA
+                    //NOMBRE ARMA
                     linea = br.readLine();
                     textoSeparado = linea.split(": ");
                     armadura.setNombre(textoSeparado[1]);
@@ -239,6 +240,7 @@ public class LecturaFicheroUsuario {
                     linea = br.readLine();
                     textoSeparado = linea.split(": ");
                     armadura.setModDefensa((Integer.parseInt(textoSeparado[1])));
+
                     //NIVEL ATAQUE ARMA
                     linea = br.readLine();
                     textoSeparado = linea.split(": ");
@@ -246,6 +248,28 @@ public class LecturaFicheroUsuario {
 
                     vampiro.getArmaduras().add(armadura);
                 }
+
+                //ARMADURA ACTIVA
+                linea = br.readLine();
+                textoSeparado = linea.split(": ");
+
+                Armadura armadura = new Armadura();
+
+                //NOMBRE ARMADURA
+                linea = br.readLine();
+                textoSeparado = linea.split(": ");
+                armadura.setNombre(textoSeparado[1]);
+
+                //NIVEL DEFENSA ARMA
+                linea = br.readLine();
+                textoSeparado = linea.split(": ");
+                armadura.setModDefensa((Integer.parseInt(textoSeparado[1])));
+                //NIVEL ATAQUE ARMA
+                linea = br.readLine();
+                textoSeparado = linea.split(": ");
+                armadura.setModAtaque((Integer.parseInt(textoSeparado[1])));
+
+                vampiro.setArmaduraActiva(armadura);
 
                 //CANTIDAD ORO
                 linea = br.readLine();
@@ -279,7 +303,7 @@ public class LecturaFicheroUsuario {
                     textoSeparado = linea.split(": ");
                     debilidad.setValor((Integer.parseInt(textoSeparado[1])));
 
-                    vampiro.getDebilidades();
+                    vampiro.getDebilidades().add(debilidad);
                 }
 
                 // FORTALEZAS
@@ -299,7 +323,7 @@ public class LecturaFicheroUsuario {
                     textoSeparado = linea.split(": ");
                     fortaleza.setValor((Integer.parseInt(textoSeparado[1])));
 
-                    vampiro.getFortalezas();
+                    vampiro.getFortalezas().add(fortaleza);
                 }
 
                 //EDAD VAMPIRO
@@ -316,7 +340,7 @@ public class LecturaFicheroUsuario {
                     Ghoul ghoul = new Ghoul();
                     Demonio demonio = new Demonio();
 
-                    if (textoSeparado[1].equals("HUMANO")) {
+                    if (textoSeparado[1].equals("HUMANO")) { //BORRAR PARA VAMPIROS
 
                         //TIPO ESBIRRO
                         humano.setTipo(textoSeparado[1]);
@@ -331,10 +355,10 @@ public class LecturaFicheroUsuario {
                         textoSeparado = linea.split(": ");
                         humano.setHp((Integer.parseInt(textoSeparado[1])));
 
-                        //VALOR LEALTAD
+                        //VALOR LEALTAD     SE HARIA CON UN STRING PORQUE PUEDE SER DE TRES TIPOS ALTA, MEDIO, BAJO
                         linea = br.readLine();
                         textoSeparado = linea.split(": ");
-                        humano.setLealtad((Integer.parseInt(textoSeparado[1])));
+                        humano.setLealtad(((textoSeparado[1])));
 
                     } else if (textoSeparado[1].equals("GHOULS")) {
                         //TIPO ESBIRRO
@@ -377,7 +401,7 @@ public class LecturaFicheroUsuario {
                 }
                 vampiro.getEsbirros();
             }
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

@@ -33,10 +33,11 @@ public class Sistema{
                 //INICIO DE SESION COMO CLIENTE
                 boolean login = loginCliente();
                 if (login) {
+                    lecturaFicheroUsuario.lecturaFicheroUsuario();
                     Menu menu = new Menu();
                     Cliente cliente = new Cliente();
                     menu.selector(cliente, this);
-                    lecturaFicheroUsuario.lecturaFicheroUsuario();
+                    
                 }
                 break;
             }

@@ -50,6 +50,8 @@ public class ControlFicheroUsuarios {
             bw.newLine();
             bw.write(cliente.getRegistro());
             bw.newLine();
+            bw.write("TIPO_PERSONAJE: null");
+            bw.newLine();
             bw.write("FIN USUARIO");
             bw.newLine();
             bw.close();
@@ -104,51 +106,50 @@ public class ControlFicheroUsuarios {
 
                 String tipoPersonaje = listaCliente.get(i).getPersonaje().getTipo();
                 if (tipoPersonaje == null) {
-                    bw.write("***** USUARIO *****");
-                    bw.newLine();
-                    bw.write("NOMBRE: ");
-                    bw.newLine();
-                    bw.write(listaCliente.get(i).getNombre());
-                    bw.newLine();
-                    bw.write("NICK: ");
-                    bw.newLine();
-                    bw.write(listaCliente.get(i).getNick());
-                    bw.newLine();
-                    bw.write("PASSWORD: ");
-                    bw.newLine();
-                    bw.write(listaCliente.get(i).getPassword());
-                    bw.newLine();
-                    bw.write("REGISTRO: ");
-                    bw.newLine();
-                    bw.write(listaCliente.get(i).getRegistro());
-                    bw.newLine();
+                    
                     bw.write("TIPO_PERSONAJE: null");
                     bw.newLine();
 
                 } else if (tipoPersonaje.equals("VAMPIRO")) {
                     Vampiro vampiro = (Vampiro) listaCliente.get(i).getPersonaje();
-                    bw.write("***** USUARIO *****");
-                    bw.newLine();
-                    bw.write("NOMBRE: ");
-                    bw.newLine();
-                    bw.write(listaCliente.get(i).getNombre());
-                    bw.newLine();
-                    bw.write("NICK: ");
-                    bw.newLine();
-                    bw.write(listaCliente.get(i).getNick());
-                    bw.newLine();
-                    bw.write("PASSWORD: ");
-                    bw.newLine();
-                    bw.write(listaCliente.get(i).getPassword());
-                    bw.newLine();
-                    bw.write("REGISTRO: ");
-                    bw.newLine();
-                    bw.write(listaCliente.get(i).getRegistro());
-                    bw.newLine();
+                    Disciplina disciplina = (Disciplina) vampiro.getHabilidad();
+                                        
                     bw.write("TIPO_PERSONAJE: ");
                     bw.newLine();
                     bw.write(listaCliente.get(i).getPersonaje().getTipo());
                     bw.newLine();
+                    
+                    bw.write("NOMBRE_PERSONAJE: ");
+                    bw.newLine();
+                    bw.write(listaCliente.get(i).getPersonaje().getNombre());
+                    bw.newLine();
+                    
+                    bw.write("VALOR_ATAQUE: ");
+                    bw.newLine();
+                    bw.write(disciplina.getAtaque());
+                    bw.newLine();
+                    
+                    bw.write("VALOR_DEFENSA: ");
+                    bw.newLine();
+                    bw.write(disciplina.getDefensa());
+                    bw.newLine();
+                    
+                    bw.write("VALOR_ATAQUE: ");
+                    bw.newLine();
+                    bw.write(disciplina.getAtaque());
+                    bw.newLine();
+                    
+                     bw.write("COSTE_HABILIDAD: ");
+                    bw.newLine();
+                    bw.write(disciplina.getCoste());
+                    bw.newLine();
+                    
+                     bw.write("VALOR_ATAQUE: ");
+                    bw.newLine();
+                    bw.write(disciplina.getAtaque());
+                    bw.newLine();
+                    
+                    
                     bw.newLine();
                 }
             }
