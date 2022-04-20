@@ -11,6 +11,8 @@ public class Desafio {
     private Cliente desafiante;
     private Cliente contrincante;
     private int oro;
+    private ArrayList<Modificador> modificadores;
+    private boolean validated;
 
     public Cliente getDesafiante() {
         return desafiante;
@@ -36,6 +38,22 @@ public class Desafio {
         this.oro = oro;
     }
 
+    public ArrayList<Modificador> getModificadores() {
+        return modificadores;
+    }
+
+    public void setModificadores(ArrayList<Modificador> modificadores) {
+        this.modificadores = modificadores;
+    }
+
+    public boolean isValidated() {
+        return validated;
+    }
+
+    public void setValidated(boolean validated) {
+        this.validated = validated;
+    }
+
     public void crearDesafio(ArrayList<Cliente> listaClientes, Cliente cliente, Sistema sistema) {
         Terminal terminal = new Terminal();
         terminal.bienvenidaDesafio();
@@ -58,6 +76,7 @@ public class Desafio {
             setOro(cantidadOro);
             cliente.getPersonaje().setOro(cliente.getPersonaje().getOro() - cantidadOro);
             setDesafiante(cliente);
+            setValidated(false);
             terminal.desafioCreado();
             sistema.avisarAdmin(this);
         }

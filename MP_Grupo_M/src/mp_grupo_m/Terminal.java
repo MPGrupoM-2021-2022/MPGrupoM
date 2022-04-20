@@ -3,6 +3,7 @@ package mp_grupo_m;
 import mp_grupo_m.Entidades.Arma;
 import mp_grupo_m.Entidades.Armadura;
 import mp_grupo_m.Entidades.Cliente;
+import mp_grupo_m.Entidades.Desafio;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -310,6 +311,34 @@ public class Terminal {
 
     public void ErrNumSelec() {
         System.out.println("El numero introducido no es correcto");
+    }
+
+    public void inicioRonda(int hpDesafiante, int hpContrincante, String nick, String nick1, int potencialAtaqueDesafiante, int potencialDefensaDesafiante, int potencialAtaqueContrincante, int potencialDefensaContrincante) {
+        System.out.println(nick + ":");
+        System.out.println("Vida: " + hpDesafiante);
+        System.out.println("Potencial ataque: " + potencialAtaqueDesafiante);
+        System.out.println("Potencial defensa: " + potencialDefensaDesafiante);
+        System.out.println();
+        System.out.println(nick1 + ":");
+        System.out.println("Vida: " + hpContrincante);
+        System.out.println("Potencial ataque: " + potencialAtaqueContrincante);
+        System.out.println("Potencial defensa: " + potencialDefensaContrincante);
+        System.out.println();
+    }
+
+    public void preguntarDesafio(Desafio desafio) {
+        System.out.println("Te ha desfiado el usuario " + desafio.getDesafiante().getNick());
+        System.out.println("Ha apostado " + desafio.getOro() + " oro");
+        System.out.println("Quieres aceptar el desafio?");
+        System.out.println("1. SI");
+        System.out.println("2. NO");
+        System.out.println("Nota: si no aceptas perderás " + desafio.getOro()/10 + " de oro");
+    }
+
+    public void cambiarEquipo() {
+        System.out.println("Quieres cambiar las armas y armaduras del personaje?");
+        System.out.println("1. SI");
+        System.out.println("2. NO");
     }
 }
 
