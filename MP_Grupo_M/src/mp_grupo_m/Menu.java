@@ -11,49 +11,6 @@ public class Menu {
         Terminal terminal = new Terminal();
         Scanner sc = new Scanner(System.in);
 
-        Desafio desafio = new Desafio();
-        ArrayList<Desafio> listaDesafios = new ArrayList<>(); //leerlo de fichero y meter observer
-        listaDesafios.add(desafio);
-        for (int i = 0; i < listaDesafios.size(); i++){
-            if (listaDesafios.get(i).isValidated() && listaDesafios.get(i).getContrincante().getNick().equals(cliente.getNick())){
-                int opcion;
-                do {
-                    terminal.preguntarDesafio(listaDesafios.get(i));
-                    opcion = askNum();
-                } while (opcion < 1 || opcion > 2);
-                if (opcion == 1) {
-                    int cambioEquipo;
-                    do {
-                        terminal.cambiarEquipo();
-                        cambioEquipo = askNum();
-                    } while (cambioEquipo < 1 || cambioEquipo > 2);
-                    if (cambioEquipo == 1){
-                        cliente.seleccionarEquipo(cliente);
-                    }
-                    Combate combate = new Combate();
-                    combate.inicializarCombate(listaDesafios.get(i).getDesafiante(), cliente, listaDesafios.get(i).getOro(), listaDesafios.get(i).getModificadores());
-                    combate = combate.empezarCombate(combate);
-                    if (combate.getVencedor() != null){
-                        if (combate.getVencedor().getNick().equals(cliente.getNick())){
-                            cliente.getPersonaje().setOro(cliente.getPersonaje().getOro() + listaDesafios.get(i).getOro());
-                            //leer fichero usuarios y sobreescribir cliente
-                        } else {
-                            //leer fichero clientes
-                            ArrayList<Cliente> listaClientes = new ArrayList<>();
-                            listaClientes.add(cliente);
-                            for (int j = 0; j < listaClientes.size(); j++){
-                                if (listaClientes.get(j).getNick().equals(listaDesafios.get(i).getDesafiante().getNick())){
-                                    listaClientes.get(j).getPersonaje().setOro(listaClientes.get(j).getPersonaje().getOro() + listaDesafios.get(i).getOro());
-                                }
-                            }
-                        }
-                    }
-                } else {
-                    cliente.getPersonaje().setOro(cliente.getPersonaje().getOro() - (listaDesafios.get(i).getOro()/10));
-                }
-            }
-        }
-
         int opcion;
         do {
             terminal.mostrarMenu();
@@ -82,7 +39,7 @@ public class Menu {
                     cliente.desafiar(listaClientes, cliente, sistema);
                     break;
                 case 5:
-                    consultarCombates();
+                    consultarCombates(cliente);
                     break;
                 case 6:
                     consultarRanking(cliente);
@@ -95,7 +52,7 @@ public class Menu {
                     cliente.eliminarCuenta(cliente, sistema);
                     break;
                 default:
-                    terminal.WIP();
+                    terminal.error();
                     break;
             }
         } while (opcion != 7 && opcion != 8);
@@ -128,17 +85,21 @@ public class Menu {
         terminal.WIP();
     }
 
-    private void consultarCombates() {
+    private void consultarCombates(Cliente cliente) {
         Terminal terminal = new Terminal();
         terminal.WIP();
+        //leer fichero combates
+        ArrayList<Combate> listaCombates = new ArrayList<>();
+        Combate combate = new Combate();
+        listaCombates.add(combate);
+        for (int i = 0; i < listaCombates.size(); i++){
+            if (listaCombates.get(i).getDesafiante().getNick().equals(cliente.getNick()) || listaCombates.get(i).getContrincante().getNick().equals(cliente.getNick())){
+                terminal.mostrarCombate(listaCombates.get(i));
+            }
+        }
     }
 
     private void consultarRanking(Cliente cliente) {
         cliente.consultarRanking();
-    }
-
-    public int askNum() {
-        Scanner sc = new Scanner(System.in);
-        return sc.nextInt();
     }
 }

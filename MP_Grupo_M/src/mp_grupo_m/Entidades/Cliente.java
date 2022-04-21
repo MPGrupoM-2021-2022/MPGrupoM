@@ -51,7 +51,6 @@ public class Cliente extends User {
         ArrayList<Debilidad> debilidades = new ArrayList<>();
         ArrayList<Fortaleza> fortalezas = new ArrayList<>();
         Armadura armadura = new Armadura();
-        Arma arma = new Arma();
         ArrayList<EsbirrosComposite> esbirros = new ArrayList<>();
 
         terminal.preguntarNombre();
@@ -77,7 +76,7 @@ public class Cliente extends User {
             numArmas = factoriaVampiros.askNum();
         } while (numArmas < 1);
         for (int iterator = 1; iterator <= numArmas; iterator++) {
-            arma = new Arma();
+            Arma arma = new Arma();
             terminal.preguntarNombreArma();
             factoriaVampiros.inicializarnNombreArma(arma);
             do {
@@ -176,7 +175,7 @@ public class Cliente extends User {
             esbirros.add(esbirro);
         }
         vampiro.setEsbirros(esbirros);
-        vampiro.setTipo("vampiro");
+        vampiro.setTipo("VAMPIRO");
         return vampiro;
     }
 
@@ -320,7 +319,7 @@ public class Cliente extends User {
         }
         cazador.setEsbirros(esbirros);
         cazador.setVoluntad(3);
-        cazador.setTipo("cazador");
+        cazador.setTipo("CAZADOR");
         return cazador;
     }
 
@@ -452,7 +451,7 @@ public class Cliente extends User {
             esbirros.add(esbirro);
         }
         licantropo.setEsbirros(esbirros);
-        licantropo.setTipo("licantropo");
+        licantropo.setTipo("LICANTROPO");
         return licantropo;
     }
 
@@ -511,6 +510,7 @@ public class Cliente extends User {
             for (int i = 0; i <= listaClientes.size(); i++) {
                 if (listaClientes.get(i).getRegistro().equals(cliente.getRegistro())) {
                     listaClientes.remove(i);
+                    break;
                 }
             }
             //sobreescribir fichero

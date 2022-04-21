@@ -1,5 +1,7 @@
 package mp_grupo_m.Entidades;
 
+import mp_grupo_m.Terminal;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -13,6 +15,8 @@ public class Combate {
     private boolean esbirrosContrincante;
     private int oro;
     private ArrayList<Modificador> modificadores;
+    private String registro;
+    private boolean visto;
 
     public Cliente getDesafiante() {
         return desafiante;
@@ -86,13 +90,31 @@ public class Combate {
         this.modificadores = modificadores;
     }
 
-    public Combate inicializarCombate(Cliente desafiante, Cliente contrincante, int oro, ArrayList<Modificador> modificadores){
+    public String getRegistro() {
+        return registro;
+    }
+
+    public void setRegistro(String registro) {
+        this.registro = registro;
+    }
+
+    public boolean isVisto() {
+        return visto;
+    }
+
+    public void setVisto(boolean visto) {
+        this.visto = visto;
+    }
+
+    public Combate inicializarCombate(Cliente desafiante, Cliente contrincante, int oro, ArrayList<Modificador> modificadores, String registro){
         setDesafiante(desafiante);
         setContrincante(contrincante);
         Date fechaHoy = new Date();
         setFecha(fechaHoy);
         setOro(oro);
         setModificadores(modificadores);
+        setRegistro(registro);
+        setVisto(false);
         return this;
     }
 
@@ -126,6 +148,8 @@ public class Combate {
                 combate.setEsbirrosDesafiante(false);
             }
         }
+        Terminal terminal = new Terminal();
+        terminal.mostrarRondas(combate);
         return combate;
     }
 

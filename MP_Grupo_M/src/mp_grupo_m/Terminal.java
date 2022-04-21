@@ -1,9 +1,6 @@
 package mp_grupo_m;
 
-import mp_grupo_m.Entidades.Arma;
-import mp_grupo_m.Entidades.Armadura;
-import mp_grupo_m.Entidades.Cliente;
-import mp_grupo_m.Entidades.Desafio;
+import mp_grupo_m.Entidades.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -339,6 +336,44 @@ public class Terminal {
         System.out.println("Quieres cambiar las armas y armaduras del personaje?");
         System.out.println("1. SI");
         System.out.println("2. NO");
+    }
+
+    public void mostrarCombate(Combate combate) {
+        System.out.println("Combate: " + combate.getRegistro());
+        System.out.println("Desafiante: " + combate.getDesafiante().getNick());
+        System.out.println("Contrincante: " + combate.getContrincante().getNick());
+        System.out.println("Fecha: " + combate.getFecha());
+        if (combate.isEsbirrosDesafiante()){
+            System.out.println("Esbirros de " + combate.getDesafiante().getNick() + " : vivos");
+        } else {
+            System.out.println("Esbirros de " + combate.getDesafiante().getNick() + " : muertos");
+        }
+        if (combate.isEsbirrosContrincante()){
+            System.out.println("Esbirros de " + combate.getContrincante().getNick() + " : vivos");
+        } else {
+            System.out.println("Esbirros de " + combate.getContrincante().getNick() + " : muertos");
+        }
+        System.out.println("Oro apostado: " + combate.getOro());
+        System.out.println("Modificadores:");
+        for (int i = 0; i < combate.getModificadores().size(); i++){
+            System.out.println(combate.getModificadores().get(i).getNombre());
+        }
+        System.out.println("RONDAS:");
+        mostrarRondas(combate);
+    }
+
+    public void mostrarRondas(Combate combate) {
+        for (int i = 0; i < combate.getRondas().size(); i++){
+            System.out.println("Ronda " + i+1 + " :");
+            System.out.println("Vida de " + combate.getDesafiante().getPersonaje().getNombre() + " al final de la ronda: " + combate.getRondas().get(i).getHpDesafianteEnd());
+            System.out.println("Vida de " + combate.getContrincante().getPersonaje().getNombre() + " al final de la ronda: " + combate.getRondas().get(i).getHpContrincanteEnd());
+        }
+        System.out.println("FIN DEL COMBATE");
+        if (combate.getVencedor() != null) {
+            System.out.println("Vencedor: " + combate.getVencedor().getNick());
+        } else {
+            System.out.println("Vencedor: empate");
+        }
     }
 }
 
