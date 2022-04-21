@@ -375,5 +375,9 @@ public class Terminal {
             System.out.println("Vencedor: empate");
         }
     }
+
+    public void cuentaBaneada() {
+        System.out.println("Esta cuenta ha sido baneada, acceso denegdo...");
+    }
 }
 

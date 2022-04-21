@@ -4,6 +4,7 @@ import mp_grupo_m.Entidades.Cliente;
 import mp_grupo_m.Entidades.Combate;
 import mp_grupo_m.Entidades.Desafio;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -85,5 +86,29 @@ public class GestorNotificaciones {
     public void notifyCombate(Combate combate) {
         Terminal terminal = new Terminal();
         terminal.mostrarCombate(combate);
+    }
+
+    public void subscribeBan(Cliente cliente){
+        Terminal terminal = new Terminal();
+        terminal.WIP();
+        //escribir nick en el fichero de bans
+    }
+
+    public void unsubscribeBan(Cliente cliente){
+        //leer fichero bans
+        ArrayList<String> listaBans = new ArrayList<>();
+        listaBans.add("nick");
+        for (int i = 0; i< listaBans.size(); i++){
+            if (listaBans.get(i).equals(cliente.getNick())){
+                listaBans.remove(i);
+                break;
+            }
+        }
+        //sobreescribir fichero bans
+    }
+
+    public void notifyBan(){
+        Terminal terminal = new Terminal();
+        terminal.cuentaBaneada();
     }
 }
