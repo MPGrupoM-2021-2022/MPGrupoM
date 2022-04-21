@@ -216,9 +216,45 @@ public class Ronda {
         }
         if (ataqueDesafiante >= defensaContrincante){
             hpContrincante -= 1;
+            if (desafiante.getPersonaje().getTipo().equals("VAMPIRO")){
+                Vampiro vampiro = (Vampiro) desafiante.getPersonaje();
+                vampiro.setSangre(vampiro.getSangre() + 4);
+                if (vampiro.getSangre() > 10){
+                    vampiro.setSangre(10);
+                }
+            }
+            if (contrincante.getPersonaje().getTipo().equals("LICANTROPO")){
+                Licantropo licantropo = (Licantropo) contrincante.getPersonaje();
+                if (licantropo.getRabia() != 3) {
+                    licantropo.setRabia(licantropo.getRabia() + 1);
+                }
+            } else if (contrincante.getPersonaje().getTipo().equals("CAZADOR")){
+                Cazador cazador = (Cazador) contrincante.getPersonaje();
+                if (cazador.getVoluntad() != 0){
+                    cazador.setVoluntad(cazador.getVoluntad() - 1);
+                }
+            }
         }
         if (ataqueContrincante >= defensaDesafiante){
             hpDesafiante -= 1;
+            if (contrincante.getPersonaje().getTipo().equals("VAMPIRO")){
+                Vampiro vampiro = (Vampiro) contrincante.getPersonaje();
+                vampiro.setSangre(vampiro.getSangre() + 4);
+                if (vampiro.getSangre() > 10){
+                    vampiro.setSangre(10);
+                }
+            }
+            if (desafiante.getPersonaje().getTipo().equals("LICANTROPO")){
+                Licantropo licantropo = (Licantropo) desafiante.getPersonaje();
+                if (licantropo.getRabia() != 3) {
+                    licantropo.setRabia(licantropo.getRabia() + 1);
+                }
+            } else if (desafiante.getPersonaje().getTipo().equals("CAZADOR")){
+                Cazador cazador = (Cazador) desafiante.getPersonaje();
+                if (cazador.getVoluntad() != 0){
+                    cazador.setVoluntad(cazador.getVoluntad() - 1);
+                }
+            }
         }
         setHpDesafianteEnd(hpDesafiante);
         setHpContrincanteEnd(hpContrincante);
