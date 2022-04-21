@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class FactoriaLicantropos {
 
-    public void inicializarNombre(Licantropo licantropo){
+    public void inicializarNombre(Licantropo licantropo) {
         Scanner sc = new Scanner(System.in);
         String nombre = sc.nextLine();
         licantropo.setNombre(nombre);
@@ -22,7 +22,7 @@ public class FactoriaLicantropos {
     public boolean inicializarRabiaHabilidad(Don don) {
         Scanner sc = new Scanner(System.in);
         int rabia = sc.nextInt();
-        if (rabia < 0)  {
+        if (rabia < 0) {
             return false;
         }
         don.setValorMinimo(rabia);
@@ -133,13 +133,13 @@ public class FactoriaLicantropos {
         return true;
     }
 
-    public boolean inicializarAtaqueArmadura(Arma arma) {
+    public boolean inicializarAtaqueArmadura(Armadura armadura) {
         Scanner sc = new Scanner(System.in);
         int ataque = sc.nextInt();
         if ((ataque < 0) || (ataque > 3)) {
             return false;
         }
-        arma.setModAtaque(ataque);
+        armadura.setModAtaque(ataque);
         return true;
     }
 

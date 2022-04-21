@@ -69,20 +69,20 @@ public class Desafio {
         terminal.bienvenidaDesafio();
         int numContrincante = -1;
         int cantidadOro = -1;
-        if (listaClientes.size() == 1){         //Habría que indicar tambien que tienen que tener un personaje creado de alguna manera
+        if (listaClientes.size() == 1) {
             terminal.noHayContrincantes();
-        } else{
+        } else {
             terminal.mostrarPosiblesContrincantes(listaClientes);
             do {
                 terminal.numValido();
                 numContrincante = askNum();
-            } while(numContrincante < 0 || numContrincante > listaClientes.size() + 1 || listaClientes.get(numContrincante).getPersonaje() == null);
+            } while (numContrincante < 0 || numContrincante > listaClientes.size() + 1 || listaClientes.get(numContrincante).getPersonaje() == null);
             setContrincante(listaClientes.get(numContrincante - 1));
             terminal.preguntarCantidadApostar();
             do {
                 terminal.numValido();
                 cantidadOro = askNum();
-            } while(cantidadOro <= 0 && cantidadOro > cliente.getPersonaje().getOro());
+            } while (cantidadOro <= 0 && cantidadOro > cliente.getPersonaje().getOro());
             setOro(cantidadOro);
             cliente.getPersonaje().setOro(cliente.getPersonaje().getOro() - cantidadOro);
             setDesafiante(cliente);
@@ -106,7 +106,7 @@ public class Desafio {
         ArrayList<Desafio> listaDesafios = new ArrayList<>();
         listaDesafios.add(desafio);
         String strBuilder = null;
-        //crear del fichero lista de clientes para coger sus registros y comparar
+        //crear del fichero lista de desafios para coger sus registros y comparar
         while (!valido) {
             strBuilder = String.valueOf(getLetra()) +
                     getNumber() +
@@ -125,8 +125,7 @@ public class Desafio {
     }
 
     public char getLetra() {
-        char paramChar = (char) (Math.random() * 26 + 'a');
-        return paramChar;
+        return (char) (Math.random() * 26 + 'a');
     }
 
     public char getNumber() {

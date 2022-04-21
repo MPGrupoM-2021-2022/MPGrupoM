@@ -6,7 +6,6 @@ import mp_grupo_m.Factorias.FactoriaLicantropos;
 import mp_grupo_m.Sistema;
 import mp_grupo_m.Terminal;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -34,8 +33,6 @@ public class Cliente extends User {
 
     public Vampiro crearVampiro() {
 
-        boolean rightValue;
-        boolean[] rightWeapon;
         boolean[] aux1 = new boolean[]{true, true};
         boolean[] aux2 = new boolean[]{true, false};
 
@@ -53,136 +50,21 @@ public class Cliente extends User {
         Armadura armadura = new Armadura();
         ArrayList<EsbirrosComposite> esbirros = new ArrayList<>();
 
-        terminal.preguntarNombre();
-        factoriaVampiros.inicializarNombre(vampiro);
-        terminal.preguntarNombreHabilidad();
-        factoriaVampiros.inicializarNombreHabilidad(disciplina);
-        do {
-            terminal.preguntarAtaqueHabilidad();
-            rightValue = factoriaVampiros.inicializarAtaqueHabilidad(disciplina);
-        } while (!rightValue);
-        do {
-            terminal.preguntarDefensaHabilidad();
-            rightValue = factoriaVampiros.inicializarDefensaHabilidad(disciplina);
-        } while (!rightValue);
-        do {
-            terminal.preguntarCosteHabilidad();
-            rightValue = factoriaVampiros.inicializarCosteHabilidad(disciplina);
-        } while (!rightValue);
-        factoriaVampiros.setHabilidad(vampiro, disciplina);
-        int numArmas;
-        do {
-            terminal.preguntarNumArmas();
-            numArmas = factoriaVampiros.askNum();
-        } while (numArmas < 1);
-        for (int iterator = 1; iterator <= numArmas; iterator++) {
-            Arma arma = new Arma();
-            terminal.preguntarNombreArma();
-            factoriaVampiros.inicializarnNombreArma(arma);
-            do {
-                terminal.preguntarAtaqueArma();
-                rightValue = factoriaVampiros.inicializarAtaqueArma(arma);
-            } while (!rightValue);
-            do {
-                terminal.preguntarDefensaArma();
-                rightValue = factoriaVampiros.inicializarDefensaArma(arma);
-            } while (!rightValue);
-            do {
-                terminal.peguntarSingleHandArma();
-                rightValue = factoriaVampiros.inicializarSingleHandArma(arma);
-            } while (!rightValue);
-            factoriaVampiros.addArma(armas, arma);
-        }
-        factoriaVampiros.setArmas(vampiro, armas);
-        do {
-            terminal.mostrarArmas(armas);
-            rightWeapon = factoriaVampiros.addArmaActiva(armas, armasActivas);
-        } while (!Arrays.equals(rightWeapon, aux1) && !Arrays.equals(rightWeapon, aux2));
-        if (Arrays.equals(rightWeapon, aux1)) {
-            do {
-                terminal.otroArma(armas, armasActivas.get(0));
-                rightValue = factoriaVampiros.addArmaActiva2(armas, armasActivas);
-                if (!rightValue){
-                    terminal.ErrNumSelec();
-                }
-            } while (!rightValue);
-        }
-        factoriaVampiros.setArmasActivas(vampiro, armasActivas);
-        int numArmaduras;
-        do {
-            terminal.preguntarNumArmaduras();
-            numArmaduras = factoriaVampiros.askNum();
-        } while (numArmaduras < 1);
-        for (int iterator = 1; iterator <= numArmaduras; iterator++) {
-            armadura = new Armadura();
-            terminal.preguntarNombreArmadura();
-            factoriaVampiros.inicializarnNombreArmadura(armadura);
-            do {
-                terminal.preguntarDefensaArmadura();
-                rightValue = factoriaVampiros.inicializarDefensaArmadura(armadura);
-            } while (!rightValue);
-            do {
-                terminal.preguntarAtaqueArmadura();
-                rightValue = factoriaVampiros.inicializarAtaqueArmadura(armadura);
-            } while (!rightValue);
-            factoriaVampiros.addArmadura(armadura, armaduras);
-        }
-        factoriaVampiros.setArmaduras(vampiro, armaduras);
-        do {
-            terminal.mostrarArmaduras(armaduras);
-            rightValue = factoriaVampiros.addArmaduraActiva(vampiro, armadura, armaduras);
-        } while (!rightValue);
-        do {
-            terminal.preguntarOro();
-            rightValue = factoriaVampiros.inicializarOro(vampiro);
-        } while (!rightValue);
-        do {
-            terminal.preguntarHP();
-            rightValue = factoriaVampiros.inicializarHP(vampiro);
-        } while (!rightValue);
-        do {
-            terminal.preguntarPoder();
-            rightValue = factoriaVampiros.inicializarPoder(vampiro);
-        } while (!rightValue);
-        terminal.peguntarNumDebilidades();
-        int numDebilidades = factoriaVampiros.askNum();
-        for (int iterator = 1; iterator <= numDebilidades; iterator++) {
-            terminal.preguntarNombreDebilidad();
-            factoriaVampiros.inicializarNombreDebilidad(debilidad);
-            terminal.preguntarValorDebilidad();
-            factoriaVampiros.inicializarValorDebilidad(debilidad);
-            factoriaVampiros.addDebilidad(debilidades, debilidad);
-        }
-        factoriaVampiros.setDebilidades(vampiro, debilidades);
-        terminal.peguntarNumFortalezas();
-        int numFortalezas = factoriaVampiros.askNum();
-        for (int iterator = 1; iterator <= numFortalezas; iterator++) {
-            terminal.preguntarNombreFortaleza();
-            factoriaVampiros.inicializarNombreFortaleza(fortaleza);
-            terminal.preguntarValorFortaleza();
-            factoriaVampiros.inicializarValorFortaleza(fortaleza);
-            factoriaVampiros.addFortaleza(fortalezas, fortaleza);
-        }
-        factoriaVampiros.setFortalezas(vampiro, fortalezas);
+        setNombreYHabilidadVampiro(factoriaVampiros, terminal, vampiro, disciplina);
+        setAllArmasVampiro(aux1, aux2, factoriaVampiros, terminal, vampiro, armas, armasActivas);
+        setAllAmadurasVampiro(factoriaVampiros, terminal, vampiro, armaduras, armadura);
+        setOroHpPoderVampiro(factoriaVampiros, terminal, vampiro);
+        setModificadoresVampiro(factoriaVampiros, terminal, vampiro, debilidad, fortaleza, debilidades, fortalezas);
         terminal.preguntarEdadVampiro();
         factoriaVampiros.setEdad(vampiro);
         vampiro.setSangre(0);
-        terminal.preguntarNumEsbirros();
-        int numEsbirros = factoriaVampiros.askNum();
-        for (int iterator = 1; iterator <= numEsbirros; iterator++) {
-            EsbirrosComposite esbirro = new EsbirrosComposite();
-            esbirro = esbirro.crearEsbirro(true);
-            esbirros.add(esbirro);
-        }
-        vampiro.setEsbirros(esbirros);
+        setEsbirrosVampiro(factoriaVampiros, terminal, vampiro, esbirros);
         vampiro.setTipo("VAMPIRO");
         return vampiro;
     }
 
     public Cazador crearCazador() {
 
-        boolean rightValue;
-        boolean[] rightWeapon;
         boolean[] aux1 = new boolean[]{true, true};
         boolean[] aux2 = new boolean[]{true, false};
 
@@ -198,126 +80,14 @@ public class Cliente extends User {
         ArrayList<Debilidad> debilidades = new ArrayList<>();
         ArrayList<Fortaleza> fortalezas = new ArrayList<>();
         Armadura armadura = new Armadura();
-        Arma arma = new Arma();
         ArrayList<EsbirrosComposite> esbirros = new ArrayList<>();
 
-        terminal.preguntarNombre();
-        factoriaCazadores.inicializarNombre(cazador);
-        terminal.preguntarNombreHabilidad();
-        factoriaCazadores.inicializarNombreHabilidad(talento);
-        do {
-            terminal.preguntarAtaqueHabilidad();
-            rightValue = factoriaCazadores.inicializarAtaqueHabilidad(talento);
-        } while (!rightValue);
-        do {
-            terminal.preguntarDefensaHabilidad();
-            rightValue = factoriaCazadores.inicializarDefensaHabilidad(talento);
-        } while (!rightValue);
-        terminal.preguntarEdadHabilidad();
-        factoriaCazadores.inicializarEdadHabilidad(talento);
-        factoriaCazadores.setHabilidad(cazador, talento);
-        int numArmas;
-        do {
-            terminal.preguntarNumArmas();
-            numArmas = factoriaCazadores.askNum();
-        } while (numArmas < 1);
-        for (int iterator = 1; iterator <= numArmas; iterator++) {
-            arma = new Arma();
-            terminal.preguntarNombreArma();
-            factoriaCazadores.inicializarnNombreArma(arma);
-            do {
-                terminal.preguntarAtaqueArma();
-                rightValue = factoriaCazadores.inicializarAtaqueArma(arma);
-            } while (!rightValue);
-            do {
-                terminal.preguntarDefensaArma();
-                rightValue = factoriaCazadores.inicializarDefensaArma(arma);
-            } while (!rightValue);
-            do {
-                terminal.peguntarSingleHandArma();
-                rightValue = factoriaCazadores.inicializarSingleHandArma(arma);
-            } while (!rightValue);
-            factoriaCazadores.addArma(armas, arma);
-        }
-        factoriaCazadores.setArmas(cazador, armas);
-        do {
-            terminal.mostrarArmas(armas);
-            rightWeapon = factoriaCazadores.addArmaActiva(armas, armasActivas);
-        } while (!Arrays.equals(rightWeapon, aux1) && !Arrays.equals(rightWeapon, aux2));
-        if (Arrays.equals(rightWeapon, aux1)) {
-            do {
-                terminal.otroArma(armas, armasActivas.get(0));
-                rightValue = factoriaCazadores.addArmaActiva2(armas, armasActivas);
-                if (!rightValue){
-                    terminal.ErrNumSelec();
-                }
-            } while (!rightValue);
-        }
-        factoriaCazadores.setArmasActivas(cazador, armasActivas);
-        int numArmaduras;
-        do {
-            terminal.preguntarNumArmaduras();
-            numArmaduras = factoriaCazadores.askNum();
-        } while (numArmaduras < 1);
-        for (int iterator = 1; iterator <= numArmaduras; iterator++) {
-            armadura = new Armadura();
-            terminal.preguntarNombreArmadura();
-            factoriaCazadores.inicializarnNombreArmadura(armadura);
-            do {
-                terminal.preguntarDefensaArmadura();
-                rightValue = factoriaCazadores.inicializarDefensaArmadura(armadura);
-            } while (!rightValue);
-            do {
-                terminal.preguntarAtaqueArmadura();
-                rightValue = factoriaCazadores.inicializarAtaqueArmadura(armadura);
-            } while (!rightValue);
-            factoriaCazadores.addArmadura(armadura, armaduras);
-        }
-        factoriaCazadores.setArmaduras(cazador, armaduras);
-        do {
-            terminal.mostrarArmaduras(armaduras);
-            rightValue = factoriaCazadores.addArmaduraActiva(cazador, armadura, armaduras);
-        } while (!rightValue);
-        do {
-            terminal.preguntarOro();
-            rightValue = factoriaCazadores.inicializarOro(cazador);
-        } while (!rightValue);
-        do {
-            terminal.preguntarHP();
-            rightValue = factoriaCazadores.inicializarHP(cazador);
-        } while (!rightValue);
-        do {
-            terminal.preguntarPoder();
-            rightValue = factoriaCazadores.inicializarPoder(cazador);
-        } while (!rightValue);
-        terminal.peguntarNumDebilidades();
-        int numDebilidades = factoriaCazadores.askNum();
-        for (int iterator = 1; iterator <= numDebilidades; iterator++) {
-            terminal.preguntarNombreDebilidad();
-            factoriaCazadores.inicializarNombreDebilidad(debilidad);
-            terminal.preguntarValorDebilidad();
-            factoriaCazadores.inicializarValorDebilidad(debilidad);
-            factoriaCazadores.addDebilidad(debilidades, debilidad);
-        }
-        factoriaCazadores.setDebilidades(cazador, debilidades);
-        terminal.peguntarNumFortalezas();
-        int numFortalezas = factoriaCazadores.askNum();
-        for (int iterator = 1; iterator <= numFortalezas; iterator++) {
-            terminal.preguntarNombreFortaleza();
-            factoriaCazadores.inicializarNombreFortaleza(fortaleza);
-            terminal.preguntarValorFortaleza();
-            factoriaCazadores.inicializarValorFortaleza(fortaleza);
-            factoriaCazadores.addFortaleza(fortalezas, fortaleza);
-        }
-        factoriaCazadores.setFortalezas(cazador, fortalezas);
-        terminal.preguntarNumEsbirros();
-        int numEsbirros = factoriaCazadores.askNum();
-        for (int iterator = 1; iterator <= numEsbirros; iterator++) {
-            EsbirrosComposite esbirro = new EsbirrosComposite();
-            esbirro = esbirro.crearEsbirro(false);
-            esbirros.add(esbirro);
-        }
-        cazador.setEsbirros(esbirros);
+        setNombreYHabilidadCazador(factoriaCazadores, terminal, cazador, talento);
+        setAllArmasCazador(aux1, aux2, factoriaCazadores, terminal, cazador, armas, armasActivas);
+        setAllArmadurasCazador(factoriaCazadores, terminal, cazador, armaduras, armadura);
+        setOroHpPoderCazador(factoriaCazadores, terminal, cazador);
+        setModificadoresCazador(factoriaCazadores, terminal, cazador, debilidad, fortaleza, debilidades, fortalezas);
+        setEsbirrosCazador(factoriaCazadores, cazador, esbirros);
         cazador.setVoluntad(3);
         cazador.setTipo("CAZADOR");
         return cazador;
@@ -325,16 +95,13 @@ public class Cliente extends User {
 
     public Licantropo crearLicantropo() {
 
-        boolean rightValue;
-        boolean[] rightWeapon;
         boolean[] aux1 = new boolean[]{true, true};
         boolean[] aux2 = new boolean[]{true, false};
 
-        FactoriaLicantropos FL = new FactoriaLicantropos();
+        FactoriaLicantropos factoriaLicantropo = new FactoriaLicantropos();
         Terminal terminal = new Terminal();
         Licantropo licantropo = new Licantropo();
         Don don = new Don();
-        Arma arma = new Arma();
         ArrayList<Arma> armas = new ArrayList<>();
         ArrayList<Arma> armasActivas = new ArrayList<>();
         Armadura armadura = new Armadura();
@@ -345,112 +112,12 @@ public class Cliente extends User {
         ArrayList<Fortaleza> fortalezas = new ArrayList<>();
         ArrayList<EsbirrosComposite> esbirros = new ArrayList<>();
 
-        terminal.preguntarNombre();
-        FL.inicializarNombre(licantropo);
-        terminal.preguntarNombreHabilidad();
-        FL.inicializarNombreHabilidad(don);
-        licantropo.setRabia(0);
-        do {
-            terminal.preguntarRabiaHabilidad();
-            rightValue = FL.inicializarRabiaHabilidad(don);
-        } while (!rightValue);
-        FL.setHabilidad(licantropo, don);
-        terminal.preguntarNumArmas();
-        int numArmas = FL.askNum();
-        for (int iterator = 1; iterator <= numArmas; iterator++) {
-            arma = new Arma();
-            terminal.preguntarNombreArma();
-            FL.inicializarnNombreArma(arma);
-            do {
-                terminal.preguntarAtaqueArma();
-                rightValue = FL.inicializarAtaqueArma(arma);
-            } while (!rightValue);
-            do {
-                terminal.preguntarDefensaArma();
-                rightValue = FL.inicializarDefensaArma(arma);
-            } while (!rightValue);
-            do {
-                terminal.peguntarSingleHandArma();
-                rightValue = FL.inicializarSingleHandArma(arma);
-            } while (!rightValue);
-            FL.addArma(armas, arma);
-        }
-        FL.setArmas(licantropo, armas);
-        do {
-            terminal.mostrarArmas(armas);
-            rightWeapon = FL.addArmaActiva(armas, armasActivas);
-        } while (!Arrays.equals(rightWeapon, aux1) && !Arrays.equals(rightWeapon, aux2));
-        if (Arrays.equals(rightWeapon, aux1)) {
-            do {
-                terminal.otroArma(armas, armasActivas.get(0));
-                rightValue = FL.addArmaActiva2(armas, armasActivas);
-                if (!rightValue){
-                    terminal.ErrNumSelec();
-                }
-            } while (!rightValue);
-        }
-
-        terminal.preguntarNumArmaduras();
-        int numArmaduras = FL.askNum();
-        for (int iterator = 1; iterator <= numArmaduras; iterator++) {
-            armadura = new Armadura();
-            terminal.preguntarNombreArmadura();
-            FL.inicializarNombreArmadura(armadura);
-            do {
-                terminal.preguntarDefensaArmadura();
-                rightValue = FL.inicializarDefensaArmadura(armadura);
-            } while (!rightValue);
-            do {
-                terminal.preguntarAtaqueArmadura();
-                rightValue = FL.inicializarAtaqueArmadura(arma);
-            } while (!rightValue);
-            FL.addArmadura(armadura, armaduras);
-        }
-        FL.setArmaduras(licantropo, armaduras);
-        do {
-            terminal.mostrarArmaduras(armaduras);
-            rightValue = FL.addArmaduraActiva(licantropo, armadura, armaduras);
-        } while (!rightValue);
-        do {
-            terminal.preguntarOro();
-            rightValue = FL.inicializarOro(licantropo);
-        } while (!rightValue);
-        do {
-            terminal.preguntarHP();
-            rightValue = FL.inicializarHP(licantropo);
-        } while (!rightValue);
-        do {
-            terminal.preguntarPoder();
-            rightValue = FL.inicializarPoder(licantropo);
-        } while (!rightValue);
-        terminal.peguntarNumDebilidades();
-        int numDebilidades = FL.askNum();
-        for (int iterator = 1; iterator <= numDebilidades; iterator++) {
-            terminal.preguntarNombreDebilidad();
-            FL.inicializarNombreDebilidad(debilidad);
-            terminal.preguntarValorDebilidad();
-            FL.inicializarValorDebilidad(debilidad);
-            FL.addDebilidad(debilidades, debilidad);
-        }
-        FL.setDebilidades(licantropo, debilidades);
-        terminal.peguntarNumFortalezas();
-        int numFortalezas = FL.askNum();
-        for (int iterator = 1; iterator <= numFortalezas; iterator++) {
-            terminal.preguntarNombreFortaleza();
-            FL.inicializarNombreFortaleza(fortaleza);
-            terminal.preguntarValorFortaleza();
-            FL.inicializarValorFortaleza(fortaleza);
-            FL.addFortaleza(fortalezas, fortaleza);
-        }
-        FL.setFortalezas(licantropo, fortalezas);
-        terminal.preguntarNumEsbirros();
-        int numEsbirros = FL.askNum();
-        for (int iterator = 1; iterator <= numEsbirros; iterator++) {
-            EsbirrosComposite esbirro = new EsbirrosComposite();
-            esbirro = esbirro.crearEsbirro(false);
-            esbirros.add(esbirro);
-        }
-        licantropo.setEsbirros(esbirros);
+        setNombreYHabilidadLicantropo(factoriaLicantropo, terminal, licantropo, don);
+        setAllArmasLicantropo(aux1, aux2, factoriaLicantropo, terminal, licantropo, armas, armasActivas);
+        setAllArmadurasLicantropo(factoriaLicantropo, terminal, licantropo, armadura, armaduras);
+        setOroHpPoderLicantropo(factoriaLicantropo, terminal, licantropo);
+        setModificadoresLicantropo(factoriaLicantropo, terminal, licantropo, debilidad, fortaleza, debilidades, fortalezas, esbirros);
+        setEsbirrosLicantropo(factoriaLicantropo, licantropo, esbirros);
         licantropo.setTipo("LICANTROPO");
         return licantropo;
     }
@@ -581,8 +248,7 @@ public class Cliente extends User {
     }
 
     public char getLetra() {
-        char paramChar = (char) (Math.random() * 26 + 'a');
-        return paramChar;
+        return (char) (Math.random() * 26 + 'a');
     }
 
     public char getNumber() {
@@ -595,6 +261,7 @@ public class Cliente extends User {
         terminal.ranking();
         Cliente cliente = new Cliente();
         ArrayList<Cliente> lista = new ArrayList<>();
+        lista.add(cliente);
         //coger lista clientes de ficheros y guardarlos en lista
         ArrayList<Cliente> listaAux = new ArrayList<>();
 
@@ -612,6 +279,423 @@ public class Cliente extends User {
             }
         }
         terminal.mostrarRanking(listaAux);
+    }
+
+    private void setEsbirrosVampiro(FactoriaVampiros factoriaVampiros, Terminal terminal, Vampiro vampiro, ArrayList<EsbirrosComposite> esbirros) {
+        terminal.preguntarNumEsbirros();
+        int numEsbirros = factoriaVampiros.askNum();
+        for (int iterator = 1; iterator <= numEsbirros; iterator++) {
+            EsbirrosComposite esbirro = new EsbirrosComposite();
+            esbirro = esbirro.crearEsbirro(true);
+            esbirros.add(esbirro);
+        }
+        vampiro.setEsbirros(esbirros);
+    }
+
+    private void setModificadoresVampiro(FactoriaVampiros factoriaVampiros, Terminal terminal, Vampiro vampiro, Debilidad debilidad, Fortaleza fortaleza, ArrayList<Debilidad> debilidades, ArrayList<Fortaleza> fortalezas) {
+        terminal.peguntarNumDebilidades();
+        int numDebilidades = factoriaVampiros.askNum();
+        for (int iterator = 1; iterator <= numDebilidades; iterator++) {
+            terminal.preguntarNombreDebilidad();
+            factoriaVampiros.inicializarNombreDebilidad(debilidad);
+            terminal.preguntarValorDebilidad();
+            factoriaVampiros.inicializarValorDebilidad(debilidad);
+            factoriaVampiros.addDebilidad(debilidades, debilidad);
+        }
+        factoriaVampiros.setDebilidades(vampiro, debilidades);
+        terminal.peguntarNumFortalezas();
+        int numFortalezas = factoriaVampiros.askNum();
+        for (int iterator = 1; iterator <= numFortalezas; iterator++) {
+            terminal.preguntarNombreFortaleza();
+            factoriaVampiros.inicializarNombreFortaleza(fortaleza);
+            terminal.preguntarValorFortaleza();
+            factoriaVampiros.inicializarValorFortaleza(fortaleza);
+            factoriaVampiros.addFortaleza(fortalezas, fortaleza);
+        }
+        factoriaVampiros.setFortalezas(vampiro, fortalezas);
+    }
+
+    private void setOroHpPoderVampiro(FactoriaVampiros factoriaVampiros, Terminal terminal, Vampiro vampiro) {
+        boolean rightValue;
+        do {
+            terminal.preguntarOro();
+            rightValue = factoriaVampiros.inicializarOro(vampiro);
+        } while (!rightValue);
+        do {
+            terminal.preguntarHP();
+            rightValue = factoriaVampiros.inicializarHP(vampiro);
+        } while (!rightValue);
+        do {
+            terminal.preguntarPoder();
+            rightValue = factoriaVampiros.inicializarPoder(vampiro);
+        } while (!rightValue);
+    }
+
+    private void setAllAmadurasVampiro(FactoriaVampiros factoriaVampiros, Terminal terminal, Vampiro vampiro, ArrayList<Armadura> armaduras, Armadura armadura) {
+        boolean rightValue;
+        int numArmaduras;
+        do {
+            terminal.preguntarNumArmaduras();
+            numArmaduras = factoriaVampiros.askNum();
+        } while (numArmaduras < 1);
+        for (int iterator = 1; iterator <= numArmaduras; iterator++) {
+            armadura = new Armadura();
+            terminal.preguntarNombreArmadura();
+            factoriaVampiros.inicializarnNombreArmadura(armadura);
+            do {
+                terminal.preguntarDefensaArmadura();
+                rightValue = factoriaVampiros.inicializarDefensaArmadura(armadura);
+            } while (!rightValue);
+            do {
+                terminal.preguntarAtaqueArmadura();
+                rightValue = factoriaVampiros.inicializarAtaqueArmadura(armadura);
+            } while (!rightValue);
+            factoriaVampiros.addArmadura(armadura, armaduras);
+        }
+        factoriaVampiros.setArmaduras(vampiro, armaduras);
+        do {
+            terminal.mostrarArmaduras(armaduras);
+            rightValue = factoriaVampiros.addArmaduraActiva(vampiro, armadura, armaduras);
+        } while (!rightValue);
+    }
+
+    private void setAllArmasVampiro(boolean[] aux1, boolean[] aux2, FactoriaVampiros factoriaVampiros, Terminal terminal, Vampiro vampiro, ArrayList<Arma> armas, ArrayList<Arma> armasActivas) {
+        boolean[] rightWeapon;
+        boolean rightValue;
+        int numArmas;
+        do {
+            terminal.preguntarNumArmas();
+            numArmas = factoriaVampiros.askNum();
+        } while (numArmas < 1);
+        for (int iterator = 1; iterator <= numArmas; iterator++) {
+            Arma arma = new Arma();
+            terminal.preguntarNombreArma();
+            factoriaVampiros.inicializarnNombreArma(arma);
+            do {
+                terminal.preguntarAtaqueArma();
+                rightValue = factoriaVampiros.inicializarAtaqueArma(arma);
+            } while (!rightValue);
+            do {
+                terminal.preguntarDefensaArma();
+                rightValue = factoriaVampiros.inicializarDefensaArma(arma);
+            } while (!rightValue);
+            do {
+                terminal.peguntarSingleHandArma();
+                rightValue = factoriaVampiros.inicializarSingleHandArma(arma);
+            } while (!rightValue);
+            factoriaVampiros.addArma(armas, arma);
+        }
+        factoriaVampiros.setArmas(vampiro, armas);
+        do {
+            terminal.mostrarArmas(armas);
+            rightWeapon = factoriaVampiros.addArmaActiva(armas, armasActivas);
+        } while (!Arrays.equals(rightWeapon, aux1) && !Arrays.equals(rightWeapon, aux2));
+        if (Arrays.equals(rightWeapon, aux1)) {
+            do {
+                terminal.otroArma(armas, armasActivas.get(0));
+                rightValue = factoriaVampiros.addArmaActiva2(armas, armasActivas);
+                if (!rightValue){
+                    terminal.ErrNumSelec();
+                }
+            } while (!rightValue);
+        }
+        factoriaVampiros.setArmasActivas(vampiro, armasActivas);
+    }
+
+    private void setNombreYHabilidadVampiro(FactoriaVampiros factoriaVampiros, Terminal terminal, Vampiro vampiro, Disciplina disciplina) {
+        boolean rightValue;
+        terminal.preguntarNombre();
+        factoriaVampiros.inicializarNombre(vampiro);
+        terminal.preguntarNombreHabilidad();
+        factoriaVampiros.inicializarNombreHabilidad(disciplina);
+        do {
+            terminal.preguntarAtaqueHabilidad();
+            rightValue = factoriaVampiros.inicializarAtaqueHabilidad(disciplina);
+        } while (!rightValue);
+        do {
+            terminal.preguntarDefensaHabilidad();
+            rightValue = factoriaVampiros.inicializarDefensaHabilidad(disciplina);
+        } while (!rightValue);
+        do {
+            terminal.preguntarCosteHabilidad();
+            rightValue = factoriaVampiros.inicializarCosteHabilidad(disciplina);
+        } while (!rightValue);
+        factoriaVampiros.setHabilidad(vampiro, disciplina);
+    }
+
+    private void setEsbirrosCazador(FactoriaCazadores factoriaCazadores, Cazador cazador, ArrayList<EsbirrosComposite> esbirros) {
+        int numEsbirros = factoriaCazadores.askNum();
+        for (int iterator = 1; iterator <= numEsbirros; iterator++) {
+            EsbirrosComposite esbirro = new EsbirrosComposite();
+            esbirro = esbirro.crearEsbirro(false);
+            esbirros.add(esbirro);
+        }
+        cazador.setEsbirros(esbirros);
+    }
+
+    private void setModificadoresCazador(FactoriaCazadores factoriaCazadores, Terminal terminal, Cazador cazador, Debilidad debilidad, Fortaleza fortaleza, ArrayList<Debilidad> debilidades, ArrayList<Fortaleza> fortalezas) {
+        terminal.peguntarNumDebilidades();
+        int numDebilidades = factoriaCazadores.askNum();
+        for (int iterator = 1; iterator <= numDebilidades; iterator++) {
+            terminal.preguntarNombreDebilidad();
+            factoriaCazadores.inicializarNombreDebilidad(debilidad);
+            terminal.preguntarValorDebilidad();
+            factoriaCazadores.inicializarValorDebilidad(debilidad);
+            factoriaCazadores.addDebilidad(debilidades, debilidad);
+        }
+        factoriaCazadores.setDebilidades(cazador, debilidades);
+        terminal.peguntarNumFortalezas();
+        int numFortalezas = factoriaCazadores.askNum();
+        for (int iterator = 1; iterator <= numFortalezas; iterator++) {
+            terminal.preguntarNombreFortaleza();
+            factoriaCazadores.inicializarNombreFortaleza(fortaleza);
+            terminal.preguntarValorFortaleza();
+            factoriaCazadores.inicializarValorFortaleza(fortaleza);
+            factoriaCazadores.addFortaleza(fortalezas, fortaleza);
+        }
+        factoriaCazadores.setFortalezas(cazador, fortalezas);
+        terminal.preguntarNumEsbirros();
+    }
+
+    private void setOroHpPoderCazador(FactoriaCazadores factoriaCazadores, Terminal terminal, Cazador cazador) {
+        boolean rightValue;
+        do {
+            terminal.preguntarOro();
+            rightValue = factoriaCazadores.inicializarOro(cazador);
+        } while (!rightValue);
+        do {
+            terminal.preguntarHP();
+            rightValue = factoriaCazadores.inicializarHP(cazador);
+        } while (!rightValue);
+        do {
+            terminal.preguntarPoder();
+            rightValue = factoriaCazadores.inicializarPoder(cazador);
+        } while (!rightValue);
+    }
+
+    private void setAllArmadurasCazador(FactoriaCazadores factoriaCazadores, Terminal terminal, Cazador cazador, ArrayList<Armadura> armaduras, Armadura armadura) {
+        boolean rightValue;
+        int numArmaduras;
+        do {
+            terminal.preguntarNumArmaduras();
+            numArmaduras = factoriaCazadores.askNum();
+        } while (numArmaduras < 1);
+        for (int iterator = 1; iterator <= numArmaduras; iterator++) {
+            armadura = new Armadura();
+            terminal.preguntarNombreArmadura();
+            factoriaCazadores.inicializarnNombreArmadura(armadura);
+            do {
+                terminal.preguntarDefensaArmadura();
+                rightValue = factoriaCazadores.inicializarDefensaArmadura(armadura);
+            } while (!rightValue);
+            do {
+                terminal.preguntarAtaqueArmadura();
+                rightValue = factoriaCazadores.inicializarAtaqueArmadura(armadura);
+            } while (!rightValue);
+            factoriaCazadores.addArmadura(armadura, armaduras);
+        }
+        factoriaCazadores.setArmaduras(cazador, armaduras);
+        do {
+            terminal.mostrarArmaduras(armaduras);
+            rightValue = factoriaCazadores.addArmaduraActiva(cazador, armadura, armaduras);
+        } while (!rightValue);
+    }
+
+    private void setAllArmasCazador(boolean[] aux1, boolean[] aux2, FactoriaCazadores factoriaCazadores, Terminal terminal, Cazador cazador, ArrayList<Arma> armas, ArrayList<Arma> armasActivas) {
+        boolean rightValue;
+        boolean[] rightWeapon;
+        Arma arma;
+        int numArmas;
+        do {
+            terminal.preguntarNumArmas();
+            numArmas = factoriaCazadores.askNum();
+        } while (numArmas < 1);
+        for (int iterator = 1; iterator <= numArmas; iterator++) {
+            arma = new Arma();
+            terminal.preguntarNombreArma();
+            factoriaCazadores.inicializarnNombreArma(arma);
+            do {
+                terminal.preguntarAtaqueArma();
+                rightValue = factoriaCazadores.inicializarAtaqueArma(arma);
+            } while (!rightValue);
+            do {
+                terminal.preguntarDefensaArma();
+                rightValue = factoriaCazadores.inicializarDefensaArma(arma);
+            } while (!rightValue);
+            do {
+                terminal.peguntarSingleHandArma();
+                rightValue = factoriaCazadores.inicializarSingleHandArma(arma);
+            } while (!rightValue);
+            factoriaCazadores.addArma(armas, arma);
+        }
+        factoriaCazadores.setArmas(cazador, armas);
+        do {
+            terminal.mostrarArmas(armas);
+            rightWeapon = factoriaCazadores.addArmaActiva(armas, armasActivas);
+        } while (!Arrays.equals(rightWeapon, aux1) && !Arrays.equals(rightWeapon, aux2));
+        if (Arrays.equals(rightWeapon, aux1)) {
+            do {
+                terminal.otroArma(armas, armasActivas.get(0));
+                rightValue = factoriaCazadores.addArmaActiva2(armas, armasActivas);
+                if (!rightValue){
+                    terminal.ErrNumSelec();
+                }
+            } while (!rightValue);
+        }
+        factoriaCazadores.setArmasActivas(cazador, armasActivas);
+    }
+
+    private void setNombreYHabilidadCazador(FactoriaCazadores factoriaCazadores, Terminal terminal, Cazador cazador, Talento talento) {
+        boolean rightValue;
+        terminal.preguntarNombre();
+        factoriaCazadores.inicializarNombre(cazador);
+        terminal.preguntarNombreHabilidad();
+        factoriaCazadores.inicializarNombreHabilidad(talento);
+        do {
+            terminal.preguntarAtaqueHabilidad();
+            rightValue = factoriaCazadores.inicializarAtaqueHabilidad(talento);
+        } while (!rightValue);
+        do {
+            terminal.preguntarDefensaHabilidad();
+            rightValue = factoriaCazadores.inicializarDefensaHabilidad(talento);
+        } while (!rightValue);
+        terminal.preguntarEdadHabilidad();
+        factoriaCazadores.inicializarEdadHabilidad(talento);
+        factoriaCazadores.setHabilidad(cazador, talento);
+    }
+
+    private void setEsbirrosLicantropo(FactoriaLicantropos factoriaLicantropo, Licantropo licantropo, ArrayList<EsbirrosComposite> esbirros) {
+        int numEsbirros = factoriaLicantropo.askNum();
+        for (int iterator = 1; iterator <= numEsbirros; iterator++) {
+            EsbirrosComposite esbirro = new EsbirrosComposite();
+            esbirro = esbirro.crearEsbirro(false);
+            esbirros.add(esbirro);
+        }
+        licantropo.setEsbirros(esbirros);
+    }
+
+    private void setModificadoresLicantropo(FactoriaLicantropos factoriaLicantropo, Terminal terminal, Licantropo licantropo, Debilidad debilidad, Fortaleza fortaleza, ArrayList<Debilidad> debilidades, ArrayList<Fortaleza> fortalezas, ArrayList<EsbirrosComposite> esbirros) {
+        terminal.peguntarNumDebilidades();
+        int numDebilidades = factoriaLicantropo.askNum();
+        for (int iterator = 1; iterator <= numDebilidades; iterator++) {
+            terminal.preguntarNombreDebilidad();
+            factoriaLicantropo.inicializarNombreDebilidad(debilidad);
+            terminal.preguntarValorDebilidad();
+            factoriaLicantropo.inicializarValorDebilidad(debilidad);
+            factoriaLicantropo.addDebilidad(debilidades, debilidad);
+        }
+        factoriaLicantropo.setDebilidades(licantropo, debilidades);
+        terminal.peguntarNumFortalezas();
+        int numFortalezas = factoriaLicantropo.askNum();
+        for (int iterator = 1; iterator <= numFortalezas; iterator++) {
+            terminal.preguntarNombreFortaleza();
+            factoriaLicantropo.inicializarNombreFortaleza(fortaleza);
+            terminal.preguntarValorFortaleza();
+            factoriaLicantropo.inicializarValorFortaleza(fortaleza);
+            factoriaLicantropo.addFortaleza(fortalezas, fortaleza);
+        }
+        factoriaLicantropo.setFortalezas(licantropo, fortalezas);
+        terminal.preguntarNumEsbirros();
+        int numEsbirros = factoriaLicantropo.askNum();
+        for (int iterator = 1; iterator <= numEsbirros; iterator++) {
+            EsbirrosComposite esbirro = new EsbirrosComposite();
+            esbirro = esbirro.crearEsbirro(false);
+            esbirros.add(esbirro);
+        }
+    }
+
+    private void setOroHpPoderLicantropo(FactoriaLicantropos factoriaLicantropo, Terminal terminal, Licantropo licantropo) {
+        boolean rightValue;
+        do {
+            terminal.preguntarOro();
+            rightValue = factoriaLicantropo.inicializarOro(licantropo);
+        } while (!rightValue);
+        do {
+            terminal.preguntarHP();
+            rightValue = factoriaLicantropo.inicializarHP(licantropo);
+        } while (!rightValue);
+        do {
+            terminal.preguntarPoder();
+            rightValue = factoriaLicantropo.inicializarPoder(licantropo);
+        } while (!rightValue);
+    }
+
+    private void setAllArmadurasLicantropo(FactoriaLicantropos factoriaLicantropo, Terminal terminal, Licantropo licantropo, Armadura armadura, ArrayList<Armadura> armaduras) {
+        boolean rightValue;
+        terminal.preguntarNumArmaduras();
+        int numArmaduras = factoriaLicantropo.askNum();
+        for (int iterator = 1; iterator <= numArmaduras; iterator++) {
+            armadura = new Armadura();
+            terminal.preguntarNombreArmadura();
+            factoriaLicantropo.inicializarNombreArmadura(armadura);
+            do {
+                terminal.preguntarDefensaArmadura();
+                rightValue = factoriaLicantropo.inicializarDefensaArmadura(armadura);
+            } while (!rightValue);
+            do {
+                terminal.preguntarAtaqueArmadura();
+                rightValue = factoriaLicantropo.inicializarAtaqueArmadura(armadura);
+            } while (!rightValue);
+            factoriaLicantropo.addArmadura(armadura, armaduras);
+        }
+        factoriaLicantropo.setArmaduras(licantropo, armaduras);
+        do {
+            terminal.mostrarArmaduras(armaduras);
+            rightValue = factoriaLicantropo.addArmaduraActiva(licantropo, armadura, armaduras);
+        } while (!rightValue);
+    }
+
+    private void setAllArmasLicantropo(boolean[] aux1, boolean[] aux2, FactoriaLicantropos factoriaLicantropo, Terminal terminal, Licantropo licantropo, ArrayList<Arma> armas, ArrayList<Arma> armasActivas) {
+        boolean[] rightWeapon;
+        boolean rightValue;
+        int numArmas = factoriaLicantropo.askNum();
+        for (int iterator = 1; iterator <= numArmas; iterator++) {
+            Arma arma = new Arma();
+            terminal.preguntarNombreArma();
+            factoriaLicantropo.inicializarnNombreArma(arma);
+            do {
+                terminal.preguntarAtaqueArma();
+                rightValue = factoriaLicantropo.inicializarAtaqueArma(arma);
+            } while (!rightValue);
+            do {
+                terminal.preguntarDefensaArma();
+                rightValue = factoriaLicantropo.inicializarDefensaArma(arma);
+            } while (!rightValue);
+            do {
+                terminal.peguntarSingleHandArma();
+                rightValue = factoriaLicantropo.inicializarSingleHandArma(arma);
+            } while (!rightValue);
+            factoriaLicantropo.addArma(armas, arma);
+        }
+        factoriaLicantropo.setArmas(licantropo, armas);
+        do {
+            terminal.mostrarArmas(armas);
+            rightWeapon = factoriaLicantropo.addArmaActiva(armas, armasActivas);
+        } while (!Arrays.equals(rightWeapon, aux1) && !Arrays.equals(rightWeapon, aux2));
+        if (Arrays.equals(rightWeapon, aux1)) {
+            do {
+                terminal.otroArma(armas, armasActivas.get(0));
+                rightValue = factoriaLicantropo.addArmaActiva2(armas, armasActivas);
+                if (!rightValue){
+                    terminal.ErrNumSelec();
+                }
+            } while (!rightValue);
+        }
+    }
+
+    private void setNombreYHabilidadLicantropo(FactoriaLicantropos factoriaLicantropo, Terminal terminal, Licantropo licantropo, Don don) {
+        boolean rightValue;
+        terminal.preguntarNombre();
+        factoriaLicantropo.inicializarNombre(licantropo);
+        terminal.preguntarNombreHabilidad();
+        factoriaLicantropo.inicializarNombreHabilidad(don);
+        licantropo.setRabia(0);
+        do {
+            terminal.preguntarRabiaHabilidad();
+            rightValue = factoriaLicantropo.inicializarRabiaHabilidad(don);
+        } while (!rightValue);
+        factoriaLicantropo.setHabilidad(licantropo, don);
+        terminal.preguntarNumArmas();
     }
 }
 

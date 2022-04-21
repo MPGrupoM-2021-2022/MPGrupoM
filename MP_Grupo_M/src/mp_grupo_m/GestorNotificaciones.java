@@ -4,7 +4,6 @@ import mp_grupo_m.Entidades.Cliente;
 import mp_grupo_m.Entidades.Combate;
 import mp_grupo_m.Entidades.Desafio;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -16,21 +15,21 @@ public class GestorNotificaciones {
         //gurdar nuevo desafio en su fichero
     }
 
-    private void unsubscribeDesafio(Desafio desafio, ArrayList<Desafio> listaDesafios){
+    private void unsubscribeDesafio(Desafio desafio, ArrayList<Desafio> listaDesafios) {
         listaDesafios.add(desafio);
-        for (int i = 0; i < listaDesafios.size(); i++){
-            if (desafio.getRegistro().equals(listaDesafios.get(i).getRegistro())){
-                listaDesafios.remove(i);
+        for (int numDesafio = 0; numDesafio < listaDesafios.size(); numDesafio++) {
+            if (desafio.getRegistro().equals(listaDesafios.get(numDesafio).getRegistro())) {
+                listaDesafios.remove(numDesafio);
                 //sobreescribir fichero desafios
                 break;
             }
         }
     }
 
-    public void notifyDesafio(Cliente cliente, Terminal terminal, ArrayList<Desafio> listaDesafios, int i) {
+    public void notifyDesafio(Cliente cliente, Terminal terminal, ArrayList<Desafio> listaDesafios, int numDesafio) {
         int opcion;
         do {
-            terminal.preguntarDesafio(listaDesafios.get(i));
+            terminal.preguntarDesafio(listaDesafios.get(numDesafio));
             opcion = askNum();
         } while (opcion < 1 || opcion > 2);
         if (opcion == 1) {
@@ -39,43 +38,43 @@ public class GestorNotificaciones {
                 terminal.cambiarEquipo();
                 cambioEquipo = askNum();
             } while (cambioEquipo < 1 || cambioEquipo > 2);
-            if (cambioEquipo == 1){
+            if (cambioEquipo == 1) {
                 cliente.seleccionarEquipo(cliente);
             }
             Combate combate = new Combate();
-            combate.inicializarCombate(listaDesafios.get(i).getDesafiante(), cliente, listaDesafios.get(i).getOro(), listaDesafios.get(i).getModificadores(), listaDesafios.get(i).getRegistro());
+            combate = combate.inicializarCombate(listaDesafios.get(numDesafio).getDesafiante(), cliente, listaDesafios.get(numDesafio).getOro(), listaDesafios.get(numDesafio).getModificadores(), listaDesafios.get(numDesafio).getRegistro());
             combate = combate.empezarCombate(combate);
-            if (combate.getVencedor() != null){
-                if (combate.getVencedor().getNick().equals(cliente.getNick())){
-                    cliente.getPersonaje().setOro(cliente.getPersonaje().getOro() + listaDesafios.get(i).getOro());
+            if (combate.getVencedor() != null) {
+                if (combate.getVencedor().getNick().equals(cliente.getNick())) {
+                    cliente.getPersonaje().setOro(cliente.getPersonaje().getOro() + listaDesafios.get(numDesafio).getOro());
                     //leer fichero usuarios y sobreescribir cliente
                 } else {
                     //leer fichero clientes
                     ArrayList<Cliente> listaClientes = new ArrayList<>();
                     listaClientes.add(cliente);
-                    for (int j = 0; j < listaClientes.size(); j++){
-                        if (listaClientes.get(j).getNick().equals(listaDesafios.get(i).getDesafiante().getNick())){
-                            listaClientes.get(j).getPersonaje().setOro(listaClientes.get(j).getPersonaje().getOro() + listaDesafios.get(i).getOro()*2);
+                    for (int numCliente = 0; numCliente < listaClientes.size(); numCliente++) {
+                        if (listaClientes.get(numCliente).getNick().equals(listaDesafios.get(numDesafio).getDesafiante().getNick())) {
+                            listaClientes.get(numCliente).getPersonaje().setOro(listaClientes.get(numCliente).getPersonaje().getOro() + listaDesafios.get(numDesafio).getOro() * 2);
                             break;
                         }
                     }
-                    cliente.getPersonaje().setOro(cliente.getPersonaje().getOro() - listaDesafios.get(i).getOro());
+                    cliente.getPersonaje().setOro(cliente.getPersonaje().getOro() - listaDesafios.get(numDesafio).getOro());
                     //sobreescribir fichero clientes
                 }
             }
         } else {
-            cliente.getPersonaje().setOro(cliente.getPersonaje().getOro() - (listaDesafios.get(i).getOro()/10));
+            cliente.getPersonaje().setOro(cliente.getPersonaje().getOro() - (listaDesafios.get(numDesafio).getOro() / 10));
             //leer fichero clientes
             ArrayList<Cliente> listaClientes = new ArrayList<>();
             listaClientes.add(cliente);
-            for (int j = 0; j < listaClientes.size(); j++){
-                if (listaClientes.get(j).getNick().equals(listaDesafios.get(i).getDesafiante().getNick())){
-                    listaClientes.get(j).getPersonaje().setOro(listaClientes.get(j).getPersonaje().getOro() + listaDesafios.get(i).getOro() + (listaDesafios.get(i).getOro()/10));
+            for (int numCliente = 0; numCliente < listaClientes.size(); numCliente++) {
+                if (listaClientes.get(numCliente).getNick().equals(listaDesafios.get(numDesafio).getDesafiante().getNick())) {
+                    listaClientes.get(numCliente).getPersonaje().setOro(listaClientes.get(numCliente).getPersonaje().getOro() + listaDesafios.get(numDesafio).getOro() + (listaDesafios.get(numDesafio).getOro() / 10));
                     break;
                 }
             }
         }
-        unsubscribeDesafio(listaDesafios.get(i), listaDesafios);
+        unsubscribeDesafio(listaDesafios.get(numDesafio), listaDesafios);
     }
 
     public int askNum() {
@@ -88,26 +87,26 @@ public class GestorNotificaciones {
         terminal.mostrarCombate(combate);
     }
 
-    public void subscribeBan(Cliente cliente){
+    public void subscribeBan(Cliente cliente) {
         Terminal terminal = new Terminal();
         terminal.WIP();
         //escribir nick en el fichero de bans
     }
 
-    public void unsubscribeBan(Cliente cliente){
+    public void unsubscribeBan(Cliente cliente) {
         //leer fichero bans
         ArrayList<String> listaBans = new ArrayList<>();
         listaBans.add("nick");
-        for (int i = 0; i< listaBans.size(); i++){
-            if (listaBans.get(i).equals(cliente.getNick())){
-                listaBans.remove(i);
+        for (int numCliente = 0; numCliente < listaBans.size(); numCliente++) {
+            if (listaBans.get(numCliente).equals(cliente.getNick())) {
+                listaBans.remove(numCliente);
                 break;
             }
         }
         //sobreescribir fichero bans
     }
 
-    public void notifyBan(){
+    public void notifyBan() {
         Terminal terminal = new Terminal();
         terminal.cuentaBaneada();
     }

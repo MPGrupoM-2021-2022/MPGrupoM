@@ -106,7 +106,7 @@ public class Combate {
         this.visto = visto;
     }
 
-    public Combate inicializarCombate(Cliente desafiante, Cliente contrincante, int oro, ArrayList<Modificador> modificadores, String registro){
+    public Combate inicializarCombate(Cliente desafiante, Cliente contrincante, int oro, ArrayList<Modificador> modificadores, String registro) {
         setDesafiante(desafiante);
         setContrincante(contrincante);
         Date fechaHoy = new Date();
@@ -118,14 +118,14 @@ public class Combate {
         return this;
     }
 
-    public Combate empezarCombate(Combate combate){
+    public Combate empezarCombate(Combate combate) {
         int hpDesafiante = combate.getDesafiante().getPersonaje().getHp();
         int hpContrincante = combate.getContrincante().getPersonaje().getHp();
         hpDesafiante = setearHPinicial(combate.getDesafiante().getPersonaje(), hpDesafiante);
         hpContrincante = setearHPinicial(combate.getDesafiante().getPersonaje(), hpContrincante);
         boolean finCombate = false;
         ArrayList<Ronda> rondas = new ArrayList<>();
-        while (!finCombate){
+        while (!finCombate) {
             Ronda ronda = new Ronda();
             finCombate = ronda.iniciarRonda(hpDesafiante, hpContrincante, combate.getDesafiante(), combate.getContrincante(), combate.getModificadores());
             hpDesafiante = ronda.getHpDesafianteEnd();
@@ -133,18 +133,14 @@ public class Combate {
             rondas.add(ronda);
         }
         combate.setRondas(rondas);
-        if (rondas.get(rondas.size() - 1).getHpDesafianteEnd() > 0){
+        if (rondas.get(rondas.size() - 1).getHpDesafianteEnd() > 0) {
             combate.setVencedor(combate.getDesafiante());
-            if (rondas.get(rondas.size() - 1).getHpDesafianteEnd() > combate.getDesafiante().getPersonaje().getHp()){
-                combate.setEsbirrosDesafiante(true);
-            } else{
-                combate.setEsbirrosDesafiante(false);
-            }
+            combate.setEsbirrosDesafiante(rondas.get(rondas.size() - 1).getHpDesafianteEnd() > combate.getDesafiante().getPersonaje().getHp());
         } else if (rondas.get(rondas.size() - 1).getHpContrincanteEnd() > 0) {
             combate.setVencedor(combate.getContrincante());
             if (rondas.get(rondas.size() - 1).getHpContrincanteEnd() > combate.getContrincante().getPersonaje().getHp()) {
                 combate.setEsbirrosContrincante(true);
-            } else{
+            } else {
                 combate.setEsbirrosDesafiante(false);
             }
         }
@@ -154,24 +150,24 @@ public class Combate {
     }
 
     private int setearHPinicial(Personaje personaje, int hp) {
-        for (int i = 0; i < personaje.getEsbirros().size(); i++){
-            if (personaje.getEsbirros().get(i).getTipo().equals("Demonio")){
-                hp += personaje.getEsbirros().get(i).getHp();
-                hp += anadirHPesbirros((Demonio) personaje.getEsbirros().get(i), hp);
+        for (int numEsbirro = 0; numEsbirro < personaje.getEsbirros().size(); numEsbirro++) {
+            if (personaje.getEsbirros().get(numEsbirro).getTipo().equals("Demonio")) {
+                hp += personaje.getEsbirros().get(numEsbirro).getHp();
+                hp += anadirHPesbirros((Demonio) personaje.getEsbirros().get(numEsbirro), hp);
             } else {
-                hp += personaje.getEsbirros().get(i).getHp();
+                hp += personaje.getEsbirros().get(numEsbirro).getHp();
             }
         }
         return hp;
     }
 
     private int anadirHPesbirros(Demonio demonio, int hp) {
-        for (int i = 0; i < demonio.getEsbirrosComposites().size(); i++){
-            if (demonio.getEsbirrosComposites().get(i).getTipo().equals("Demonio")){
-                hp += demonio.getEsbirrosComposites().get(i).getHp();
-                hp += anadirHPesbirros((Demonio) demonio.getEsbirrosComposites().get(i), hp);
+        for (int numEsbirro = 0; numEsbirro < demonio.getEsbirrosComposites().size(); numEsbirro++) {
+            if (demonio.getEsbirrosComposites().get(numEsbirro).getTipo().equals("Demonio")) {
+                hp += demonio.getEsbirrosComposites().get(numEsbirro).getHp();
+                hp += anadirHPesbirros((Demonio) demonio.getEsbirrosComposites().get(numEsbirro), hp);
             } else {
-                hp += demonio.getEsbirrosComposites().get(i).getHp();
+                hp += demonio.getEsbirrosComposites().get(numEsbirro).getHp();
             }
         }
         return hp;
