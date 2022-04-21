@@ -1,6 +1,5 @@
 package mp_grupo_m;
 
-import java.io.IOException;
 import mp_grupo_m.Entidades.Cazador;
 import mp_grupo_m.Entidades.Cliente;
 import mp_grupo_m.Entidades.Operador;
@@ -9,15 +8,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Scanner;
-import mp_grupo_m.Ficheros.ControlFicheroUsuarios;
-import mp_grupo_m.Ficheros.LecturaFicheroUsuario;
 
 public class Sistema{
 
-    public void selector() throws IOException {
+    public void selector() {
         Terminal terminal = new Terminal();
-       // ControlFicheroUsuarios controlFicheroUsuarios = new ControlFicheroUsuarios();
-       LecturaFicheroUsuario lecturaFicheroUsuario = new LecturaFicheroUsuario();
         Scanner sc = new Scanner(System.in);
         int opcion = sc.nextInt();
         switch (opcion) {
@@ -26,18 +21,15 @@ public class Sistema{
                 terminal.menuRegistroUsuario();
                 int user = sc.nextInt();
                 registrarUsuario(user);
-                
                 break;
             }
             case 2: {
                 //INICIO DE SESION COMO CLIENTE
                 boolean login = loginCliente();
                 if (login) {
-                    lecturaFicheroUsuario.lecturaFicheroUsuario();
                     Menu menu = new Menu();
                     Cliente cliente = new Cliente();
                     menu.selector(cliente, this);
-                    
                 }
                 break;
             }
