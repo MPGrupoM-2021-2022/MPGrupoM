@@ -1,5 +1,6 @@
 package mp_grupo_m.Entidades;
 
+import java.io.IOException;
 import mp_grupo_m.Factorias.FactoriaCazadores;
 import mp_grupo_m.Factorias.FactoriaVampiros;
 import mp_grupo_m.Factorias.FactoriaLicantropos;
@@ -499,7 +500,7 @@ public class Cliente extends User {
         desafio.crearDesafio(listaClientes, cliente, sistema);
     }
 
-    public void eliminarCuenta(Cliente cliente, Sistema sistema) {
+    public void eliminarCuenta(Cliente cliente, Sistema sistema) throws IOException {
         Terminal terminal = new Terminal();
         Scanner sc = new Scanner(System.in);
         terminal.confirmarDelete();

@@ -1,5 +1,6 @@
 package mp_grupo_m;
 
+import java.io.IOException;
 import mp_grupo_m.Entidades.Cazador;
 import mp_grupo_m.Entidades.Cliente;
 import mp_grupo_m.Entidades.Operador;
@@ -8,10 +9,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Scanner;
+import mp_grupo_m.Ficheros.LecturaFicheroUsuario;
 
 public class Sistema{
 
-    public void selector() {
+    public void selector() throws IOException {
         Terminal terminal = new Terminal();
         Scanner sc = new Scanner(System.in);
         int opcion = sc.nextInt();

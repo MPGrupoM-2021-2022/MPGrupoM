@@ -1,5 +1,6 @@
 package mp_grupo_m;
 
+import java.io.IOException;
 import mp_grupo_m.Entidades.*;
 
 import java.util.ArrayList;
@@ -7,7 +8,7 @@ import java.util.Scanner;
 
 public class Menu {
 
-    public void selector(Cliente cliente, Sistema sistema) {
+    public void selector(Cliente cliente, Sistema sistema) throws IOException {
         Terminal terminal = new Terminal();
         Scanner sc = new Scanner(System.in);
 

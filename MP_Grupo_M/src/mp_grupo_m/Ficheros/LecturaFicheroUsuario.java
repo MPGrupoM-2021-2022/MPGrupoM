@@ -362,7 +362,7 @@ public class LecturaFicheroUsuario {
         Talento talento = new Talento();
 
         FileReader fr = null;
-        ArrayList<Cliente> listaVampiro = new ArrayList<>();
+        ArrayList<Cliente> listaCazador = new ArrayList<>();
         try {
             // Lectura del fichero
             String linea;
@@ -476,17 +476,17 @@ public class LecturaFicheroUsuario {
 
                     Armadura armadura = new Armadura();
 
-                    //NOMBRE ARMA
+                    //NOMBRE ARMADURA
                     linea = br.readLine();
                     textoSeparado = linea.split(": ");
                     armadura.setNombre(textoSeparado[1]);
 
-                    //NIVEL DEFENSA ARMA
+                    //NIVEL DEFENSA ARMADURA
                     linea = br.readLine();
                     textoSeparado = linea.split(": ");
                     armadura.setModDefensa((Integer.parseInt(textoSeparado[1])));
 
-                    //NIVEL ATAQUE ARMA
+                    //NIVEL ATAQUE ARMADURA
                     linea = br.readLine();
                     textoSeparado = linea.split(": ");
                     armadura.setModAtaque((Integer.parseInt(textoSeparado[1])));
@@ -627,11 +627,7 @@ public class LecturaFicheroUsuario {
                 textoSeparado = linea.split(": ");
                 licantropo.setRabia(Integer.parseInt(textoSeparado[1]));
 
-                //VOLUNTAD CAZADOR
-                linea = br.readLine();
-                textoSeparado = linea.split(": ");
-                licantropo.setNombre(textoSeparado[1]);
-
+              
                 //NOMBRE HABILIDAD
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
@@ -686,19 +682,19 @@ public class LecturaFicheroUsuario {
                 for (int i = 0; i < (Integer.parseInt(textoSeparado[1])); i++) {
 
                     Arma arma = new Arma();
-
+                    //NOMBRE ARMA
                     linea = br.readLine();
                     textoSeparado = linea.split(": ");
                     arma.setNombre(textoSeparado[1]);
-
+                    //VALOR ATAQUE
                     linea = br.readLine();
                     textoSeparado = linea.split(": ");
                     arma.setModAtaque((Integer.parseInt(textoSeparado[1])));
-
+                    //VALOR DEFENSA
                     linea = br.readLine();
                     textoSeparado = linea.split(": ");
                     arma.setModDefensa((Integer.parseInt(textoSeparado[1])));
-
+                    //EMPULADURA DE ARMA
                     linea = br.readLine();
                     textoSeparado = linea.split(": ");
                     if (textoSeparado[1].equals("true")) {
@@ -716,7 +712,7 @@ public class LecturaFicheroUsuario {
 
                     Armadura armadura = new Armadura();
 
-                    //NOMBRE ARMA
+                    //NOMBRE ARMADURA
                     linea = br.readLine();
                     textoSeparado = linea.split(": ");
                     armadura.setNombre(textoSeparado[1]);
@@ -739,7 +735,7 @@ public class LecturaFicheroUsuario {
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
 
-                //NOMBRE ARMADURA
+                //NOMBRE ARMADURA      *********MIRAR ESTO***** POSIBLEMENTE SE ME HAYA COLADO Y HAY QUE QUITARLO
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
                 armadura.setNombre(textoSeparado[1]);
