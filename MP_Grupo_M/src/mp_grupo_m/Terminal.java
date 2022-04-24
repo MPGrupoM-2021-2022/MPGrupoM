@@ -520,5 +520,13 @@ public class Terminal {
     public void preguntarEsbirroEliminar() {
         System.out.println("Introduce el esbirro que quiere eliminar");
     }
+
+    public void modificarEsbirros() {
+        System.out.println("¿Que desea realizar?");
+        System.out.println("******************************");
+        System.out.println("1.  añadir esbirro");
+        System.out.println("2.  eliminar esbirro");
+        System.out.println("3.  Volver");
+    }
 }
 

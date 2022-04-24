@@ -274,7 +274,7 @@ public class Operador extends User{
                     terminal.esbirrosPersonajes(esbirros);
                     salir = false;
                     do {
-                        terminal.modificarDebilidades();
+                        terminal.modificarEsbirros();
                         opcion = sc.nextInt();
                         switch (opcion) {
                             case 1:
