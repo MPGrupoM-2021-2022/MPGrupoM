@@ -27,21 +27,19 @@ public class Sistema{
                 boolean login = loginCliente(cliente);
                 if (login) {
                     Menu menu = new Menu();
-                  
-                    Cliente cliente = new Cliente();
 
                     //leer fichero de combates
-                    ArrayList<Combate> listaCombates = new ArrayList<>();
-                    Combate combate = new Combate();
-                    listaCombates.add(combate);
-                    for (int i = 0; i < listaCombates.size(); i++){
-                        if (!listaCombates.get(i).isVisto() && listaCombates.get(i).getDesafiante().getNick().equals(cliente.getNick())){
-                            GestorNotificaciones gestorNotificaciones = new GestorNotificaciones();
-                            gestorNotificaciones.notifyCombate(listaCombates.get(i));
-                            listaCombates.get(i).setVisto(true);
-                        }
-                        //sobreescribir fichero combates
-                    }
+//                    ArrayList<Combate> listaCombates = new ArrayList<>();
+//                    Combate combate = new Combate();
+//                    listaCombates.add(combate);
+//                    for (int i = 0; i < listaCombates.size(); i++){
+//                        if (!listaCombates.get(i).isVisto() && listaCombates.get(i).getDesafiante().getNick().equals(cliente.getNick())){
+//                            GestorNotificaciones gestorNotificaciones = new GestorNotificaciones();
+//                            gestorNotificaciones.notifyCombate(listaCombates.get(i));
+//                            listaCombates.get(i).setVisto(true);
+//                        }
+//                        //sobreescribir fichero combates
+//                    }
 
                     Desafio desafio = new Desafio();
                     ArrayList<Desafio> listaDesafios = new ArrayList<>(); //leerlo de fichero y meter observer

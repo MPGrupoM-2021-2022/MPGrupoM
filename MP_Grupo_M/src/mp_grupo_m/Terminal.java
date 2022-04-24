@@ -143,7 +143,7 @@ public class Terminal {
     }
 
     public void mostrarArmaduras(List<Armadura> armaduras) {
-        System.out.println("Que arma quieres equipar?");
+        System.out.println("Que armadura quieres equipar?");
         for (int numArmadura = 0; numArmadura < armaduras.size(); numArmadura++) {
             System.out.println(numArmadura + 1 + ": " + armaduras.get(numArmadura).getNombre());
         }
@@ -528,7 +528,6 @@ public class Terminal {
         System.out.println("2.  eliminar esbirro");
         System.out.println("3.  Volver");
     }
-}
 
     public void mostrarCombate(Combate combate) {
         System.out.println("Combate: " + combate.getRegistro());
