@@ -25,20 +25,20 @@ public class Sistema{
             }
             case 2: {
                 //INICIO DE SESION COMO CLIENTE
-                boolean login = loginCliente();
+                Cliente cliente = new Cliente();
+                boolean login = loginCliente(cliente);
                 if (login) {
                     Menu menu = new Menu();
-                    Cliente cliente = new Cliente();
                     menu.selector(cliente, this);
                 }
                 break;
             }
             case 3:{
                 //INICIO DE SESION COMO ADMIN
-                boolean login = loginOperador();
+                Operador operador = new Operador();
+                boolean login = loginOperador(operador);
                 if (login) {
                     Menu menu = new Menu();
-                    Operador operador = new Operador();
                     menu.selectorOperador(operador, this);
                 }
                 break;
@@ -133,12 +133,13 @@ public class Sistema{
         }
     }
 
-    public boolean loginCliente() {
+    public boolean loginCliente(Cliente cliente) {
         Scanner sc = new Scanner(System.in);
         Terminal terminal = new Terminal();
-        Cliente cliente = new Cliente();
         int aux = -1;
         ArrayList<Cliente> lista = new ArrayList<>();
+        cliente.setNombre("pepe viruela");
+        cliente.setRegistro("lu12o");
         cliente.setNick("pepe");
         cliente.setPassword("123");
         lista.add(cliente);
@@ -168,6 +169,7 @@ public class Sistema{
                 terminal.errorPassword();
             }
         } while (!passCorrect);
+        cliente = lista.get(aux);
         return passCorrect;
         //devolver el valor de la password (se que hay intentos infinitos pero por si se quitan y se limitan los intentos)
 //        if(passCorrect){
@@ -177,10 +179,9 @@ public class Sistema{
 //        }
     }
 
-    public boolean loginOperador() {
+    public boolean loginOperador(Operador operador) {
         Scanner sc = new Scanner(System.in);
         Terminal terminal = new Terminal();
-        Operador operador = new Operador();
         ArrayList<Operador> lista = new ArrayList<>();
         operador.setNick("pepe");
         operador.setPassword("123");
@@ -209,6 +210,7 @@ public class Sistema{
             passCorrect = lista.get(aux).getPassword().equals(password);
             terminal.errorPassword();
         } while (!passCorrect);
+        operador = lista.get(aux);
         return passCorrect;
     }
         //devolver el valor de la password (se que hay intentos infinitos pero por si se quitan y se limitan los intentos)
