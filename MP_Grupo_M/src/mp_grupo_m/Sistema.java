@@ -1,12 +1,10 @@
 package mp_grupo_m;
 
-import mp_grupo_m.Entidades.Cazador;
 import mp_grupo_m.Entidades.Cliente;
+import mp_grupo_m.Entidades.Combate;
 import mp_grupo_m.Entidades.Operador;
 import mp_grupo_m.Entidades.Desafio;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Objects;
 import java.util.Scanner;
 
 public class Sistema{
@@ -29,6 +27,32 @@ public class Sistema{
                 boolean login = loginCliente(cliente);
                 if (login) {
                     Menu menu = new Menu();
+                  
+                    Cliente cliente = new Cliente();
+
+                    //leer fichero de combates
+                    ArrayList<Combate> listaCombates = new ArrayList<>();
+                    Combate combate = new Combate();
+                    listaCombates.add(combate);
+                    for (int i = 0; i < listaCombates.size(); i++){
+                        if (!listaCombates.get(i).isVisto() && listaCombates.get(i).getDesafiante().getNick().equals(cliente.getNick())){
+                            GestorNotificaciones gestorNotificaciones = new GestorNotificaciones();
+                            gestorNotificaciones.notifyCombate(listaCombates.get(i));
+                            listaCombates.get(i).setVisto(true);
+                        }
+                        //sobreescribir fichero combates
+                    }
+
+                    Desafio desafio = new Desafio();
+                    ArrayList<Desafio> listaDesafios = new ArrayList<>(); //leerlo de fichero y meter observer
+                    listaDesafios.add(desafio);
+                    for (int i = 0; i < listaDesafios.size(); i++){
+                        if (listaDesafios.get(i).isValidated() && listaDesafios.get(i).getContrincante().getNick().equals(cliente.getNick())){
+                            GestorNotificaciones gestorNotificaciones = new GestorNotificaciones();
+                            gestorNotificaciones.notifyDesafio(cliente, terminal, listaDesafios, i);
+                        }
+                    }
+
                     menu.selector(cliente, this);
                 }
                 break;
@@ -219,8 +243,4 @@ public class Sistema{
 //        }else{
 //            return false;
 //        }
-    public void avisarAdmin (Desafio desafio) {
-        Terminal terminal = new Terminal();
-        terminal.WIP();
-    }
 }

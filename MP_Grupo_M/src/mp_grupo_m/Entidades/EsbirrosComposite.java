@@ -37,8 +37,7 @@ public class EsbirrosComposite {
     public EsbirrosComposite crearEsbirro(boolean isVampiro) {
         Terminal terminal = new Terminal();
         terminal.preguntarTipoEsbirro();
-        EsbirrosComposite esbirro = selectorEsbirro(isVampiro);
-        return esbirro;
+        return selectorEsbirro(isVampiro);
     }
 
     private EsbirrosComposite selectorEsbirro(boolean isVampiro) {
@@ -47,26 +46,22 @@ public class EsbirrosComposite {
         int opcion = sc.nextInt();
         Terminal terminal = new Terminal();
         switch (opcion) {
-            case 1: {
+            case 1 -> {
                 if (!isVampiro) {
-                    Humano humano = crearHumano();
-                    return humano;
+                    return crearHumano();
                 } else {
                     terminal.errorHumano();
                     crearEsbirro(true);
-                    break;
                 }
             }
-            case 2: {
-                Ghoul ghoul = crearGhoul();
-                return ghoul;
+            case 2 -> {
+                return crearGhoul();
             }
-            case 3: {
+            case 3 -> {
                 ArrayList<EsbirrosComposite> esbirros = new ArrayList<>();
-                Demonio demonio = crearDemonio(esbirros, isVampiro);
-                return demonio;
+                return crearDemonio(esbirros, isVampiro);
             }
-            default: {
+            default -> {
                 terminal.error();
                 crearEsbirro(isVampiro);
             }
@@ -93,18 +88,16 @@ public class EsbirrosComposite {
         do {
             terminal.preguntarLealtad();
             opcionLealtad = sc.nextInt();
-        } while(opcionLealtad < 1 || opcionLealtad > 3);
-        if (opcionLealtad == 1){
+        } while (opcionLealtad < 1 || opcionLealtad > 3);
+        if (opcionLealtad == 1) {
             lealtad = Humano.Lealtad.ALTA;
-        }
-        else if (opcionLealtad == 2){
+        } else if (opcionLealtad == 2) {
             lealtad = Humano.Lealtad.MEDIA;
-        }
-        else {
+        } else {
             lealtad = Humano.Lealtad.BAJA;
         }
         humano.setLealtad(lealtad);
-        humano.setTipo("humano");
+        humano.setTipo("HUMANO");
         return humano;
     }
 
@@ -123,13 +116,13 @@ public class EsbirrosComposite {
             hp = sc.nextInt();
         } while (hp < 1 || hp > 3);
         ghoul.setHp(hp);
-        do{
+        do {
             terminal.preguntarDependencia();
             dependencia = sc.nextInt();
-        }while(dependencia < 1 || dependencia > 5);
+        } while (dependencia < 1 || dependencia > 5);
         ghoul.setDependencia(dependencia);
-        ghoul.setTipo("ghoul");
-        return  ghoul;
+        ghoul.setTipo("GHOUL");
+        return ghoul;
     }
 
     private Demonio crearDemonio(ArrayList<EsbirrosComposite> esbirros, boolean isVampiro) {
@@ -158,7 +151,7 @@ public class EsbirrosComposite {
             esbirros.add(esbirro);
         }
         demonio.setEsbirrosComposites(esbirros);
-        demonio.setTipo("demonio");
+        demonio.setTipo("DEMONIO");
         return demonio;
     }
 

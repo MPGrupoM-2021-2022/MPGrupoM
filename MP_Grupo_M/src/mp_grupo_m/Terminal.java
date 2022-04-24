@@ -97,8 +97,8 @@ public class Terminal {
 
     public void mostrarArmas(List<Arma> armas) {
         System.out.println("Que arma quieres equipar?");
-        for (int iterator = 0; iterator < armas.size(); iterator++) {
-            System.out.println(iterator + 1 + ": " + armas.get(iterator).getNombre());
+        for (int numArma = 0; numArma < armas.size(); numArma++) {
+            System.out.println(numArma + 1 + ": " + armas.get(numArma).getNombre());
         }
     }
 
@@ -119,9 +119,9 @@ public class Terminal {
     public void otroArma(List<Arma> armas, Arma arma) {
         System.out.println("Quiere equipar otro arma de una sola mano?");
         System.out.println("0: NO");
-        for (int iterator = 0; iterator < armas.size(); iterator++) {
-            if (armas.get(iterator).isSingleHand() && armas.get(iterator) != arma) {
-                System.out.println(iterator + 1 + ": " + armas.get(iterator).getNombre());
+        for (int numArma = 0; numArma < armas.size(); numArma++) {
+            if (armas.get(numArma).isSingleHand() && armas.get(numArma) != arma) {
+                System.out.println(numArma + 1 + ": " + armas.get(numArma).getNombre());
             }
         }
     }
@@ -144,8 +144,8 @@ public class Terminal {
 
     public void mostrarArmaduras(List<Armadura> armaduras) {
         System.out.println("Que arma quieres equipar?");
-        for (int iterator = 0; iterator < armaduras.size(); iterator++) {
-            System.out.println(iterator + 1 + ": " + armaduras.get(iterator).getNombre());
+        for (int numArmadura = 0; numArmadura < armaduras.size(); numArmadura++) {
+            System.out.println(numArmadura + 1 + ": " + armaduras.get(numArmadura).getNombre());
         }
     }
 
@@ -250,9 +250,9 @@ public class Terminal {
 
     public void mostrarPosiblesContrincantes(ArrayList<Cliente> listaClientes) {
         System.out.println("0: Cancelar");
-        for (int i = 0; i <= listaClientes.size(); i++) {
-            if (listaClientes.get(i).getPersonaje() != null) {
-                System.out.println((i + 1) + ": " + listaClientes.get(i).getNick());
+        for (int numCliente = 0; numCliente <= listaClientes.size(); numCliente++) {
+            if (listaClientes.get(numCliente).getPersonaje() != null) {
+                System.out.println((numCliente + 1) + ": " + listaClientes.get(numCliente).getNick());
             }
         }
     }
@@ -331,8 +331,8 @@ public class Terminal {
     }
 
     public void mostrarRanking(ArrayList<Cliente> lista) {
-        for (int i = 0; i < lista.size(); i++) {
-            System.out.println(i + 1 + ": " + lista.get(i).getNick() + "\t\t" + lista.get(i).getPersonaje().getOro() + " Oro");
+        for (int numCliente = 0; numCliente < lista.size(); numCliente++) {
+            System.out.println(numCliente + 1 + ": " + lista.get(numCliente).getNick() + "\t\t" + lista.get(numCliente).getPersonaje().getOro() + " Oro");
         }
     }
 
@@ -359,7 +359,7 @@ public class Terminal {
         System.out.println("Quieres aceptar el desafio?");
         System.out.println("1. SI");
         System.out.println("2. NO");
-        System.out.println("Nota: si no aceptas perderás " + desafio.getOro()/10 + " de oro");
+        System.out.println("Nota: si no aceptas perderás " + desafio.getOro() / 10 + " de oro");
     }
 
     public void cambiarEquipo() {
@@ -530,3 +530,45 @@ public class Terminal {
     }
 }
 
+    public void mostrarCombate(Combate combate) {
+        System.out.println("Combate: " + combate.getRegistro());
+        System.out.println("Desafiante: " + combate.getDesafiante().getNick());
+        System.out.println("Contrincante: " + combate.getContrincante().getNick());
+        System.out.println("Fecha: " + combate.getFecha());
+        if (combate.isEsbirrosDesafiante()) {
+            System.out.println("Esbirros de " + combate.getDesafiante().getNick() + " : vivos");
+        } else {
+            System.out.println("Esbirros de " + combate.getDesafiante().getNick() + " : muertos");
+        }
+        if (combate.isEsbirrosContrincante()) {
+            System.out.println("Esbirros de " + combate.getContrincante().getNick() + " : vivos");
+        } else {
+            System.out.println("Esbirros de " + combate.getContrincante().getNick() + " : muertos");
+        }
+        System.out.println("Oro apostado: " + combate.getOro());
+        System.out.println("Modificadores:");
+        for (int numModificador = 0; numModificador < combate.getModificadores().size(); numModificador++) {
+            System.out.println(combate.getModificadores().get(numModificador).getNombre());
+        }
+        System.out.println("RONDAS:");
+        mostrarRondas(combate);
+    }
+
+    public void mostrarRondas(Combate combate) {
+        for (int numRonda = 0; numRonda < combate.getRondas().size(); numRonda++) {
+            System.out.println("Ronda " + numRonda + 1 + " :");
+            System.out.println("Vida de " + combate.getDesafiante().getPersonaje().getNombre() + " al final de la ronda: " + combate.getRondas().get(numRonda).getHpDesafianteEnd());
+            System.out.println("Vida de " + combate.getContrincante().getPersonaje().getNombre() + " al final de la ronda: " + combate.getRondas().get(numRonda).getHpContrincanteEnd());
+        }
+        System.out.println("FIN DEL COMBATE");
+        if (combate.getVencedor() != null) {
+            System.out.println("Vencedor: " + combate.getVencedor().getNick());
+        } else {
+            System.out.println("Vencedor: empate");
+        }
+    }
+
+    public void cuentaBaneada() {
+        System.out.println("Esta cuenta ha sido baneada, acceso denegdo...");
+    }
+}

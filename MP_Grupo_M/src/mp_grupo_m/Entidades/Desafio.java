@@ -1,5 +1,6 @@
 package mp_grupo_m.Entidades;
 
+import mp_grupo_m.GestorNotificaciones;
 import mp_grupo_m.Sistema;
 import mp_grupo_m.Terminal;
 
@@ -13,6 +14,7 @@ public class Desafio {
     private int oro;
     private ArrayList<Modificador> modificadores;
     private boolean validated;
+    private String registro;
 
     public Cliente getDesafiante() {
         return desafiante;
@@ -54,36 +56,80 @@ public class Desafio {
         this.validated = validated;
     }
 
+    public String getRegistro() {
+        return registro;
+    }
+
+    public void setRegistro(String registro) {
+        this.registro = registro;
+    }
+
     public void crearDesafio(ArrayList<Cliente> listaClientes, Cliente cliente, Sistema sistema) {
         Terminal terminal = new Terminal();
         terminal.bienvenidaDesafio();
         int numContrincante = -1;
         int cantidadOro = -1;
-        if (listaClientes.size() == 1){         //Habría que indicar tambien que tienen que tener un personaje creado de alguna manera
+        if (listaClientes.size() == 1) {
             terminal.noHayContrincantes();
-        } else{
+        } else {
             terminal.mostrarPosiblesContrincantes(listaClientes);
             do {
                 terminal.numValido();
                 numContrincante = askNum();
-            } while(numContrincante < 0 || numContrincante > listaClientes.size() + 1 || listaClientes.get(numContrincante).getPersonaje() == null);
+            } while (numContrincante < 0 || numContrincante > listaClientes.size() + 1 || listaClientes.get(numContrincante).getPersonaje() == null);
             setContrincante(listaClientes.get(numContrincante - 1));
             terminal.preguntarCantidadApostar();
             do {
                 terminal.numValido();
                 cantidadOro = askNum();
-            } while(cantidadOro <= 0 && cantidadOro > cliente.getPersonaje().getOro());
+            } while (cantidadOro <= 0 && cantidadOro > cliente.getPersonaje().getOro());
             setOro(cantidadOro);
             cliente.getPersonaje().setOro(cliente.getPersonaje().getOro() - cantidadOro);
             setDesafiante(cliente);
             setValidated(false);
+            String registro = generarNumerRegistro();
+            setRegistro(registro);
             terminal.desafioCreado();
-            sistema.avisarAdmin(this);
+            GestorNotificaciones gestorNotificaciones = new GestorNotificaciones();
+            gestorNotificaciones.subscribeDesafio(this);
         }
     }
 
     private int askNum() {
         Scanner sc = new Scanner(System.in);
         return sc.nextInt();
+    }
+
+    public String generarNumerRegistro() {
+        boolean valido = false;
+        Desafio desafio = new Desafio();
+        ArrayList<Desafio> listaDesafios = new ArrayList<>();
+        listaDesafios.add(desafio);
+        String strBuilder = null;
+        //crear del fichero lista de desafios para coger sus registros y comparar
+        while (!valido) {
+            strBuilder = String.valueOf(getLetra()) +
+                    getNumber() +
+                    getNumber() +
+                    getLetra() +
+                    getLetra();
+            for (Desafio value : listaDesafios) {
+                if (!(value.getRegistro().equals(strBuilder))) {
+                    valido = true;
+                } else {
+                    strBuilder = null;
+                }
+            }
+        }
+        return strBuilder;
+    }
+
+    public char getLetra() {
+        return (char) (Math.random() * 26 + 'a');
+    }
+
+    public char getNumber() {
+        int N = (int) (Math.random() * 10 + '0');
+        return (char) N;
     }
 }
