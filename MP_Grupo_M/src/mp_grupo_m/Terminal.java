@@ -282,6 +282,14 @@ public class Terminal {
         System.out.println("Introduce el nick del cliente que desea modificar su personaje");
     }
 
+    public void preguntarNickAdminBan() {
+        System.out.println("Introduce el nick del cliente que desea banear");
+    }
+
+    public void preguntarNickAdminUnban() {
+        System.out.println("Introduce el nick del cliente que desea desbanear");
+    }
+
     public void preguntarPassword() {
         System.out.println("Introduce la password de tu cuenta");
     }
