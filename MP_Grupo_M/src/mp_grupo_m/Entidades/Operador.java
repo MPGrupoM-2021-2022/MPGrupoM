@@ -3,6 +3,7 @@ package mp_grupo_m.Entidades;
 import mp_grupo_m.Factorias.FactoriaCazadores;
 import mp_grupo_m.Factorias.FactoriaVampiros;
 import mp_grupo_m.Factorias.FactoriaLicantropos;
+import mp_grupo_m.GestorNotificaciones;
 import mp_grupo_m.Sistema;
 import mp_grupo_m.Terminal;
 
@@ -608,13 +609,17 @@ public class Operador extends User{
     }
 
     public void banearUser() {
-        Terminal terminal = new Terminal();
-        terminal.WIP();
+        //pedir cliente a banear
+        Cliente cliente = new Cliente();
+        GestorNotificaciones gestorNotificaciones = new GestorNotificaciones();
+        gestorNotificaciones.subscribeBan(cliente);
     }
 
     public void desbanearUser() {
-        Terminal terminal = new Terminal();
-        terminal.WIP();
+        //pedir cliente a desbanear
+        Cliente cliente = new Cliente();
+        GestorNotificaciones gestorNotificaciones = new GestorNotificaciones();
+        gestorNotificaciones.unsubscribeBan(cliente);
     }
 
     public void eliminarCuenta(Operador operador, Sistema sistema) {

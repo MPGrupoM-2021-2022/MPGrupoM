@@ -88,10 +88,12 @@ public class Sistema{
                 cliente.setNombre(nombre);
                 terminal.preguntarNick();
                 String nick = sc.nextLine();
-                for (Cliente value : lista) {
-                    if ((value.getNick().equals(nick))) {
-                        terminal.nickExistente();
-                        break;
+                if (!lista.isEmpty()) {
+                    for (Cliente value : lista) {
+                        if ((value.getNick().equals(nick))) {
+                            terminal.nickExistente();
+                            break;
+                        }
                     }
                 }
                 cliente.setNick(nick);
