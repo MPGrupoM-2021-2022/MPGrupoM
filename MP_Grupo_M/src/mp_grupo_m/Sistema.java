@@ -9,13 +9,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Scanner;
+import java.util.concurrent.ConcurrentHashMap;
+import mp_grupo_m.Ficheros.ControlFicheroUsuarios;
 import mp_grupo_m.Ficheros.LecturaFicheroUsuario;
 
-public class Sistema{
+public class Sistema {
 
     public void selector() throws IOException {
         Terminal terminal = new Terminal();
         Scanner sc = new Scanner(System.in);
+
         int opcion = sc.nextInt();
         switch (opcion) {
             case 1: {
@@ -23,19 +26,21 @@ public class Sistema{
                 terminal.menuRegistroUsuario();
                 int user = sc.nextInt();
                 registrarUsuario(user);
+
                 break;
             }
             case 2: {
                 //INICIO DE SESION COMO CLIENTE
-                boolean login = loginCliente();
+                Cliente cliente = new Cliente();
+                boolean login = loginCliente(cliente);
                 if (login) {
                     Menu menu = new Menu();
-                    Cliente cliente = new Cliente();
                     menu.selector(cliente, this);
+
                 }
                 break;
             }
-            case 3:{
+            case 3: {
                 //INICIO DE SESION COMO ADMIN
                 boolean login = loginOperador();
                 if (login) {
@@ -55,23 +60,24 @@ public class Sistema{
         terminal.WIP();
     }
 
-    public void registrarUsuario(int opcion) {
+    public void registrarUsuario(int opcion) throws IOException {
         Scanner sc = new Scanner(System.in);
         Terminal terminal = new Terminal();
         switch (opcion) {
             case 1: {
                 Cliente cliente = new Cliente();
                 ArrayList<Cliente> lista = new ArrayList<>();
-                lista.add(cliente);
                 terminal.preguntarNombreUser();
                 String nombre = sc.nextLine();
                 cliente.setNombre(nombre);
                 terminal.preguntarNick();
                 String nick = sc.nextLine();
-                for (Cliente value : lista) {
-                    if ((value.getNick().equals(nick))) {
-                        terminal.nickExistente();
-                        break;
+                if (!lista.isEmpty()) {
+                    for (Cliente value : lista) {
+                        if ((value.getNick().equals(nick))) {
+                            terminal.nickExistente();
+                            break;
+                        }
                     }
                 }
                 cliente.setNick(nick);
@@ -80,7 +86,7 @@ public class Sistema{
                 terminal.confirmarPassword();
                 String confirm = sc.nextLine();
                 //poner if para verificar si la contraseña es la misma, si no break;
-                if (!password.equals(confirm)){
+                if (!password.equals(confirm)) {
                     terminal.error();
                     break;
                 }
@@ -92,7 +98,8 @@ public class Sistema{
                 System.out.println(cliente.getNick());
                 System.out.println(cliente.getPassword());
                 System.out.println(cliente.getRegistro());
-
+                ControlFicheroUsuarios controlFicheroUsuarios = new ControlFicheroUsuarios();
+                controlFicheroUsuarios.registroUsuario(cliente);
 
                 break;
             }
@@ -117,7 +124,7 @@ public class Sistema{
                 terminal.confirmarPassword();
                 String confirm = sc.nextLine();
                 //poner if para verificar si la contraseña es la misma, si no break;
-                if (!password.equals(confirm)){
+                if (!password.equals(confirm)) {
                     terminal.error();
                     break;
                 }
@@ -127,7 +134,7 @@ public class Sistema{
 
                 break;
             }
-            case 3:{
+            case 3: {
                 break;
             }
             default:
@@ -135,29 +142,25 @@ public class Sistema{
         }
     }
 
-    public boolean loginCliente() {
+    public boolean loginCliente(Cliente cliente) throws IOException {
         Scanner sc = new Scanner(System.in);
         Terminal terminal = new Terminal();
-        Cliente cliente = new Cliente();
         int aux = -1;
-        ArrayList<Cliente> lista = new ArrayList<>();
-        cliente.setNick("pepe");
-        cliente.setPassword("123");
-        lista.add(cliente);
+        LecturaFicheroUsuario lecturaFicheroUsuario = new LecturaFicheroUsuario();
+        ArrayList<Cliente> lista = lecturaFicheroUsuario.lecturaFicheroUsuario();
         //coger lista clientes ficheros
         terminal.preguntarNick();
         String nick = sc.nextLine();
         boolean encontrado = false;
         //comparar nick con lista clientes ficheros
-        for(int i = 0; i<lista.size(); i++)
-        {
-            if (lista.get(i).getNick().equals(nick)){
-               encontrado = true;
-               aux = i;
-               i = lista.size();
+        for (int i = 0; i < lista.size(); i++) {
+            if (lista.get(i).getNick().equals(nick)) {
+                encontrado = true;
+                aux = i;
+                i = lista.size();
             }
         }
-        if (!encontrado){
+        if (!encontrado) {
             return false;
         }
         boolean passCorrect = false;
@@ -166,7 +169,7 @@ public class Sistema{
             String password = sc.nextLine();
             //comparar password asociada al nick
             passCorrect = lista.get(aux).getPassword().equals(password);
-            if(!passCorrect) {
+            if (!passCorrect) {
                 terminal.errorPassword();
             }
         } while (!passCorrect);
@@ -213,14 +216,16 @@ public class Sistema{
         } while (!passCorrect);
         return passCorrect;
     }
-        //devolver el valor de la password (se que hay intentos infinitos pero por si se quitan y se limitan los intentos)
+    //devolver el valor de la password (se que hay intentos infinitos pero por si se quitan y se limitan los intentos)
 //        if(passCorrect){
 //            return true;
 //        }else{
 //            return false;
 //        }
-    public void avisarAdmin (Desafio desafio) {
+
+    public void avisarAdmin(Desafio desafio) {
         Terminal terminal = new Terminal();
         terminal.WIP();
     }
+
 }

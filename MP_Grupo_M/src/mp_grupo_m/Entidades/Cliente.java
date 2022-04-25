@@ -104,7 +104,7 @@ public class Cliente extends User {
             do {
                 terminal.otroArma(armas, armasActivas.get(0));
                 rightValue = factoriaVampiros.addArmaActiva2(armas, armasActivas);
-                if (!rightValue){
+                if (!rightValue) {
                     terminal.ErrNumSelec();
                 }
             } while (!rightValue);
@@ -250,7 +250,7 @@ public class Cliente extends User {
             do {
                 terminal.otroArma(armas, armasActivas.get(0));
                 rightValue = factoriaCazadores.addArmaActiva2(armas, armasActivas);
-                if (!rightValue){
+                if (!rightValue) {
                     terminal.ErrNumSelec();
                 }
             } while (!rightValue);
@@ -386,7 +386,7 @@ public class Cliente extends User {
             do {
                 terminal.otroArma(armas, armasActivas.get(0));
                 rightValue = FL.addArmaActiva2(armas, armasActivas);
-                if (!rightValue){
+                if (!rightValue) {
                     terminal.ErrNumSelec();
                 }
             } while (!rightValue);
@@ -561,21 +561,24 @@ public class Cliente extends User {
         boolean valido = false;
         Cliente cliente = new Cliente();
         ArrayList<Cliente> lista = new ArrayList<>();
-        lista.add(cliente);
         String strBuilder = null;
         //crear del fichero lista de clientes para coger sus registros y comparar
         while (!valido) {
-            strBuilder = String.valueOf(getLetra()) +
-                    getNumber() +
-                    getNumber() +
-                    getLetra() +
-                    getLetra();
-            for (Cliente value : lista) {
-                if (!(value.getRegistro().equals(strBuilder))) {
-                    valido = true;
-                } else {
-                    strBuilder = null;
+            strBuilder = String.valueOf(getLetra())
+                    + getNumber()
+                    + getNumber()
+                    + getLetra()
+                    + getLetra();
+            if (!lista.isEmpty()) {
+                for (Cliente value : lista) {
+                    if (!(value.getRegistro().equals(strBuilder))) {
+                        valido = true;
+                    } else {
+                        strBuilder = null;
+                    }
                 }
+            } else {
+                valido = true;
             }
         }
         return strBuilder;
@@ -615,4 +618,3 @@ public class Cliente extends User {
         terminal.mostrarRanking(listaAux);
     }
 }
-

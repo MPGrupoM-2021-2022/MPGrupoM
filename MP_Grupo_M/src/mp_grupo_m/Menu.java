@@ -5,6 +5,8 @@ import mp_grupo_m.Entidades.*;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import mp_grupo_m.Ficheros.ControlFicheroUsuarios;
+import mp_grupo_m.Ficheros.LecturaFicheroUsuario;
 
 public class Menu {
 
@@ -64,6 +66,11 @@ public class Menu {
                     if (cliente.getPersonaje() == null) {
                         terminal.mostrarFactorias();
                         selectorFactoria(cliente);
+                        ControlFicheroUsuarios controlFicheroUsuarios = new ControlFicheroUsuarios();
+                        LecturaFicheroUsuario lecturaFicheroUsuario = new LecturaFicheroUsuario();
+                        ArrayList<Cliente> listaCliente = lecturaFicheroUsuario.lecturaFicheroUsuario();
+                        listaCliente.add(cliente);
+                        controlFicheroUsuarios.sobreescribirFicheroUsuario(listaCliente);
                     } else {
                         terminal.eliminarPersonaje();
                     }

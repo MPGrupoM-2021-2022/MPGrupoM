@@ -35,23 +35,21 @@ public class ControlFicheroUsuarios {
             bw.write("***** USUARIO *****");
             bw.newLine();
             bw.write("NOMBRE: ");
-            bw.newLine();
             bw.write(cliente.getNombre());
             bw.newLine();
             bw.write("NICK: ");
-            bw.newLine();
             bw.write(cliente.getNick());
             bw.newLine();
             bw.write("PASSWORD: ");
-            bw.newLine();
             bw.write(cliente.getPassword());
             bw.newLine();
             bw.write("REGISTRO: ");
-            bw.newLine();
             bw.write(cliente.getRegistro());
             bw.newLine();
             bw.write("TIPO_PERSONAJE: null");
             bw.newLine();
+            
+            
             bw.write("FIN USUARIO");
             bw.newLine();
             bw.close();
@@ -63,7 +61,7 @@ public class ControlFicheroUsuarios {
         }
     }
 
-    public void registroPersonaje(ArrayList<Cliente> listaCliente) throws IOException {
+    public void sobreescribirFicheroUsuario (ArrayList<Cliente> listaCliente) throws IOException {
         try {
             String ruta = "src/mp_grupo_m/Ficheros/registroUsuario.txt";
             File file = new File(ruta);
@@ -82,21 +80,16 @@ public class ControlFicheroUsuarios {
             for (int i = 0; i < listaCliente.size(); i++) {
 
                 bw.write("***** USUARIO *****");
-                bw.newLine();
                 bw.write("NOMBRE: ");
-                bw.newLine();
                 bw.write(listaCliente.get(i).getNombre());
                 bw.newLine();
                 bw.write("NICK: ");
-                bw.newLine();
                 bw.write(listaCliente.get(i).getNick());
                 bw.newLine();
                 bw.write("PASSWORD: ");
-                bw.newLine();
                 bw.write(listaCliente.get(i).getPassword());
                 bw.newLine();
                 bw.write("REGISTRO: ");
-                bw.newLine();
                 bw.write(listaCliente.get(i).getRegistro());
                 bw.newLine();
 
@@ -128,40 +121,33 @@ public class ControlFicheroUsuarios {
 
         //TIPO PERSONAJE
         bw.write("TIPO_PERSONAJE: ");
-        bw.newLine();
         bw.write(listaCliente.get(i).getPersonaje().getTipo());
         bw.newLine();
         //NOMBRE PERSONAJE
         bw.write("NOMBRE_PERSONAJE: ");
-        bw.newLine();
         bw.write(listaCliente.get(i).getPersonaje().getNombre());
         bw.newLine();
         //PUNTOS DE SANGRE
         bw.write("SANGRE: ");
-        bw.newLine();
         bw.write(vampiro.getSangre());
         bw.newLine();
         //NOMBRE DE HABILIDAD
         bw.write("NOMNRE_HABILIDAD: ");
-        bw.newLine();
         bw.write(disciplina.getNombre());
         bw.newLine();
 
         //VALOR ATAQUE
         bw.write("VALOR_ATAQUE: ");
-        bw.newLine();
         bw.write(disciplina.getAtaque());
         bw.newLine();
 
         //VALOR DEFENSA
         bw.write("VALOR_DEFENSA: ");
-        bw.newLine();
         bw.write(disciplina.getDefensa());
         bw.newLine();
 
         //COSTE HABILIDAD
         bw.write("COSATE_HABILIDAD: ");
-        bw.newLine();
         bw.write(disciplina.getCoste());
         bw.newLine();
 
@@ -174,12 +160,10 @@ public class ControlFicheroUsuarios {
         for (int variableArma = 0; variableArma < (listaCliente.get(i).getPersonaje().getArmas().size()); variableArma++) {
             Arma arma = vampiro.getArmas().get(i);
             bw.write("NOMBRE_ARMA: ");
-            bw.newLine();
             bw.write(arma.getNombre());
             bw.newLine();
 
             bw.write("ATAQUE_ARMA: ");
-            bw.newLine();
             bw.write(arma.getModAtaque());
             bw.newLine();
 
@@ -190,7 +174,6 @@ public class ControlFicheroUsuarios {
 
             //si es true es de 1 mano, si es false es de dos manos
             bw.write("EMPUÑADURA: ");
-            bw.newLine();
             if (arma.isSingleHand()) {
                 bw.write("true");
             } else {
@@ -210,7 +193,6 @@ public class ControlFicheroUsuarios {
             Arma armaActiva = (Arma) vampiro.getArmasActivas().get(variableArmaActiva);
 
             bw.write("NOMBRE_ARMAS_ACTIVAS: ");
-            bw.newLine();
             bw.write(armaActiva.getNombre());
             bw.newLine();
 
@@ -220,7 +202,6 @@ public class ControlFicheroUsuarios {
             bw.newLine();
 
             bw.write("DEFENSA_ARMA_ACTIVAS: ");
-            bw.newLine();
             bw.write(armaActiva.getModDefensa());
             bw.newLine();
 
@@ -245,12 +226,10 @@ public class ControlFicheroUsuarios {
         for (int j = 0; j < (listaCliente.get(i).getPersonaje().getArmaduras().size()); j++) {
             Armadura armadura = (Armadura) vampiro.getArmaduras().get(j);
             bw.write("NOMBRE_ARMADURA: ");
-            bw.newLine();
             bw.write(armadura.getNombre());
             bw.newLine();
 
             bw.write("DEFENSA_ARMADURA: ");
-            bw.newLine();
             bw.write(armadura.getModDefensa());
             bw.newLine();
 
@@ -263,14 +242,12 @@ public class ControlFicheroUsuarios {
 
         //EDAD VAMPIRO
         bw.write("EDAD_VAMPIRO: ");
-        bw.newLine();
         bw.write(vampiro.getEdad());
         bw.newLine();
 
         //ESBIRROS
         //NUMERO DE ESBIRROS
         bw.write("NUMERO_ESBIRROS: ");
-        bw.newLine();
         bw.write(listaCliente.get(i).getPersonaje().getEsbirros().size());
         bw.newLine();
 
@@ -288,46 +265,39 @@ public class ControlFicheroUsuarios {
 
         //TIPO PERSONAJE
         bw.write("TIPO_PERSONAJE: ");
-        bw.newLine();
         bw.write(listaCliente.get(i).getPersonaje().getTipo());
         bw.newLine();
         //NOMBRE PERSONAJE
         bw.write("NOMBRE_PERSONAJE: ");
-        bw.newLine();
         bw.write(listaCliente.get(i).getPersonaje().getNombre());
         bw.newLine();
+        
         //PUNTOS DE SANGRE
         bw.write("RABIA: ");
-        bw.newLine();
         bw.write(licantropo.getRabia());
         bw.newLine();
 
         //NUMERO ARMAS
         bw.write("NUMERO_ARMAS: ");
-        bw.newLine();
         bw.write(listaCliente.get(i).getPersonaje().getArmas().size());
         bw.newLine();
 
         for (int variableArma = 0; variableArma < (listaCliente.get(i).getPersonaje().getArmas().size()); variableArma++) {
             Arma arma = licantropo.getArmas().get(i);
             bw.write("NOMBRE_ARMA: ");
-            bw.newLine();
             bw.write(arma.getNombre());
             bw.newLine();
 
             bw.write("ATAQUE_ARMA: ");
-            bw.newLine();
             bw.write(arma.getModAtaque());
             bw.newLine();
 
             bw.write("DEFENSA_ARMA: ");
-            bw.newLine();
             bw.write(arma.getModDefensa());
             bw.newLine();
 
             //si es true es de 1 mano, si es false es de dos manos
             bw.write("EMPUÑADURA: ");
-            bw.newLine();
             if (arma.isSingleHand()) {
                 bw.write("true");
             } else {
@@ -347,12 +317,10 @@ public class ControlFicheroUsuarios {
             Arma armaActiva = (Arma) licantropo.getArmasActivas().get(variableArmaActiva);
 
             bw.write("NOMBRE_ARMAS_ACTIVAS: ");
-            bw.newLine();
             bw.write(armaActiva.getNombre());
             bw.newLine();
 
             bw.write("ATAQUE_ARMA_ACTIVAS: ");
-            bw.newLine();
             bw.write(armaActiva.getModAtaque());
             bw.newLine();
 
@@ -705,39 +673,35 @@ public class ControlFicheroUsuarios {
         bw.newLine();
         listaCliente.get(i).getPersonaje().getTipo();
         
-        escrituraEsbirros(listaCliente, i, listaCliente.get(i).getPersonaje().getTipo(), bw);
+        escrituraEsbirros(listaCliente, i, cazador, bw);
         
         
         bw.write("FIN_USUARIO");
         bw.newLine();
     }
 
-    private void escrituraEsbirros(ArrayList<Cliente> listaCliente, int i, Vampiro vampiro, BufferedWriter bw) throws IOException {
+    private void escrituraEsbirros(ArrayList<Cliente> listaCliente, int i, Personaje persona, BufferedWriter bw) throws IOException {
         for (int j = 0; j < (listaCliente.get(i).getPersonaje().getEsbirros().size()); j++) {
-            if (vampiro.getEsbirros().get(j).getTipo().equals("HUMANO")) {
-                Humano humano = (Humano) vampiro.getEsbirros().get(j);
+            if (persona.getEsbirros().get(j).getTipo().equals("HUMANO")) {
+                Humano humano = (Humano) persona.getEsbirros().get(j);
                 //NUMERO DE ESBIRROS
                 bw.write("TIPO_ESBIRRO: ");
-                bw.newLine();
 
-                bw.write(vampiro.getTipo());
+                bw.write(persona.getTipo());
                 bw.newLine();
 
                 //NOMBRE DE ESBIRROS
                 bw.write("NOMBRE_ESBIRRO: ");
-                bw.newLine();
                 bw.write(humano.getNombre());
                 bw.newLine();
 
                 //VIDA DE ESBIRROS
                 bw.write("VIDA_ESBIRRO: ");
-                bw.newLine();
                 bw.write(humano.getHp());
                 bw.newLine();
 
                 //LEALTAD ESBIRRO HUMANO
                 bw.write("LELTAD: ");
-                bw.newLine();
                 if (humano.getLealtad().equals(0)) {
                     bw.write("0");
                 } else if (humano.getLealtad().equals(1)) {
@@ -747,66 +711,57 @@ public class ControlFicheroUsuarios {
                 }
                 bw.newLine();
 
-            } else if (vampiro.getEsbirros().get(j).getTipo().equals("GHOUL")) {
-                Ghoul ghoul = (Ghoul) vampiro.getEsbirros().get(j);
+            } else if (persona.getEsbirros().get(j).getTipo().equals("GHOUL")) {
+                Ghoul ghoul = (Ghoul) persona.getEsbirros().get(j);
                 //NUMERO DE ESBIRRO
                 bw.write("TIPO_ESBIRRO: ");
-                bw.newLine();
-                bw.write(vampiro.getTipo());
+                bw.write(persona.getTipo());
                 bw.newLine();
 
                 //NOMBRE DE ESBIRRO
                 bw.write("NOMBRE_ESBIRRO: ");
-                bw.newLine();
                 bw.write(ghoul.getNombre());
                 bw.newLine();
 
                 //VIDA DE ESBIRRO
                 bw.write("VIDA_ESBIRRO: ");
-                bw.newLine();
                 bw.write(ghoul.getHp());
                 bw.newLine();
 
                 //DEPENDENCIA ESBIRRO
                 bw.write("DEPENDENCIA: ");
-                bw.newLine();
                 bw.write(ghoul.getDependencia());
                 bw.newLine();
 
-            } else if (vampiro.getEsbirros().get(j).getTipo().equals("DEMONIO")) {
-                Demonio demonio = (Demonio) vampiro.getEsbirros().get(j);
+            } else if (persona.getEsbirros().get(j).getTipo().equals("DEMONIO")) {
+                Demonio demonio = (Demonio) persona.getEsbirros().get(j);
                 //TIPO DE ESBIRRO
                 bw.write("TIPO_ESBIRRO: ");
-                bw.newLine();
 
-                bw.write(vampiro.getTipo());
+                bw.write(persona.getTipo());
                 bw.newLine();
 
                 //NOMBRE DE ESBIRRO
                 bw.write("NOMBRE_ESBIRRO: ");
-                bw.newLine();
                 bw.write(demonio.getNombre());
                 bw.newLine();
 
                 //VIDA ESBIRRO
                 bw.write("VIDA_ESBIRRO: ");
-                bw.newLine();
                 bw.write(demonio.getHp());
                 bw.newLine();
 
                 //DESCRIPCION / PACTO
                 bw.write("DESCRIPCION: ");
-                bw.newLine();
                 bw.write(demonio.getDescripcion());
                 bw.newLine();
 
                 //ESBIRROS EXTRA
                 //NUMERO DE ESBIRROS EXTRA
                 bw.write("NUMERO_ESBIRROS_EXTRA: ");
-                bw.newLine();
                 bw.write(listaCliente.get(i).getPersonaje().getEsbirros().size());
                 bw.newLine();
-                escrituraEsbirros(listaCliente, i, vampiro, bw);
+                escrituraEsbirros(listaCliente, i, persona, bw);
             }
         }
     }

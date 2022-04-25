@@ -29,7 +29,6 @@ import mp_grupo_m.Entidades.Vampiro;
 public class LecturaFicheroUsuario {
 
     public ArrayList<Cliente> lecturaFicheroUsuario() throws IOException {
-        Cliente cliente = new Cliente();
         File archivo = null;
         FileReader fr = null;
         BufferedReader br = null;
@@ -45,15 +44,16 @@ public class LecturaFicheroUsuario {
             String linea;
             String alineados;
             String nombreUsuario;
+            linea = br.readLine();
+            String[] textoSeparado = linea.split(": ");
+            textoSeparado = linea.split(": ");
 
             linea = br.readLine();
-            while (!linea.equals("FIN_USUARIO")) {
-                linea = br.readLine();
-                System.out.println(linea);
-                String[] textoSeparado = linea.split(": ");
+            
+            while (linea != null) {
+                Cliente cliente = new Cliente();
 
                 //NOMBRE
-                linea = br.readLine();
                 textoSeparado = linea.split(": ");
                 cliente.setNombre(textoSeparado[1]);
 
@@ -76,7 +76,7 @@ public class LecturaFicheroUsuario {
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
 
-                if (textoSeparado[1] != null) {
+                if (!textoSeparado[1].equals("null")) {
                     //LECTURA SI ES DE TIPO VAMPIRO
                     if (textoSeparado[1].equals("VAMPIRO")) {
                         Vampiro vampiro = lecturaVampiro(br);
@@ -90,11 +90,14 @@ public class LecturaFicheroUsuario {
                         Cazador cazador = lecturaCazador(br);
                         cliente.setPersonaje(cazador);
                     }
-                } else if (textoSeparado[1] == null) {
+                } else {
                     System.out.println("HEMOS TERMINADO CON EL USUARIO");
                     System.out.println("AUN TE FALTA CREAR EL PERSONAJE");
-                    listaCliente.add(cliente);
                 }
+                listaCliente.add(cliente);
+                linea = br.readLine();
+                linea = br.readLine();
+                linea = br.readLine();
             }
 
         } catch (Exception e) {
@@ -118,7 +121,7 @@ public class LecturaFicheroUsuario {
     private Vampiro lecturaVampiro(BufferedReader br) throws FileNotFoundException, IOException {
         Vampiro vampiro = new Vampiro();
         Disciplina disciplina = new Disciplina();
-        
+
         FileReader fr = null;
         ArrayList<Cliente> listaVampiro = new ArrayList<>();
         try {
@@ -606,7 +609,7 @@ public class LecturaFicheroUsuario {
         try {
             // Lectura del fichero
             String linea;
-           
+
             linea = br.readLine();
 
             while (!linea.equals("FIN_USUARIO")) {
@@ -621,13 +624,12 @@ public class LecturaFicheroUsuario {
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
                 licantropo.setNombre(textoSeparado[1]);
-                
+
                 //RABIA LICANTROPO
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
                 licantropo.setRabia(Integer.parseInt(textoSeparado[1]));
 
-              
                 //NOMBRE HABILIDAD
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
@@ -643,7 +645,6 @@ public class LecturaFicheroUsuario {
                 textoSeparado = linea.split(": ");
                 don.setDefensa(Integer.parseInt(textoSeparado[1]));
 
-                
                 //NUMERO DE ARMAS
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");

@@ -4,12 +4,12 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/octavio/Documents/SERGIO/UNIVERSIDAD/MP/PRACTICA/MPGrupoM-main(3)/MPGrupoM-main/MP_Grupo_M/src/mp_grupo_m/Terminal.java</file>
-            <file>file:/C:/Users/octavio/Documents/SERGIO/UNIVERSIDAD/MP/PRACTICA/MPGrupoM-main(3)/MPGrupoM-main/MP_Grupo_M/src/mp_grupo_m/Entidades/Personaje.java</file>
             <file>file:/C:/Users/octavio/Documents/SERGIO/UNIVERSIDAD/MP/PRACTICA/MPGrupoM-main(3)/MPGrupoM-main/MP_Grupo_M/src/mp_grupo_m/MP_Grupo_M.java</file>
+            <file>file:/C:/Users/octavio/Documents/SERGIO/UNIVERSIDAD/MP/PRACTICA/MPGrupoM-main(3)/MPGrupoM-main/MP_Grupo_M/src/mp_grupo_m/Ficheros/ControlFicheroUsuarios.java</file>
             <file>file:/C:/Users/octavio/Documents/SERGIO/UNIVERSIDAD/MP/PRACTICA/MPGrupoM-main(3)/MPGrupoM-main/MP_Grupo_M/src/mp_grupo_m/Ficheros/LecturaFicheroUsuario.java</file>
-            <file>file:/C:/Users/octavio/Documents/SERGIO/UNIVERSIDAD/MP/PRACTICA/MPGrupoM-main(3)/MPGrupoM-main/MP_Grupo_M/src/mp_grupo_m/Menu.java</file>
             <file>file:/C:/Users/octavio/Documents/SERGIO/UNIVERSIDAD/MP/PRACTICA/MPGrupoM-main(3)/MPGrupoM-main/MP_Grupo_M/src/mp_grupo_m/Entidades/Cliente.java</file>
-            <file>file:/C:/Users/octavio/Documents/SERGIO/UNIVERSIDAD/MP/PRACTICA/MPGrupoM-main(3)/MPGrupoM-main/MP_Grupo_M/src/mp_grupo_m/Entidades/Licantropo.java</file>
+            <file>file:/C:/Users/octavio/Documents/SERGIO/UNIVERSIDAD/MP/PRACTICA/MPGrupoM-main(3)/MPGrupoM-main/MP_Grupo_M/src/mp_grupo_m/Entidades/User.java</file>
+            <file>file:/C:/Users/octavio/Documents/SERGIO/UNIVERSIDAD/MP/PRACTICA/MPGrupoM-main(3)/MPGrupoM-main/MP_Grupo_M/src/mp_grupo_m/Ficheros/registroUsuario.txt</file>
             <file>file:/C:/Users/octavio/Documents/SERGIO/UNIVERSIDAD/MP/PRACTICA/MPGrupoM-main(3)/MPGrupoM-main/MP_Grupo_M/src/mp_grupo_m/Sistema.java</file>
         </group>
     </open-files>
