@@ -609,15 +609,51 @@ public class Operador extends User{
     }
 
     public void banearUser() {
-        //pedir cliente a banear
+        Scanner sc = new Scanner(System.in);
+        Terminal terminal = new Terminal();
+        ArrayList<Cliente> listaClientes = new ArrayList<>(); //coger fichero lista clientes
         Cliente cliente = new Cliente();
+        listaClientes.add(cliente);
+        boolean encontrado = false;
+        do {
+            terminal.preguntarNickAdminBan();
+            String nick = sc.nextLine();
+            for (int i = 0; i < listaClientes.size(); i++) {
+                if (listaClientes.get(i).getNick().equals(nick)) {
+                    encontrado = true;
+                    cliente = listaClientes.get(i);
+                    i = listaClientes.size();
+                }
+            }
+            if(!encontrado){
+                terminal.errorNick();
+            }
+        }while(!encontrado);
         GestorNotificaciones gestorNotificaciones = new GestorNotificaciones();
         gestorNotificaciones.subscribeBan(cliente);
     }
 
     public void desbanearUser() {
-        //pedir cliente a desbanear
+        Scanner sc = new Scanner(System.in);
+        Terminal terminal = new Terminal();
+        ArrayList<Cliente> listaClientes = new ArrayList<>(); //coger fichero clientes baneados
         Cliente cliente = new Cliente();
+        listaClientes.add(cliente);
+        boolean encontrado = false;
+        do {
+            terminal.preguntarNickAdminUnban();
+            String nick = sc.nextLine();
+            for (int i = 0; i < listaClientes.size(); i++) {
+                if (listaClientes.get(i).getNick().equals(nick)) {
+                    encontrado = true;
+                    cliente = listaClientes.get(i);
+                    i = listaClientes.size();
+                }
+            }
+            if(!encontrado){
+                terminal.errorNick();
+            }
+        }while(!encontrado);
         GestorNotificaciones gestorNotificaciones = new GestorNotificaciones();
         gestorNotificaciones.unsubscribeBan(cliente);
     }
