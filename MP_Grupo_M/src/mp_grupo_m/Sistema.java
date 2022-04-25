@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.Scanner;
 import java.util.concurrent.ConcurrentHashMap;
-import mp_grupo_m.Ficheros.ControlFicheroUsuarios;
+import mp_grupo_m.Ficheros.ControlFicheroUsuario;
 import mp_grupo_m.Ficheros.LecturaFicheroUsuario;
 
 public class Sistema {
@@ -98,7 +98,7 @@ public class Sistema {
                 System.out.println(cliente.getNick());
                 System.out.println(cliente.getPassword());
                 System.out.println(cliente.getRegistro());
-                ControlFicheroUsuarios controlFicheroUsuarios = new ControlFicheroUsuarios();
+                ControlFicheroUsuario controlFicheroUsuarios = new ControlFicheroUsuario();
                 controlFicheroUsuarios.registroUsuario(cliente);
 
                 break;
