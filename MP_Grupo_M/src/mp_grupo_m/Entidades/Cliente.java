@@ -3,6 +3,7 @@ package mp_grupo_m.Entidades;
 import mp_grupo_m.Factorias.FactoriaCazadores;
 import mp_grupo_m.Factorias.FactoriaVampiros;
 import mp_grupo_m.Factorias.FactoriaLicantropos;
+import mp_grupo_m.Ficheros.LecturaFicheroUsuarios;
 import mp_grupo_m.Sistema;
 import mp_grupo_m.Terminal;
 
@@ -225,9 +226,8 @@ public class Cliente extends User {
 
     public String generarNumerRegistro() {
         boolean valido = false;
-        Cliente cliente = new Cliente();
-        ArrayList<Cliente> lista = new ArrayList<>();
-        lista.add(cliente);
+        LecturaFicheroUsuarios lecturaFicheroUsuarios = new LecturaFicheroUsuarios();
+        ArrayList<Cliente> lista = lecturaFicheroUsuarios.lecturaFicheroUsuario();
         String strBuilder = null;
         //crear del fichero lista de clientes para coger sus registros y comparar
         while (!valido) {
@@ -236,12 +236,16 @@ public class Cliente extends User {
                     getNumber() +
                     getLetra() +
                     getLetra();
-            for (Cliente value : lista) {
-                if (!(value.getRegistro().equals(strBuilder))) {
-                    valido = true;
-                } else {
-                    strBuilder = null;
+            if (!lista.isEmpty()) {
+                for (Cliente value : lista) {
+                    if (!(value.getRegistro().equals(strBuilder))) {
+                        valido = true;
+                    } else {
+                        strBuilder = null;
+                    }
                 }
+            } else {
+                valido = true;
             }
         }
         return strBuilder;
@@ -394,7 +398,7 @@ public class Cliente extends User {
             do {
                 terminal.otroArma(armas, armasActivas.get(0));
                 rightValue = factoriaVampiros.addArmaActiva2(armas, armasActivas);
-                if (!rightValue){
+                if (!rightValue) {
                     terminal.ErrNumSelec();
                 }
             } while (!rightValue);
@@ -537,7 +541,7 @@ public class Cliente extends User {
             do {
                 terminal.otroArma(armas, armasActivas.get(0));
                 rightValue = factoriaCazadores.addArmaActiva2(armas, armasActivas);
-                if (!rightValue){
+                if (!rightValue) {
                     terminal.ErrNumSelec();
                 }
             } while (!rightValue);
@@ -676,7 +680,7 @@ public class Cliente extends User {
             do {
                 terminal.otroArma(armas, armasActivas.get(0));
                 rightValue = factoriaLicantropo.addArmaActiva2(armas, armasActivas);
-                if (!rightValue){
+                if (!rightValue) {
                     terminal.ErrNumSelec();
                 }
             } while (!rightValue);

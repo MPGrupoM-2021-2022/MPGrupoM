@@ -20,6 +20,17 @@ public class Terminal {
         System.out.println("****************************");
     }
 
+    public void mostrarMenuOperador() {
+        System.out.println("************MENU************");
+        System.out.println("1. MODIFICAR PERSONAJE");
+        System.out.println("2. VALIDAR DESAFIO");
+        System.out.println("3. BANEAR USUARIO");
+        System.out.println("4. DESBANEAR USUARIO");
+        System.out.println("5. SALIR");
+        System.out.println("6. BORRAR CUENTA");
+        System.out.println("****************************");
+    }
+
     public void mostrarInicio() {
         System.out.println("1. REGISTRARSE");
         System.out.println("2. INICIAR SESION CLIENTE");
@@ -90,6 +101,20 @@ public class Terminal {
         }
     }
 
+    public void armasPersonaje(List<Arma> armas) {
+        System.out.println("Estas son las armas del personaje");
+        for (int iterator = 0; iterator < armas.size(); iterator++) {
+            System.out.println(iterator + 1 + ": " + armas.get(iterator).getNombre());
+        }
+    }
+
+    public void armadurasPersonaje(List<Armadura> armaduras) {
+        System.out.println("Estas son las armas del personaje");
+        for (int iterator = 0; iterator < armaduras.size(); iterator++) {
+            System.out.println(iterator + 1 + ": " + armaduras.get(iterator).getNombre());
+        }
+    }
+
     public void otroArma(List<Arma> armas, Arma arma) {
         System.out.println("Quiere equipar otro arma de una sola mano?");
         System.out.println("0: NO");
@@ -117,7 +142,7 @@ public class Terminal {
     }
 
     public void mostrarArmaduras(List<Armadura> armaduras) {
-        System.out.println("Que arma quieres equipar?");
+        System.out.println("Que armadura quieres equipar?");
         for (int numArmadura = 0; numArmadura < armaduras.size(); numArmadura++) {
             System.out.println(numArmadura + 1 + ": " + armaduras.get(numArmadura).getNombre());
         }
@@ -252,6 +277,18 @@ public class Terminal {
         System.out.println("Introduce tu nick de usuario");
     }
 
+    public void preguntarNickAdmin() {
+        System.out.println("Introduce el nick del cliente que desea modificar su personaje");
+    }
+
+    public void preguntarNickAdminBan() {
+        System.out.println("Introduce el nick del cliente que desea banear");
+    }
+
+    public void preguntarNickAdminUnban() {
+        System.out.println("Introduce el nick del cliente que desea desbanear");
+    }
+
     public void preguntarPassword() {
         System.out.println("Introduce la password de tu cuenta");
     }
@@ -336,6 +373,167 @@ public class Terminal {
         System.out.println("Quieres cambiar las armas y armaduras del personaje?");
         System.out.println("1. SI");
         System.out.println("2. NO");
+    }
+
+    public void validarDesafio() {
+        System.out.println("¿Quieres validar este desafio?");
+        System.out.println("1. SI");
+        System.out.println("2. NO");
+    }
+
+    public void modificarCliente() {
+        System.out.println("Introduce el nick del cliente que desea modificar su personaje");
+    }
+    public void menuModPersonaje() {
+        System.out.println("SELECCIONE QUE DESEA MODIFICAR");
+        System.out.println("******************************");
+        System.out.println("1.  Nombre");
+        System.out.println("2.  Habilidad");
+        System.out.println("3.  Armas");
+        System.out.println("4.  Armas activas");
+        System.out.println("5.  Armaduras");
+        System.out.println("6.  Armafuras activas");
+        System.out.println("7.  Esbirros");
+        System.out.println("8.  Oro");
+        System.out.println("9.  Hp");
+        System.out.println("10. Poder");
+        System.out.println("11. Debilidades");
+        System.out.println("12. Fortalezas");
+        System.out.println("13. Tipo");
+        System.out.println("14. Salir");
+    }
+
+    public void eleccionFortalezas() {
+        System.out.println("Introduce las fortalezas que creas convenientes para el combate, cuando acabes escribe continuar:");
+    }
+
+    public void eleccionDebilidades() {
+        System.out.println("Introduce las debilidades que creas convenientes para el combate, cuando acabes escribe salir:");
+    }
+
+    public void errorMod() {
+        System.out.println("el modificador introducido es erroneo, por favor indique los modificadores mostrados anteriormente");
+    }
+
+    public void errorNick() {
+        System.out.println("el nick introducido no corresponde con ningun cliente, intentelo otra vez");
+    }
+
+    public void introModificacion() {
+        System.out.println("introduce el valor modificado:");
+    }
+
+    public void salir() {
+        System.out.println("Saliendo...");
+    }
+
+    public void mostrarNombre() {
+        System.out.println("Este es el nombre actual:");
+    }
+
+    public void mostrarOro() {
+        System.out.println("Este es el oro actual:");
+    }
+
+    public void mostrarHp() {
+        System.out.println("Esta es la hp actual:");
+    }
+
+    public void mostrarPoder() {
+        System.out.println("Este es el poder actual:");
+    }
+
+
+    public void mostrarTipo() {
+        System.out.println("Este es el tipo de personaje actual:");
+    }
+
+    public void modificarArma() {
+        System.out.println("¿Que desea realizar?");
+        System.out.println("******************************");
+        System.out.println("1.  añadir arma");
+        System.out.println("2.  eliminar arma");
+        System.out.println("3.  Volver");
+    }
+
+    public void modificarArmadura() {
+        System.out.println("¿Que desea realizar?");
+        System.out.println("******************************");
+        System.out.println("1.  añadir armadura");
+        System.out.println("2.  eliminar armadura");
+        System.out.println("3.  Volver");
+    }
+
+    public void errorArmaActiva() {
+        System.out.println("El arma esta activa y no se puede eliminar");
+    }
+
+    public void errorArmaduraActiva() {
+        System.out.println("la armadura esta activa y no se puede eliminar");
+    }
+
+    public void preguntarArmaEliminar() {
+        System.out.println("Introduce el arma que quiere eliminar");
+    }
+    public void preguntarArmaduraEliminar() {
+        System.out.println("Introduce la armadura que quiere eliminar");
+    }
+
+    public void debilidadesPersonaje(ArrayList<Debilidad> debilidades) {
+        System.out.println("Estas son las debilidades del personaje");
+        for (int iterator = 0; iterator < debilidades.size(); iterator++) {
+            System.out.println(iterator + 1 + ": " + debilidades.get(iterator).getNombre());
+        }
+    }
+
+    public void modificarDebilidades() {
+        System.out.println("¿Que desea realizar?");
+        System.out.println("******************************");
+        System.out.println("1.  añadir debilidad");
+        System.out.println("2.  eliminar debilidad");
+        System.out.println("3.  Volver");
+    }
+
+    public void fortalezasPersonaje(ArrayList<Fortaleza> fortalezas) {
+        System.out.println("Estas son las fortalezas del personaje");
+        for (int iterator = 0; iterator < fortalezas.size(); iterator++) {
+            System.out.println(iterator + 1 + ": " + fortalezas.get(iterator).getNombre());
+        }
+    }
+
+    public void modificarFortalezas() {
+        System.out.println("¿Que desea realizar?");
+        System.out.println("******************************");
+        System.out.println("1.  añadir debilidad");
+        System.out.println("2.  eliminar debilidad");
+        System.out.println("3.  Volver");
+    }
+
+    public void seleccionarTipo() {
+        System.out.println("¿de cual tipo quiere que sea el personaje?");
+        System.out.println("******************************");
+        System.out.println("1.  vampiro");
+        System.out.println("2.  cazador");
+        System.out.println("3.  licantropo");
+    }
+
+    public void esbirrosPersonajes(ArrayList<EsbirrosComposite> esbirros) {
+        System.out.println("Estas son las fortalezas del personaje");
+        for (int iterator = 0; iterator < esbirros.size(); iterator++) {
+            System.out.println(iterator + 1 + ": " + esbirros.get(iterator).getNombre());
+        }
+    }
+
+    public void preguntarEsbirroEliminar() {
+        System.out.println("Introduce el esbirro que quiere eliminar");
+    }
+
+    public void modificarEsbirros() {
+        System.out.println("¿Que desea realizar?");
+        System.out.println("******************************");
+        System.out.println("1.  añadir esbirro");
+        System.out.println("2.  eliminar esbirro");
+        System.out.println("3.  Volver");
     }
 
     public void mostrarCombate(Combate combate) {

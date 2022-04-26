@@ -82,7 +82,38 @@ public class Menu {
 
     public void selectorOperador(Operador operador, Sistema sistema) {
         Terminal terminal = new Terminal();
+        Scanner sc = new Scanner(System.in);
         terminal.WIP();
+
+        int opcion;
+        do {
+            terminal.mostrarMenuOperador();
+            opcion = sc.nextInt();
+            switch (opcion) {
+                case 1:
+                    operador.modificarPersonaje();
+                    break;
+                case 2:
+                    operador.validarDesafio();
+                    break;
+                case 3:
+                    terminal.WIP();
+                    break;
+                case 4:
+                    operador.desbanearUser();
+                    break;
+                case 5:
+                    terminal.cerrarSesion();
+                    sistema.selector();
+                    break;
+                case 6:
+                    operador.eliminarCuenta(operador, sistema);
+                    break;
+                default:
+                    terminal.error();
+                    break;
+            }
+        } while (opcion != 5 && opcion != 6);
     }
 
     private void consultarCombates(Cliente cliente) {

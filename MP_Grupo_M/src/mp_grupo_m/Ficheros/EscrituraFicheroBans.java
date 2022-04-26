@@ -4,11 +4,12 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
+
 import mp_grupo_m.Sistema;
 
 public class EscrituraFicheroBans {
 
-    public void registroBaneado(String nick){
+    public void registroBaneado(String nick) {
         try {
             String ruta = "src/mp_grupo_m/Ficheros/registroBaneos.txt";
             File file = new File(ruta);
@@ -30,7 +31,7 @@ public class EscrituraFicheroBans {
         }
     }
 
-    public void sobreescribirFicheroBaneado (ArrayList<String> listaBaneados) {
+    public void sobreescribirFicheroBaneado(ArrayList<String> listaBaneados) {
 
         try {
             String ruta = "src/mp_grupo_m/Ficheros/registroBaneos.txt";
