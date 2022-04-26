@@ -97,23 +97,20 @@ public class Menu {
                     operador.validarDesafio();
                     break;
                 case 3:
-                    operador.banearUser();
-                    break;
-                case 4:
                     operador.desbanearUser();
                     break;
-                case 5:
+                case 4:
                     terminal.cerrarSesion();
                     sistema.selector();
                     break;
-                case 6:
+                case 5:
                     operador.eliminarCuenta(operador, sistema);
                     break;
                 default:
                     terminal.error();
                     break;
             }
-        } while (opcion != 5 && opcion != 6);
+        } while (opcion != 4 && opcion != 5);
     }
 
     private void consultarCombates(Cliente cliente) {
