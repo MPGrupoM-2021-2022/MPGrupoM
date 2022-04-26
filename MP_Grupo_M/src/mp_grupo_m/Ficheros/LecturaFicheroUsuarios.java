@@ -834,8 +834,13 @@ public class LecturaFicheroUsuarios {
                 //VALOR LEALTAD     TIPOS: ALTA, MEDIO, BAJO que coresponde a 0,1,2
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
-                humano.setLealtad((Integer.parseInt(textoSeparado[1])));
-
+                if (textoSeparado[1].equals("ALTA")){
+                    humano.setLealtad(Humano.Lealtad.ALTA);
+                } else if (textoSeparado[1].equals("MEDIA")){
+                    humano.setLealtad(Humano.Lealtad.MEDIA);
+                } else {
+                    humano.setLealtad(Humano.Lealtad.BAJA);
+                }
                 return humano;
 
             } else if (textoSeparado[1].equals("GHOULS")) {

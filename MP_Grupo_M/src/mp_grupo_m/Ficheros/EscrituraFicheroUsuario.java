@@ -629,12 +629,12 @@ public class EscrituraFicheroUsuario {
 
                 //LEALTAD ESBIRRO HUMANO
                 bw.write("LELTAD: ");
-                if (humano.getLealtad().equals(0)) {
-                    bw.write("0");
-                } else if (humano.getLealtad().equals(1)) {
-                    bw.write("1");
-                } else if (humano.getLealtad().equals(2)) {
-                    bw.write("2");
+                if (humano.getLealtad() == Humano.Lealtad.ALTA) {
+                    bw.write("ALTA");
+                } else if (humano.getLealtad() == Humano.Lealtad.MEDIA) {
+                    bw.write("MEDIA");
+                } else if (humano.getLealtad() == Humano.Lealtad.BAJA) {
+                    bw.write("BAJA");
                 }
                 bw.newLine();
 
