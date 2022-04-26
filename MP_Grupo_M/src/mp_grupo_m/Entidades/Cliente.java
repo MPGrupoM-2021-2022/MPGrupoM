@@ -236,16 +236,12 @@ public class Cliente extends User {
                     getNumber() +
                     getLetra() +
                     getLetra();
-            if (!lista.isEmpty()) {
-                for (Cliente value : lista) {
-                    if (!(value.getRegistro().equals(strBuilder))) {
-                        valido = true;
-                    } else {
-                        strBuilder = null;
-                    }
+            for (Cliente value : lista) {
+                if (!(value.getRegistro().equals(strBuilder))) {
+                    valido = true;
+                } else {
+                    strBuilder = null;
                 }
-            } else{
-                valido = true;
             }
         }
         return strBuilder;

@@ -5,6 +5,7 @@ import mp_grupo_m.Sistema;
 import mp_grupo_m.Terminal;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
 
 public class Desafio {
@@ -15,6 +16,15 @@ public class Desafio {
     private ArrayList<Modificador> modificadores;
     private boolean validated;
     private String registro;
+    private Date fecha;
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
 
     public Cliente getDesafiante() {
         return desafiante;
@@ -89,6 +99,8 @@ public class Desafio {
             setValidated(false);
             String registro = generarNumerRegistro();
             setRegistro(registro);
+            Date fechaHoy = new Date();
+            setFecha(fechaHoy);
             terminal.desafioCreado();
             GestorNotificaciones gestorNotificaciones = new GestorNotificaciones();
             gestorNotificaciones.subscribeDesafio(this);
