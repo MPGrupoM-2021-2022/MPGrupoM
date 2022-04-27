@@ -93,12 +93,12 @@ public class GestorNotificaciones {
         //escribir nick en el fichero de bans
     }
 
-    public void unsubscribeBan(Cliente cliente) {
+    public void unsubscribeBan(String nick) {
         //leer fichero bans
         ArrayList<String> listaBans = new ArrayList<>();
         listaBans.add("nick");
         for (int numCliente = 0; numCliente < listaBans.size(); numCliente++) {
-            if (listaBans.get(numCliente).equals(cliente.getNick())) {
+            if (listaBans.get(numCliente).equals(nick)) {
                 listaBans.remove(numCliente);
                 break;
             }

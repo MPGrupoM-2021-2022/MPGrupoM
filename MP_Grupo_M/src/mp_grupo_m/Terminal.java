@@ -24,10 +24,9 @@ public class Terminal {
         System.out.println("************MENU************");
         System.out.println("1. MODIFICAR PERSONAJE");
         System.out.println("2. VALIDAR DESAFIO");
-        System.out.println("3. BANEAR USUARIO");
-        System.out.println("4. DESBANEAR USUARIO");
-        System.out.println("5. SALIR");
-        System.out.println("6. BORRAR CUENTA");
+        System.out.println("3. DESBANEAR USUARIO");
+        System.out.println("4. SALIR");
+        System.out.println("5. BORRAR CUENTA");
         System.out.println("****************************");
     }
 
@@ -279,14 +278,6 @@ public class Terminal {
 
     public void preguntarNickAdmin() {
         System.out.println("Introduce el nick del cliente que desea modificar su personaje");
-    }
-
-    public void preguntarNickAdminBan() {
-        System.out.println("Introduce el nick del cliente que desea banear");
-    }
-
-    public void preguntarNickAdminUnban() {
-        System.out.println("Introduce el nick del cliente que desea desbanear");
     }
 
     public void preguntarPassword() {
@@ -575,6 +566,19 @@ public class Terminal {
     }
 
     public void cuentaBaneada() {
-        System.out.println("Esta cuenta ha sido baneada, acceso denegdo...");
+        System.out.println("Esta cuenta ha sido baneada, acceso denegado...");
+    }
+
+    public void mostrarClientes(ArrayList<String> listaClientes) {
+        for (int numCliente = 0; numCliente < listaClientes.size(); numCliente++) {
+            System.out.println(numCliente + 1 + ": " + listaClientes.get(numCliente));
+        }
+    }
+
+    public void preguntarBan() {
+        System.out.println("El desafiante ha incumplido las normas de desafio, ¿Desea banearle?");
+        System.out.println("1:  Si");
+        System.out.println("2:  No");
+
     }
 }

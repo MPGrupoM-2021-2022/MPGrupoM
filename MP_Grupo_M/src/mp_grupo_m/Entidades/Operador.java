@@ -517,151 +517,156 @@ public class Operador extends User{
 
         terminal.modificarCliente();
     }
+  
+    public void validarDesafio() {
+        Scanner sc = new Scanner(System.in);
+        Terminal terminal = new Terminal();
+        Desafio desafio = new Desafio();
+        Cliente desafiante, contrincante = new Cliente();
+        ArrayList<Desafio> listaDesafios = new ArrayList<>(); //coger fichero lista desafios
+        listaDesafios.add(desafio);
 
-//    public void validarDesafio() {
-//        Scanner sc = new Scanner(System.in);
-//        Terminal terminal = new Terminal();
-//        Desafio desafio = new Desafio();
-//        Cliente desafiante, contrincante = new Cliente();
-//        ArrayList<Desafio> listaDesafios = new ArrayList<>(); //coger fichero lista desafios
-//        listaDesafios.add(desafio);
-//
-//        for(int i = 0; i<listaDesafios.size(); i++)
-//        {
-//            if (!listaDesafios.get(i).isValidated()){
-//                desafiante = listaDesafios.get(i).getDesafiante();
-//                contrincante = listaDesafios.get(i).getContrincante();
-//                Date fechaDesafio = listaDesafios.get(i).getFecha();
-//                boolean banear = comprobarBan(listaDesafios,fechaDesafio,contrincante);
-//                if(banear){
-//                    banearUser(desafiante);
-//                }else {
-//                    //fortalezas del desafiante y del contrincante
-//                    for (int j = 0; j < desafiante.getPersonaje().getFortalezas().size(); j++) {
-//                        System.out.println(desafiante.getPersonaje().getFortalezas().get(i).getNombre());
-//                    }
-//                    for (int j = 0; j < contrincante.getPersonaje().getFortalezas().size(); j++) {
-//                        System.out.println(contrincante.getPersonaje().getFortalezas().get(i).getNombre());
-//                    }
-//                    //debilidades del contrincante y del contrincante
-//                    for (int j = 0; j < desafiante.getPersonaje().getDebilidades().size(); j++) {
-//                        System.out.println(desafiante.getPersonaje().getDebilidades().get(i).getNombre());
-//                    }
-//                    for (int j = 0; j < contrincante.getPersonaje().getDebilidades().size(); j++) {
-//                        System.out.println(contrincante.getPersonaje().getDebilidades().get(i).getNombre());
-//                    }
-//                    int opcion;
-//                    do {
-//                        terminal.validarDesafio();
-//                        opcion = sc.nextInt();
-//                        if (opcion != 0 && opcion != 1) {
-//                            terminal.numValido();
-//                        }
-//                    } while (opcion != 0 && opcion != 1);
-//                    if (opcion == 0) {
-//                        listaDesafios.get(i).setValidated(true);
-//                        ArrayList<Modificador> listaMods = new ArrayList<>();
-//                        String modificacion;
-//                        terminal.eleccionFortalezas();
-//                        do {
-//                            modificacion = sc.nextLine();
-//                            boolean encontrado = false;
-//                            for (int j = 0; j < desafiante.getPersonaje().getFortalezas().size(); j++) {
-//                                if (desafiante.getPersonaje().getFortalezas().get(j).getNombre().equals(modificacion)) {
-//                                    listaMods.add(desafiante.getPersonaje().getFortalezas().get(j));
-//                                    encontrado = true;
-//                                }
-//                            }
-//                            if (!encontrado) {
-//                                for (int j = 0; j < contrincante.getPersonaje().getFortalezas().size(); j++) {
-//                                    if (contrincante.getPersonaje().getFortalezas().get(j).getNombre().equals(modificacion)) {
-//                                        listaMods.add(contrincante.getPersonaje().getFortalezas().get(j));
-//                                        encontrado = true;
-//                                    }
-//                                }
-//                            }
-//                            if (!encontrado) {
-//                                terminal.errorMod();
-//                            }
-//                        } while (!modificacion.equals("continuar"));
-//
-//                        terminal.eleccionDebilidades();
-//                        do {
-//                            modificacion = sc.nextLine();
-//                            boolean encontrado = false;
-//                            for (int j = 0; j < desafiante.getPersonaje().getDebilidades().size(); j++) {
-//                                if (desafiante.getPersonaje().getDebilidades().get(j).getNombre().equals(modificacion)) {
-//                                    listaMods.add(desafiante.getPersonaje().getDebilidades().get(j));
-//                                    encontrado = true;
-//                                }
-//                            }
-//                            if (!encontrado) {
-//                                for (int j = 0; j < contrincante.getPersonaje().getDebilidades().size(); j++) {
-//                                    if (contrincante.getPersonaje().getDebilidades().get(j).getNombre().equals(modificacion)) {
-//                                        listaMods.add(contrincante.getPersonaje().getDebilidades().get(j));
-//                                        encontrado = true;
-//                                    }
-//                                }
-//                            }
-//                            if (!encontrado) {
-//                                terminal.errorMod();
-//                            }
-//                        } while (!modificacion.equals("salir"));
-//                        listaDesafios.get(i).setModificadores(listaMods);
-//                    } else {
-//                        listaDesafios.remove(i);
-//                    }
-//                }
-//            }
-//        }
-//    }
+        for(int i = 0; i<listaDesafios.size(); i++)
+        {
+            if (!listaDesafios.get(i).isValidated()){
+                desafiante = listaDesafios.get(i).getDesafiante();
+                contrincante = listaDesafios.get(i).getContrincante();
+                Date fechaDesafio = listaDesafios.get(i).getFecha();
+                boolean banear = comprobarBan(fechaDesafio,contrincante);
+                if(banear){
+                    banearUser(desafiante);
+                }else {
+                    //fortalezas del desafiante y del contrincante
+                    for (int j = 0; j < desafiante.getPersonaje().getFortalezas().size(); j++) {
+                        System.out.println(desafiante.getPersonaje().getFortalezas().get(i).getNombre());
+                    }
+                    for (int j = 0; j < contrincante.getPersonaje().getFortalezas().size(); j++) {
+                        System.out.println(contrincante.getPersonaje().getFortalezas().get(i).getNombre());
+                    }
+                    //debilidades del contrincante y del contrincante
+                    for (int j = 0; j < desafiante.getPersonaje().getDebilidades().size(); j++) {
+                        System.out.println(desafiante.getPersonaje().getDebilidades().get(i).getNombre());
+                    }
+                    for (int j = 0; j < contrincante.getPersonaje().getDebilidades().size(); j++) {
+                        System.out.println(contrincante.getPersonaje().getDebilidades().get(i).getNombre());
+                    }
+                    int opcion;
+                    do {
+                        terminal.validarDesafio();
+                        opcion = sc.nextInt();
+                        if (opcion != 0 && opcion != 1) {
+                            terminal.numValido();
+                        }
+                    } while (opcion != 0 && opcion != 1);
+                    if (opcion == 0) {
+                        listaDesafios.get(i).setValidated(true);
+                        ArrayList<Modificador> listaMods = new ArrayList<>();
+                        String modificacion;
+                        terminal.eleccionFortalezas();
+                        do {
+                            modificacion = sc.nextLine();
+                            boolean encontrado = false;
+                            for (int j = 0; j < desafiante.getPersonaje().getFortalezas().size(); j++) {
+                                if (desafiante.getPersonaje().getFortalezas().get(j).getNombre().equals(modificacion)) {
+                                    listaMods.add(desafiante.getPersonaje().getFortalezas().get(j));
+                                    encontrado = true;
+                                }
+                            }
+                            if (!encontrado) {
+                                for (int j = 0; j < contrincante.getPersonaje().getFortalezas().size(); j++) {
+                                    if (contrincante.getPersonaje().getFortalezas().get(j).getNombre().equals(modificacion)) {
+                                        listaMods.add(contrincante.getPersonaje().getFortalezas().get(j));
+                                        encontrado = true;
+                                    }
+                                }
+                            }
+                            if (!encontrado) {
+                                terminal.errorMod();
+                            }
+                        } while (!modificacion.equals("continuar"));
 
-//    private boolean comprobarBan(ArrayList<Desafio> listaDesafios, Date fechaDesafio, Cliente cliente) {
-//        Terminal terminal = new Terminal();
-//        Scanner sc = new Scanner(System.in);
-//        boolean sugerirBan = false;
-//        boolean banear = false;
-//        for(int i=0; i<listaDesafios.size(); i++){
-//            if(listaDesafios.get(i).getDesafiante().equals(cliente) ||
-//                    listaDesafios.get(i).getContrincante().equals(cliente)){
-//                Date fechaDesafioAnterior = listaDesafios.get(i).getFecha();
-//                long diferencia = fechaDesafio.getTime() - fechaDesafioAnterior.getTime();
-//                long horas = TimeUnit.MILLISECONDS.toHours(diferencia);
-//                if(horas <= 24){
-//                    sugerirBan = true;
-//                    break;
-//                }
-//            }
-//        }
-//        if(sugerirBan){
-//            int opcion;
-//            do {
-//                terminal.preguntarBan();
-//                opcion = sc.nextInt();
-//            }while(opcion != 1 && opcion != 2);
-//            if(opcion == 1){
-//                banear = true;
-//            }
-//        }
-//        return banear;
-//    }
-//
-//    public void banearUser(Cliente cliente) {
-//        GestorNotificaciones gestorNotificaciones = new GestorNotificaciones();
-//        gestorNotificaciones.subscribeBan(cliente);
-//    }
-//
-//    public void desbanearUser() {
-//        Scanner sc = new Scanner(System.in);
-//        Terminal terminal = new Terminal();
-//        GestorNotificaciones gestorNotificaciones = new GestorNotificaciones();
-//        ArrayList<String> listaClientes = new ArrayList<>(); //coger fichero clientes baneados
-//        listaClientes.add("nick");
-//        terminal.mostrarClientes(listaClientes);
-//        int opcion = sc.nextInt();
-//        String nick = listaClientes.get(opcion-1);
-//        gestorNotificaciones.unsubscribeBan(nick);
-//    }
+                        terminal.eleccionDebilidades();
+                        do {
+                            modificacion = sc.nextLine();
+                            boolean encontrado = false;
+                            for (int j = 0; j < desafiante.getPersonaje().getDebilidades().size(); j++) {
+                                if (desafiante.getPersonaje().getDebilidades().get(j).getNombre().equals(modificacion)) {
+                                    listaMods.add(desafiante.getPersonaje().getDebilidades().get(j));
+                                    encontrado = true;
+                                }
+                            }
+                            if (!encontrado) {
+                                for (int j = 0; j < contrincante.getPersonaje().getDebilidades().size(); j++) {
+                                    if (contrincante.getPersonaje().getDebilidades().get(j).getNombre().equals(modificacion)) {
+                                        listaMods.add(contrincante.getPersonaje().getDebilidades().get(j));
+                                        encontrado = true;
+                                    }
+                                }
+                            }
+                            if (!encontrado) {
+                                terminal.errorMod();
+                            }
+                        } while (!modificacion.equals("salir"));
+                        listaDesafios.get(i).setModificadores(listaMods);
+                    } else {
+                        listaDesafios.remove(i);
+                    }
+                }
+            }
+        }
+    }
+
+    private boolean comprobarBan(Date fechaDesafio, Cliente cliente) {
+        Terminal terminal = new Terminal();
+        Scanner sc = new Scanner(System.in);
+        ArrayList<Combate> listaCombates = new ArrayList<>(); //coger fichero de combates
+        Combate combate = new Combate();
+        listaCombates.add(combate);
+        boolean sugerirBan = false;
+        boolean banear = false;
+        for(int i=0; i<listaCombates.size(); i++){
+            if(listaCombates.get(i).getDesafiante().equals(cliente) ||
+                    listaCombates.get(i).getContrincante().equals(cliente)){
+                Date fechaDesafioAnterior = listaCombates.get(i).getFecha();
+                long diferencia = fechaDesafio.getTime() - fechaDesafioAnterior.getTime();
+                long horas = TimeUnit.MILLISECONDS.toHours(diferencia);
+                if(horas <= 24 && (!listaCombates.get(i).getVencedor().getNick().equals(cliente.getNick())
+                        || listaCombates.get(i).getVencedor() != null)){
+                    sugerirBan = true;
+                    break;
+                }
+            }
+        }
+        if(sugerirBan){
+            int opcion;
+            do {
+                terminal.preguntarBan();
+                opcion = sc.nextInt();
+            }while(opcion != 1 && opcion != 2);
+            if(opcion == 1){
+                banear = true;
+            }
+        }
+        return banear;
+    }
+
+    public void banearUser(Cliente cliente) {
+        GestorNotificaciones gestorNotificaciones = new GestorNotificaciones();
+        gestorNotificaciones.subscribeBan(cliente);
+    }
+
+    public void desbanearUser() {
+        Scanner sc = new Scanner(System.in);
+        Terminal terminal = new Terminal();
+        GestorNotificaciones gestorNotificaciones = new GestorNotificaciones();
+        ArrayList<String> listaClientes = new ArrayList<>(); //coger fichero clientes baneados
+        listaClientes.add("nick");
+        terminal.mostrarClientes(listaClientes);
+        int opcion = sc.nextInt();
+        String nick = listaClientes.get(opcion-1);
+        gestorNotificaciones.unsubscribeBan(nick);
+    }
+
 
     public void eliminarCuenta(Operador operador, Sistema sistema) {
         Terminal terminal = new Terminal();
