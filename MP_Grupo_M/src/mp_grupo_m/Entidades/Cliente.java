@@ -3,6 +3,7 @@ package mp_grupo_m.Entidades;
 import mp_grupo_m.Factorias.FactoriaCazadores;
 import mp_grupo_m.Factorias.FactoriaVampiros;
 import mp_grupo_m.Factorias.FactoriaLicantropos;
+import mp_grupo_m.Ficheros.EscrituraFicheroUsuario;
 import mp_grupo_m.Ficheros.LecturaFicheroUsuarios;
 import mp_grupo_m.Sistema;
 import mp_grupo_m.Terminal;
@@ -173,8 +174,8 @@ public class Cliente extends User {
         boolean delete = sc.nextInt() == 1;
         if (delete) {
             //leer fichero de clientes
-            ArrayList<Cliente> listaClientes = new ArrayList<>();
-            listaClientes.add(cliente);
+            LecturaFicheroUsuarios lecturaFicheroUsuarios = new LecturaFicheroUsuarios();
+            ArrayList<Cliente> listaClientes = lecturaFicheroUsuarios.lecturaFicheroUsuarios();
             for (int i = 0; i <= listaClientes.size(); i++) {
                 if (listaClientes.get(i).getRegistro().equals(cliente.getRegistro())) {
                     listaClientes.remove(i);
@@ -182,6 +183,8 @@ public class Cliente extends User {
                 }
             }
             //sobreescribir fichero
+            EscrituraFicheroUsuario escrituraFicheroUsuario = new EscrituraFicheroUsuario();
+            escrituraFicheroUsuario.sobreescribirFicheroUsuario(listaClientes);
             terminal.cerrarSesion();
             sistema.selector();
         }
@@ -227,7 +230,7 @@ public class Cliente extends User {
     public String generarNumerRegistro() {
         boolean valido = false;
         LecturaFicheroUsuarios lecturaFicheroUsuarios = new LecturaFicheroUsuarios();
-        ArrayList<Cliente> lista = lecturaFicheroUsuarios.lecturaFicheroUsuario();
+        ArrayList<Cliente> lista = lecturaFicheroUsuarios.lecturaFicheroUsuarios();
         String strBuilder = null;
         //crear del fichero lista de clientes para coger sus registros y comparar
         while (!valido) {
@@ -263,9 +266,8 @@ public class Cliente extends User {
     public void consultarRanking() {
         Terminal terminal = new Terminal();
         terminal.ranking();
-        Cliente cliente = new Cliente();
-        ArrayList<Cliente> lista = new ArrayList<>();
-        lista.add(cliente);
+        LecturaFicheroUsuarios lecturaFicheroUsuarios = new LecturaFicheroUsuarios();
+        ArrayList<Cliente> lista = lecturaFicheroUsuarios.lecturaFicheroUsuarios();
         //coger lista clientes de ficheros y guardarlos en lista
         ArrayList<Cliente> listaAux = new ArrayList<>();
 

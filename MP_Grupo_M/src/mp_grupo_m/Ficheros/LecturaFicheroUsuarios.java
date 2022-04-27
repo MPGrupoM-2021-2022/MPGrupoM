@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import mp_grupo_m.Entidades.*;
 
 public class LecturaFicheroUsuarios {
-    public ArrayList<Cliente> lecturaFicheroUsuario() {
+    public ArrayList<Cliente> lecturaFicheroUsuarios() {
 
         FileReader fr = null;
         ArrayList<Cliente> listaCliente = new ArrayList<>();

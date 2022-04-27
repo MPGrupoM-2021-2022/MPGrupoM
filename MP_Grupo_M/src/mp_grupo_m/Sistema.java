@@ -1,9 +1,11 @@
 package mp_grupo_m;
 
 import mp_grupo_m.Entidades.Cliente;
-import mp_grupo_m.Entidades.Combate;
 import mp_grupo_m.Entidades.Operador;
 import mp_grupo_m.Entidades.Desafio;
+import mp_grupo_m.Ficheros.EscrituraFicheroOperadores;
+import mp_grupo_m.Ficheros.EscrituraFicheroUsuario;
+import mp_grupo_m.Ficheros.LecturaFicheroOperadores;
 import mp_grupo_m.Ficheros.LecturaFicheroUsuarios;
 
 import java.util.ArrayList;
@@ -16,14 +18,13 @@ public class Sistema{
         Scanner sc = new Scanner(System.in);
         int opcion = sc.nextInt();
         switch (opcion) {
-            case 1: {
-                //REGISTRO DE SESION
+            case 1 -> {
+                //REGISTRO DE USUARIO
                 terminal.menuRegistroUsuario();
                 int user = sc.nextInt();
                 registrarUsuario(user);
-                break;
             }
-            case 2: {
+            case 2 -> {
                 //INICIO DE SESION COMO CLIENTE
                 Cliente cliente = new Cliente();
                 boolean login = loginCliente(cliente);
@@ -46,8 +47,8 @@ public class Sistema{
                     Desafio desafio = new Desafio();
                     ArrayList<Desafio> listaDesafios = new ArrayList<>(); //leerlo de fichero y meter observer
                     listaDesafios.add(desafio);
-                    for (int i = 0; i < listaDesafios.size(); i++){
-                        if (listaDesafios.get(i).isValidated() && listaDesafios.get(i).getContrincante().getNick().equals(cliente.getNick())){
+                    for (int i = 0; i < listaDesafios.size(); i++) {
+                        if (listaDesafios.get(i).isValidated() && listaDesafios.get(i).getContrincante().getNick().equals(cliente.getNick())) {
                             GestorNotificaciones gestorNotificaciones = new GestorNotificaciones();
                             gestorNotificaciones.notifyDesafio(cliente, terminal, listaDesafios, i);
                         }
@@ -55,9 +56,8 @@ public class Sistema{
 
                     menu.selector(cliente, this);
                 }
-                break;
             }
-            case 3:{
+            case 3 -> {
                 //INICIO DE SESION COMO ADMIN
                 Operador operador = new Operador();
                 boolean login = loginOperador(operador);
@@ -65,26 +65,19 @@ public class Sistema{
                     Menu menu = new Menu();
                     menu.selectorOperador(operador, this);
                 }
-                break;
             }
-            default:
-                terminal.error();
+            default -> terminal.error();
         }
-    }
-
-    public void avisarAdmin(Cliente cliente, int contrincante, int oro, ArrayList<Cliente> listaClientes) {
-        Terminal terminal = new Terminal();
-        terminal.WIP();
     }
 
     public void registrarUsuario(int opcion) {
         Scanner sc = new Scanner(System.in);
         Terminal terminal = new Terminal();
         switch (opcion) {
-            case 1: {
+            case 1 -> {
                 Cliente cliente = new Cliente();
                 LecturaFicheroUsuarios lecturaFicheroUsuarios = new LecturaFicheroUsuarios();
-                ArrayList<Cliente> lista = lecturaFicheroUsuarios.lecturaFicheroUsuario();
+                ArrayList<Cliente> lista = lecturaFicheroUsuarios.lecturaFicheroUsuarios();
                 terminal.preguntarNombreUser();
                 String nombre = sc.nextLine();
                 cliente.setNombre(nombre);
@@ -104,7 +97,7 @@ public class Sistema{
                 terminal.confirmarPassword();
                 String confirm = sc.nextLine();
                 //poner if para verificar si la contraseña es la misma, si no break;
-                if (!password.equals(confirm)){
+                if (!password.equals(confirm)) {
                     terminal.error();
                     break;
                 }
@@ -112,18 +105,13 @@ public class Sistema{
                 String registro = cliente.generarNumerRegistro();
                 cliente.setRegistro(registro);
                 cliente.setPersonaje(null);
-                System.out.println(cliente.getNombre());
-                System.out.println(cliente.getNick());
-                System.out.println(cliente.getPassword());
-                System.out.println(cliente.getRegistro());
-
-
-                break;
+                EscrituraFicheroUsuario escrituraFicheroUsuario = new EscrituraFicheroUsuario();
+                escrituraFicheroUsuario.registroUsuario(cliente);
             }
-            case 2: {
+            case 2 -> {
                 Operador operador = new Operador();
-                ArrayList<Operador> lista = new ArrayList<>();
-                lista.add(operador);
+                LecturaFicheroOperadores lecturaFicheroOperadores = new LecturaFicheroOperadores();
+                ArrayList<Operador> lista = lecturaFicheroOperadores.lecturaFicheroOperador();
                 terminal.preguntarNombreUser();
                 String nombre = sc.nextLine();
                 operador.setNombre(nombre);
@@ -141,21 +129,17 @@ public class Sistema{
                 terminal.confirmarPassword();
                 String confirm = sc.nextLine();
                 //poner if para verificar si la contraseña es la misma, si no break;
-                if (!password.equals(confirm)){
+                if (!password.equals(confirm)) {
                     terminal.error();
                     break;
                 }
                 operador.setPassword(password);
-                System.out.println(operador.getNombre());
-                System.out.println(operador.getNick());
-
-                break;
+                EscrituraFicheroOperadores escrituraFicheroOperadores = new EscrituraFicheroOperadores();
+                escrituraFicheroOperadores.registroOperadores(operador);
             }
-            case 3:{
-                break;
+            case 3 -> {
             }
-            default:
-                terminal.error();
+            default -> terminal.error();
         }
     }
 
@@ -163,10 +147,8 @@ public class Sistema{
         Scanner sc = new Scanner(System.in);
         Terminal terminal = new Terminal();
         int aux = -1;
-        ArrayList<Cliente> lista = new ArrayList<>();
-        cliente.setNick("pepe");
-        cliente.setPassword("123");
-        lista.add(cliente);
+        LecturaFicheroUsuarios lecturaFicheroUsuarios = new LecturaFicheroUsuarios();
+        ArrayList<Cliente> lista = lecturaFicheroUsuarios.lecturaFicheroUsuarios();
         //coger lista clientes ficheros
         terminal.preguntarNick();
         String nick = sc.nextLine();
@@ -183,7 +165,7 @@ public class Sistema{
         if (!encontrado){
             return false;
         }
-        boolean passCorrect = false;
+        boolean passCorrect;
         do {
             terminal.preguntarPassword();
             String password = sc.nextLine();
@@ -206,10 +188,8 @@ public class Sistema{
     public boolean loginOperador(Operador operador) {
         Scanner sc = new Scanner(System.in);
         Terminal terminal = new Terminal();
-        ArrayList<Operador> lista = new ArrayList<>();
-        operador.setNick("pepe");
-        operador.setPassword("123");
-        lista.add(operador);
+        LecturaFicheroOperadores lecturaFicheroOperadores = new LecturaFicheroOperadores();
+        ArrayList<Operador> lista = lecturaFicheroOperadores.lecturaFicheroOperador();
         //coger lista operadores ficheros
         terminal.preguntarNick();
         String nick = sc.nextLine();
