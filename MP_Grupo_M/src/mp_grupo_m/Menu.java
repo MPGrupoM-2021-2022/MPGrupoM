@@ -1,6 +1,8 @@
 package mp_grupo_m;
 
 import mp_grupo_m.Entidades.*;
+import mp_grupo_m.Ficheros.EscrituraFicheroUsuario;
+import mp_grupo_m.Ficheros.LecturaFicheroUsuarios;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -35,7 +37,8 @@ public class Menu {
                     break;
                 case 4:
                     //Llamada a lectura del fichero de todos los clientes
-                    ArrayList<Cliente> listaClientes = new ArrayList<>();
+                    LecturaFicheroUsuarios lecturaFicheroUsuarios = new LecturaFicheroUsuarios();
+                    ArrayList<Cliente> listaClientes = lecturaFicheroUsuarios.lecturaFicheroUsuarios();
                     cliente.desafiar(listaClientes, cliente, sistema);
                     break;
                 case 5:
@@ -64,20 +67,23 @@ public class Menu {
         Personaje personaje = null;
         int opcion = sc.nextInt();
         switch (opcion) {
-            case 1:
-                personaje = cliente.crearVampiro();
-                break;
-            case 2:
-                personaje = cliente.crearLicantropo();
-                break;
-            case 3:
-                personaje = cliente.crearCazador();
-                break;
-            default:
-                terminal.error();
-                break;
+            case 1 -> personaje = cliente.crearVampiro();
+            case 2 -> personaje = cliente.crearLicantropo();
+            case 3 -> personaje = cliente.crearCazador();
+            default -> terminal.error();
         }
         cliente.setPersonaje(personaje);
+        LecturaFicheroUsuarios lecturaFicheroUsuarios = new LecturaFicheroUsuarios();
+        EscrituraFicheroUsuario escrituraFicheroUsuario = new EscrituraFicheroUsuario();
+        ArrayList<Cliente> listaClientes = lecturaFicheroUsuarios.lecturaFicheroUsuarios();
+        for (int numCliente = 0; numCliente < listaClientes.size(); numCliente++){
+            if (cliente.getNick().equals(listaClientes.get(numCliente).getNick())){
+                listaClientes.remove(numCliente);
+                listaClientes.add(cliente);
+                escrituraFicheroUsuario.sobreescribirFicheroUsuario(listaClientes);
+                break;
+            }
+        }
     }
 
     public void selectorOperador(Operador operador, Sistema sistema) {
@@ -94,7 +100,7 @@ public class Menu {
                     operador.modificarPersonaje();
                     break;
                 case 2:
-                    operador.validarDesafio();
+//                    operador.validarDesafio();
                     break;
                 case 3:
                     operador.desbanearUser();
@@ -124,7 +130,7 @@ public class Menu {
             if (listaCombates.get(i).getDesafiante().getNick().equals(cliente.getNick()) || listaCombates.get(i).getContrincante().getNick().equals(cliente.getNick())){
                 terminal.mostrarCombate(listaCombates.get(i));
             }
-        }
+        } // FALTA IMPLEMENTACIÓN DEL MÉTODO
     }
 
     private void consultarRanking(Cliente cliente) {

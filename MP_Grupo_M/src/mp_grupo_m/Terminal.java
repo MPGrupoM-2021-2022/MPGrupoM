@@ -7,7 +7,6 @@ import java.util.List;
 
 public class Terminal {
 
-
     public void mostrarMenu() {
         System.out.println("************MENU************");
         System.out.println("1. REGISTRAR PERSONAJE");
@@ -362,7 +361,7 @@ public class Terminal {
     }
 
     public void cambiarEquipo() {
-        System.out.println("¿Quieres cambiar las armas y armaduras del personaje?");
+        System.out.println("Quieres cambiar las armas y armaduras del personaje?");
         System.out.println("1. SI");
         System.out.println("2. NO");
     }

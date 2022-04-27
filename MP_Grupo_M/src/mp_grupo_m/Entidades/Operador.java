@@ -127,7 +127,7 @@ public class Operador extends User{
                         opcion = sc.nextInt();
                         switch (opcion) {
                             case 1:
-                                //añadir armas
+                                //aÃ±adir armas
                                 int numArmas;
                                 do {
                                     terminal.preguntarNumArmas();
@@ -219,7 +219,7 @@ public class Operador extends User{
                         opcion = sc.nextInt();
                         switch (opcion) {
                             case 1:
-                                //añadir armaduras
+                                //aÃ±adir armaduras
                                 int numArmaduras;
                                 do {
                                     terminal.preguntarNumArmaduras();
@@ -281,7 +281,7 @@ public class Operador extends User{
                         opcion = sc.nextInt();
                         switch (opcion) {
                             case 1:
-                                //añadir esbirros
+                                //aÃ±adir esbirros
                                 int numEsbirros;
                                 do {
                                     terminal.peguntarNumDebilidades();
@@ -350,7 +350,7 @@ public class Operador extends User{
                         opcion = sc.nextInt();
                         switch (opcion) {
                             case 1:
-                                //añadir debilidades
+                                //aÃ±adir debilidades
                                 int numDebilidades;
                                 Debilidad nuevaDebilidad = new Debilidad();
                                 do {
@@ -395,7 +395,7 @@ public class Operador extends User{
                         opcion = sc.nextInt();
                         switch (opcion) {
                             case 1:
-                                //añadir fortalezas
+                                //aÃ±adir fortalezas
                                 int numFortalezas;
                                 Fortaleza nuevaFortaleza = new Fortaleza();
                                 do {
@@ -517,7 +517,7 @@ public class Operador extends User{
 
         terminal.modificarCliente();
     }
-
+  
     public void validarDesafio() {
         Scanner sc = new Scanner(System.in);
         Terminal terminal = new Terminal();
@@ -666,6 +666,7 @@ public class Operador extends User{
         String nick = listaClientes.get(opcion-1);
         gestorNotificaciones.unsubscribeBan(nick);
     }
+
 
     public void eliminarCuenta(Operador operador, Sistema sistema) {
         Terminal terminal = new Terminal();

@@ -99,6 +99,8 @@ public class Desafio {
             setValidated(false);
             String registro = generarNumerRegistro();
             setRegistro(registro);
+            Date fechaHoy = new Date();
+            setFecha(fechaHoy);
             terminal.desafioCreado();
             GestorNotificaciones gestorNotificaciones = new GestorNotificaciones();
             gestorNotificaciones.subscribeDesafio(this);
