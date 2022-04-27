@@ -581,4 +581,42 @@ public class Terminal {
         System.out.println("2:  No");
 
     }
+
+    public void mostrarModificadoresDesafio(Cliente desafiante, Cliente contrincante, int i) {
+        //fortalezas del desafiante y del contrincante
+        for (int j = 0; j < desafiante.getPersonaje().getFortalezas().size(); j++) {
+            System.out.println(desafiante.getPersonaje().getFortalezas().get(i).getNombre());
+        }
+        for (int j = 0; j < contrincante.getPersonaje().getFortalezas().size(); j++) {
+            System.out.println(contrincante.getPersonaje().getFortalezas().get(i).getNombre());
+        }
+        //debilidades del contrincante y del contrincante
+        for (int j = 0; j < desafiante.getPersonaje().getDebilidades().size(); j++) {
+            System.out.println(desafiante.getPersonaje().getDebilidades().get(i).getNombre());
+        }
+        for (int j = 0; j < contrincante.getPersonaje().getDebilidades().size(); j++) {
+            System.out.println(contrincante.getPersonaje().getDebilidades().get(i).getNombre());
+        }
+    }
+
+    public void mostrarDon(Don don) {
+        System.out.println("nombre de habilidad: " + don.getNombre());
+        System.out.println("ataque de habilidad: " + don.getAtaque());
+        System.out.println("defensa de habilidad: " + don.getDefensa());
+        System.out.println("edad de habilidad: " + don.getValorMinimo());
+    }
+
+    public void mostrarTalento(Talento talento) {
+        System.out.println("nombre de habilidad: " + talento.getNombre());
+        System.out.println("ataque de habilidad: " + talento.getAtaque());
+        System.out.println("defensa de habilidad: " + talento.getDefensa());
+        System.out.println("edad de habilidad: " + talento.getEdad());
+    }
+
+    public void mostrarDisciplina(Disciplina disciplina) {
+        System.out.println("nombre de habilidad: " + disciplina.getNombre());
+        System.out.println("ataque de habilidad: " + disciplina.getAtaque());
+        System.out.println("defensa de habilidad: " + disciplina.getDefensa());
+        System.out.println("coste de habilidad: " + disciplina.getCoste());
+    }
 }

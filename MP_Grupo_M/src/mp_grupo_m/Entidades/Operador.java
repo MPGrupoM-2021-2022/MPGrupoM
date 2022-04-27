@@ -3,6 +3,9 @@ package mp_grupo_m.Entidades;
 import mp_grupo_m.Factorias.FactoriaCazadores;
 import mp_grupo_m.Factorias.FactoriaVampiros;
 import mp_grupo_m.Factorias.FactoriaLicantropos;
+import mp_grupo_m.Ficheros.LecturaFicheroBans;
+import mp_grupo_m.Ficheros.LecturaFicheroOperadores;
+import mp_grupo_m.Ficheros.LecturaFicheroUsuarios;
 import mp_grupo_m.GestorNotificaciones;
 import mp_grupo_m.Sistema;
 import mp_grupo_m.Terminal;
@@ -13,14 +16,14 @@ import java.util.Date;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
-public class Operador extends User{
+public class Operador extends User {
 
     public void modificarPersonaje() {
         Scanner sc = new Scanner(System.in);
         Terminal terminal = new Terminal();
-        ArrayList<Cliente> listaClientes = new ArrayList<>(); //coger fichero lista clientes
+        LecturaFicheroUsuarios lecturaFicheroUsuarios = new LecturaFicheroUsuarios();
+        ArrayList<Cliente> listaClientes = lecturaFicheroUsuarios.lecturaFicheroUsuarios(); //coger fichero lista clientes
         Cliente cliente = new Cliente();
-        listaClientes.add(cliente);
         boolean encontrado = false;
         do {
             terminal.preguntarNickAdmin();
@@ -32,10 +35,10 @@ public class Operador extends User{
                     i = listaClientes.size();
                 }
             }
-            if(!encontrado){
+            if (!encontrado) {
                 terminal.errorNick();
             }
-        }while(!encontrado);
+        } while (!encontrado);
         FactoriaVampiros factoriaVampiros = new FactoriaVampiros();
         FactoriaCazadores factoriaCazadores = new FactoriaCazadores();
         FactoriaLicantropos factoriaLicantropos = new FactoriaLicantropos();
@@ -44,480 +47,27 @@ public class Operador extends User{
             terminal.menuModPersonaje();
             opcion = sc.nextInt();
             switch (opcion) {
-                case 1:
-                    //modificar nombre
-                    terminal.mostrarNombre();
-                    System.out.println(cliente.getPersonaje().getNombre());
-                    terminal.introModificacion();
-                    String nombre = sc.nextLine();
-                    cliente.getPersonaje().setNombre(nombre);
-                    break;
-                case 2:
-                    //modificar habilidad
-                    boolean rightValue;
-                    terminal.mostrarTipo();
-                    System.out.println(cliente.getPersonaje().getTipo());
-                    if (cliente.getPersonaje().getTipo().equals("VAMPIRO")){
-                        Vampiro vampiro = (Vampiro) cliente.getPersonaje();
-                        Disciplina disciplina = (Disciplina) vampiro.getHabilidad();
-                        System.out.println("nombre de habilidad: " + disciplina.getNombre());
-                        System.out.println("ataque de habilidad: " + disciplina.getAtaque());
-                        System.out.println("defensa de habilidad: " + disciplina.getDefensa());
-                        System.out.println("coste de habilidad: " + disciplina.getCoste());
-                        terminal.preguntarNombreHabilidad();
-                        factoriaVampiros.inicializarNombreHabilidad(disciplina);
-                        do {
-                            terminal.preguntarAtaqueHabilidad();
-                            rightValue = factoriaVampiros.inicializarAtaqueHabilidad(disciplina);
-                        } while (!rightValue);
-                        do {
-                            terminal.preguntarDefensaHabilidad();
-                            rightValue = factoriaVampiros.inicializarDefensaHabilidad(disciplina);
-                        } while (!rightValue);
-                        do {
-                            terminal.preguntarCosteHabilidad();
-                            rightValue = factoriaVampiros.inicializarCosteHabilidad(disciplina);
-                        } while (!rightValue);
-                        factoriaVampiros.setHabilidad(vampiro, disciplina);
-                    }else if(cliente.getPersonaje().getTipo().equals("CAZADOR")){
-                        Cazador cazador = (Cazador) cliente.getPersonaje();
-                        Talento talento = (Talento) cazador.getHabilidad();
-                        System.out.println("nombre de habilidad: " + talento.getNombre());
-                        System.out.println("ataque de habilidad: " + talento.getAtaque());
-                        System.out.println("defensa de habilidad: " + talento.getDefensa());
-                        System.out.println("edad de habilidad: " + talento.getEdad());
-                        terminal.preguntarNombreHabilidad();
-                        factoriaCazadores.inicializarNombreHabilidad(talento);
-                        do {
-                            terminal.preguntarAtaqueHabilidad();
-                            rightValue = factoriaCazadores.inicializarAtaqueHabilidad(talento);
-                        } while (!rightValue);
-                        do {
-                            terminal.preguntarDefensaHabilidad();
-                            rightValue = factoriaCazadores.inicializarDefensaHabilidad(talento);
-                        } while (!rightValue);
-                        terminal.preguntarEdadHabilidad();
-                        factoriaCazadores.inicializarEdadHabilidad(talento);
-                        factoriaCazadores.setHabilidad(cazador, talento);
-                    }else if(cliente.getPersonaje().getTipo().equals("LICANTROPO")){
-                        Licantropo licantropo = (Licantropo) cliente.getPersonaje();
-                        Don don = (Don) licantropo.getHabilidad();
-                        System.out.println("nombre de habilidad: " + don.getNombre());
-                        System.out.println("ataque de habilidad: " + don.getAtaque());
-                        System.out.println("defensa de habilidad: " + don.getDefensa());
-                        System.out.println("edad de habilidad: " + don.getValorMinimo());
-                        terminal.preguntarNombreHabilidad();
-                        factoriaLicantropos.inicializarNombreHabilidad(don);
-                        licantropo.setRabia(0);
-                        do {
-                            terminal.preguntarRabiaHabilidad();
-                            rightValue = factoriaLicantropos.inicializarRabiaHabilidad(don);
-                        } while (!rightValue);
-                        factoriaLicantropos.setHabilidad(licantropo, don);
-                    }
-                    break;
-                case 3:
-                    //modificar armas
-                    ArrayList<Arma> armas = cliente.getPersonaje().getArmas();
-                    ArrayList<Arma> armasActivas = cliente.getPersonaje().getArmasActivas();
-                    terminal.armasPersonaje(armas);
-                    boolean salir = false;
-                    do {
-                        terminal.modificarArma();
-                        opcion = sc.nextInt();
-                        switch (opcion) {
-                            case 1:
-                                //aÃ±adir armas
-                                int numArmas;
-                                do {
-                                    terminal.preguntarNumArmas();
-                                    numArmas = sc.nextInt();
-                                } while (numArmas < 1);
-                                for (int iterator = 1; iterator <= numArmas; iterator++) {
-                                    Arma arma = new Arma();
-                                    terminal.preguntarNombreArma();
-                                    factoriaCazadores.inicializarnNombreArma(arma);
-                                    do {
-                                        terminal.preguntarAtaqueArma();
-                                        rightValue = factoriaCazadores.inicializarAtaqueArma(arma);
-                                    } while (!rightValue);
-                                    do {
-                                        terminal.preguntarDefensaArma();
-                                        rightValue = factoriaCazadores.inicializarDefensaArma(arma);
-                                    } while (!rightValue);
-                                    do {
-                                        terminal.peguntarSingleHandArma();
-                                        rightValue = factoriaCazadores.inicializarSingleHandArma(arma);
-                                    } while (!rightValue);
-                                    factoriaCazadores.addArma(armas, arma);
-                                }
-                                break;
-
-                            case 2:
-                                //eliminar arma
-                                int arma;
-                                do {
-                                    terminal.preguntarArmaEliminar();
-                                    arma = sc.nextInt();
-                                } while (arma < 1 && arma > armas.size()+1);
-                                if (armas.get(arma - 1).getNombre().equals(armasActivas.get(0).getNombre()) ||
-                                        armas.get(arma - 1).getNombre().equals(armasActivas.get(1).getNombre())) {
-                                    terminal.errorArmaActiva();
-                                } else {
-                                    armas.remove(arma);
-                                }
-                                break;
-
-                            case 3:
-                                //salir
-                                terminal.salir();
-                                salir = true;
-                                break;
-
-                        }
-                    }while(!salir);
-                    break;
-                case 4:
-                    //modificar armas activas
-                    boolean[] rightWeapon;
-                    boolean[] aux1 = new boolean[]{true, true};
-                    boolean[] aux2 = new boolean[]{true, false};
-                    armas = cliente.getPersonaje().getArmas();
-                    armasActivas = cliente.getPersonaje().getArmasActivas();
-                    do {
-                        terminal.mostrarArmas(armas);
-                        rightWeapon = factoriaCazadores.addArmaActiva(armas, armasActivas);
-                    } while (!Arrays.equals(rightWeapon, aux1) && !Arrays.equals(rightWeapon, aux2));
-                    if (Arrays.equals(rightWeapon, aux1)) {
-                        do {
-                            terminal.otroArma(armas, armasActivas.get(0));
-                            rightValue = factoriaCazadores.addArmaActiva2(armas, armasActivas);
-                            if (!rightValue){
-                                terminal.ErrNumSelec();
-                            }
-                        } while (!rightValue);
-                    }
-                    if (cliente.getPersonaje().getTipo().equals("VAMPIRO")){
-                        Vampiro vampiro = (Vampiro) cliente.getPersonaje();
-                        factoriaVampiros.setArmasActivas(vampiro, armasActivas);
-                    }else if(cliente.getPersonaje().getTipo().equals("CAZADOR")){
-                        Cazador cazador = (Cazador) cliente.getPersonaje();
-                        factoriaCazadores.setArmasActivas(cazador, armasActivas);
-                    }else if(cliente.getPersonaje().getTipo().equals("LICANTROPO")){
-                        Licantropo licantropo = (Licantropo) cliente.getPersonaje();
-                        factoriaLicantropos.setArmasActivas(licantropo, armasActivas);
-                    }
-                    break;
-                case 5:
-                    //modificar armaduras
-                    ArrayList<Armadura> armaduras = cliente.getPersonaje().getArmaduras();
-                    Armadura armadurasActivas = cliente.getPersonaje().getArmaduraActiva();
-                    terminal.armadurasPersonaje(armaduras);
-                    salir = false;
-                    do {
-                        terminal.modificarArmadura();
-                        opcion = sc.nextInt();
-                        switch (opcion) {
-                            case 1:
-                                //aÃ±adir armaduras
-                                int numArmaduras;
-                                do {
-                                    terminal.preguntarNumArmaduras();
-                                    numArmaduras = sc.nextInt();
-                                } while (numArmaduras < 1);
-                                for (int iterator = 1; iterator <= numArmaduras; iterator++) {
-                                    Armadura armadura = new Armadura();
-                                    terminal.preguntarNombreArmadura();
-                                    factoriaCazadores.inicializarnNombreArmadura(armadura);
-                                    do {
-                                        terminal.preguntarDefensaArmadura();
-                                        rightValue = factoriaCazadores.inicializarDefensaArmadura(armadura);
-                                    } while (!rightValue);
-                                    do {
-                                        terminal.preguntarAtaqueArmadura();
-                                        rightValue = factoriaCazadores.inicializarAtaqueArmadura(armadura);
-                                    } while (!rightValue);
-                                    factoriaCazadores.addArmadura(armadura, armaduras);
-                                }
-                                break;
-
-                            case 2:
-                                //eliminar armaduras
-                                int armadura;
-                                do {
-                                    terminal.preguntarArmaduraEliminar();
-                                    armadura = sc.nextInt();
-                                } while (armadura < 1 && armadura > armaduras.size()+1);
-                                if (armaduras.get(armadura - 1).getNombre().equals(armadurasActivas.getNombre())) {
-                                    terminal.errorArmaduraActiva();
-                                } else {
-                                    armaduras.remove(armadura);
-                                }
-                                break;
-
-                            case 3:
-                                //salir
-                                terminal.salir();
-                                salir = true;
-                                break;
-
-                        }
-                    }while(!salir);
-                    break;
-                case 6:
-                    //modificar armaduras activas
-                    do {
-                        terminal.mostrarArmaduras(cliente.getPersonaje().getArmaduras());
-                        rightValue = addArmaduraActiva(cliente.getPersonaje(), cliente.getPersonaje().getArmaduras());
-                    } while (!rightValue);
-                    break;
-                case 7:
-                    //modificar esbirros
-                    ArrayList<EsbirrosComposite> esbirros = cliente.getPersonaje().getEsbirros();
-                    terminal.esbirrosPersonajes(esbirros);
-                    salir = false;
-                    do {
-                        terminal.modificarEsbirros();
-                        opcion = sc.nextInt();
-                        switch (opcion) {
-                            case 1:
-                                //aÃ±adir esbirros
-                                int numEsbirros;
-                                do {
-                                    terminal.peguntarNumDebilidades();
-                                    numEsbirros = sc.nextInt();
-                                } while (numEsbirros < 1);
-                                for (int iterator = 1; iterator <= numEsbirros; iterator++) {
-                                    EsbirrosComposite nuevoEsbirro = new EsbirrosComposite();
-                                    if(cliente.getPersonaje().getTipo().equals("VAMPIRO")){
-                                        nuevoEsbirro = nuevoEsbirro.crearEsbirro(true);
-                                    }else {
-                                        nuevoEsbirro = nuevoEsbirro.crearEsbirro(false);
-                                    }
-                                    esbirros.add(nuevoEsbirro);
-                                }
-
-                            case 2:
-                                //eliminar esbirros
-                                int esbirro;
-                                do {
-                                    terminal.preguntarEsbirroEliminar();
-                                    esbirro = sc.nextInt();
-                                } while (esbirro < 1 && esbirro > esbirros.size()+1);
-                                esbirros.remove(esbirro-1);
-                                break;
-
-                            case 3:
-                                //salir
-                                terminal.salir();
-                                salir = true;
-                                break;
-
-                        }
-                    }while(!salir);
-                    break;
-                case 8:
-                    //modificar oro
-                    terminal.mostrarOro();
-                    System.out.println(cliente.getPersonaje().getOro());
-                    terminal.introModificacion();
-                    int oro = sc.nextInt();
-                    cliente.getPersonaje().setOro(oro);
-                    break;
-                case 9:
-                    //modificar hp
-                    terminal.mostrarHp();
-                    System.out.println(cliente.getPersonaje().getHp());
-                    terminal.introModificacion();
-                    int hp = sc.nextInt();
-                    cliente.getPersonaje().setHp(hp);
-                    break;
-                case 10:
-                    //modificar poder
-                    terminal.mostrarPoder();
-                    System.out.println(cliente.getPersonaje().getPoder());
-                    terminal.introModificacion();
-                    int poder = sc.nextInt();
-                    cliente.getPersonaje().setPoder(poder);
-                    break;
-                case 11:
-                    //modificar debilidades
-                    ArrayList<Debilidad> debilidades = cliente.getPersonaje().getDebilidades();
-                    terminal.debilidadesPersonaje(debilidades);
-                    salir = false;
-                    do {
-                        terminal.modificarDebilidades();
-                        opcion = sc.nextInt();
-                        switch (opcion) {
-                            case 1:
-                                //aÃ±adir debilidades
-                                int numDebilidades;
-                                Debilidad nuevaDebilidad = new Debilidad();
-                                do {
-                                    terminal.peguntarNumDebilidades();
-                                    numDebilidades = sc.nextInt();
-                                } while (numDebilidades < 1);
-                                for (int iterator = 1; iterator <= numDebilidades; iterator++) {
-                                    terminal.preguntarNombreDebilidad();
-                                    factoriaCazadores.inicializarNombreDebilidad(nuevaDebilidad);
-                                    terminal.preguntarValorDebilidad();
-                                    factoriaCazadores.inicializarValorDebilidad(nuevaDebilidad);
-                                    factoriaCazadores.addDebilidad(debilidades, nuevaDebilidad);
-                                }
-                                break;
-
-                            case 2:
-                                //eliminar debilidades
-                                int debilidad;
-                                do {
-                                    terminal.preguntarArmaduraEliminar();
-                                    debilidad = sc.nextInt();
-                                } while (debilidad < 1 && debilidad > debilidades.size()+1);
-                                debilidades.remove(debilidad-1);
-                                break;
-
-                            case 3:
-                                //salir
-                                terminal.salir();
-                                salir = true;
-                                break;
-
-                        }
-                    }while(!salir);
-                    break;
-                case 12:
-                    //modificar fortalezas
-                    ArrayList<Fortaleza> fortalezas = cliente.getPersonaje().getFortalezas();
-                    salir = false;
-                    do {
-                        terminal.fortalezasPersonaje(fortalezas);
-                        terminal.modificarFortalezas();
-                        opcion = sc.nextInt();
-                        switch (opcion) {
-                            case 1:
-                                //aÃ±adir fortalezas
-                                int numFortalezas;
-                                Fortaleza nuevaFortaleza = new Fortaleza();
-                                do {
-                                    terminal.peguntarNumDebilidades();
-                                    numFortalezas = sc.nextInt();
-                                } while (numFortalezas < 1);
-                                for (int iterator = 1; iterator <= numFortalezas; iterator++) {
-                                    terminal.preguntarNombreFortaleza();
-                                    factoriaCazadores.inicializarNombreFortaleza(nuevaFortaleza);
-                                    terminal.preguntarValorFortaleza();
-                                    factoriaCazadores.inicializarValorFortaleza(nuevaFortaleza);
-                                    factoriaCazadores.addFortaleza(fortalezas, nuevaFortaleza);
-                                }
-                                break;
-
-                            case 2:
-                                //eliminar fortalezas
-                                int fortaleza;
-                                do {
-                                    terminal.preguntarArmaduraEliminar();
-                                    fortaleza = sc.nextInt();
-                                } while (fortaleza < 1 && fortaleza > fortalezas.size()+1);
-                                fortalezas.remove(fortaleza);
-                                break;
-
-                            case 3:
-                                //salir
-                                terminal.salir();
-                                salir = true;
-                                break;
-
-                        }
-                    }while(!salir);
-                    break;
-                case 13:
-                    //modificar tipo
-                    rightValue = false;
-                    terminal.mostrarTipo();
-                    System.out.println(cliente.getPersonaje().getTipo());
-                    terminal.seleccionarTipo();
-                    opcion = sc.nextInt();
-                    switch (opcion) {
-
-                        case 1:
-                            cliente.getPersonaje().setTipo("VAMPIRO");
-                            Vampiro vampiro = (Vampiro) cliente.getPersonaje();
-                            Disciplina disciplina = (Disciplina) vampiro.getHabilidad();
-                            System.out.println("nombre de habilidad: " + disciplina.getNombre());
-                            System.out.println("ataque de habilidad: " + disciplina.getAtaque());
-                            System.out.println("defensa de habilidad: " + disciplina.getDefensa());
-                            System.out.println("coste de habilidad: " + disciplina.getCoste());
-                            terminal.preguntarNombreHabilidad();
-                            factoriaVampiros.inicializarNombreHabilidad(disciplina);
-                            do {
-                                terminal.preguntarAtaqueHabilidad();
-                                rightValue = factoriaVampiros.inicializarAtaqueHabilidad(disciplina);
-                            } while (!rightValue);
-                            do {
-                                terminal.preguntarDefensaHabilidad();
-                                rightValue = factoriaVampiros.inicializarDefensaHabilidad(disciplina);
-                            } while (!rightValue);
-                            do {
-                                terminal.preguntarCosteHabilidad();
-                                rightValue = factoriaVampiros.inicializarCosteHabilidad(disciplina);
-                            } while (!rightValue);
-                            factoriaVampiros.setHabilidad(vampiro, disciplina);
-                            break;
-
-                        case 2:
-                            cliente.getPersonaje().setTipo("CAZADOR");
-                            Cazador cazador = (Cazador) cliente.getPersonaje();
-                            Talento talento = (Talento) cazador.getHabilidad();
-                            System.out.println("nombre de habilidad: " + talento.getNombre());
-                            System.out.println("ataque de habilidad: " + talento.getAtaque());
-                            System.out.println("defensa de habilidad: " + talento.getDefensa());
-                            System.out.println("edad de habilidad: " + talento.getEdad());
-                            terminal.preguntarNombreHabilidad();
-                            factoriaCazadores.inicializarNombreHabilidad(talento);
-                            do {
-                                terminal.preguntarAtaqueHabilidad();
-                                rightValue = factoriaCazadores.inicializarAtaqueHabilidad(talento);
-                            } while (!rightValue);
-                            do {
-                                terminal.preguntarDefensaHabilidad();
-                                rightValue = factoriaCazadores.inicializarDefensaHabilidad(talento);
-                            } while (!rightValue);
-                            terminal.preguntarEdadHabilidad();
-                            factoriaCazadores.inicializarEdadHabilidad(talento);
-                            factoriaCazadores.setHabilidad(cazador, talento);
-                            break;
-
-                        case 3:
-                            cliente.getPersonaje().setTipo("LICANTROPO");
-                            Licantropo licantropo = (Licantropo) cliente.getPersonaje();
-                            Don don = (Don) licantropo.getHabilidad();
-                            System.out.println("nombre de habilidad: " + don.getNombre());
-                            System.out.println("ataque de habilidad: " + don.getAtaque());
-                            System.out.println("defensa de habilidad: " + don.getDefensa());
-                            System.out.println("edad de habilidad: " + don.getValorMinimo());
-                            terminal.preguntarNombreHabilidad();
-                            factoriaLicantropos.inicializarNombreHabilidad(don);
-                            licantropo.setRabia(0);
-                            do {
-                                terminal.preguntarRabiaHabilidad();
-                                rightValue = factoriaLicantropos.inicializarRabiaHabilidad(don);
-                            } while (!rightValue);
-                            factoriaLicantropos.setHabilidad(licantropo, don);
-                            break;
-                    }
-                    break;
-                case 14:
-                    terminal.salir();
-                    break;
-                default:
-                    terminal.error();
-                    break;
+                case 1 -> cambiarNombre(sc, terminal, cliente);
+                case 2 -> cambiarHabilidad(terminal, cliente, factoriaVampiros, factoriaCazadores, factoriaLicantropos);
+                case 3 -> cambiarArmas(sc, terminal, cliente, factoriaCazadores);
+                case 4 -> cambiarArmasActivas(terminal, cliente, factoriaVampiros, factoriaCazadores, factoriaLicantropos);
+                case 5 -> cambiarArmaduras(sc, terminal, cliente, factoriaCazadores);
+                case 6 -> cambiarArmaduraActiva(terminal, cliente);
+                case 7 -> cambiarEsbirros(sc, terminal, cliente);
+                case 8 -> cambiarOro(sc, terminal, cliente);
+                case 9 -> cambiarHP(sc, terminal, cliente);
+                case 10 -> cambiarPoder(sc, terminal, cliente);
+                case 11 -> cambiarDebilidades(sc, terminal, cliente, factoriaCazadores);
+                case 12 -> cambiarFortalezas(sc, terminal, cliente, factoriaCazadores);
+                case 13 -> cambiarTipo(sc, terminal, cliente, factoriaVampiros, factoriaCazadores, factoriaLicantropos);
+                case 14 -> terminal.salir();
+                default -> terminal.error();
             }
         } while (opcion != 14);
 
         terminal.modificarCliente();
     }
-  
+
     public void validarDesafio() {
         Scanner sc = new Scanner(System.in);
         Terminal terminal = new Terminal();
@@ -526,30 +76,16 @@ public class Operador extends User{
         ArrayList<Desafio> listaDesafios = new ArrayList<>(); //coger fichero lista desafios
         listaDesafios.add(desafio);
 
-        for(int i = 0; i<listaDesafios.size(); i++)
-        {
-            if (!listaDesafios.get(i).isValidated()){
+        for (int i = 0; i < listaDesafios.size(); i++) {
+            if (!listaDesafios.get(i).isValidated()) {
                 desafiante = listaDesafios.get(i).getDesafiante();
                 contrincante = listaDesafios.get(i).getContrincante();
                 Date fechaDesafio = listaDesafios.get(i).getFecha();
-                boolean banear = comprobarBan(fechaDesafio,contrincante);
-                if(banear){
+                boolean banear = comprobarBan(fechaDesafio, contrincante);
+                if (banear) {
                     banearUser(desafiante);
-                }else {
-                    //fortalezas del desafiante y del contrincante
-                    for (int j = 0; j < desafiante.getPersonaje().getFortalezas().size(); j++) {
-                        System.out.println(desafiante.getPersonaje().getFortalezas().get(i).getNombre());
-                    }
-                    for (int j = 0; j < contrincante.getPersonaje().getFortalezas().size(); j++) {
-                        System.out.println(contrincante.getPersonaje().getFortalezas().get(i).getNombre());
-                    }
-                    //debilidades del contrincante y del contrincante
-                    for (int j = 0; j < desafiante.getPersonaje().getDebilidades().size(); j++) {
-                        System.out.println(desafiante.getPersonaje().getDebilidades().get(i).getNombre());
-                    }
-                    for (int j = 0; j < contrincante.getPersonaje().getDebilidades().size(); j++) {
-                        System.out.println(contrincante.getPersonaje().getDebilidades().get(i).getNombre());
-                    }
+                } else {
+                    terminal.mostrarModificadoresDesafio(desafiante, contrincante, i);
                     int opcion;
                     do {
                         terminal.validarDesafio();
@@ -624,26 +160,26 @@ public class Operador extends User{
         listaCombates.add(combate);
         boolean sugerirBan = false;
         boolean banear = false;
-        for(int i=0; i<listaCombates.size(); i++){
-            if(listaCombates.get(i).getDesafiante().equals(cliente) ||
-                    listaCombates.get(i).getContrincante().equals(cliente)){
-                Date fechaDesafioAnterior = listaCombates.get(i).getFecha();
+        for (Combate listaCombate : listaCombates) {
+            if (listaCombate.getDesafiante().equals(cliente) ||
+                    listaCombate.getContrincante().equals(cliente)) {
+                Date fechaDesafioAnterior = listaCombate.getFecha();
                 long diferencia = fechaDesafio.getTime() - fechaDesafioAnterior.getTime();
                 long horas = TimeUnit.MILLISECONDS.toHours(diferencia);
-                if(horas <= 24 && (!listaCombates.get(i).getVencedor().getNick().equals(cliente.getNick())
-                        || listaCombates.get(i).getVencedor() != null)){
+                if (horas <= 24 && (!listaCombate.getVencedor().getNick().equals(cliente.getNick())
+                        || listaCombate.getVencedor() != null)) {
                     sugerirBan = true;
                     break;
                 }
             }
         }
-        if(sugerirBan){
+        if (sugerirBan) {
             int opcion;
             do {
                 terminal.preguntarBan();
                 opcion = sc.nextInt();
-            }while(opcion != 1 && opcion != 2);
-            if(opcion == 1){
+            } while (opcion != 1 && opcion != 2);
+            if (opcion == 1) {
                 banear = true;
             }
         }
@@ -659,11 +195,11 @@ public class Operador extends User{
         Scanner sc = new Scanner(System.in);
         Terminal terminal = new Terminal();
         GestorNotificaciones gestorNotificaciones = new GestorNotificaciones();
-        ArrayList<String> listaClientes = new ArrayList<>(); //coger fichero clientes baneados
-        listaClientes.add("nick");
+        LecturaFicheroBans lecturaFicheroBans = new LecturaFicheroBans();
+        ArrayList<String> listaClientes = lecturaFicheroBans.lecturaFicheroBaneados();
         terminal.mostrarClientes(listaClientes);
         int opcion = sc.nextInt();
-        String nick = listaClientes.get(opcion-1);
+        String nick = listaClientes.get(opcion - 1);
         gestorNotificaciones.unsubscribeBan(nick);
     }
 
@@ -675,11 +211,12 @@ public class Operador extends User{
         boolean delete = sc.nextInt() == 1;
         if (delete) {
             //leer fichero de operadores
-            ArrayList<Operador> listaOperadores = new ArrayList<>();
-            listaOperadores.add(operador);
+            LecturaFicheroOperadores lecturaFicheroOperadores = new LecturaFicheroOperadores();
+            ArrayList<Operador> listaOperadores = lecturaFicheroOperadores.lecturaFicheroOperador();
             for (int i = 0; i <= listaOperadores.size(); i++) {
                 if (listaOperadores.get(i).getNick().equals(operador.getNick())) {
                     listaOperadores.remove(i);
+                    break;
                 }
             }
             //sobreescribir fichero
@@ -697,5 +234,445 @@ public class Operador extends User{
         Armadura armadura = armaduras.get(opcion - 1);
         personaje.setArmaduraActiva(armadura);
         return true;
+    }
+
+    private void cambiarNombre(Scanner sc, Terminal terminal, Cliente cliente) {
+        //modificar nombre
+        terminal.mostrarNombre();
+        System.out.println(cliente.getPersonaje().getNombre());
+        terminal.introModificacion();
+        String nombre = sc.nextLine();
+        cliente.getPersonaje().setNombre(nombre);
+    }
+
+    private void cambiarHabilidad(Terminal terminal, Cliente cliente, FactoriaVampiros factoriaVampiros, FactoriaCazadores factoriaCazadores, FactoriaLicantropos factoriaLicantropos) {
+        //modificar habilidad
+        boolean rightValue;
+        terminal.mostrarTipo();
+        System.out.println(cliente.getPersonaje().getTipo());
+        switch (cliente.getPersonaje().getTipo()) {
+            case "VAMPIRO" -> {
+                cambiarDisciplina(terminal, cliente, factoriaVampiros);
+            }
+            case "CAZADOR" -> {
+                cambiarTalento(terminal, cliente, factoriaCazadores);
+            }
+            case "LICANTROPO" -> {
+                cambiarDon(terminal, cliente, factoriaLicantropos);
+            }
+        }
+    }
+
+    private void cambiarDon(Terminal terminal, Cliente cliente, FactoriaLicantropos factoriaLicantropos) {
+        boolean rightValue;
+        Licantropo licantropo = (Licantropo) cliente.getPersonaje();
+        Don don = (Don) licantropo.getHabilidad();
+        terminal.mostrarDon(don);
+        terminal.preguntarNombreHabilidad();
+        factoriaLicantropos.inicializarNombreHabilidad(don);
+        licantropo.setRabia(0);
+        do {
+            terminal.preguntarRabiaHabilidad();
+            rightValue = factoriaLicantropos.inicializarRabiaHabilidad(don);
+        } while (!rightValue);
+        factoriaLicantropos.setHabilidad(licantropo, don);
+    }
+
+    private void cambiarTalento(Terminal terminal, Cliente cliente, FactoriaCazadores factoriaCazadores) {
+        boolean rightValue;
+        Cazador cazador = (Cazador) cliente.getPersonaje();
+        Talento talento = (Talento) cazador.getHabilidad();
+        terminal.mostrarTalento(talento);
+        terminal.preguntarNombreHabilidad();
+        factoriaCazadores.inicializarNombreHabilidad(talento);
+        do {
+            terminal.preguntarAtaqueHabilidad();
+            rightValue = factoriaCazadores.inicializarAtaqueHabilidad(talento);
+        } while (!rightValue);
+        do {
+            terminal.preguntarDefensaHabilidad();
+            rightValue = factoriaCazadores.inicializarDefensaHabilidad(talento);
+        } while (!rightValue);
+        terminal.preguntarEdadHabilidad();
+        factoriaCazadores.inicializarEdadHabilidad(talento);
+        factoriaCazadores.setHabilidad(cazador, talento);
+    }
+
+    private void cambiarDisciplina(Terminal terminal, Cliente cliente, FactoriaVampiros factoriaVampiros) {
+        boolean rightValue;
+        Vampiro vampiro = (Vampiro) cliente.getPersonaje();
+        Disciplina disciplina = (Disciplina) vampiro.getHabilidad();
+        terminal.mostrarDisciplina(disciplina);
+        terminal.preguntarNombreHabilidad();
+        factoriaVampiros.inicializarNombreHabilidad(disciplina);
+        do {
+            terminal.preguntarAtaqueHabilidad();
+            rightValue = factoriaVampiros.inicializarAtaqueHabilidad(disciplina);
+        } while (!rightValue);
+        do {
+            terminal.preguntarDefensaHabilidad();
+            rightValue = factoriaVampiros.inicializarDefensaHabilidad(disciplina);
+        } while (!rightValue);
+        do {
+            terminal.preguntarCosteHabilidad();
+            rightValue = factoriaVampiros.inicializarCosteHabilidad(disciplina);
+        } while (!rightValue);
+        factoriaVampiros.setHabilidad(vampiro, disciplina);
+    }
+
+    private void cambiarArmas(Scanner sc, Terminal terminal, Cliente cliente, FactoriaCazadores factoriaCazadores) {
+        int opcion;
+        boolean rightValue;
+        //modificar armas
+        ArrayList<Arma> armas = cliente.getPersonaje().getArmas();
+        ArrayList<Arma> armasActivas = cliente.getPersonaje().getArmasActivas();
+        terminal.armasPersonaje(armas);
+        boolean salir = false;
+        do {
+            terminal.modificarArma();
+            opcion = sc.nextInt();
+            switch (opcion) {
+                case 1 -> {
+                    //aÃ±adir armas
+                    int numArmas;
+                    do {
+                        terminal.preguntarNumArmas();
+                        numArmas = sc.nextInt();
+                    } while (numArmas < 1);
+                    for (int iterator = 1; iterator <= numArmas; iterator++) {
+                        Arma arma = new Arma();
+                        terminal.preguntarNombreArma();
+                        factoriaCazadores.inicializarnNombreArma(arma);
+                        do {
+                            terminal.preguntarAtaqueArma();
+                            rightValue = factoriaCazadores.inicializarAtaqueArma(arma);
+                        } while (!rightValue);
+                        do {
+                            terminal.preguntarDefensaArma();
+                            rightValue = factoriaCazadores.inicializarDefensaArma(arma);
+                        } while (!rightValue);
+                        do {
+                            terminal.peguntarSingleHandArma();
+                            rightValue = factoriaCazadores.inicializarSingleHandArma(arma);
+                        } while (!rightValue);
+                        factoriaCazadores.addArma(armas, arma);
+                    }
+                }
+                case 2 -> {
+                    //eliminar arma
+                    int arma;
+                    do {
+                        terminal.preguntarArmaEliminar();
+                        arma = sc.nextInt();
+                    } while (arma < 1 && arma > armas.size() + 1);
+                    if (armas.get(arma - 1).getNombre().equals(armasActivas.get(0).getNombre()) ||
+                            armas.get(arma - 1).getNombre().equals(armasActivas.get(1).getNombre())) {
+                        terminal.errorArmaActiva();
+                    } else {
+                        armas.remove(arma);
+                    }
+                }
+                case 3 -> {
+                    //salir
+                    terminal.salir();
+                    salir = true;
+                }
+            }
+        } while (!salir);
+    }
+
+    private void cambiarArmasActivas(Terminal terminal, Cliente cliente, FactoriaVampiros factoriaVampiros, FactoriaCazadores factoriaCazadores, FactoriaLicantropos factoriaLicantropos) {
+        ArrayList<Arma> armas;
+        ArrayList<Arma> armasActivas;
+        boolean rightValue;
+        //modificar armas activas
+        boolean[] rightWeapon;
+        boolean[] aux1 = new boolean[]{true, true};
+        boolean[] aux2 = new boolean[]{true, false};
+        armas = cliente.getPersonaje().getArmas();
+        armasActivas = cliente.getPersonaje().getArmasActivas();
+        do {
+            terminal.mostrarArmas(armas);
+            rightWeapon = factoriaCazadores.addArmaActiva(armas, armasActivas);
+        } while (!Arrays.equals(rightWeapon, aux1) && !Arrays.equals(rightWeapon, aux2));
+        if (Arrays.equals(rightWeapon, aux1)) {
+            do {
+                terminal.otroArma(armas, armasActivas.get(0));
+                rightValue = factoriaCazadores.addArmaActiva2(armas, armasActivas);
+                if (!rightValue) {
+                    terminal.ErrNumSelec();
+                }
+            } while (!rightValue);
+        }
+        switch (cliente.getPersonaje().getTipo()) {
+            case "VAMPIRO" -> {
+                Vampiro vampiro = (Vampiro) cliente.getPersonaje();
+                factoriaVampiros.setArmasActivas(vampiro, armasActivas);
+            }
+            case "CAZADOR" -> {
+                Cazador cazador = (Cazador) cliente.getPersonaje();
+                factoriaCazadores.setArmasActivas(cazador, armasActivas);
+            }
+            case "LICANTROPO" -> {
+                Licantropo licantropo = (Licantropo) cliente.getPersonaje();
+                factoriaLicantropos.setArmasActivas(licantropo, armasActivas);
+            }
+        }
+    }
+
+    private void cambiarArmaduras(Scanner sc, Terminal terminal, Cliente cliente, FactoriaCazadores factoriaCazadores) {
+        int opcion;
+        boolean rightValue;
+        boolean salir;
+        //modificar armaduras
+        ArrayList<Armadura> armaduras = cliente.getPersonaje().getArmaduras();
+        Armadura armadurasActivas = cliente.getPersonaje().getArmaduraActiva();
+        terminal.armadurasPersonaje(armaduras);
+        salir = false;
+        do {
+            terminal.modificarArmadura();
+            opcion = sc.nextInt();
+            switch (opcion) {
+                case 1 -> {
+                    //aÃ±adir armaduras
+                    int numArmaduras;
+                    do {
+                        terminal.preguntarNumArmaduras();
+                        numArmaduras = sc.nextInt();
+                    } while (numArmaduras < 1);
+                    for (int iterator = 1; iterator <= numArmaduras; iterator++) {
+                        Armadura armadura = new Armadura();
+                        terminal.preguntarNombreArmadura();
+                        factoriaCazadores.inicializarnNombreArmadura(armadura);
+                        do {
+                            terminal.preguntarDefensaArmadura();
+                            rightValue = factoriaCazadores.inicializarDefensaArmadura(armadura);
+                        } while (!rightValue);
+                        do {
+                            terminal.preguntarAtaqueArmadura();
+                            rightValue = factoriaCazadores.inicializarAtaqueArmadura(armadura);
+                        } while (!rightValue);
+                        factoriaCazadores.addArmadura(armadura, armaduras);
+                    }
+                }
+                case 2 -> {
+                    //eliminar armaduras
+                    int armadura;
+                    do {
+                        terminal.preguntarArmaduraEliminar();
+                        armadura = sc.nextInt();
+                    } while (armadura < 1 && armadura > armaduras.size() + 1);
+                    if (armaduras.get(armadura - 1).getNombre().equals(armadurasActivas.getNombre())) {
+                        terminal.errorArmaduraActiva();
+                    } else {
+                        armaduras.remove(armadura);
+                    }
+                }
+                case 3 -> {
+                    //salir
+                    terminal.salir();
+                    salir = true;
+                }
+            }
+        } while (!salir);
+    }
+
+    private void cambiarArmaduraActiva(Terminal terminal, Cliente cliente) {
+        boolean rightValue;
+        //modificar armaduras activas
+        do {
+            terminal.mostrarArmaduras(cliente.getPersonaje().getArmaduras());
+            rightValue = addArmaduraActiva(cliente.getPersonaje(), cliente.getPersonaje().getArmaduras());
+        } while (!rightValue);
+    }
+
+    private void cambiarEsbirros(Scanner sc, Terminal terminal, Cliente cliente) {
+        int opcion;
+        boolean salir;
+        //modificar esbirros
+        ArrayList<EsbirrosComposite> esbirros = cliente.getPersonaje().getEsbirros();
+        terminal.esbirrosPersonajes(esbirros);
+        salir = false;
+        do {
+            terminal.modificarEsbirros();
+            opcion = sc.nextInt();
+            switch (opcion) {
+                case 1:
+                    //aÃ±adir esbirros
+                    int numEsbirros;
+                    do {
+                        terminal.peguntarNumDebilidades();
+                        numEsbirros = sc.nextInt();
+                    } while (numEsbirros < 1);
+                    for (int iterator = 1; iterator <= numEsbirros; iterator++) {
+                        EsbirrosComposite nuevoEsbirro = new EsbirrosComposite();
+                        if (cliente.getPersonaje().getTipo().equals("VAMPIRO")) {
+                            nuevoEsbirro = nuevoEsbirro.crearEsbirro(true);
+                        } else {
+                            nuevoEsbirro = nuevoEsbirro.crearEsbirro(false);
+                        }
+                        esbirros.add(nuevoEsbirro);
+                    }
+
+                case 2:
+                    //eliminar esbirros
+                    int esbirro;
+                    do {
+                        terminal.preguntarEsbirroEliminar();
+                        esbirro = sc.nextInt();
+                    } while (esbirro < 1 && esbirro > esbirros.size() + 1);
+                    esbirros.remove(esbirro - 1);
+                    break;
+
+                case 3:
+                    //salir
+                    terminal.salir();
+                    salir = true;
+                    break;
+
+            }
+        } while (!salir);
+    }
+
+    private void cambiarOro(Scanner sc, Terminal terminal, Cliente cliente) {
+        //modificar oro
+        terminal.mostrarOro();
+        System.out.println(cliente.getPersonaje().getOro());
+        terminal.introModificacion();
+        int oro = sc.nextInt();
+        cliente.getPersonaje().setOro(oro);
+    }
+
+    private void cambiarHP(Scanner sc, Terminal terminal, Cliente cliente) {
+        //modificar hp
+        terminal.mostrarHp();
+        System.out.println(cliente.getPersonaje().getHp());
+        terminal.introModificacion();
+        int hp = sc.nextInt();
+        cliente.getPersonaje().setHp(hp);
+    }
+
+    private void cambiarPoder(Scanner sc, Terminal terminal, Cliente cliente) {
+        //modificar poder
+        terminal.mostrarPoder();
+        System.out.println(cliente.getPersonaje().getPoder());
+        terminal.introModificacion();
+        int poder = sc.nextInt();
+        cliente.getPersonaje().setPoder(poder);
+    }
+
+    private void cambiarTipo(Scanner sc, Terminal terminal, Cliente cliente, FactoriaVampiros factoriaVampiros, FactoriaCazadores factoriaCazadores, FactoriaLicantropos factoriaLicantropos) {
+        int opcion;
+        boolean rightValue;
+        //modificar tipo
+        rightValue = false;
+        terminal.mostrarTipo();
+        System.out.println(cliente.getPersonaje().getTipo());
+        terminal.seleccionarTipo();
+        opcion = sc.nextInt();
+        switch (opcion) {
+            case 1 -> {
+                cliente.getPersonaje().setTipo("VAMPIRO");
+                cambiarDisciplina(terminal, cliente, factoriaVampiros);
+            }
+            case 2 -> {
+                cliente.getPersonaje().setTipo("CAZADOR");
+                cambiarTalento(terminal, cliente, factoriaCazadores);
+            }
+            case 3 -> {
+                cliente.getPersonaje().setTipo("LICANTROPO");
+                cambiarDon(terminal, cliente, factoriaLicantropos);
+            }
+        }
+    }
+
+    private void cambiarFortalezas(Scanner sc, Terminal terminal, Cliente cliente, FactoriaCazadores factoriaCazadores) {
+        int opcion;
+        boolean salir;
+        //modificar fortalezas
+        ArrayList<Fortaleza> fortalezas = cliente.getPersonaje().getFortalezas();
+        salir = false;
+        do {
+            terminal.fortalezasPersonaje(fortalezas);
+            terminal.modificarFortalezas();
+            opcion = sc.nextInt();
+            switch (opcion) {
+                case 1 -> {
+                    //aÃ±adir fortalezas
+                    int numFortalezas;
+                    Fortaleza nuevaFortaleza = new Fortaleza();
+                    do {
+                        terminal.peguntarNumDebilidades();
+                        numFortalezas = sc.nextInt();
+                    } while (numFortalezas < 1);
+                    for (int iterator = 1; iterator <= numFortalezas; iterator++) {
+                        terminal.preguntarNombreFortaleza();
+                        factoriaCazadores.inicializarNombreFortaleza(nuevaFortaleza);
+                        terminal.preguntarValorFortaleza();
+                        factoriaCazadores.inicializarValorFortaleza(nuevaFortaleza);
+                        factoriaCazadores.addFortaleza(fortalezas, nuevaFortaleza);
+                    }
+                }
+                case 2 -> {
+                    //eliminar fortalezas
+                    int fortaleza;
+                    do {
+                        terminal.preguntarArmaduraEliminar();
+                        fortaleza = sc.nextInt();
+                    } while (fortaleza < 1 && fortaleza > fortalezas.size() + 1);
+                    fortalezas.remove(fortaleza);
+                }
+                case 3 -> {
+                    //salir
+                    terminal.salir();
+                    salir = true;
+                }
+            }
+        } while (!salir);
+    }
+
+    private void cambiarDebilidades(Scanner sc, Terminal terminal, Cliente cliente, FactoriaCazadores factoriaCazadores) {
+        int opcion;
+        boolean salir;
+        //modificar debilidades
+        ArrayList<Debilidad> debilidades = cliente.getPersonaje().getDebilidades();
+        terminal.debilidadesPersonaje(debilidades);
+        salir = false;
+        do {
+            terminal.modificarDebilidades();
+            opcion = sc.nextInt();
+            switch (opcion) {
+                case 1 -> {
+                    //aÃ±adir debilidades
+                    int numDebilidades;
+                    Debilidad nuevaDebilidad = new Debilidad();
+                    do {
+                        terminal.peguntarNumDebilidades();
+                        numDebilidades = sc.nextInt();
+                    } while (numDebilidades < 1);
+                    for (int iterator = 1; iterator <= numDebilidades; iterator++) {
+                        terminal.preguntarNombreDebilidad();
+                        factoriaCazadores.inicializarNombreDebilidad(nuevaDebilidad);
+                        terminal.preguntarValorDebilidad();
+                        factoriaCazadores.inicializarValorDebilidad(nuevaDebilidad);
+                        factoriaCazadores.addDebilidad(debilidades, nuevaDebilidad);
+                    }
+                }
+                case 2 -> {
+                    //eliminar debilidades
+                    int debilidad;
+                    do {
+                        terminal.preguntarArmaduraEliminar();
+                        debilidad = sc.nextInt();
+                    } while (debilidad < 1 && debilidad > debilidades.size() + 1);
+                    debilidades.remove(debilidad - 1);
+                }
+                case 3 -> {
+                    //salir
+                    terminal.salir();
+                    salir = true;
+                }
+            }
+        } while (!salir);
     }
 }

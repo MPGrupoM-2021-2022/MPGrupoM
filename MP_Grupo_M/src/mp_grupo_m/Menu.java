@@ -96,25 +96,15 @@ public class Menu {
             terminal.mostrarMenuOperador();
             opcion = sc.nextInt();
             switch (opcion) {
-                case 1:
-                    operador.modificarPersonaje();
-                    break;
-                case 2:
-//                    operador.validarDesafio();
-                    break;
-                case 3:
-                    operador.desbanearUser();
-                    break;
-                case 4:
+                case 1 -> operador.modificarPersonaje();
+                case 2 -> operador.validarDesafio();
+                case 3 -> operador.desbanearUser();
+                case 4 -> {
                     terminal.cerrarSesion();
                     sistema.selector();
-                    break;
-                case 5:
-                    operador.eliminarCuenta(operador, sistema);
-                    break;
-                default:
-                    terminal.error();
-                    break;
+                }
+                case 5 -> operador.eliminarCuenta(operador, sistema);
+                default -> terminal.error();
             }
         } while (opcion != 4 && opcion != 5);
     }

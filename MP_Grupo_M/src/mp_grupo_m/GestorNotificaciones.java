@@ -3,6 +3,8 @@ package mp_grupo_m;
 import mp_grupo_m.Entidades.Cliente;
 import mp_grupo_m.Entidades.Combate;
 import mp_grupo_m.Entidades.Desafio;
+import mp_grupo_m.Ficheros.EscrituraFicheroBans;
+import mp_grupo_m.Ficheros.LecturaFicheroBans;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -88,15 +90,15 @@ public class GestorNotificaciones {
     }
 
     public void subscribeBan(Cliente cliente) {
-        Terminal terminal = new Terminal();
-        terminal.WIP();
+        EscrituraFicheroBans escrituraFicheroBans = new EscrituraFicheroBans();
+        escrituraFicheroBans.registroBaneado(cliente.getNick());
         //escribir nick en el fichero de bans
     }
 
     public void unsubscribeBan(String nick) {
         //leer fichero bans
-        ArrayList<String> listaBans = new ArrayList<>();
-        listaBans.add("nick");
+        LecturaFicheroBans lecturaFicheroBans = new LecturaFicheroBans();
+        ArrayList<String> listaBans = lecturaFicheroBans.lecturaFicheroBaneados();
         for (int numCliente = 0; numCliente < listaBans.size(); numCliente++) {
             if (listaBans.get(numCliente).equals(nick)) {
                 listaBans.remove(numCliente);
@@ -104,6 +106,8 @@ public class GestorNotificaciones {
             }
         }
         //sobreescribir fichero bans
+        EscrituraFicheroBans escrituraFicheroBans = new EscrituraFicheroBans();
+        escrituraFicheroBans.sobreescribirFicheroBaneado(listaBans);
     }
 
     public void notifyBan() {

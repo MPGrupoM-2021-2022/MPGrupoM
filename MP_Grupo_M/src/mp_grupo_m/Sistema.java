@@ -3,15 +3,12 @@ package mp_grupo_m;
 import mp_grupo_m.Entidades.Cliente;
 import mp_grupo_m.Entidades.Operador;
 import mp_grupo_m.Entidades.Desafio;
-import mp_grupo_m.Ficheros.EscrituraFicheroOperadores;
-import mp_grupo_m.Ficheros.EscrituraFicheroUsuario;
-import mp_grupo_m.Ficheros.LecturaFicheroOperadores;
-import mp_grupo_m.Ficheros.LecturaFicheroUsuarios;
+import mp_grupo_m.Ficheros.*;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Sistema{
+public class Sistema {
 
     public void selector() {
         Terminal terminal = new Terminal();
@@ -154,16 +151,26 @@ public class Sistema{
         String nick = sc.nextLine();
         boolean encontrado = false;
         //comparar nick con lista clientes ficheros
-        for(int i = 0; i<lista.size(); i++)
-        {
-            if (lista.get(i).getNick().equals(nick)){
-               encontrado = true;
-               aux = i;
-               i = lista.size();
+        for (int i = 0; i < lista.size(); i++) {
+            if (lista.get(i).getNick().equals(nick)) {
+                encontrado = true;
+                aux = i;
+                i = lista.size();
             }
         }
-        if (!encontrado){
+        if (!encontrado) {
             return false;
+        }
+        LecturaFicheroBans lecturaFicheroBans = new LecturaFicheroBans();
+        ArrayList<String> clientesBaneados = lecturaFicheroBans.lecturaFicheroBaneados();
+        if (!clientesBaneados.isEmpty()) {
+            for (String clienteBaneado : clientesBaneados) {
+                if (nick.equals(clienteBaneado)) {
+                    GestorNotificaciones gestorNotificaciones = new GestorNotificaciones();
+                    gestorNotificaciones.notifyBan();
+                    return false;
+                }
+            }
         }
         boolean passCorrect;
         do {
@@ -171,7 +178,7 @@ public class Sistema{
             String password = sc.nextLine();
             //comparar password asociada al nick
             passCorrect = lista.get(aux).getPassword().equals(password);
-            if(!passCorrect) {
+            if (!passCorrect) {
                 terminal.errorPassword();
             }
         } while (!passCorrect);
@@ -216,7 +223,7 @@ public class Sistema{
         } while (!passCorrect);
         return passCorrect;
     }
-        //devolver el valor de la password (se que hay intentos infinitos pero por si se quitan y se limitan los intentos)
+    //devolver el valor de la password (se que hay intentos infinitos pero por si se quitan y se limitan los intentos)
 //        if(passCorrect){
 //            return true;
 //        }else{
