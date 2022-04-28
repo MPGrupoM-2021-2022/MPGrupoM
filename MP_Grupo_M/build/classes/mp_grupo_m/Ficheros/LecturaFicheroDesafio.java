@@ -84,6 +84,23 @@ public class LecturaFicheroDesafio {
                 textoSeparado = linea.split(": ");
                 desafio.setModificadores((textoSeparado[1]));
 
+                for (int i = 0; i < (Integer.parseInt(textoSeparado[1])); i++) {
+
+                    Modificador modificador = new Modificador();
+
+                    //NOMBRE 
+                    linea = br.readLine();
+                    textoSeparado = linea.split(": ");
+                    modificador.setNombre(textoSeparado[1]);
+
+                    //VALOR
+                    linea = br.readLine();
+                    textoSeparado = linea.split(": ");
+                    modificador.setValor((Integer.parseInt(textoSeparado[1])));
+
+                    desafio.getModificadores().add(modificador);
+                }
+
                 //VALIDADO
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
@@ -92,6 +109,11 @@ public class LecturaFicheroDesafio {
                 } else {
                     desafio.setValidated(false);
                 }
+
+                //REGISTRO
+                linea = br.readLine();
+                textoSeparado = linea.split(": ");
+                desafio.setRegistro((textoSeparado[1]));
 
                 listaDesafio.add(desafio);
                 linea = br.readLine();

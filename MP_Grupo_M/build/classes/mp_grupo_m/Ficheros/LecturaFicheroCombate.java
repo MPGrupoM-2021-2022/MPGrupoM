@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import mp_grupo_m.Entidades.Cliente;
 import mp_grupo_m.Entidades.Combate;
+import mp_grupo_m.Entidades.Modificador;
 
 /**
  *
@@ -81,11 +82,27 @@ class LecturaFicheroCombate {
                 textoSeparado = linea.split(": ");
                 combate.setOro((textoSeparado[1]));
 
-                //MODIFICADOR
+               //MODIFICADOR
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
                 combate.setModificadores((textoSeparado[1]));
 
+                for (int i = 0; i < (Integer.parseInt(textoSeparado[1])); i++) {
+
+                    Modificador modificador = new Modificador();
+
+                    //NOMBRE 
+                    linea = br.readLine();
+                    textoSeparado = linea.split(": ");
+                    modificador.setNombre(textoSeparado[1]);
+
+                    //VALOR
+                    linea = br.readLine();
+                    textoSeparado = linea.split(": ");
+                    modificador.setValor((Integer.parseInt(textoSeparado[1])));
+
+                    combate.getModificadores().add(modificador);
+                }
                 listaCombate.add(combate);
                 linea = br.readLine();
                 linea = br.readLine();

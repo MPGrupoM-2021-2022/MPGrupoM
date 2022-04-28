@@ -99,10 +99,22 @@ public class EscrituraFicheroDesafio {
             bw.write("ORO: ");
             bw.write(desafio.getOro());
             bw.newLine();
-
-            bw.write("MODIFICADOR: ");
+//MODIFICADOR
+            bw.write("CANTIDAD_MODIFICADORES: ");
             bw.write(desafio.getModificadores().size());
             bw.newLine();
+            for (int j = 0; j < (desafio.getModificadores().size()); j++) {
+                Modificador modificador = (Modificador) desafio.getModificadores().get(j);
+                bw.write("NOMBRE_MODIFICADOR:");
+                bw.write(modificador.getNombre());
+                bw.newLine();
+
+                bw.write("VALOR_DEBILIDAD:");
+                bw.write(modificador.getValor());
+                bw.newLine();
+            }
+            bw.newLine();
+// FIN MODIFICADOR
 
             bw.write("VALIDADO: ");
             if (desafio.isValidated()) {
@@ -210,9 +222,25 @@ public class EscrituraFicheroDesafio {
                 bw.write(listaDesafio.get(i).getOro());
                 bw.newLine();
 
+
+//MODIFICADOR
+
                 bw.write("MODIFICADOR: ");
                 bw.write(listaDesafio.get(i).getModificadores().size());
                 bw.newLine();
+                for (int j = 0; j < (listaDesafio.get(i).getModificadores().size()); j++) {
+                Modificador modificador = (Modificador) listaDesafio.get(i).getModificadores().get(j);
+                bw.write("NOMBRE_MODIFICADOR:");
+                bw.write(modificador.getNombre());
+                bw.newLine();
+
+                bw.write("VALOR_DEBILIDAD:");
+                bw.write(modificador.getValor());
+                bw.newLine();
+            }
+                bw.newLine();
+// FIN MODIFICADOR                
+                
 
                 bw.write("VALIDADO: ");
                 if (listaDesafio.get(i).isValidated()) {
@@ -220,6 +248,10 @@ public class EscrituraFicheroDesafio {
                 } else {
                     bw.write("false");
                 }
+                bw.newLine();
+                
+                bw.write("REGISTRO: ");
+                bw.write(listaDesafio.get(i).getRegistro());
                 bw.newLine();
 
                 bw.write("FIN USUARIO");
