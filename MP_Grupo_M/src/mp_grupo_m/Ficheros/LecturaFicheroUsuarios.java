@@ -20,9 +20,7 @@ public class LecturaFicheroUsuarios {
 
             // Lectura del fichero
             String linea;
-            String alineados;
-            String nombreUsuario;
-            linea = br.readLine();
+            br.readLine();
 
             linea = br.readLine();
 
