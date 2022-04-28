@@ -57,6 +57,7 @@ public class EscrituraFicheroOperadores {
             for (int i = 0; i < listaOperador.size(); i++) {
 
                 bw.write("***** USUARIO *****");
+                bw.newLine();
                 bw.write("NOMBRE: ");
                 bw.write(listaOperador.get(i).getNombre());
                 bw.newLine();

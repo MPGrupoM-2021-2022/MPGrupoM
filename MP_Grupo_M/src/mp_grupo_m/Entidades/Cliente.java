@@ -580,6 +580,8 @@ public class Cliente extends User {
     }
 
     private void setEsbirrosLicantropo(FactoriaLicantropos factoriaLicantropo, Licantropo licantropo, ArrayList<EsbirrosComposite> esbirros) {
+        Terminal terminal = new Terminal();
+        terminal.preguntarNumEsbirros();
         int numEsbirros = factoriaLicantropo.askNum();
         for (int iterator = 1; iterator <= numEsbirros; iterator++) {
             EsbirrosComposite esbirro = new EsbirrosComposite();
@@ -610,13 +612,6 @@ public class Cliente extends User {
             factoriaLicantropo.addFortaleza(fortalezas, fortaleza);
         }
         factoriaLicantropo.setFortalezas(licantropo, fortalezas);
-        terminal.preguntarNumEsbirros();
-        int numEsbirros = factoriaLicantropo.askNum();
-        for (int iterator = 1; iterator <= numEsbirros; iterator++) {
-            EsbirrosComposite esbirro = new EsbirrosComposite();
-            esbirro = esbirro.crearEsbirro(false);
-            esbirros.add(esbirro);
-        }
     }
 
     private void setOroHpPoderLicantropo(FactoriaLicantropos factoriaLicantropo, Terminal terminal, Licantropo licantropo) {

@@ -3,9 +3,7 @@ package mp_grupo_m.Entidades;
 import mp_grupo_m.Factorias.FactoriaCazadores;
 import mp_grupo_m.Factorias.FactoriaVampiros;
 import mp_grupo_m.Factorias.FactoriaLicantropos;
-import mp_grupo_m.Ficheros.LecturaFicheroBans;
-import mp_grupo_m.Ficheros.LecturaFicheroOperadores;
-import mp_grupo_m.Ficheros.LecturaFicheroUsuarios;
+import mp_grupo_m.Ficheros.*;
 import mp_grupo_m.GestorNotificaciones;
 import mp_grupo_m.Sistema;
 import mp_grupo_m.Terminal;
@@ -26,6 +24,7 @@ public class Operador extends User {
         Cliente cliente = new Cliente();
         boolean encontrado = false;
         do {
+            terminal.mostrarNicks(listaClientes);
             terminal.preguntarNickAdmin();
             String nick = sc.nextLine();
             for (int i = 0; i < listaClientes.size(); i++) {
@@ -47,7 +46,7 @@ public class Operador extends User {
             terminal.menuModPersonaje();
             opcion = sc.nextInt();
             switch (opcion) {
-                case 1 -> cambiarNombre(sc, terminal, cliente);
+                case 1 -> cambiarNombre(terminal, cliente);
                 case 2 -> cambiarHabilidad(terminal, cliente, factoriaVampiros, factoriaCazadores, factoriaLicantropos);
                 case 3 -> cambiarArmas(sc, terminal, cliente, factoriaCazadores);
                 case 4 -> cambiarArmasActivas(terminal, cliente, factoriaVampiros, factoriaCazadores, factoriaLicantropos);
@@ -64,7 +63,15 @@ public class Operador extends User {
                 default -> terminal.error();
             }
         } while (opcion != 14);
-
+        EscrituraFicheroUsuario escrituraFicheroUsuario = new EscrituraFicheroUsuario();
+        for (int numCliente = 0; numCliente < listaClientes.size(); numCliente++){
+            if (cliente.getNick().equals(listaClientes.get(numCliente).getNick())){
+                listaClientes.remove(numCliente);
+                listaClientes.add(cliente);
+                escrituraFicheroUsuario.sobreescribirFicheroUsuario(listaClientes);
+                break;
+            }
+        }
         terminal.modificarCliente();
     }
 
@@ -73,8 +80,8 @@ public class Operador extends User {
         Terminal terminal = new Terminal();
         Desafio desafio = new Desafio();
         Cliente desafiante, contrincante = new Cliente();
-        ArrayList<Desafio> listaDesafios = new ArrayList<>(); //coger fichero lista desafios
-        listaDesafios.add(desafio);
+        LecturaFicheroDesafio lecturaFicheroDesafio = new LecturaFicheroDesafio();
+        ArrayList<Desafio> listaDesafios = lecturaFicheroDesafio.lecturaFicheroDesafio();
 
         for (int i = 0; i < listaDesafios.size(); i++) {
             if (!listaDesafios.get(i).isValidated()) {
@@ -155,9 +162,8 @@ public class Operador extends User {
     private boolean comprobarBan(Date fechaDesafio, Cliente cliente) {
         Terminal terminal = new Terminal();
         Scanner sc = new Scanner(System.in);
-        ArrayList<Combate> listaCombates = new ArrayList<>(); //coger fichero de combates
-        Combate combate = new Combate();
-        listaCombates.add(combate);
+        LecturaFicheroCombate lecturaFicheroCombate = new LecturaFicheroCombate();
+        ArrayList<Combate> listaCombates = lecturaFicheroCombate.lecturaFicheroCombate();
         boolean sugerirBan = false;
         boolean banear = false;
         for (Combate listaCombate : listaCombates) {
@@ -198,9 +204,11 @@ public class Operador extends User {
         LecturaFicheroBans lecturaFicheroBans = new LecturaFicheroBans();
         ArrayList<String> listaClientes = lecturaFicheroBans.lecturaFicheroBaneados();
         terminal.mostrarClientes(listaClientes);
-        int opcion = sc.nextInt();
-        String nick = listaClientes.get(opcion - 1);
-        gestorNotificaciones.unsubscribeBan(nick);
+        if (!listaClientes.isEmpty()) {
+            int opcion = sc.nextInt();
+            String nick = listaClientes.get(opcion - 1);
+            gestorNotificaciones.unsubscribeBan(nick);
+        }
     }
 
 
@@ -210,7 +218,6 @@ public class Operador extends User {
         terminal.confirmarDelete();
         boolean delete = sc.nextInt() == 1;
         if (delete) {
-            //leer fichero de operadores
             LecturaFicheroOperadores lecturaFicheroOperadores = new LecturaFicheroOperadores();
             ArrayList<Operador> listaOperadores = lecturaFicheroOperadores.lecturaFicheroOperador();
             for (int i = 0; i <= listaOperadores.size(); i++) {
@@ -219,7 +226,8 @@ public class Operador extends User {
                     break;
                 }
             }
-            //sobreescribir fichero
+            EscrituraFicheroOperadores escrituraFicheroOperadores = new EscrituraFicheroOperadores();
+            escrituraFicheroOperadores.sobreescribirFicheroOperador(listaOperadores);
             terminal.cerrarSesion();
             sistema.selector();
         }
@@ -236,10 +244,10 @@ public class Operador extends User {
         return true;
     }
 
-    private void cambiarNombre(Scanner sc, Terminal terminal, Cliente cliente) {
+    private void cambiarNombre(Terminal terminal, Cliente cliente) {
         //modificar nombre
-        terminal.mostrarNombre();
-        System.out.println(cliente.getPersonaje().getNombre());
+        Scanner sc = new Scanner(System.in);
+        terminal.mostrarNombre(cliente.getPersonaje());
         terminal.introModificacion();
         String nombre = sc.nextLine();
         cliente.getPersonaje().setNombre(nombre);
@@ -369,7 +377,7 @@ public class Operador extends User {
                             armas.get(arma - 1).getNombre().equals(armasActivas.get(1).getNombre())) {
                         terminal.errorArmaActiva();
                     } else {
-                        armas.remove(arma);
+                        armas.remove(arma - 1);
                     }
                 }
                 case 3 -> {
@@ -390,7 +398,7 @@ public class Operador extends User {
         boolean[] aux1 = new boolean[]{true, true};
         boolean[] aux2 = new boolean[]{true, false};
         armas = cliente.getPersonaje().getArmas();
-        armasActivas = cliente.getPersonaje().getArmasActivas();
+        armasActivas = new ArrayList<>();
         do {
             terminal.mostrarArmas(armas);
             rightWeapon = factoriaCazadores.addArmaActiva(armas, armasActivas);
@@ -465,7 +473,7 @@ public class Operador extends User {
                     if (armaduras.get(armadura - 1).getNombre().equals(armadurasActivas.getNombre())) {
                         terminal.errorArmaduraActiva();
                     } else {
-                        armaduras.remove(armadura);
+                        armaduras.remove(armadura - 1);
                     }
                 }
                 case 3 -> {
@@ -497,11 +505,11 @@ public class Operador extends User {
             terminal.modificarEsbirros();
             opcion = sc.nextInt();
             switch (opcion) {
-                case 1:
+                case 1 -> {
                     //aÃ±adir esbirros
                     int numEsbirros;
                     do {
-                        terminal.peguntarNumDebilidades();
+                        terminal.preguntarNumEsbirros();
                         numEsbirros = sc.nextInt();
                     } while (numEsbirros < 1);
                     for (int iterator = 1; iterator <= numEsbirros; iterator++) {
@@ -513,8 +521,8 @@ public class Operador extends User {
                         }
                         esbirros.add(nuevoEsbirro);
                     }
-
-                case 2:
+                }
+                case 2 -> {
                     //eliminar esbirros
                     int esbirro;
                     do {
@@ -522,14 +530,12 @@ public class Operador extends User {
                         esbirro = sc.nextInt();
                     } while (esbirro < 1 && esbirro > esbirros.size() + 1);
                     esbirros.remove(esbirro - 1);
-                    break;
-
-                case 3:
+                }
+                case 3 -> {
                     //salir
                     terminal.salir();
                     salir = true;
-                    break;
-
+                }
             }
         } while (!salir);
     }
@@ -600,12 +606,12 @@ public class Operador extends User {
                 case 1 -> {
                     //aÃ±adir fortalezas
                     int numFortalezas;
-                    Fortaleza nuevaFortaleza = new Fortaleza();
                     do {
                         terminal.peguntarNumDebilidades();
                         numFortalezas = sc.nextInt();
                     } while (numFortalezas < 1);
                     for (int iterator = 1; iterator <= numFortalezas; iterator++) {
+                        Fortaleza nuevaFortaleza = new Fortaleza();
                         terminal.preguntarNombreFortaleza();
                         factoriaCazadores.inicializarNombreFortaleza(nuevaFortaleza);
                         terminal.preguntarValorFortaleza();
@@ -620,7 +626,7 @@ public class Operador extends User {
                         terminal.preguntarArmaduraEliminar();
                         fortaleza = sc.nextInt();
                     } while (fortaleza < 1 && fortaleza > fortalezas.size() + 1);
-                    fortalezas.remove(fortaleza);
+                    fortalezas.remove(fortaleza - 1);
                 }
                 case 3 -> {
                     //salir
@@ -645,12 +651,12 @@ public class Operador extends User {
                 case 1 -> {
                     //aÃ±adir debilidades
                     int numDebilidades;
-                    Debilidad nuevaDebilidad = new Debilidad();
                     do {
                         terminal.peguntarNumDebilidades();
                         numDebilidades = sc.nextInt();
                     } while (numDebilidades < 1);
                     for (int iterator = 1; iterator <= numDebilidades; iterator++) {
+                        Debilidad nuevaDebilidad = new Debilidad();
                         terminal.preguntarNombreDebilidad();
                         factoriaCazadores.inicializarNombreDebilidad(nuevaDebilidad);
                         terminal.preguntarValorDebilidad();

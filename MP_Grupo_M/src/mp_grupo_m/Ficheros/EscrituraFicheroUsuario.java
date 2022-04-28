@@ -143,7 +143,7 @@ public class EscrituraFicheroUsuario {
         bw.newLine();
 
         for (int variableArma = 0; variableArma < (listaCliente.get(i).getPersonaje().getArmas().size()); variableArma++) {
-            Arma arma = vampiro.getArmas().get(i);
+            Arma arma = vampiro.getArmas().get(variableArma);
             bw.write("NOMBRE_ARMA: ");
             bw.write(arma.getNombre());
             bw.newLine();
