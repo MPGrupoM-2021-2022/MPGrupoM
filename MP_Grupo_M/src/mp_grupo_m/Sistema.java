@@ -1,6 +1,7 @@
 package mp_grupo_m;
 
 import mp_grupo_m.Entidades.Cliente;
+import mp_grupo_m.Entidades.Combate;
 import mp_grupo_m.Entidades.Operador;
 import mp_grupo_m.Entidades.Desafio;
 import mp_grupo_m.Ficheros.*;
@@ -13,6 +14,7 @@ public class Sistema {
     public void selector() {
         Terminal terminal = new Terminal();
         Scanner sc = new Scanner(System.in);
+        terminal.mostrarInicio();
         int opcion = sc.nextInt();
         switch (opcion) {
             case 1 -> {
@@ -24,41 +26,38 @@ public class Sistema {
             case 2 -> {
                 //INICIO DE SESION COMO CLIENTE
                 Cliente cliente = new Cliente();
-                boolean login = loginCliente(cliente);
-                if (login) {
+                cliente = loginCliente(cliente);
+                if (cliente != null) {
                     Menu menu = new Menu();
 
-                    //leer fichero de combates
-//                    ArrayList<Combate> listaCombates = new ArrayList<>();
-//                    Combate combate = new Combate();
-//                    listaCombates.add(combate);
-//                    for (int i = 0; i < listaCombates.size(); i++){
-//                        if (!listaCombates.get(i).isVisto() && listaCombates.get(i).getDesafiante().getNick().equals(cliente.getNick())){
-//                            GestorNotificaciones gestorNotificaciones = new GestorNotificaciones();
-//                            gestorNotificaciones.notifyCombate(listaCombates.get(i));
-//                            listaCombates.get(i).setVisto(true);
-//                        }
-//                        //sobreescribir fichero combates
-//                    }
+                    LecturaFicheroCombate lecturaFicheroCombate = new LecturaFicheroCombate();
+                    ArrayList<Combate> listaCombates = lecturaFicheroCombate.lecturaFicheroCombate();
+                    for (Combate listaCombate : listaCombates) {
+                        if (!listaCombate.isVisto() && listaCombate.getDesafiante().getNick().equals(cliente.getNick())) {
+                            GestorNotificaciones gestorNotificaciones = new GestorNotificaciones();
+                            gestorNotificaciones.notifyCombate(listaCombate);
+                            listaCombate.setVisto(true);
+                        }
+                        EscrituraFicheroCombate escrituraFicheroCombate = new EscrituraFicheroCombate();
+                        //********************************FALTA SOBREESCIBIR********************************************
+                    }
 
-                    Desafio desafio = new Desafio();
-                    ArrayList<Desafio> listaDesafios = new ArrayList<>(); //leerlo de fichero y meter observer
-                    listaDesafios.add(desafio);
+                    LecturaFicheroDesafio lecturaFicheroDesafio = new LecturaFicheroDesafio();
+                    ArrayList<Desafio> listaDesafios = lecturaFicheroDesafio.lecturaFicheroDesafio();
                     for (int i = 0; i < listaDesafios.size(); i++) {
                         if (listaDesafios.get(i).isValidated() && listaDesafios.get(i).getContrincante().getNick().equals(cliente.getNick())) {
                             GestorNotificaciones gestorNotificaciones = new GestorNotificaciones();
                             gestorNotificaciones.notifyDesafio(cliente, terminal, listaDesafios, i);
                         }
                     }
-
                     menu.selector(cliente, this);
                 }
             }
             case 3 -> {
                 //INICIO DE SESION COMO ADMIN
                 Operador operador = new Operador();
-                boolean login = loginOperador(operador);
-                if (login) {
+                operador = loginOperador(operador);
+                if (operador != null) {
                     Menu menu = new Menu();
                     menu.selectorOperador(operador, this);
                 }
@@ -80,30 +79,34 @@ public class Sistema {
                 cliente.setNombre(nombre);
                 terminal.preguntarNick();
                 String nick = sc.nextLine();
+                boolean encontrado = false;
                 if (!lista.isEmpty()) {
                     for (Cliente value : lista) {
                         if ((value.getNick().equals(nick))) {
                             terminal.nickExistente();
+                            encontrado = true;
                             break;
                         }
                     }
                 }
-                cliente.setNick(nick);
-                terminal.preguntarPassword();
-                String password = sc.nextLine();
-                terminal.confirmarPassword();
-                String confirm = sc.nextLine();
-                //poner if para verificar si la contraseña es la misma, si no break;
-                if (!password.equals(confirm)) {
-                    terminal.error();
-                    break;
+                if (!encontrado) {
+                    cliente.setNick(nick);
+                    terminal.preguntarPassword();
+                    String password = sc.nextLine();
+                    terminal.confirmarPassword();
+                    String confirm = sc.nextLine();
+                    //poner if para verificar si la contraseña es la misma, si no break;
+                    if (!password.equals(confirm)) {
+                        terminal.error();
+                        break;
+                    }
+                    cliente.setPassword(password);
+                    String registro = cliente.generarNumerRegistro();
+                    cliente.setRegistro(registro);
+                    cliente.setPersonaje(null);
+                    EscrituraFicheroUsuario escrituraFicheroUsuario = new EscrituraFicheroUsuario();
+                    escrituraFicheroUsuario.registroUsuario(cliente);
                 }
-                cliente.setPassword(password);
-                String registro = cliente.generarNumerRegistro();
-                cliente.setRegistro(registro);
-                cliente.setPersonaje(null);
-                EscrituraFicheroUsuario escrituraFicheroUsuario = new EscrituraFicheroUsuario();
-                escrituraFicheroUsuario.registroUsuario(cliente);
             }
             case 2 -> {
                 Operador operador = new Operador();
@@ -140,13 +143,12 @@ public class Sistema {
         }
     }
 
-    public boolean loginCliente(Cliente cliente) {
+    public Cliente loginCliente(Cliente cliente) {
         Scanner sc = new Scanner(System.in);
         Terminal terminal = new Terminal();
         int aux = -1;
         LecturaFicheroUsuarios lecturaFicheroUsuarios = new LecturaFicheroUsuarios();
         ArrayList<Cliente> lista = lecturaFicheroUsuarios.lecturaFicheroUsuarios();
-        //coger lista clientes ficheros
         terminal.preguntarNick();
         String nick = sc.nextLine();
         boolean encontrado = false;
@@ -159,7 +161,7 @@ public class Sistema {
             }
         }
         if (!encontrado) {
-            return false;
+            return null;
         }
         LecturaFicheroBans lecturaFicheroBans = new LecturaFicheroBans();
         ArrayList<String> clientesBaneados = lecturaFicheroBans.lecturaFicheroBaneados();
@@ -168,7 +170,7 @@ public class Sistema {
                 if (nick.equals(clienteBaneado)) {
                     GestorNotificaciones gestorNotificaciones = new GestorNotificaciones();
                     gestorNotificaciones.notifyBan();
-                    return false;
+                    return null;
                 }
             }
         }
@@ -183,21 +185,14 @@ public class Sistema {
             }
         } while (!passCorrect);
         cliente = lista.get(aux);
-        return passCorrect;
-        //devolver el valor de la password (se que hay intentos infinitos pero por si se quitan y se limitan los intentos)
-//        if(passCorrect){
-//            return true;
-//        }else{
-//            return false;
-//        }
+        return cliente;
     }
 
-    public boolean loginOperador(Operador operador) {
+    public Operador loginOperador(Operador operador) {
         Scanner sc = new Scanner(System.in);
         Terminal terminal = new Terminal();
         LecturaFicheroOperadores lecturaFicheroOperadores = new LecturaFicheroOperadores();
         ArrayList<Operador> lista = lecturaFicheroOperadores.lecturaFicheroOperador();
-        //coger lista operadores ficheros
         terminal.preguntarNick();
         String nick = sc.nextLine();
         boolean encontrado = false;
@@ -211,7 +206,7 @@ public class Sistema {
             }
         }
         if (!encontrado) {
-            return false;
+            return null;
         }
         boolean passCorrect = false;
         do {
@@ -219,9 +214,11 @@ public class Sistema {
             String password = sc.nextLine();
             //comparar password asociada al nick
             passCorrect = lista.get(aux).getPassword().equals(password);
-            terminal.errorPassword();
+            if (!passCorrect) {
+                terminal.errorPassword();
+            }
         } while (!passCorrect);
-        return passCorrect;
+        return operador;
     }
     //devolver el valor de la password (se que hay intentos infinitos pero por si se quitan y se limitan los intentos)
 //        if(passCorrect){

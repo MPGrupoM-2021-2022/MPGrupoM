@@ -39,7 +39,7 @@ public class Menu {
                     //Llamada a lectura del fichero de todos los clientes
                     LecturaFicheroUsuarios lecturaFicheroUsuarios = new LecturaFicheroUsuarios();
                     ArrayList<Cliente> listaClientes = lecturaFicheroUsuarios.lecturaFicheroUsuarios();
-                    cliente.desafiar(listaClientes, cliente, sistema);
+                    cliente.desafiar(listaClientes, cliente);
                     break;
                 case 5:
                     consultarCombates(cliente);
@@ -89,7 +89,6 @@ public class Menu {
     public void selectorOperador(Operador operador, Sistema sistema) {
         Terminal terminal = new Terminal();
         Scanner sc = new Scanner(System.in);
-        terminal.WIP();
 
         int opcion;
         do {
