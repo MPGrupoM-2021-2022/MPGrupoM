@@ -4,16 +4,15 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+
 import mp_grupo_m.Entidades.*;
 
-/**
- *
- * @author octavio
- */
 public class LecturaFicheroDesafio {
 
-    public ArrayList<Desafio> lecturaFicheroDesafio() throws IOException {
+    public ArrayList<Desafio> lecturaFicheroDesafio() {
         File archivo = null;
         FileReader fr = null;
         BufferedReader br = null;
@@ -21,15 +20,16 @@ public class LecturaFicheroDesafio {
         ArrayList<Desafio> listaDesafio = new ArrayList<>();
 
         try {
-            archivo = new File("src/mp_grupo_m/Ficheros/registroDesafio.txt");
+            archivo = new File("./MP_Grupo_M/src/mp_grupo_m/Ficheros/registroDesafio.txt");
+            if (!archivo.exists()) {
+                archivo.createNewFile();
+            }
             fr = new FileReader(archivo);
             br = new BufferedReader(fr);
 
             // Lectura del fichero
             String linea;
             linea = br.readLine();
-            String[] textoSeparado = linea.split(": ");
-            textoSeparado = linea.split(": ");
 
             linea = br.readLine();
 
@@ -37,19 +37,20 @@ public class LecturaFicheroDesafio {
                 Desafio desafio = new Desafio();
                 Cliente cliente = new Cliente();
 
-                //DESAFIANTE
-                textoSeparado = linea.split(": ");
-                desafio.setDesafiante((textoSeparado[1]));
-
                 //NICK
-                textoSeparado = linea.split(": ");
-                cliente.setNombre((textoSeparado[1]));
+                String[] textoSeparado = linea.split(": ");
+                cliente.setNombre(textoSeparado[1]);
 
                 //PASSWORD
                 textoSeparado = linea.split(": ");
-                cliente.setPassword((textoSeparado[1]));
+                cliente.setPassword(textoSeparado[1]);
 
                 //NUMERO_REGISTRO
+                linea = br.readLine();
+                textoSeparado = linea.split(": ");
+                cliente.setRegistro(textoSeparado[1]);
+
+                //PERSONAJE
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
 
@@ -69,10 +70,44 @@ public class LecturaFicheroDesafio {
                     }
                 }
 
-                //CONTRINCANTE
+                desafio.setDesafiante(cliente);
+
+                cliente = new Cliente();
+
+                //NICK
+                textoSeparado = linea.split(": ");
+                cliente.setNombre((textoSeparado[1]));
+
+                //PASSWORD
+                textoSeparado = linea.split(": ");
+                cliente.setPassword((textoSeparado[1]));
+
+                //NUMERO_REGISTRO
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
-                desafio.setContrincante((textoSeparado[1]));
+                cliente.setRegistro(textoSeparado[1]);
+
+                //PERSONAJE
+                linea = br.readLine();
+                textoSeparado = linea.split(": ");
+
+                if (!textoSeparado[1].equals("null")) {
+                    //LECTURA SI ES DE TIPO VAMPIRO
+                    if (textoSeparado[1].equals("VAMPIRO")) {
+                        Vampiro vampiro = lecturaVampiroDesafio(br);
+                        cliente.setPersonaje(vampiro);
+                        //LECTURA SI ES DE TIPO LICANTROPO
+                    } else if (textoSeparado[1].equals("LICANTROPO")) {
+                        Licantropo licantropo = lecturaLicantropoDesafio(br);
+                        cliente.setPersonaje(licantropo);
+                        //LECTURA SI ES DE TIPO CAZADOR
+                    } else if (textoSeparado[1].equals("CAZADOR")) {
+                        Cazador cazador = lecturaCazadorDesafio(br);
+                        cliente.setPersonaje(cazador);
+                    }
+                }
+
+                desafio.setContrincante(cliente);
 
                 //ORO
                 linea = br.readLine();
@@ -82,7 +117,6 @@ public class LecturaFicheroDesafio {
                 //MODIFICADOR
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
-                desafio.setModificadores((textoSeparado[1]));
 
                 for (int i = 0; i < (Integer.parseInt(textoSeparado[1])); i++) {
 
@@ -100,6 +134,12 @@ public class LecturaFicheroDesafio {
 
                     desafio.getModificadores().add(modificador);
                 }
+
+                //FECHA
+                linea = br.readLine();
+                textoSeparado = linea.split(": ");
+                Date fecha = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss").parse(textoSeparado[1]);
+                desafio.setFecha(fecha);
 
                 //VALIDADO
                 linea = br.readLine();
@@ -854,7 +894,7 @@ public class LecturaFicheroDesafio {
         return licantropo;
     }
 
-    private EsbirrosComposite esbirroFichero(String linea, BufferedReader br, String[] textoSeparado) throws NumberFormatException, IOException {
+    private EsbirrosComposite esbirroFichero(String linea, BufferedReader br, String[] textoSeparado) throws IOException {
         // ESBIRROS
         linea = br.readLine();
         textoSeparado = linea.split(": ");

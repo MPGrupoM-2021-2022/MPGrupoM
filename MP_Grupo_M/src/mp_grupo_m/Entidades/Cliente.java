@@ -162,9 +162,9 @@ public class Cliente extends User {
         terminal.finishEquipar();
     }
 
-    public void desafiar(ArrayList<Cliente> listaClientes, Cliente cliente, Sistema sistema) {
+    public void desafiar(ArrayList<Cliente> listaClientes, Cliente cliente) {
         Desafio desafio = new Desafio();
-        desafio.crearDesafio(listaClientes, cliente, sistema);
+        desafio.crearDesafio(listaClientes, cliente);
     }
 
     public void eliminarCuenta(Cliente cliente, Sistema sistema) {
@@ -173,7 +173,6 @@ public class Cliente extends User {
         terminal.confirmarDelete();
         boolean delete = sc.nextInt() == 1;
         if (delete) {
-            //leer fichero de clientes
             LecturaFicheroUsuarios lecturaFicheroUsuarios = new LecturaFicheroUsuarios();
             ArrayList<Cliente> listaClientes = lecturaFicheroUsuarios.lecturaFicheroUsuarios();
             for (int i = 0; i <= listaClientes.size(); i++) {
@@ -182,7 +181,6 @@ public class Cliente extends User {
                     break;
                 }
             }
-            //sobreescribir fichero
             EscrituraFicheroUsuario escrituraFicheroUsuario = new EscrituraFicheroUsuario();
             escrituraFicheroUsuario.sobreescribirFicheroUsuario(listaClientes);
             terminal.cerrarSesion();

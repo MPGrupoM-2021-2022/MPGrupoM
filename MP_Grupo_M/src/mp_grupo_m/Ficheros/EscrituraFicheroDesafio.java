@@ -9,20 +9,12 @@ import mp_grupo_m.Entidades.*;
 import mp_grupo_m.Sistema;
 import mp_grupo_m.Terminal;
 
-/**
- *
- * @author octavio
- */
 public class EscrituraFicheroDesafio {
 
-    Sistema sistema = new Sistema();
-    Terminal terminal = new Terminal();
-    LecturaFicheroDesafio lecturaFicheroDesafio = new LecturaFicheroDesafio();
-
-    public void registroDesafio(Desafio desafio) throws IOException {
+    public void registroDesafio(Desafio desafio){
 
         try {
-            String ruta = "src/mp_grupo_m/Ficheros/registroDesafio.txt";
+            String ruta = "./MP_Grupo_M/src/mp_grupo_m/Ficheros/registroDesafio.txt";
             File file = new File(ruta);
             // Si el archivo no existe es creado
             if (!file.exists()) {
@@ -37,7 +29,7 @@ public class EscrituraFicheroDesafio {
 
             ///////////DESAFIANTE ///////////
             bw.write("DESAFIANTE: ");
-            bw.write(desafio.getDesafiante().getNombre());
+            bw.write(desafio.getDesafiante().getNick());
             bw.newLine();
 
             bw.write("NICK: ");
@@ -116,6 +108,10 @@ public class EscrituraFicheroDesafio {
             bw.newLine();
 // FIN MODIFICADOR
 
+            bw.write("FECHA: ");
+            bw.write(desafio.getFecha().toString());
+            bw.newLine();
+
             bw.write("VALIDADO: ");
             if (desafio.isValidated()) {
                 bw.write("true");
@@ -124,7 +120,7 @@ public class EscrituraFicheroDesafio {
             }
             bw.newLine();
 
-            bw.write("FIN USUARIO");
+            bw.write("FIN DESAFIO");
             bw.newLine();
             bw.close();
 
@@ -135,18 +131,11 @@ public class EscrituraFicheroDesafio {
         }
     }
 
-    public void sobreescribirFicheroDesafio(ArrayList<Desafio> listaDesafio) throws IOException {
+    public void sobreescribirFicheroDesafio(ArrayList<Desafio> listaDesafio){
 
         try {
-            String ruta = "src/mp_grupo_m/Ficheros/registroDesafio.txt";
+            String ruta = "./MP_Grupo_M/src/mp_grupo_m/Ficheros/registroDesafio.txt";
             File file = new File(ruta);
-            // Si el archivo no existe devuelve al menu de inicio para crear el usuario. 
-            if (!file.exists()) {
-                System.out.println("El fichero no existe.");
-                System.out.println("No se permite el registro del nuevo personaje.");
-                terminal.mostrarInicio();
-                sistema.selector();
-            }
             //FileWriter fw = new FileWriter(file);
             FileWriter fw = new FileWriter(file); //opción append habilitada!
             BufferedWriter bw = new BufferedWriter(fw);

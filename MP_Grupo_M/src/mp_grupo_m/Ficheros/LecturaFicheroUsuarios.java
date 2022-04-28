@@ -11,7 +11,10 @@ public class LecturaFicheroUsuarios {
         ArrayList<Cliente> listaCliente = new ArrayList<>();
 
         try {
-            File archivo = new File("src/mp_grupo_m/Ficheros/registroUsuario.txt");
+            File archivo = new File("./MP_Grupo_M/src/mp_grupo_m/Ficheros/registroUsuario.txt");
+            if (!archivo.exists()) {
+                archivo.createNewFile();
+            }
             fr = new FileReader(archivo);
             BufferedReader br = new BufferedReader(fr);
 
@@ -20,8 +23,6 @@ public class LecturaFicheroUsuarios {
             String alineados;
             String nombreUsuario;
             linea = br.readLine();
-            String[] textoSeparado = linea.split(": ");
-            textoSeparado = linea.split(": ");
 
             linea = br.readLine();
 
@@ -29,7 +30,7 @@ public class LecturaFicheroUsuarios {
                 Cliente cliente = new Cliente();
 
                 //NOMBRE
-                textoSeparado = linea.split(": ");
+                String[] textoSeparado = linea.split(": ");
                 cliente.setNombre(textoSeparado[1]);
 
                 //NICK
@@ -47,7 +48,7 @@ public class LecturaFicheroUsuarios {
                 textoSeparado = linea.split(": ");
                 cliente.setRegistro(textoSeparado[1]);
 
-                //NUMERO_REGISTRO
+                //PERSONAJE
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
 
@@ -65,9 +66,6 @@ public class LecturaFicheroUsuarios {
                         Cazador cazador = lecturaCazador(br);
                         cliente.setPersonaje(cazador);
                     }
-                } else {
-                    System.out.println("HEMOS TERMINADO CON EL USUARIO");
-                    System.out.println("AUN TE FALTA CREAR EL PERSONAJE");
                 }
                 listaCliente.add(cliente);
                 linea = br.readLine();

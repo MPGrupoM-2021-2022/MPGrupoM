@@ -13,7 +13,10 @@ public class LecturaFicheroBans {
         ArrayList<String> listaBaneados = new ArrayList<>();
 
         try {
-            File archivo = new File("src/mp_grupo_m/Ficheros/registroBaneados.txt");
+            File archivo = new File("./MP_Grupo_M/src/mp_grupo_m/Ficheros/registroBaneados.txt");
+            if (!archivo.exists()) {
+                archivo.createNewFile();
+            }
             fr = new FileReader(archivo);
             BufferedReader br = new BufferedReader(fr);
 

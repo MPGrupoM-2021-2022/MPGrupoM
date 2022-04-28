@@ -11,7 +11,7 @@ public class EscrituraFicheroOperadores {
 
     public void registroOperadores(Operador operador){
         try {
-            String ruta = "src/mp_grupo_m/Ficheros/registroOperador.txt";
+            String ruta = "./MP_Grupo_M/src/mp_grupo_m/Ficheros/registroOperador.txt";
             File file = new File(ruta);
             // Si el archivo no existe es creado
             if (!file.exists()) {
@@ -46,7 +46,7 @@ public class EscrituraFicheroOperadores {
     public void sobreescribirFicheroOperador(ArrayList<Operador> listaOperador){
 
         try {
-            String ruta = "src/mp_grupo_m/Ficheros/registroOperador.txt";
+            String ruta = "./MP_Grupo_M/src/mp_grupo_m/Ficheros/registroOperador.txt";
             File file = new File(ruta);
             // Si el archivo no existe devuelve al menu de inicio para crear el usuario.
             //FileWriter fw = new FileWriter(file);

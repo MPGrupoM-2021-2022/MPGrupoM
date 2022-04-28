@@ -5,34 +5,17 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import mp_grupo_m.Entidades.Arma;
-import mp_grupo_m.Entidades.Armadura;
-import mp_grupo_m.Entidades.Cazador;
-import mp_grupo_m.Entidades.Combate;
-import mp_grupo_m.Entidades.Debilidad;
-import mp_grupo_m.Entidades.Demonio;
-import mp_grupo_m.Entidades.Desafio;
-import mp_grupo_m.Entidades.Disciplina;
-import mp_grupo_m.Entidades.Fortaleza;
-import mp_grupo_m.Entidades.Ghoul;
-import mp_grupo_m.Entidades.Humano;
-import mp_grupo_m.Entidades.Licantropo;
-import mp_grupo_m.Entidades.Modificador;
-import mp_grupo_m.Entidades.Personaje;
-import mp_grupo_m.Entidades.Ronda;
-import mp_grupo_m.Entidades.Vampiro;
+import mp_grupo_m.Entidades.*;
 import mp_grupo_m.Sistema;
+import mp_grupo_m.Terminal;
 
-/**
- *
- * @author octavio
- */
 public class EscrituraFicheroCombate {
 
-    public void registroCombate(Combate combate) throws IOException {
+    public void registroCombate(Combate combate) {
+
 
         try {
-            String ruta = "src/mp_grupo_m/Ficheros/registroCombate.txt";
+            String ruta = "./MP_Grupo_M/src/mp_grupo_m/Ficheros/registroCombate.txt";
             File file = new File(ruta);
             // Si el archivo no existe es creado
             if (!file.exists()) {
@@ -128,7 +111,7 @@ public class EscrituraFicheroCombate {
 
 // INICIO VENCEDOR  ///////////
             bw.write("VENCEDOR: ");
-            bw.write(combate.getVencedor().getNombre());
+            bw.write(combate.getVencedor().getNick());
             bw.newLine();
 // FIN  VENCEDOR  ///////////
             //ESBIRRO DESAFIANTE
@@ -166,7 +149,7 @@ public class EscrituraFicheroCombate {
                 bw.write("VALOR_DEBILIDAD:");
                 bw.write(modificador.getValor());
                 bw.newLine();
-                
+
             }
             bw.newLine();
 // FIN MODIFICADOR
@@ -184,10 +167,176 @@ public class EscrituraFicheroCombate {
 
             bw.newLine();
 
-            bw.write("FIN USUARIO");
+            bw.write("FIN COMBATE");
             bw.newLine();
             bw.close();
 
+        } catch (Exception e) {
+            Sistema sistema = new Sistema();
+            sistema.selector();
+            e.printStackTrace();
+        }
+    }
+
+    public void sobreescribirFicheroCombate(ArrayList<Combate> listaCombate) {
+
+        try {
+            String ruta = "./MP_Grupo_M/src/mp_grupo_m/Ficheros/registroCombate.txt";
+            File file = new File(ruta);
+            // Si el archivo no existe devuelve al menu de inicio para crear el usuario.
+
+            //FileWriter fw = new FileWriter(file);
+            FileWriter fw = new FileWriter(file); //opción append habilitada!
+            BufferedWriter bw = new BufferedWriter(fw);
+
+            //recorre la lista de clientes
+            for (int i = 0; i < listaCombate.size(); i++) {
+
+                bw.write("***** DESAFIO *****");
+                bw.newLine();
+
+///////////  INICIO DESAFIANTE ///////////
+                bw.write("DESAFIANTE: ");
+                bw.write(listaCombate.get(i).getDesafiante().getNombre());
+                bw.newLine();
+
+                bw.write("NICK: ");
+                bw.write(listaCombate.get(i).getDesafiante().getNick());
+                bw.newLine();
+
+                bw.write("PASSWORD: ");
+                bw.write(listaCombate.get(i).getDesafiante().getPassword());
+                bw.newLine();
+
+                bw.write("REGISTRO: ");
+                bw.write(listaCombate.get(i).getDesafiante().getRegistro());
+                bw.newLine();
+
+                String tipoPersonajeDesafiante = listaCombate.get(i).getDesafiante().getPersonaje().getTipo();
+                if (tipoPersonajeDesafiante == null) {
+                    bw.write("TIPO_PERSONAJE: null");
+                    bw.newLine();
+                } else if (tipoPersonajeDesafiante.equals("VAMPIRO")) {
+                    escrituraVampiroDesafiante(listaCombate.get(i), bw);
+                } else if (tipoPersonajeDesafiante.equals("LICANTROPO")) {
+                    escrituraLicantropoDesafiante(listaCombate.get(i), bw);
+                } else if (tipoPersonajeDesafiante.equals("CAZADOR")) {
+                    escrituraCazadorDesafiante(listaCombate.get(i), bw);
+                }
+/////////// FIN DESAFIANTE ///////////
+
+/////////// INICIO CONTRINCANTE  ///////////
+                bw.write("CONTRINCANTE: ");
+                bw.write(listaCombate.get(i).getContrincante().getNombre());
+                bw.newLine();
+
+                bw.write("NICK: ");
+                bw.write(listaCombate.get(i).getContrincante().getNick());
+                bw.newLine();
+
+                bw.write("PASSWORD: ");
+                bw.write(listaCombate.get(i).getContrincante().getPassword());
+                bw.newLine();
+
+                bw.write("REGISTRO: ");
+                bw.write(listaCombate.get(i).getContrincante().getRegistro());
+                bw.newLine();
+
+                String tipoPersonajeContrincante = listaCombate.get(i).getContrincante().getPersonaje().getTipo();
+                if (tipoPersonajeContrincante == null) {
+                    bw.write("TIPO_PERSONAJE: null");
+                    bw.newLine();
+                } else if (tipoPersonajeContrincante.equals("VAMPIRO")) {
+                    escrituraVampiroContrincante(listaCombate.get(i), bw);
+                } else if (tipoPersonajeContrincante.equals("LICANTROPO")) {
+                    escrituraLicantropoContrincante(listaCombate.get(i), bw);
+                } else if (tipoPersonajeContrincante.equals("CAZADOR")) {
+                    escrituraCazadorContrincante(listaCombate.get(i), bw);
+                }
+/////////// FIN CONTRINCANTE  ///////////
+
+                //RONDAS
+                bw.write("RONDAS: ");
+                bw.write(listaCombate.get(i).getRondas().size());
+                bw.newLine();
+                for (int j = 0; j < (listaCombate.get(i).getRondas().size()); j++) {
+                    Ronda ronda = (Ronda) listaCombate.get(i).getRondas().get(j);
+                    bw.write("VIDA_CONTRINCANTE:");
+                    bw.write(ronda.getHpContrincanteEnd());
+                    bw.newLine();
+
+                    bw.write("VIDA_DESAFIANTE:");
+                    bw.write(ronda.getHpDesafianteEnd());
+                    bw.newLine();
+
+                }
+                bw.newLine();
+
+                bw.write("FECHA: ");
+                bw.write(listaCombate.get(i).getFecha().toString());
+                bw.newLine();
+
+// INICIO VENCEDOR  ///////////
+                bw.write("VENCEDOR: ");
+                bw.write(listaCombate.get(i).getVencedor().getNick());
+                bw.newLine();
+// FIN  VENCEDOR  ///////////
+                //ESBIRRO DESAFIANTE
+                bw.write("ESBIRRO_DESAFIANTE: ");
+                if (listaCombate.get(i).isEsbirrosDesafiante()) {
+                    bw.write("true");
+                } else {
+                    bw.write("false");
+                }
+                bw.newLine();
+
+                //ESBIRRO CONTRINCANTE
+                bw.write("ESBIRRO_CONTRINCANTE: ");
+                if (listaCombate.get(i).isEsbirrosContrincante()) {
+                    bw.write("true");
+                } else {
+                    bw.write("false");
+                }
+                bw.newLine();
+
+                bw.write("ORO: ");
+                bw.write(listaCombate.get(i).getOro());
+                bw.newLine();
+
+//MODIFICADOR
+                bw.write("CANTIDAD_MODIFICADORES: ");
+                bw.write(listaCombate.get(i).getModificadores().size());
+                bw.newLine();
+                for (int j = 0; j < (listaCombate.get(i).getModificadores().size()); j++) {
+                    Modificador modificador = listaCombate.get(i).getModificadores().get(j);
+                    bw.write("NOMBRE_MODIFICADOR:");
+                    bw.write(modificador.getNombre());
+                    bw.newLine();
+
+                    bw.write("VALOR_DEBILIDAD:");
+                    bw.write(modificador.getValor());
+                    bw.newLine();
+                }
+                bw.newLine();
+// FIN MODIFICADOR
+                bw.write("REGISTRO: ");
+                bw.write(listaCombate.get(i).getRegistro());
+                bw.newLine();
+
+                bw.write("VISTO: ");
+                if (listaCombate.get(i).isVisto()) {
+                    bw.write("true");
+                } else {
+                    bw.write("false");
+                }
+                bw.newLine();
+
+                bw.newLine();
+
+                bw.write("FIN COMBATE");
+                bw.newLine();
+                bw.close();
+            }
         } catch (Exception e) {
             Sistema sistema = new Sistema();
             sistema.selector();
@@ -386,7 +535,7 @@ public class EscrituraFicheroCombate {
         bw.write("NUMERO_ARMAS_ACTIVAS: ");
         bw.write(combate.getDesafiante().getPersonaje().getArmasActivas().size());
         bw.newLine();
-        for (int variableArmaActiva = 0; variableArmaActiva < (desafio.getDesafiante().getPersonaje().getArmasActivas().size()); variableArmaActiva++) {
+        for (int variableArmaActiva = 0; variableArmaActiva < (combate.getDesafiante().getPersonaje().getArmasActivas().size()); variableArmaActiva++) {
             Arma armaActiva = (Arma) licantropo.getArmasActivas().get(variableArmaActiva);
 
             bw.write("NOMBRE_ARMAS_ACTIVAS: ");

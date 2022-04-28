@@ -74,7 +74,7 @@ public class Desafio {
         this.registro = registro;
     }
 
-    public void crearDesafio(ArrayList<Cliente> listaClientes, Cliente cliente, Sistema sistema) {
+    public void crearDesafio(ArrayList<Cliente> listaClientes, Cliente cliente) {
         Terminal terminal = new Terminal();
         terminal.bienvenidaDesafio();
         int numContrincante = -1;
