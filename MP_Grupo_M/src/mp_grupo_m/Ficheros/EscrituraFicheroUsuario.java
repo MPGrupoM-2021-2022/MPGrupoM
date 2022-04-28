@@ -152,7 +152,7 @@ public class EscrituraFicheroUsuario {
             bw.write(String.valueOf(arma.getModAtaque()));
             bw.newLine();
 
-            bw.write("DEFENSA_ARMA:");
+            bw.write("DEFENSA_ARMA: ");
             bw.write(String.valueOf(arma.getModDefensa()));
             bw.newLine();
 
@@ -179,7 +179,7 @@ public class EscrituraFicheroUsuario {
             bw.write(armaActiva.getNombre());
             bw.newLine();
 
-            bw.write("ATAQUE_ARMA_ACTIVAS:");
+            bw.write("ATAQUE_ARMA_ACTIVAS: ");
             bw.write(String.valueOf(armaActiva.getModAtaque()));
             bw.newLine();
 
@@ -219,10 +219,67 @@ public class EscrituraFicheroUsuario {
         }
         bw.newLine();
 
+        bw.write("NOMBRE_ARMADURA: ");
+        bw.write(vampiro.getArmaduraActiva().getNombre());
+        bw.newLine();
+
+        bw.write("DEFENSA_ARMADURA: ");
+        bw.write(String.valueOf(vampiro.getArmaduraActiva().getModDefensa()));
+        bw.newLine();
+
+        bw.write("ATAQUE_ARMADURA: ");
+        bw.write(String.valueOf(vampiro.getArmaduraActiva().getModAtaque()));
+        bw.newLine();
+
+        bw.newLine();
+
+        //ORO
+        bw.write("ORO: ");
+        bw.write(String.valueOf(vampiro.getOro()));
+        bw.newLine();
+
         //EDAD VAMPIRO
         bw.write("EDAD_VAMPIRO: ");
         bw.write(String.valueOf(vampiro.getEdad()));
         bw.newLine();
+
+        bw.write("HP: ");
+        bw.write(String.valueOf(vampiro.getHp()));
+        bw.newLine();
+
+        bw.write("PODER: ");
+        bw.write(String.valueOf(vampiro.getPoder()));
+        bw.newLine();
+
+        bw.write("NUMERO_FORTALEZAS: ");
+        bw.write(String.valueOf(vampiro.getFortalezas().size()));
+        bw.newLine();
+
+        for (int j = 0; j < (listaCliente.get(i).getPersonaje().getFortalezas().size()); j++) {
+            Fortaleza fortaleza = listaCliente.get(i).getPersonaje().getFortalezas().get(j);
+            bw.write("NOMBRE_FORTALEZA: ");
+            bw.write(fortaleza.getNombre());
+            bw.newLine();
+
+            bw.write("VALOR_FORTALEZA: ");
+            bw.write(String.valueOf(fortaleza.getValor()));
+            bw.newLine();
+        }
+
+        bw.write("NUMERO_DEBILIDADES: ");
+        bw.write(String.valueOf(vampiro.getDebilidades().size()));
+        bw.newLine();
+
+        for (int j = 0; j < (listaCliente.get(i).getPersonaje().getDebilidades().size()); j++) {
+            Debilidad debilidad = listaCliente.get(i).getPersonaje().getDebilidades().get(j);
+            bw.write("NOMBRE_DEBILIDAD: ");
+            bw.write(debilidad.getNombre());
+            bw.newLine();
+
+            bw.write("VALOR_DEBILIDAD: ");
+            bw.write(String.valueOf(debilidad.getValor()));
+            bw.newLine();
+        }
 
         //ESBIRROS
         //NUMERO DE ESBIRROS
@@ -608,86 +665,86 @@ public class EscrituraFicheroUsuario {
 
     private void escrituraEsbirros(ArrayList<Cliente> listaCliente, int i, Personaje persona, BufferedWriter bw) throws IOException {
         for (int j = 0; j < (listaCliente.get(i).getPersonaje().getEsbirros().size()); j++) {
-            if (persona.getEsbirros().get(j).getTipo().equals("HUMANO")) {
-                Humano humano = (Humano) persona.getEsbirros().get(j);
-                //NUMERO DE ESBIRROS
-                bw.write("TIPO_ESBIRRO: ");
+            switch (persona.getEsbirros().get(j).getTipo()) {
+                case "HUMANO" -> {
+                    Humano humano = (Humano) persona.getEsbirros().get(j);
+                    //NUMERO DE ESBIRROS
+                    bw.write("TIPO_ESBIRRO: ");
+                    bw.write(humano.getTipo());
+                    bw.newLine();
 
-                bw.write(persona.getTipo());
-                bw.newLine();
+                    //NOMBRE DE ESBIRROS
+                    bw.write("NOMBRE_ESBIRRO: ");
+                    bw.write(humano.getNombre());
+                    bw.newLine();
 
-                //NOMBRE DE ESBIRROS
-                bw.write("NOMBRE_ESBIRRO: ");
-                bw.write(humano.getNombre());
-                bw.newLine();
+                    //VIDA DE ESBIRROS
+                    bw.write("VIDA_ESBIRRO: ");
+                    bw.write(String.valueOf(humano.getHp()));
+                    bw.newLine();
 
-                //VIDA DE ESBIRROS
-                bw.write("VIDA_ESBIRRO: ");
-                bw.write(String.valueOf(humano.getHp()));
-                bw.newLine();
-
-                //LEALTAD ESBIRRO HUMANO
-                bw.write("LELTAD: ");
-                if (humano.getLealtad() == Humano.Lealtad.ALTA) {
-                    bw.write("ALTA");
-                } else if (humano.getLealtad() == Humano.Lealtad.MEDIA) {
-                    bw.write("MEDIA");
-                } else if (humano.getLealtad() == Humano.Lealtad.BAJA) {
-                    bw.write("BAJA");
+                    //LEALTAD ESBIRRO HUMANO
+                    bw.write("LELTAD: ");
+                    if (humano.getLealtad() == Humano.Lealtad.ALTA) {
+                        bw.write("ALTA");
+                    } else if (humano.getLealtad() == Humano.Lealtad.MEDIA) {
+                        bw.write("MEDIA");
+                    } else if (humano.getLealtad() == Humano.Lealtad.BAJA) {
+                        bw.write("BAJA");
+                    }
+                    bw.newLine();
                 }
-                bw.newLine();
+                case "GHOUL" -> {
+                    Ghoul ghoul = (Ghoul) persona.getEsbirros().get(j);
+                    //NUMERO DE ESBIRRO
+                    bw.write("TIPO_ESBIRRO: ");
+                    bw.write(ghoul.getTipo());
+                    bw.newLine();
 
-            } else if (persona.getEsbirros().get(j).getTipo().equals("GHOUL")) {
-                Ghoul ghoul = (Ghoul) persona.getEsbirros().get(j);
-                //NUMERO DE ESBIRRO
-                bw.write("TIPO_ESBIRRO: ");
-                bw.write(persona.getTipo());
-                bw.newLine();
+                    //NOMBRE DE ESBIRRO
+                    bw.write("NOMBRE_ESBIRRO: ");
+                    bw.write(ghoul.getNombre());
+                    bw.newLine();
 
-                //NOMBRE DE ESBIRRO
-                bw.write("NOMBRE_ESBIRRO: ");
-                bw.write(ghoul.getNombre());
-                bw.newLine();
+                    //VIDA DE ESBIRRO
+                    bw.write("VIDA_ESBIRRO: ");
+                    bw.write(String.valueOf(ghoul.getHp()));
+                    bw.newLine();
 
-                //VIDA DE ESBIRRO
-                bw.write("VIDA_ESBIRRO: ");
-                bw.write(String.valueOf(ghoul.getHp()));
-                bw.newLine();
+                    //DEPENDENCIA ESBIRRO
+                    bw.write("DEPENDENCIA: ");
+                    bw.write(String.valueOf(ghoul.getDependencia()));
+                    bw.newLine();
+                }
+                case "DEMONIO" -> {
+                    Demonio demonio = (Demonio) persona.getEsbirros().get(j);
+                    //TIPO DE ESBIRRO
+                    bw.write("TIPO_ESBIRRO: ");
+                    bw.write(demonio.getTipo());
+                    bw.newLine();
 
-                //DEPENDENCIA ESBIRRO
-                bw.write("DEPENDENCIA: ");
-                bw.write(String.valueOf(ghoul.getDependencia()));
-                bw.newLine();
+                    //NOMBRE DE ESBIRRO
+                    bw.write("NOMBRE_ESBIRRO: ");
+                    bw.write(demonio.getNombre());
+                    bw.newLine();
 
-            } else if (persona.getEsbirros().get(j).getTipo().equals("DEMONIO")) {
-                Demonio demonio = (Demonio) persona.getEsbirros().get(j);
-                //TIPO DE ESBIRRO
-                bw.write("TIPO_ESBIRRO: ");
+                    //VIDA ESBIRRO
+                    bw.write("VIDA_ESBIRRO: ");
+                    bw.write(String.valueOf(demonio.getHp()));
+                    bw.newLine();
 
-                bw.write(persona.getTipo());
-                bw.newLine();
+                    //DESCRIPCION / PACTO
+                    bw.write("DESCRIPCION: ");
+                    bw.write(demonio.getDescripcion());
+                    bw.newLine();
 
-                //NOMBRE DE ESBIRRO
-                bw.write("NOMBRE_ESBIRRO: ");
-                bw.write(demonio.getNombre());
-                bw.newLine();
-
-                //VIDA ESBIRRO
-                bw.write("VIDA_ESBIRRO: ");
-                bw.write(String.valueOf(demonio.getHp()));
-                bw.newLine();
-
-                //DESCRIPCION / PACTO
-                bw.write("DESCRIPCION: ");
-                bw.write(demonio.getDescripcion());
-                bw.newLine();
-
-                //ESBIRROS EXTRA
-                //NUMERO DE ESBIRROS EXTRA
-                bw.write("NUMERO_ESBIRROS_EXTRA: ");
-                bw.write(String.valueOf(listaCliente.get(i).getPersonaje().getEsbirros().size()));
-                bw.newLine();
-                escrituraEsbirros(listaCliente, i, persona, bw);
+                    //ESBIRROS EXTRA
+                    //NUMERO DE ESBIRROS EXTRA
+                    bw.write("NUMERO_ESBIRROS_EXTRA: ");
+                    bw.write(String.valueOf(listaCliente.get(i).getPersonaje().getEsbirros().size()));
+                    bw.newLine();
+                    escrituraEsbirros(listaCliente, i, persona, bw);
+                }
             }
         }
     }

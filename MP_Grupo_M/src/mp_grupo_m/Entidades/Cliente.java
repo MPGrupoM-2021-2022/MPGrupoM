@@ -159,6 +159,17 @@ public class Cliente extends User {
             terminal.mostrarArmaduras(cliente.getPersonaje().getArmaduras());
             rightValue = addArmaduraActiva(cliente.getPersonaje(), cliente.getPersonaje().getArmaduras());
         } while (!rightValue);
+        LecturaFicheroUsuarios lecturaFicheroUsuarios = new LecturaFicheroUsuarios();
+        EscrituraFicheroUsuario escrituraFicheroUsuario = new EscrituraFicheroUsuario();
+        ArrayList<Cliente> listaClientes = lecturaFicheroUsuarios.lecturaFicheroUsuarios();
+        for (int numCliente = 0; numCliente < listaClientes.size(); numCliente++){
+            if (cliente.getNick().equals(listaClientes.get(numCliente).getNick())){
+                listaClientes.remove(numCliente);
+                listaClientes.add(cliente);
+                escrituraFicheroUsuario.sobreescribirFicheroUsuario(listaClientes);
+                break;
+            }
+        }
         terminal.finishEquipar();
     }
 
