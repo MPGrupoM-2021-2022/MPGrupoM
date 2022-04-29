@@ -246,10 +246,10 @@ public class Terminal {
         System.out.println("No hay contincantes disponibles, volviendo al menu...");
     }
 
-    public void mostrarPosiblesContrincantes(ArrayList<Cliente> listaClientes) {
+    public void mostrarPosiblesContrincantes(ArrayList<Cliente> listaClientes, Cliente cliente) {
         System.out.println("0: Cancelar");
-        for (int numCliente = 0; numCliente <= listaClientes.size(); numCliente++) {
-            if (listaClientes.get(numCliente).getPersonaje() != null) {
+        for (int numCliente = 0; numCliente < listaClientes.size(); numCliente++) {
+            if (listaClientes.get(numCliente).getPersonaje() != null && !listaClientes.get(numCliente).getNick().equals(cliente.getNick())) {
                 System.out.println((numCliente + 1) + ": " + listaClientes.get(numCliente).getNick());
             }
         }
@@ -418,8 +418,9 @@ public class Terminal {
         System.out.println("Saliendo...");
     }
 
-    public void mostrarNombre() {
+    public void mostrarNombre(Personaje personaje) {
         System.out.println("Este es el nombre actual:");
+        System.out.println(personaje.getNombre());
     }
 
     public void mostrarOro() {
@@ -618,5 +619,11 @@ public class Terminal {
         System.out.println("ataque de habilidad: " + disciplina.getAtaque());
         System.out.println("defensa de habilidad: " + disciplina.getDefensa());
         System.out.println("coste de habilidad: " + disciplina.getCoste());
+    }
+
+    public void mostrarNicks(ArrayList<Cliente> listaClientes) {
+        for (int numCliente = 0; numCliente < listaClientes.size(); numCliente++){
+            System.out.println(listaClientes.get(numCliente).getNick());
+        }
     }
 }
