@@ -1,5 +1,6 @@
 package mp_grupo_m.Entidades;
 
+import mp_grupo_m.Ficheros.LecturaFicheroDesafio;
 import mp_grupo_m.GestorNotificaciones;
 import mp_grupo_m.Sistema;
 import mp_grupo_m.Terminal;
@@ -82,7 +83,7 @@ public class Desafio {
         if (listaClientes.size() == 1) {
             terminal.noHayContrincantes();
         } else {
-            terminal.mostrarPosiblesContrincantes(listaClientes);
+            terminal.mostrarPosiblesContrincantes(listaClientes, cliente);
             do {
                 terminal.numValido();
                 numContrincante = askNum();
@@ -99,11 +100,14 @@ public class Desafio {
             setValidated(false);
             String registro = generarNumerRegistro();
             setRegistro(registro);
+            ArrayList<Modificador> modificador = new ArrayList<>();
+            setModificadores(modificador);
             Date fechaHoy = new Date();
             setFecha(fechaHoy);
             terminal.desafioCreado();
             GestorNotificaciones gestorNotificaciones = new GestorNotificaciones();
             gestorNotificaciones.subscribeDesafio(this);
+
         }
     }
 
@@ -115,8 +119,8 @@ public class Desafio {
     public String generarNumerRegistro() {
         boolean valido = false;
         Desafio desafio = new Desafio();
-        ArrayList<Desafio> listaDesafios = new ArrayList<>();
-        listaDesafios.add(desafio);
+        LecturaFicheroDesafio lecturaFicheroDesafio = new LecturaFicheroDesafio();
+        ArrayList<Desafio> listaDesafios = lecturaFicheroDesafio.lecturaFicheroDesafio();
         String strBuilder = null;
         //crear del fichero lista de desafios para coger sus registros y comparar
         while (!valido) {
@@ -125,12 +129,16 @@ public class Desafio {
                     getNumber() +
                     getLetra() +
                     getLetra();
-            for (Desafio value : listaDesafios) {
-                if (!(value.getRegistro().equals(strBuilder))) {
-                    valido = true;
-                } else {
-                    strBuilder = null;
+            if(!listaDesafios.isEmpty()) {
+                for (Desafio value : listaDesafios) {
+                    if (!(value.getRegistro().equals(strBuilder))) {
+                        valido = true;
+                    } else {
+                        strBuilder = null;
+                    }
                 }
+            }else{
+                valido = true;
             }
         }
         return strBuilder;
