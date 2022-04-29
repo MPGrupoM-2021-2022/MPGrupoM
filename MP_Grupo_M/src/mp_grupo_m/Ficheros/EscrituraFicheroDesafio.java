@@ -123,6 +123,11 @@ public class EscrituraFicheroDesafio {
             }
             bw.newLine();
 
+            //REGISTRO
+            bw.write("REGISTRO: ");
+            bw.write(desafio.getRegistro());
+            bw.newLine();
+
             bw.write("FIN DESAFIO");
             bw.newLine();
             bw.close();

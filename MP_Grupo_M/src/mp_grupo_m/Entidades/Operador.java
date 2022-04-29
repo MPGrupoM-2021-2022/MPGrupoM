@@ -78,7 +78,6 @@ public class Operador extends User {
     public void validarDesafio() {
         Scanner sc = new Scanner(System.in);
         Terminal terminal = new Terminal();
-        Desafio desafio = new Desafio();
         Cliente desafiante, contrincante = new Cliente();
         LecturaFicheroDesafio lecturaFicheroDesafio = new LecturaFicheroDesafio();
         ArrayList<Desafio> listaDesafios = lecturaFicheroDesafio.lecturaFicheroDesafio();

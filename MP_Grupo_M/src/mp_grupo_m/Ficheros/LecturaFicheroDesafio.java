@@ -177,8 +177,8 @@ public class LecturaFicheroDesafio {
                 desafio.setRegistro((textoSeparado[1]));
 
                 listaDesafio.add(desafio);
-                linea = br.readLine();
-                linea = br.readLine();
+                br.readLine();
+                br.readLine();
                 linea = br.readLine();
             }
 
