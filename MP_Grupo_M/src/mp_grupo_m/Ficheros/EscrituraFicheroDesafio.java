@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import mp_grupo_m.Entidades.*;
 import mp_grupo_m.Sistema;
@@ -107,8 +108,11 @@ public class EscrituraFicheroDesafio {
             bw.newLine();
 // FIN MODIFICADOR
 
+            String pattern = "dd-MM-yyyy HH:mm:ss";
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+            String date = simpleDateFormat.format(desafio.getFecha());
             bw.write("FECHA: ");
-            bw.write(desafio.getFecha().toString());
+            bw.write(date);
             bw.newLine();
 
             bw.write("VALIDADO: ");
@@ -822,7 +826,7 @@ public class EscrituraFicheroDesafio {
                 //NUMERO DE ESBIRROS
                 bw.write("TIPO_ESBIRRO: ");
 
-                bw.write(personaje.getTipo());
+                bw.write(humano.getTipo());
                 bw.newLine();
 
                 //NOMBRE DE ESBIRROS
@@ -850,7 +854,7 @@ public class EscrituraFicheroDesafio {
                 Ghoul ghoul = (Ghoul) personaje.getEsbirros().get(j);
                 //NUMERO DE ESBIRRO
                 bw.write("TIPO_ESBIRRO: ");
-                bw.write(personaje.getTipo());
+                bw.write(ghoul.getTipo());
                 bw.newLine();
 
                 //NOMBRE DE ESBIRRO
@@ -873,7 +877,7 @@ public class EscrituraFicheroDesafio {
                 //TIPO DE ESBIRRO
                 bw.write("TIPO_ESBIRRO: ");
 
-                bw.write(personaje.getTipo());
+                bw.write(demonio.getTipo());
                 bw.newLine();
 
                 //NOMBRE DE ESBIRRO
@@ -953,7 +957,7 @@ public class EscrituraFicheroDesafio {
             bw.write(String.valueOf(arma.getModAtaque()));
             bw.newLine();
 
-            bw.write("DEFENSA_ARMA:");
+            bw.write("DEFENSA_ARMA: ");
             bw.write(String.valueOf(arma.getModDefensa()));
             bw.newLine();
 
@@ -980,7 +984,7 @@ public class EscrituraFicheroDesafio {
             bw.write(armaActiva.getNombre());
             bw.newLine();
 
-            bw.write("ATAQUE_ARMA_ACTIVAS:");
+            bw.write("ATAQUE_ARMA_ACTIVAS: ");
             bw.write(String.valueOf(armaActiva.getModAtaque()));
             bw.newLine();
 
@@ -1466,7 +1470,7 @@ public class EscrituraFicheroDesafio {
                 //NUMERO DE ESBIRROS
                 bw.write("TIPO_ESBIRRO: ");
 
-                bw.write(personaje.getTipo());
+                bw.write(humano.getTipo());
                 bw.newLine();
 
                 //NOMBRE DE ESBIRROS
@@ -1494,7 +1498,7 @@ public class EscrituraFicheroDesafio {
                 Ghoul ghoul = (Ghoul) personaje.getEsbirros().get(j);
                 //NUMERO DE ESBIRRO
                 bw.write("TIPO_ESBIRRO: ");
-                bw.write(personaje.getTipo());
+                bw.write(ghoul.getTipo());
                 bw.newLine();
 
                 //NOMBRE DE ESBIRRO
@@ -1517,7 +1521,7 @@ public class EscrituraFicheroDesafio {
                 //TIPO DE ESBIRRO
                 bw.write("TIPO_ESBIRRO: ");
 
-                bw.write(personaje.getTipo());
+                bw.write(demonio.getTipo());
                 bw.newLine();
 
                 //NOMBRE DE ESBIRRO

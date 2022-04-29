@@ -37,11 +37,17 @@ public class LecturaFicheroDesafio {
                 Desafio desafio = new Desafio();
                 Cliente cliente = new Cliente();
 
-                //NICK
+                //NOMBRE
                 String[] textoSeparado = linea.split(": ");
                 cliente.setNombre(textoSeparado[1]);
 
+                //NICK
+                linea = br.readLine();
+                textoSeparado = linea.split(": ");
+                cliente.setNick(textoSeparado[1]);
+
                 //PASSWORD
+                linea = br.readLine();
                 textoSeparado = linea.split(": ");
                 cliente.setPassword(textoSeparado[1]);
 
@@ -56,29 +62,41 @@ public class LecturaFicheroDesafio {
 
                 if (!textoSeparado[1].equals("null")) {
                     //LECTURA SI ES DE TIPO VAMPIRO
-                    if (textoSeparado[1].equals("VAMPIRO")) {
-                        Vampiro vampiro = lecturaVampiroDesafio(br);
-                        cliente.setPersonaje(vampiro);
+                    switch (textoSeparado[1]) {
+                        case "VAMPIRO" -> {
+                            Vampiro vampiro = lecturaVampiroDesafio(br);
+                            cliente.setPersonaje(vampiro);
+                        }
                         //LECTURA SI ES DE TIPO LICANTROPO
-                    } else if (textoSeparado[1].equals("LICANTROPO")) {
-                        Licantropo licantropo = lecturaLicantropoDesafio(br);
-                        cliente.setPersonaje(licantropo);
+                        case "LICANTROPO" -> {
+                            Licantropo licantropo = lecturaLicantropoDesafio(br);
+                            cliente.setPersonaje(licantropo);
+                        }
                         //LECTURA SI ES DE TIPO CAZADOR
-                    } else if (textoSeparado[1].equals("CAZADOR")) {
-                        Cazador cazador = lecturaCazadorDesafio(br);
-                        cliente.setPersonaje(cazador);
+                        case "CAZADOR" -> {
+                            Cazador cazador = lecturaCazadorDesafio(br);
+                            cliente.setPersonaje(cazador);
+                        }
                     }
                 }
 
                 desafio.setDesafiante(cliente);
 
                 cliente = new Cliente();
-
-                //NICK
-                textoSeparado = linea.split(": ");
+                do{
+                    linea = br.readLine();
+                    textoSeparado = linea.split(": ");
+                } while (!textoSeparado[0].equals("CONTRINCANTE"));
+                //NOMBRE
                 cliente.setNombre((textoSeparado[1]));
 
+                //NICK
+                linea = br.readLine();
+                textoSeparado = linea.split(": ");
+                cliente.setNick(textoSeparado[1]);
+
                 //PASSWORD
+                linea = br.readLine();
                 textoSeparado = linea.split(": ");
                 cliente.setPassword((textoSeparado[1]));
 
@@ -93,25 +111,31 @@ public class LecturaFicheroDesafio {
 
                 if (!textoSeparado[1].equals("null")) {
                     //LECTURA SI ES DE TIPO VAMPIRO
-                    if (textoSeparado[1].equals("VAMPIRO")) {
-                        Vampiro vampiro = lecturaVampiroDesafio(br);
-                        cliente.setPersonaje(vampiro);
+                    switch (textoSeparado[1]) {
+                        case "VAMPIRO" -> {
+                            Vampiro vampiro = lecturaVampiroDesafio(br);
+                            cliente.setPersonaje(vampiro);
+                        }
                         //LECTURA SI ES DE TIPO LICANTROPO
-                    } else if (textoSeparado[1].equals("LICANTROPO")) {
-                        Licantropo licantropo = lecturaLicantropoDesafio(br);
-                        cliente.setPersonaje(licantropo);
+                        case "LICANTROPO" -> {
+                            Licantropo licantropo = lecturaLicantropoDesafio(br);
+                            cliente.setPersonaje(licantropo);
+                        }
                         //LECTURA SI ES DE TIPO CAZADOR
-                    } else if (textoSeparado[1].equals("CAZADOR")) {
-                        Cazador cazador = lecturaCazadorDesafio(br);
-                        cliente.setPersonaje(cazador);
+                        case "CAZADOR" -> {
+                            Cazador cazador = lecturaCazadorDesafio(br);
+                            cliente.setPersonaje(cazador);
+                        }
                     }
                 }
 
                 desafio.setContrincante(cliente);
 
                 //ORO
-                linea = br.readLine();
-                textoSeparado = linea.split(": ");
+                do {
+                    linea = br.readLine();
+                    textoSeparado = linea.split(": ");
+                } while(!textoSeparado[0].equals("ORO"));
                 desafio.setOro(Integer.parseInt(textoSeparado[1]));
 
                 //MODIFICADOR
@@ -135,20 +159,17 @@ public class LecturaFicheroDesafio {
                     desafio.getModificadores().add(modificador);
                 }
 
+                br.readLine();
                 //FECHA
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
-                Date fecha = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss").parse(textoSeparado[1]);
+                Date fecha = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse(textoSeparado[1]);//FORMATO FECHA
                 desafio.setFecha(fecha);
 
                 //VALIDADO
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
-                if (textoSeparado[1].equals("true")) {
-                    desafio.setValidated(true);
-                } else {
-                    desafio.setValidated(false);
-                }
+                desafio.setValidated(textoSeparado[1].equals("true"));
 
                 //REGISTRO
                 linea = br.readLine();
@@ -193,12 +214,15 @@ public class LecturaFicheroDesafio {
 
                 //TIPO USUARIO
                 String[] textoSeparado = linea.split(": ");
-                vampiro.setTipo(textoSeparado[1]);
+                vampiro.setTipo("VAMPIRO");
 
                 //NOMBRE VAMPIRO
+                vampiro.setNombre(textoSeparado[1]);
+
+                //SANGRE
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
-                vampiro.setNombre(textoSeparado[1]);
+                vampiro.setSangre(Integer.parseInt(textoSeparado[1]));
 
                 //NOMBRE HABILIDAD
                 linea = br.readLine();
@@ -352,8 +376,10 @@ public class LecturaFicheroDesafio {
                 vampiro.setEsbirros(listaEsbirros);
 
                 //CANTIDAD ORO
-                linea = br.readLine();
-                textoSeparado = linea.split(": ");
+                do {
+                    linea = br.readLine();
+                    textoSeparado = linea.split(": ");
+                } while (!textoSeparado[0].equals("CANTIDAD_ORO"));
                 vampiro.setOro(Integer.parseInt(textoSeparado[1]));
 
                 //CANTIDAD VIDA
@@ -370,6 +396,7 @@ public class LecturaFicheroDesafio {
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
                 tope = Integer.parseInt(textoSeparado[1]);
+                ArrayList<Debilidad> debilidades = new ArrayList<>();
                 for (int i = 0; i < tope; i++) {
 
                     Debilidad debilidad = new Debilidad();
@@ -384,13 +411,15 @@ public class LecturaFicheroDesafio {
                     textoSeparado = linea.split(": ");
                     debilidad.setValor((Integer.parseInt(textoSeparado[1])));
 
-                    vampiro.getDebilidades().add(debilidad);
+                    debilidades.add(debilidad);
                 }
-
+                vampiro.setDebilidades(debilidades);
+                br.readLine();
                 // FORTALEZAS
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
                 tope = Integer.parseInt(textoSeparado[1]);
+                ArrayList<Fortaleza> fortalezas = new ArrayList<>();
                 for (int i = 0; i < tope; i++) {
                     Fortaleza fortaleza = new Fortaleza();
 
@@ -404,8 +433,11 @@ public class LecturaFicheroDesafio {
                     textoSeparado = linea.split(": ");
                     fortaleza.setValor((Integer.parseInt(textoSeparado[1])));
 
-                    vampiro.getFortalezas().add(fortaleza);
+                    fortalezas.add(fortaleza);
                 }
+                vampiro.setFortalezas(fortalezas);
+                br.readLine();
+                linea = br.readLine();
             }
 
         } catch (Exception e) {
@@ -886,92 +918,91 @@ public class LecturaFicheroDesafio {
         // ESBIRROS
         int tope = Integer.parseInt(textoSeparado[1]);
         for (int i = 0; i < tope; i++) {
-            if (textoSeparado[1].equals("HUMANO")) { //BORRAR PARA VAMPIROS
+            linea = br.readLine();
+            textoSeparado = linea.split(": ");
+            switch (textoSeparado[1]) {
+                case "HUMANO" -> {  //BORRAR PARA VAMPIROS
 
-                Humano humano = new Humano();
+                    Humano humano = new Humano();
 
-                //TIPO ESBIRRO
-                humano.setTipo(textoSeparado[1]);
+                    //TIPO ESBIRRO
+                    humano.setTipo(textoSeparado[1]);
 
-                //NOMBRE ESBIRRO
-                linea = br.readLine();
-                textoSeparado = linea.split(": ");
-                humano.setNombre(textoSeparado[1]);
+                    //NOMBRE ESBIRRO
+                    linea = br.readLine();
+                    textoSeparado = linea.split(": ");
+                    humano.setNombre(textoSeparado[1]);
 
-                //VIDA ESBIRRO
-                linea = br.readLine();
-                textoSeparado = linea.split(": ");
-                humano.setHp((Integer.parseInt(textoSeparado[1])));
+                    //VIDA ESBIRRO
+                    linea = br.readLine();
+                    textoSeparado = linea.split(": ");
+                    humano.setHp((Integer.parseInt(textoSeparado[1])));
 
-                //VALOR LEALTAD     TIPOS: ALTA, MEDIO, BAJO que coresponde a 0,1,2
-                linea = br.readLine();
-                textoSeparado = linea.split(": ");
-                if (textoSeparado[1].equals("ALTA")) {
-                    humano.setLealtad(Humano.Lealtad.ALTA);
-                } else if (textoSeparado[1].equals("MEDIA")) {
-                    humano.setLealtad(Humano.Lealtad.MEDIA);
-                } else {
-                    humano.setLealtad(Humano.Lealtad.BAJA);
+                    //VALOR LEALTAD     TIPOS: ALTA, MEDIO, BAJO que coresponde a 0,1,2
+                    linea = br.readLine();
+                    textoSeparado = linea.split(": ");
+                    if (textoSeparado[1].equals("ALTA")) {
+                        humano.setLealtad(Humano.Lealtad.ALTA);
+                    } else if (textoSeparado[1].equals("MEDIA")) {
+                        humano.setLealtad(Humano.Lealtad.MEDIA);
+                    } else {
+                        humano.setLealtad(Humano.Lealtad.BAJA);
+                    }
+                    return humano;
                 }
-                return humano;
+                case "GHOUL" -> {
+                    Ghoul ghoul = new Ghoul();
 
-            } else if (textoSeparado[1].equals("GHOULS")) {
+                    //TIPO ESBIRRO
+                    ghoul.setTipo(textoSeparado[1]);
 
-                Ghoul ghoul = new Ghoul();
+                    //NOMBRE ESBIRRO
+                    linea = br.readLine();
+                    textoSeparado = linea.split(": ");
+                    ghoul.setNombre(textoSeparado[1]);
 
-                //TIPO ESBIRRO
-                ghoul.setTipo(textoSeparado[1]);
+                    //VIDA ESBIRRO
+                    linea = br.readLine();
+                    textoSeparado = linea.split(": ");
+                    ghoul.setHp((Integer.parseInt(textoSeparado[1])));
 
-                //NOMBRE ESBIRRO
-                linea = br.readLine();
-                textoSeparado = linea.split(": ");
-                ghoul.setNombre(textoSeparado[1]);
-
-                //VIDA ESBIRRO
-                linea = br.readLine();
-                textoSeparado = linea.split(": ");
-                ghoul.setHp((Integer.parseInt(textoSeparado[1])));
-
-                //DEPENDENCIA
-                linea = br.readLine();
-                textoSeparado = linea.split(": ");
-                ghoul.setDependencia((Integer.parseInt(textoSeparado[1])));
-
-                return ghoul;
-
-            } else if (textoSeparado[1].equals("DEMONIOS")) {
-
-                Demonio demonio = new Demonio();
-
-                //TIPO ESBIRRO
-                demonio.setTipo(textoSeparado[1]);
-
-                //NOMBRE ESBIRRO
-                linea = br.readLine();
-                textoSeparado = linea.split(": ");
-                demonio.setNombre(textoSeparado[1]);
-
-                //VIDA ESBIRRO
-                linea = br.readLine();
-                textoSeparado = linea.split(": ");
-                demonio.setHp((Integer.parseInt(textoSeparado[1])));
-
-                //DESCRIPCION
-                linea = br.readLine();
-                textoSeparado = linea.split(": ");
-                demonio.setDescripcion(textoSeparado[1]);
-
-                linea = br.readLine();
-                textoSeparado = linea.split(": ");
-                ArrayList<EsbirrosComposite> esbirrosDemonio = new ArrayList<>();
-                tope = Integer.parseInt(textoSeparado[1]);
-                for (int j = 0; j < tope; j++) {
-                    EsbirrosComposite esbirro = esbirroFichero(linea, br, textoSeparado);
-                    esbirrosDemonio.add(esbirro);
+                    //DEPENDENCIA
+                    linea = br.readLine();
+                    textoSeparado = linea.split(": ");
+                    ghoul.setDependencia((Integer.parseInt(textoSeparado[1])));
+                    return ghoul;
                 }
-                demonio.setEsbirrosComposites(esbirrosDemonio);
+                case "DEMONIOS" -> {
+                    Demonio demonio = new Demonio();
 
-                return demonio;
+                    //TIPO ESBIRRO
+                    demonio.setTipo(textoSeparado[1]);
+
+                    //NOMBRE ESBIRRO
+                    linea = br.readLine();
+                    textoSeparado = linea.split(": ");
+                    demonio.setNombre(textoSeparado[1]);
+
+                    //VIDA ESBIRRO
+                    linea = br.readLine();
+                    textoSeparado = linea.split(": ");
+                    demonio.setHp((Integer.parseInt(textoSeparado[1])));
+
+                    //DESCRIPCION
+                    linea = br.readLine();
+                    textoSeparado = linea.split(": ");
+                    demonio.setDescripcion(textoSeparado[1]);
+                    linea = br.readLine();
+                    textoSeparado = linea.split(": ");
+                    ArrayList<EsbirrosComposite> esbirrosDemonio = new ArrayList<>();
+                    tope = Integer.parseInt(textoSeparado[1]);
+                    for (int j = 0; j < tope; j++) {
+                        EsbirrosComposite esbirro = esbirroFichero(linea, br, textoSeparado);
+                        esbirrosDemonio.add(esbirro);
+                    }
+                    demonio.setEsbirrosComposites(esbirrosDemonio);
+                    return demonio;
+                }
             }
         }
         return null;

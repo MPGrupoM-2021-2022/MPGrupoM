@@ -87,7 +87,7 @@ public class Desafio {
             do {
                 terminal.numValido();
                 numContrincante = askNum();
-            } while (numContrincante < 0 || numContrincante > listaClientes.size() + 1 || listaClientes.get(numContrincante).getPersonaje() == null);
+            } while (numContrincante < 0 || numContrincante > listaClientes.size() + 1 || listaClientes.get(numContrincante - 1).getPersonaje() == null);
             setContrincante(listaClientes.get(numContrincante - 1));
             terminal.preguntarCantidadApostar();
             do {

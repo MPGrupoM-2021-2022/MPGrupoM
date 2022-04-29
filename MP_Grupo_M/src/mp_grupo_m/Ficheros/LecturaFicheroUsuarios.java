@@ -20,9 +20,7 @@ public class LecturaFicheroUsuarios {
 
             // Lectura del fichero
             String linea;
-            String alineados;
-            String nombreUsuario;
-            linea = br.readLine();
+            br.readLine();
 
             linea = br.readLine();
 
@@ -54,23 +52,29 @@ public class LecturaFicheroUsuarios {
 
                 if (!textoSeparado[1].equals("null")) {
                     //LECTURA SI ES DE TIPO VAMPIRO
-                    if (textoSeparado[1].equals("VAMPIRO")) {
-                        Vampiro vampiro = lecturaVampiro(br);
-                        cliente.setPersonaje(vampiro);
+                    switch (textoSeparado[1]) {
+                        case "VAMPIRO" -> {
+                            Vampiro vampiro = lecturaVampiro(br);
+                            cliente.setPersonaje(vampiro);
+                        }
                         //LECTURA SI ES DE TIPO LICANTROPO
-                    } else if (textoSeparado[1].equals("LICANTROPO")) {
-                        Licantropo licantropo = lecturaLicantropo(br);
-                        cliente.setPersonaje(licantropo);
+                        case "LICANTROPO" -> {
+                            Licantropo licantropo = lecturaLicantropo(br);
+                            cliente.setPersonaje(licantropo);
+                        }
                         //LECTURA SI ES DE TIPO CAZADOR
-                    } else if (textoSeparado[1].equals("CAZADOR")) {
-                        Cazador cazador = lecturaCazador(br);
-                        cliente.setPersonaje(cazador);
+                        case "CAZADOR" -> {
+                            Cazador cazador = lecturaCazador(br);
+                            cliente.setPersonaje(cazador);
+                        }
                     }
                 }
                 listaCliente.add(cliente);
                 br.readLine();
-                br.readLine();
                 linea = br.readLine();
+                if (linea != null && linea.equals("***** USUARIO *****")){
+                    linea = br.readLine();
+                }
             }
 
         } catch (Exception e) {
