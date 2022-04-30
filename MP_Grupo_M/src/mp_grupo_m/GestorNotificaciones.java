@@ -130,6 +130,9 @@ public class GestorNotificaciones {
                     }
                 }
                 cliente.getPersonaje().setOro(cliente.getPersonaje().getOro() - listaDesafios.get(numDesafio).getOro());
+                if (cliente.getPersonaje().getOro() < 0){
+                    cliente.getPersonaje().setOro(0);
+                }
                 for (int numCliente = 0; numCliente < listaClientes.size(); numCliente++){
                     if (cliente.getNick().equals(listaClientes.get(numCliente).getNick())){
                         listaClientes.remove(numCliente);
@@ -152,5 +155,7 @@ public class GestorNotificaciones {
             EscrituraFicheroUsuario escrituraFicheroUsuario = new EscrituraFicheroUsuario();
             escrituraFicheroUsuario.sobreescribirFicheroUsuario(listaClientes);
         }
+        EscrituraFicheroCombate escrituraFicheroCombate = new EscrituraFicheroCombate();
+        escrituraFicheroCombate.registroCombate(combate);
     }
 }

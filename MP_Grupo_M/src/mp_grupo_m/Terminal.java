@@ -394,12 +394,8 @@ public class Terminal {
         System.out.println("14. Salir");
     }
 
-    public void eleccionFortalezas() {
-        System.out.println("Introduce las fortalezas que creas convenientes para el combate, cuando acabes escribe continuar:");
-    }
-
-    public void eleccionDebilidades() {
-        System.out.println("Introduce las debilidades que creas convenientes para el combate, cuando acabes escribe salir:");
+    public void eleccionModificadores() {
+        System.out.println("Introduce las modificaciones que creas convenientes para el combate, cuando acabes escribe 'salir':");
     }
 
     public void errorMod() {
@@ -554,7 +550,7 @@ public class Terminal {
 
     public void mostrarRondas(Combate combate) {
         for (int numRonda = 0; numRonda < combate.getRondas().size(); numRonda++) {
-            System.out.println("Ronda " + numRonda + 1 + " :");
+            System.out.println("Ronda " + (numRonda+1) + " :");
             System.out.println("Vida de " + combate.getDesafiante().getPersonaje().getNombre() + " al final de la ronda: " + combate.getRondas().get(numRonda).getHpDesafianteEnd());
             System.out.println("Vida de " + combate.getContrincante().getPersonaje().getNombre() + " al final de la ronda: " + combate.getRondas().get(numRonda).getHpContrincanteEnd());
         }
@@ -576,28 +572,33 @@ public class Terminal {
         }
     }
 
-    public void preguntarBan() {
-        System.out.println("El desafiante ha incumplido las normas de desafio, ¿Desea banearle?");
+    public void preguntarBan(String desafiante, String contrincante) {
+        System.out.println("El desafiante " + desafiante + " ha incumplido las normas de desafio, desafiando a " + contrincante + ", ¿Desea banearle?");
         System.out.println("1:  Si");
         System.out.println("2:  No");
-
     }
 
-    public void mostrarModificadoresDesafio(Cliente desafiante, Cliente contrincante, int i) {
+    public ArrayList<Modificador> mostrarModificadoresDesafio(Cliente desafiante, Cliente contrincante, int i) {
         //fortalezas del desafiante y del contrincante
+        ArrayList<Modificador> lista = new ArrayList<>();
         for (int j = 0; j < desafiante.getPersonaje().getFortalezas().size(); j++) {
-            System.out.println(desafiante.getPersonaje().getFortalezas().get(i).getNombre());
+            System.out.println(desafiante.getPersonaje().getFortalezas().get(j).getNombre());
+            lista.add(desafiante.getPersonaje().getFortalezas().get(j));
         }
         for (int j = 0; j < contrincante.getPersonaje().getFortalezas().size(); j++) {
-            System.out.println(contrincante.getPersonaje().getFortalezas().get(i).getNombre());
+            System.out.println(contrincante.getPersonaje().getFortalezas().get(j).getNombre());
+            lista.add(contrincante.getPersonaje().getFortalezas().get(j));
         }
         //debilidades del contrincante y del contrincante
         for (int j = 0; j < desafiante.getPersonaje().getDebilidades().size(); j++) {
-            System.out.println(desafiante.getPersonaje().getDebilidades().get(i).getNombre());
+            System.out.println(desafiante.getPersonaje().getDebilidades().get(j).getNombre());
+            lista.add(desafiante.getPersonaje().getDebilidades().get(j));
         }
         for (int j = 0; j < contrincante.getPersonaje().getDebilidades().size(); j++) {
-            System.out.println(contrincante.getPersonaje().getDebilidades().get(i).getNombre());
+            System.out.println(contrincante.getPersonaje().getDebilidades().get(j).getNombre());
+            lista.add(contrincante.getPersonaje().getDebilidades().get(j));
         }
+        return  lista;
     }
 
     public void mostrarDon(Don don) {
@@ -622,8 +623,23 @@ public class Terminal {
     }
 
     public void mostrarNicks(ArrayList<Cliente> listaClientes) {
-        for (int numCliente = 0; numCliente < listaClientes.size(); numCliente++){
-            System.out.println(listaClientes.get(numCliente).getNick());
+        for (Cliente listaCliente : listaClientes) {
+            System.out.println(listaCliente.getNick());
         }
+    }
+
+    public void noDesafiosParaValidar() {
+        System.out.println("No hay desafios a validar");
+    }
+
+    public void mostrarRonda(int numRonda) {
+        System.out.println("Ronda " + numRonda + ":");
+    }
+
+    public void usoHabilidadDefensa(String nombrePersonaje, String nombreHabilidad) {
+        System.out.println(nombrePersonaje + " usa " + nombreHabilidad + " para potenciar su defensa");
+    }
+    public void usoHabilidadAtaque(String nombrePersonaje, String nombreHabilidad) {
+        System.out.println(nombrePersonaje + " usa " + nombreHabilidad + " para potenciar su ataque");
     }
 }

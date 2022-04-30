@@ -38,9 +38,9 @@ public class Sistema {
                             gestorNotificaciones.notifyCombate(listaCombate);
                             listaCombate.setVisto(true);
                         }
-                        EscrituraFicheroCombate escrituraFicheroCombate = new EscrituraFicheroCombate();
-                        //********************************FALTA SOBREESCIBIR********************************************
                     }
+                    EscrituraFicheroCombate escrituraFicheroCombate = new EscrituraFicheroCombate();
+                    escrituraFicheroCombate.sobreescribirFicheroCombate(listaCombates);
 
                     LecturaFicheroDesafio lecturaFicheroDesafio = new LecturaFicheroDesafio();
                     ArrayList<Desafio> listaDesafios = lecturaFicheroDesafio.lecturaFicheroDesafio();
@@ -48,6 +48,7 @@ public class Sistema {
                         if (listaDesafios.get(i).isValidated() && listaDesafios.get(i).getContrincante().getNick().equals(cliente.getNick())) {
                             GestorNotificaciones gestorNotificaciones = new GestorNotificaciones();
                             gestorNotificaciones.notifyDesafio(cliente, terminal, listaDesafios, i);
+                            i--;
                         }
                     }
                     menu.selector(cliente, this);

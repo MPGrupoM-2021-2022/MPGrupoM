@@ -37,9 +37,7 @@ public class Menu {
                     break;
                 case 4:
                     //Llamada a lectura del fichero de todos los clientes
-                    LecturaFicheroUsuarios lecturaFicheroUsuarios = new LecturaFicheroUsuarios();
-                    ArrayList<Cliente> listaClientes = lecturaFicheroUsuarios.lecturaFicheroUsuarios();
-                    cliente.desafiar(listaClientes, cliente);
+                    cliente.desafiar(cliente);
                     break;
                 case 5:
                     consultarCombates(cliente);
