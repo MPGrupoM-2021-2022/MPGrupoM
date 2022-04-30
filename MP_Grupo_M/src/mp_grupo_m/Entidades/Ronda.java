@@ -130,16 +130,16 @@ public class Ronda {
 
     private int getValorModsDesafiante(Cliente cliente, ArrayList<Modificador> modificadores, int valorMods) {
         for (int numDebilidad = 0; numDebilidad < cliente.getPersonaje().getDebilidades().size(); numDebilidad++) {
-            for (int j = 0; j < modificadores.size(); j++) {
-                if (cliente.getPersonaje().getDebilidades().get(numDebilidad).getNombre().equals(modificadores.get(j).getNombre())) {
+            for (Modificador modificadore : modificadores) {
+                if (cliente.getPersonaje().getDebilidades().get(numDebilidad).getNombre().equals(modificadore.getNombre())) {
                     valorMods -= cliente.getPersonaje().getDebilidades().get(numDebilidad).getValor();
                 }
             }
         }
 
         for (int numFortaleza = 0; numFortaleza < cliente.getPersonaje().getFortalezas().size(); numFortaleza++) {
-            for (int j = 0; j < modificadores.size(); j++) {
-                if (cliente.getPersonaje().getFortalezas().get(numFortaleza).getNombre().equals(modificadores.get(j).getNombre())) {
+            for (Modificador modificadore : modificadores) {
+                if (cliente.getPersonaje().getFortalezas().get(numFortaleza).getNombre().equals(modificadore.getNombre())) {
                     valorMods += cliente.getPersonaje().getFortalezas().get(numFortaleza).getValor();
                 }
             }
@@ -151,19 +151,25 @@ public class Ronda {
         if (cliente.getPersonaje().getTipo().equals("VAMPIRO")) {
             Vampiro vampiro = (Vampiro) cliente.getPersonaje();
             Disciplina disciplina = (Disciplina) vampiro.getHabilidad();
+            Terminal terminal = new Terminal();
             if (vampiro.getSangre() >= 5 && vampiro.getSangre() >= disciplina.getCoste()) {
+                terminal.usoHabilidadDefensa(vampiro.getNombre(), disciplina.getNombre());
                 potencialDefensa += 2;
                 vampiro.setSangre(vampiro.getSangre() - disciplina.getCoste());
             }
         } else if (cliente.getPersonaje().getTipo().equals("LICANTROPO")) {
             Licantropo licantropo = (Licantropo) cliente.getPersonaje();
             Don don = (Don) licantropo.getHabilidad();
+            Terminal terminal = new Terminal();
             if (don.getValorMinimo() <= licantropo.getRabia()) {
+                terminal.usoHabilidadDefensa(licantropo.getNombre(), don.getNombre());
                 potencialDefensa += licantropo.getRabia();
             }
         } else {
+            Terminal terminal = new Terminal();
             Cazador cazador = (Cazador) cliente.getPersonaje();
             Talento talento = (Talento) cazador.getHabilidad();
+            terminal.usoHabilidadDefensa(cazador.getNombre(), talento.getNombre());
             potencialDefensa += talento.getDefensa();
         }
         return potencialDefensa;
@@ -173,19 +179,25 @@ public class Ronda {
         if (cliente.getPersonaje().getTipo().equals("VAMPIRO")) {
             Vampiro vampiro = (Vampiro) cliente.getPersonaje();
             Disciplina disciplina = (Disciplina) vampiro.getHabilidad();
+            Terminal terminal = new Terminal();
             if (vampiro.getSangre() >= 5 && vampiro.getSangre() >= disciplina.getCoste()) {
+                terminal.usoHabilidadAtaque(vampiro.getNombre(), disciplina.getNombre());
                 potencialAtaque += 2;
                 vampiro.setSangre(vampiro.getSangre() - disciplina.getCoste());
             }
         } else if (cliente.getPersonaje().getTipo().equals("LICANTROPO")) {
             Licantropo licantropo = (Licantropo) cliente.getPersonaje();
             Don don = (Don) licantropo.getHabilidad();
+            Terminal terminal = new Terminal();
             if (don.getValorMinimo() <= licantropo.getRabia()) {
+                terminal.usoHabilidadAtaque(licantropo.getNombre(), don.getNombre());
                 potencialAtaque += licantropo.getRabia();
             }
         } else {
             Cazador cazador = (Cazador) cliente.getPersonaje();
             Talento talento = (Talento) cazador.getHabilidad();
+            Terminal terminal = new Terminal();
+            terminal.usoHabilidadAtaque(cazador.getNombre(), talento.getNombre());
             potencialAtaque += talento.getAtaque();
         }
         return potencialAtaque;

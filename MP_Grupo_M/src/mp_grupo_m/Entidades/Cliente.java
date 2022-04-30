@@ -173,9 +173,9 @@ public class Cliente extends User {
         terminal.finishEquipar();
     }
 
-    public void desafiar(ArrayList<Cliente> listaClientes, Cliente cliente) {
+    public void desafiar(Cliente cliente) {
         Desafio desafio = new Desafio();
-        desafio.crearDesafio(listaClientes, cliente);
+        desafio.crearDesafio(cliente);
     }
 
     public void eliminarCuenta(Cliente cliente, Sistema sistema) {

@@ -101,7 +101,7 @@ public class EscrituraFicheroDesafio {
                 bw.write(modificador.getNombre());
                 bw.newLine();
 
-                bw.write("VALOR_DEBILIDAD: ");
+                bw.write("VALOR_MODIFICADOR: ");
                 bw.write(String.valueOf(modificador.getValor()));
                 bw.newLine();
             }
@@ -222,22 +222,28 @@ public class EscrituraFicheroDesafio {
 
 //MODIFICADOR
 
-                bw.write("MODIFICADOR: ");
-                bw.write(desafio.getModificadores().size());
+                bw.write("NUM_MODIFICADORES: ");
+                bw.write(String.valueOf(desafio.getModificadores().size()));
                 bw.newLine();
                 for (int j = 0; j < (desafio.getModificadores().size()); j++) {
-                    Modificador modificador = (Modificador) desafio.getModificadores().get(j);
+                    Modificador modificador = desafio.getModificadores().get(j);
                     bw.write("NOMBRE_MODIFICADOR: ");
                     bw.write(modificador.getNombre());
                     bw.newLine();
 
-                    bw.write("VALOR_DEBILIDAD: ");
-                    bw.write(modificador.getValor());
+                    bw.write("VALOR_MODIFICADOR: ");
+                    bw.write(String.valueOf(modificador.getValor()));
                     bw.newLine();
                 }
                 bw.newLine();
 // FIN MODIFICADOR
 
+                String pattern = "dd-MM-yyyy HH:mm:ss";
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+                String date = simpleDateFormat.format(desafio.getFecha());
+                bw.write("FECHA: ");
+                bw.write(date);
+                bw.newLine();
 
                 bw.write("VALIDADO: ");
                 if (desafio.isValidated()) {
@@ -253,9 +259,9 @@ public class EscrituraFicheroDesafio {
 
                 bw.write("FIN USUARIO");
                 bw.newLine();
-                bw.close();
 
             }
+            bw.close();
         } catch (Exception e) {
             Sistema sistema = new Sistema();
             sistema.selector();
@@ -278,7 +284,7 @@ public class EscrituraFicheroDesafio {
         bw.newLine();
         //PUNTOS DE SANGRE
         bw.write("SANGRE: ");
-        bw.write(String.valueOf(vampiro.getSangre()));
+        bw.write("0");
         bw.newLine();
         //NOMBRE DE HABILIDAD
         bw.write("NOMNRE_HABILIDAD: ");
@@ -479,7 +485,7 @@ public class EscrituraFicheroDesafio {
 
         //PUNTOS DE SANGRE
         bw.write("RABIA: ");
-        bw.write(String.valueOf(licantropo.getRabia()));
+        bw.write("0");
         bw.newLine();
 
         //NUMERO ARMAS
@@ -925,7 +931,7 @@ public class EscrituraFicheroDesafio {
         bw.newLine();
         //PUNTOS DE SANGRE
         bw.write("SANGRE: ");
-        bw.write(String.valueOf(vampiro.getSangre()));
+        bw.write("0");
         bw.newLine();
         //NOMBRE DE HABILIDAD
         bw.write("NOMNRE_HABILIDAD: ");
@@ -1123,7 +1129,7 @@ public class EscrituraFicheroDesafio {
 
         //PUNTOS DE SANGRE
         bw.write("RABIA: ");
-        bw.write(String.valueOf(licantropo.getRabia()));
+        bw.write("0");
         bw.newLine();
 
         //NUMERO ARMAS

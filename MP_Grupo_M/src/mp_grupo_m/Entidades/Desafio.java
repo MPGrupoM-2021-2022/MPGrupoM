@@ -1,6 +1,8 @@
 package mp_grupo_m.Entidades;
 
+import mp_grupo_m.Ficheros.EscrituraFicheroUsuario;
 import mp_grupo_m.Ficheros.LecturaFicheroDesafio;
+import mp_grupo_m.Ficheros.LecturaFicheroUsuarios;
 import mp_grupo_m.GestorNotificaciones;
 import mp_grupo_m.Sistema;
 import mp_grupo_m.Terminal;
@@ -75,8 +77,10 @@ public class Desafio {
         this.registro = registro;
     }
 
-    public void crearDesafio(ArrayList<Cliente> listaClientes, Cliente cliente) {
+    public void crearDesafio(Cliente cliente) {
         Terminal terminal = new Terminal();
+        LecturaFicheroUsuarios lecturaFicheroUsuarios = new LecturaFicheroUsuarios();
+        ArrayList<Cliente> listaClientes = lecturaFicheroUsuarios.lecturaFicheroUsuarios();
         terminal.bienvenidaDesafio();
         int numContrincante = -1;
         int cantidadOro = -1;
@@ -93,9 +97,16 @@ public class Desafio {
             do {
                 terminal.numValido();
                 cantidadOro = askNum();
-            } while (cantidadOro <= 0 && cantidadOro > cliente.getPersonaje().getOro());
+            } while (cantidadOro <= 0 || cantidadOro > cliente.getPersonaje().getOro());
             setOro(cantidadOro);
             cliente.getPersonaje().setOro(cliente.getPersonaje().getOro() - cantidadOro);
+            for (int numCliente = 0; numCliente< listaClientes.size(); numCliente++){
+                if (listaClientes.get(numCliente).getNick().equals(cliente.getNick())){
+                    listaClientes.remove(numCliente);
+                    listaClientes.add(cliente);
+                    break;
+                }
+            }
             setDesafiante(cliente);
             setValidated(false);
             String registro = generarNumerRegistro();
@@ -105,6 +116,8 @@ public class Desafio {
             Date fechaHoy = new Date();
             setFecha(fechaHoy);
             terminal.desafioCreado();
+            EscrituraFicheroUsuario escrituraFicheroUsuario = new EscrituraFicheroUsuario();
+            escrituraFicheroUsuario.sobreescribirFicheroUsuario(listaClientes);
             GestorNotificaciones gestorNotificaciones = new GestorNotificaciones();
             gestorNotificaciones.subscribeDesafio(this);
 

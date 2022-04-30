@@ -115,7 +115,7 @@ public class EscrituraFicheroUsuario {
         bw.newLine();
         //PUNTOS DE SANGRE
         bw.write("SANGRE: ");
-        bw.write(String.valueOf(vampiro.getSangre()));
+        bw.write("0");
         bw.newLine();
         //NOMBRE DE HABILIDAD
         bw.write("NOMNRE_HABILIDAD: ");
@@ -310,7 +310,7 @@ public class EscrituraFicheroUsuario {
 
         //PUNTOS DE SANGRE
         bw.write("RABIA: ");
-        bw.write(licantropo.getRabia());
+        bw.write("0");
         bw.newLine();
 
         //NUMERO ARMAS
@@ -349,7 +349,7 @@ public class EscrituraFicheroUsuario {
         bw.write(listaCliente.get(i).getPersonaje().getArmasActivas().size());
         bw.newLine();
         for (int variableArmaActiva = 0; variableArmaActiva < (listaCliente.get(i).getPersonaje().getArmasActivas().size()); variableArmaActiva++) {
-            Arma armaActiva = (Arma) licantropo.getArmasActivas().get(variableArmaActiva);
+            Arma armaActiva = licantropo.getArmasActivas().get(variableArmaActiva);
 
             bw.write("NOMBRE_ARMAS_ACTIVAS: ");
             bw.write(armaActiva.getNombre());

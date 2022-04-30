@@ -122,15 +122,19 @@ public class Combate {
         int hpDesafiante = combate.getDesafiante().getPersonaje().getHp();
         int hpContrincante = combate.getContrincante().getPersonaje().getHp();
         hpDesafiante = setearHPinicial(combate.getDesafiante().getPersonaje(), hpDesafiante);
-        hpContrincante = setearHPinicial(combate.getDesafiante().getPersonaje(), hpContrincante);
+        hpContrincante = setearHPinicial(combate.getContrincante().getPersonaje(), hpContrincante);
         boolean finCombate = false;
         ArrayList<Ronda> rondas = new ArrayList<>();
+        Terminal terminal = new Terminal();
+        int numRonda = 1;
         while (!finCombate) {
             Ronda ronda = new Ronda();
+            terminal.mostrarRonda(numRonda);
             finCombate = ronda.iniciarRonda(hpDesafiante, hpContrincante, combate.getDesafiante(), combate.getContrincante(), combate.getModificadores());
             hpDesafiante = ronda.getHpDesafianteEnd();
             hpContrincante = ronda.getHpContrincanteEnd();
             rondas.add(ronda);
+            numRonda++;
         }
         combate.setRondas(rondas);
         if (rondas.get(rondas.size() - 1).getHpDesafianteEnd() > 0) {
@@ -143,15 +147,16 @@ public class Combate {
             } else {
                 combate.setEsbirrosDesafiante(false);
             }
+        } else {
+            combate.setVencedor(null);
         }
-        Terminal terminal = new Terminal();
         terminal.mostrarRondas(combate);
         return combate;
     }
 
     private int setearHPinicial(Personaje personaje, int hp) {
         for (int numEsbirro = 0; numEsbirro < personaje.getEsbirros().size(); numEsbirro++) {
-            if (personaje.getEsbirros().get(numEsbirro).getTipo().equals("Demonio")) {
+            if (personaje.getEsbirros().get(numEsbirro).getTipo().equals("DEMONIO")) {
                 hp += personaje.getEsbirros().get(numEsbirro).getHp();
                 hp += anadirHPesbirros((Demonio) personaje.getEsbirros().get(numEsbirro), hp);
             } else {
@@ -163,7 +168,7 @@ public class Combate {
 
     private int anadirHPesbirros(Demonio demonio, int hp) {
         for (int numEsbirro = 0; numEsbirro < demonio.getEsbirrosComposites().size(); numEsbirro++) {
-            if (demonio.getEsbirrosComposites().get(numEsbirro).getTipo().equals("Demonio")) {
+            if (demonio.getEsbirrosComposites().get(numEsbirro).getTipo().equals("DEMONIO")) {
                 hp += demonio.getEsbirrosComposites().get(numEsbirro).getHp();
                 hp += anadirHPesbirros((Demonio) demonio.getEsbirrosComposites().get(numEsbirro), hp);
             } else {

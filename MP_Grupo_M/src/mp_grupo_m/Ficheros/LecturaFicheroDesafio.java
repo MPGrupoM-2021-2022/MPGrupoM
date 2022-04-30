@@ -142,7 +142,10 @@ public class LecturaFicheroDesafio {
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
 
-                for (int i = 0; i < (Integer.parseInt(textoSeparado[1])); i++) {
+                ArrayList<Modificador> modificadores = new ArrayList<>();
+                int tope = Integer.parseInt(textoSeparado[1]);
+
+                for (int i = 0; i < tope; i++) {
 
                     Modificador modificador = new Modificador();
 
@@ -156,8 +159,9 @@ public class LecturaFicheroDesafio {
                     textoSeparado = linea.split(": ");
                     modificador.setValor((Integer.parseInt(textoSeparado[1])));
 
-                    desafio.getModificadores().add(modificador);
+                    modificadores.add(modificador);
                 }
+                desafio.setModificadores(modificadores);
 
                 br.readLine();
                 //FECHA

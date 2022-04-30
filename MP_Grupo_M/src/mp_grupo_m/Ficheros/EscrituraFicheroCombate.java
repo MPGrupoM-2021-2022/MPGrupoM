@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import mp_grupo_m.Entidades.*;
 import mp_grupo_m.Sistema;
@@ -25,7 +26,7 @@ public class EscrituraFicheroCombate {
             FileWriter fw = new FileWriter(file.getAbsoluteFile(), true); //opción append habilitada!
             BufferedWriter bw = new BufferedWriter(fw);
 
-            bw.write("***** DESAFIO *****");
+            bw.write("***** COMBATE *****");
             bw.newLine();
 
 ///////////  INICIO DESAFIANTE ///////////
@@ -90,28 +91,35 @@ public class EscrituraFicheroCombate {
 
             //RONDAS
             bw.write("RONDAS: ");
-            bw.write(combate.getRondas().size());
+            bw.write(String.valueOf(combate.getRondas().size()));
             bw.newLine();
             for (int j = 0; j < (combate.getRondas().size()); j++) {
                 Ronda ronda = (Ronda) combate.getRondas().get(j);
-                bw.write("VIDA_CONTRINCANTE:");
-                bw.write(ronda.getHpContrincanteEnd());
+                bw.write("VIDA_CONTRINCANTE: ");
+                bw.write(String.valueOf(ronda.getHpContrincanteEnd()));
                 bw.newLine();
 
-                bw.write("VIDA_DESAFIANTE:");
-                bw.write(ronda.getHpDesafianteEnd());
+                bw.write("VIDA_DESAFIANTE: ");
+                bw.write(String.valueOf(ronda.getHpDesafianteEnd()));
                 bw.newLine();
 
             }
             bw.newLine();
 
+            String pattern = "dd-MM-yyyy HH:mm:ss";
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+            String date = simpleDateFormat.format(combate.getFecha());
             bw.write("FECHA: ");
-            bw.write(combate.getFecha().toString());
+            bw.write(date);
             bw.newLine();
 
 // INICIO VENCEDOR  ///////////
             bw.write("VENCEDOR: ");
-            bw.write(combate.getVencedor().getNick());
+            if (combate.getVencedor()!= null) {
+                bw.write(combate.getVencedor().getNick());
+            } else {
+                bw.write("null");
+            }
             bw.newLine();
 // FIN  VENCEDOR  ///////////
             //ESBIRRO DESAFIANTE
@@ -133,21 +141,21 @@ public class EscrituraFicheroCombate {
             bw.newLine();
 
             bw.write("ORO: ");
-            bw.write(combate.getOro());
+            bw.write(String.valueOf(combate.getOro()));
             bw.newLine();
 
 //MODIFICADOR
             bw.write("CANTIDAD_MODIFICADORES: ");
-            bw.write(combate.getModificadores().size());
+            bw.write(String.valueOf(combate.getModificadores().size()));
             bw.newLine();
             for (int j = 0; j < (combate.getModificadores().size()); j++) {
-                Modificador modificador = (Modificador) combate.getModificadores().get(j);
-                bw.write("NOMBRE_MODIFICADOR:");
+                Modificador modificador = combate.getModificadores().get(j);
+                bw.write("NOMBRE_MODIFICADOR: ");
                 bw.write(modificador.getNombre());
                 bw.newLine();
 
-                bw.write("VALOR_DEBILIDAD:");
-                bw.write(modificador.getValor());
+                bw.write("VALOR_DEBILIDAD: ");
+                bw.write(String.valueOf(modificador.getValor()));
                 bw.newLine();
 
             }
@@ -190,100 +198,107 @@ public class EscrituraFicheroCombate {
             BufferedWriter bw = new BufferedWriter(fw);
 
             //recorre la lista de clientes
-            for (int i = 0; i < listaCombate.size(); i++) {
+            for (Combate combate : listaCombate) {
 
-                bw.write("***** DESAFIO *****");
+                bw.write("***** COMBATE *****");
                 bw.newLine();
 
 ///////////  INICIO DESAFIANTE ///////////
                 bw.write("DESAFIANTE: ");
-                bw.write(listaCombate.get(i).getDesafiante().getNombre());
+                bw.write(combate.getDesafiante().getNombre());
                 bw.newLine();
 
                 bw.write("NICK: ");
-                bw.write(listaCombate.get(i).getDesafiante().getNick());
+                bw.write(combate.getDesafiante().getNick());
                 bw.newLine();
 
                 bw.write("PASSWORD: ");
-                bw.write(listaCombate.get(i).getDesafiante().getPassword());
+                bw.write(combate.getDesafiante().getPassword());
                 bw.newLine();
 
                 bw.write("REGISTRO: ");
-                bw.write(listaCombate.get(i).getDesafiante().getRegistro());
+                bw.write(combate.getDesafiante().getRegistro());
                 bw.newLine();
 
-                String tipoPersonajeDesafiante = listaCombate.get(i).getDesafiante().getPersonaje().getTipo();
+                String tipoPersonajeDesafiante = combate.getDesafiante().getPersonaje().getTipo();
                 if (tipoPersonajeDesafiante == null) {
                     bw.write("TIPO_PERSONAJE: null");
                     bw.newLine();
                 } else if (tipoPersonajeDesafiante.equals("VAMPIRO")) {
-                    escrituraVampiroDesafiante(listaCombate.get(i), bw);
+                    escrituraVampiroDesafiante(combate, bw);
                 } else if (tipoPersonajeDesafiante.equals("LICANTROPO")) {
-                    escrituraLicantropoDesafiante(listaCombate.get(i), bw);
+                    escrituraLicantropoDesafiante(combate, bw);
                 } else if (tipoPersonajeDesafiante.equals("CAZADOR")) {
-                    escrituraCazadorDesafiante(listaCombate.get(i), bw);
+                    escrituraCazadorDesafiante(combate, bw);
                 }
 /////////// FIN DESAFIANTE ///////////
 
 /////////// INICIO CONTRINCANTE  ///////////
                 bw.write("CONTRINCANTE: ");
-                bw.write(listaCombate.get(i).getContrincante().getNombre());
+                bw.write(combate.getContrincante().getNombre());
                 bw.newLine();
 
                 bw.write("NICK: ");
-                bw.write(listaCombate.get(i).getContrincante().getNick());
+                bw.write(combate.getContrincante().getNick());
                 bw.newLine();
 
                 bw.write("PASSWORD: ");
-                bw.write(listaCombate.get(i).getContrincante().getPassword());
+                bw.write(combate.getContrincante().getPassword());
                 bw.newLine();
 
                 bw.write("REGISTRO: ");
-                bw.write(listaCombate.get(i).getContrincante().getRegistro());
+                bw.write(combate.getContrincante().getRegistro());
                 bw.newLine();
 
-                String tipoPersonajeContrincante = listaCombate.get(i).getContrincante().getPersonaje().getTipo();
+                String tipoPersonajeContrincante = combate.getContrincante().getPersonaje().getTipo();
                 if (tipoPersonajeContrincante == null) {
                     bw.write("TIPO_PERSONAJE: null");
                     bw.newLine();
                 } else if (tipoPersonajeContrincante.equals("VAMPIRO")) {
-                    escrituraVampiroContrincante(listaCombate.get(i), bw);
+                    escrituraVampiroContrincante(combate, bw);
                 } else if (tipoPersonajeContrincante.equals("LICANTROPO")) {
-                    escrituraLicantropoContrincante(listaCombate.get(i), bw);
+                    escrituraLicantropoContrincante(combate, bw);
                 } else if (tipoPersonajeContrincante.equals("CAZADOR")) {
-                    escrituraCazadorContrincante(listaCombate.get(i), bw);
+                    escrituraCazadorContrincante(combate, bw);
                 }
 /////////// FIN CONTRINCANTE  ///////////
 
                 //RONDAS
                 bw.write("RONDAS: ");
-                bw.write(listaCombate.get(i).getRondas().size());
+                bw.write(String.valueOf(combate.getRondas().size()));
                 bw.newLine();
-                for (int j = 0; j < (listaCombate.get(i).getRondas().size()); j++) {
-                    Ronda ronda = (Ronda) listaCombate.get(i).getRondas().get(j);
-                    bw.write("VIDA_CONTRINCANTE:");
-                    bw.write(ronda.getHpContrincanteEnd());
+                for (int j = 0; j < (combate.getRondas().size()); j++) {
+                    Ronda ronda = combate.getRondas().get(j);
+                    bw.write("VIDA_CONTRINCANTE: ");
+                    bw.write(String.valueOf(ronda.getHpContrincanteEnd()));
                     bw.newLine();
 
-                    bw.write("VIDA_DESAFIANTE:");
-                    bw.write(ronda.getHpDesafianteEnd());
+                    bw.write("VIDA_DESAFIANTE: ");
+                    bw.write(String.valueOf(ronda.getHpDesafianteEnd()));
                     bw.newLine();
 
                 }
                 bw.newLine();
 
+                String pattern = "dd-MM-yyyy HH:mm:ss";
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+                String date = simpleDateFormat.format(combate.getFecha());
                 bw.write("FECHA: ");
-                bw.write(listaCombate.get(i).getFecha().toString());
+                bw.write(date);
                 bw.newLine();
 
 // INICIO VENCEDOR  ///////////
                 bw.write("VENCEDOR: ");
-                bw.write(listaCombate.get(i).getVencedor().getNick());
+                if (combate.getVencedor()!= null) {
+                    bw.write(combate.getVencedor().getNick());
+                } else {
+                    bw.write("null");
+                }
                 bw.newLine();
 // FIN  VENCEDOR  ///////////
                 //ESBIRRO DESAFIANTE
                 bw.write("ESBIRRO_DESAFIANTE: ");
-                if (listaCombate.get(i).isEsbirrosDesafiante()) {
+                if (combate.isEsbirrosDesafiante()) {
                     bw.write("true");
                 } else {
                     bw.write("false");
@@ -292,7 +307,7 @@ public class EscrituraFicheroCombate {
 
                 //ESBIRRO CONTRINCANTE
                 bw.write("ESBIRRO_CONTRINCANTE: ");
-                if (listaCombate.get(i).isEsbirrosContrincante()) {
+                if (combate.isEsbirrosContrincante()) {
                     bw.write("true");
                 } else {
                     bw.write("false");
@@ -300,31 +315,31 @@ public class EscrituraFicheroCombate {
                 bw.newLine();
 
                 bw.write("ORO: ");
-                bw.write(listaCombate.get(i).getOro());
+                bw.write(String.valueOf(combate.getOro()));
                 bw.newLine();
 
 //MODIFICADOR
                 bw.write("CANTIDAD_MODIFICADORES: ");
-                bw.write(listaCombate.get(i).getModificadores().size());
+                bw.write(String.valueOf(combate.getModificadores().size()));
                 bw.newLine();
-                for (int j = 0; j < (listaCombate.get(i).getModificadores().size()); j++) {
-                    Modificador modificador = listaCombate.get(i).getModificadores().get(j);
-                    bw.write("NOMBRE_MODIFICADOR:");
+                for (int j = 0; j < (combate.getModificadores().size()); j++) {
+                    Modificador modificador = combate.getModificadores().get(j);
+                    bw.write("NOMBRE_MODIFICADOR: ");
                     bw.write(modificador.getNombre());
                     bw.newLine();
 
-                    bw.write("VALOR_DEBILIDAD:");
-                    bw.write(modificador.getValor());
+                    bw.write("VALOR_MODIFICADOR: ");
+                    bw.write(String.valueOf(modificador.getValor()));
                     bw.newLine();
                 }
                 bw.newLine();
 // FIN MODIFICADOR
                 bw.write("REGISTRO: ");
-                bw.write(listaCombate.get(i).getRegistro());
+                bw.write(combate.getRegistro());
                 bw.newLine();
 
                 bw.write("VISTO: ");
-                if (listaCombate.get(i).isVisto()) {
+                if (combate.isVisto()) {
                     bw.write("true");
                 } else {
                     bw.write("false");
@@ -335,8 +350,8 @@ public class EscrituraFicheroCombate {
 
                 bw.write("FIN COMBATE");
                 bw.newLine();
-                bw.close();
             }
+            bw.close();
         } catch (Exception e) {
             Sistema sistema = new Sistema();
             sistema.selector();
@@ -359,7 +374,7 @@ public class EscrituraFicheroCombate {
         bw.newLine();
         //PUNTOS DE SANGRE
         bw.write("SANGRE: ");
-        bw.write(vampiro.getSangre());
+        bw.write("0");
         bw.newLine();
         //NOMBRE DE HABILIDAD
         bw.write("NOMNRE_HABILIDAD: ");
@@ -368,22 +383,22 @@ public class EscrituraFicheroCombate {
 
         //VALOR ATAQUE
         bw.write("VALOR_ATAQUE: ");
-        bw.write(disciplina.getAtaque());
+        bw.write(String.valueOf(disciplina.getAtaque()));
         bw.newLine();
 
         //VALOR DEFENSA
         bw.write("VALOR_DEFENSA: ");
-        bw.write(disciplina.getDefensa());
+        bw.write(String.valueOf(disciplina.getDefensa()));
         bw.newLine();
 
         //COSTE HABILIDAD
         bw.write("COSATE_HABILIDAD: ");
-        bw.write(disciplina.getCoste());
+        bw.write(String.valueOf(disciplina.getCoste()));
         bw.newLine();
 
         //ARMAS
         bw.write("NUMERO_ARMAS: ");
-        bw.write(combate.getDesafiante().getPersonaje().getArmas().size());
+        bw.write(String.valueOf(combate.getDesafiante().getPersonaje().getArmas().size()));
         bw.newLine();
 
         for (int variableArma = 0; variableArma < (combate.getDesafiante().getPersonaje().getArmas().size()); variableArma++) {
@@ -393,11 +408,11 @@ public class EscrituraFicheroCombate {
             bw.newLine();
 
             bw.write("ATAQUE_ARMA: ");
-            bw.write(arma.getModAtaque());
+            bw.write(String.valueOf(arma.getModAtaque()));
             bw.newLine();
 
-            bw.write("DEFENSA_ARMA:");
-            bw.write(arma.getModDefensa());
+            bw.write("DEFENSA_ARMA: ");
+            bw.write(String.valueOf(arma.getModDefensa()));
             bw.newLine();
 
             //si es true es de 1 mano, si es false es de dos manos
@@ -414,21 +429,21 @@ public class EscrituraFicheroCombate {
 
         //NUMERO DE ARMAS ACTIVAS
         bw.write("NUMERO_ARMAS_ACTIVAS: ");
-        bw.write(combate.getDesafiante().getPersonaje().getArmasActivas().size());
+        bw.write(String.valueOf(combate.getDesafiante().getPersonaje().getArmasActivas().size()));
         bw.newLine();
         for (int variableArmaActiva = 0; variableArmaActiva < (combate.getDesafiante().getPersonaje().getArmasActivas().size()); variableArmaActiva++) {
-            Arma armaActiva = (Arma) vampiro.getArmasActivas().get(variableArmaActiva);
+            Arma armaActiva = vampiro.getArmasActivas().get(variableArmaActiva);
 
             bw.write("NOMBRE_ARMAS_ACTIVAS: ");
             bw.write(armaActiva.getNombre());
             bw.newLine();
 
-            bw.write("ATAQUE_ARMA_ACTIVAS:");
-            bw.write(armaActiva.getModAtaque());
+            bw.write("ATAQUE_ARMA_ACTIVAS: ");
+            bw.write(String.valueOf(armaActiva.getModAtaque()));
             bw.newLine();
 
             bw.write("DEFENSA_ARMA_ACTIVAS: ");
-            bw.write(armaActiva.getModDefensa());
+            bw.write(String.valueOf(armaActiva.getModDefensa()));
             bw.newLine();
 
             //si es true es de 1 mano, si es false es de dos manos
@@ -445,37 +460,101 @@ public class EscrituraFicheroCombate {
         //ARMADURAS
         //NUMERO DE ARMADURAS
         bw.write("NUMERO_ARMADURAS: ");
-        bw.write(combate.getDesafiante().getPersonaje().getArmaduras().size());
+        bw.write(String.valueOf(combate.getDesafiante().getPersonaje().getArmaduras().size()));
         bw.newLine();
         for (int j = 0; j < (combate.getDesafiante().getPersonaje().getArmaduras().size()); j++) {
-            Armadura armadura = (Armadura) vampiro.getArmaduras().get(j);
+            Armadura armadura = vampiro.getArmaduras().get(j);
             bw.write("NOMBRE_ARMADURA: ");
             bw.write(armadura.getNombre());
             bw.newLine();
 
             bw.write("DEFENSA_ARMADURA: ");
-            bw.write(armadura.getModDefensa());
+            bw.write(String.valueOf(armadura.getModDefensa()));
             bw.newLine();
 
             bw.write("ATAQUE_ARMADURA: ");
-            bw.write(armadura.getModAtaque());
+            bw.write(String.valueOf(armadura.getModAtaque()));
             bw.newLine();
         }
         bw.newLine();
 
+        //ARMADURA ACTIVA
+        Armadura armadura = vampiro.getArmaduraActiva();
+        bw.write("NOMBRE_ARMADURA: ");
+        bw.write(armadura.getNombre());
+        bw.newLine();
+
+        bw.write("DEFENSA_ARMADURA: ");
+        bw.write(String.valueOf(armadura.getModDefensa()));
+        bw.newLine();
+
+        bw.write("ATAQUE_ARMADURA: ");
+        bw.write(String.valueOf(armadura.getModAtaque()));
+        bw.newLine();
+        vampiro.setArmaduraActiva(armadura);
+        bw.newLine();
+
         //EDAD VAMPIRO
         bw.write("EDAD_VAMPIRO: ");
-        bw.write(vampiro.getEdad());
+        bw.write(String.valueOf(vampiro.getEdad()));
         bw.newLine();
 
         //ESBIRROS
         //NUMERO DE ESBIRROS
         bw.write("NUMERO_ESBIRROS: ");
-        bw.write(combate.getDesafiante().getPersonaje().getEsbirros().size());
+        bw.write(String.valueOf(combate.getDesafiante().getPersonaje().getEsbirros().size()));
         bw.newLine();
 
         //ESBIRROS
         escrituraEsbirrosDesafiante(combate, vampiro, bw);
+
+        //CANTIDAD ORO
+        bw.write("CANTIDAD_ORO: ");
+        bw.write(String.valueOf(vampiro.getOro()));
+        bw.newLine();
+
+        //CANTIDAD VIDA
+        bw.write("CANTIDAD_VIDA: ");
+        bw.write(String.valueOf(vampiro.getHp()));
+        bw.newLine();
+
+        //PODER
+        bw.write("CANTIDAD_PODER: ");
+        bw.write(String.valueOf(vampiro.getPoder()));
+        bw.newLine();
+
+        //DEBILIDADES
+        bw.write("NUMERO_DEBILIDADES: ");
+        bw.write(String.valueOf(combate.getDesafiante().getPersonaje().getDebilidades().size()));
+        bw.newLine();
+        for (int j = 0; j < (combate.getDesafiante().getPersonaje().getDebilidades().size()); j++) {
+            Debilidad debilidad = vampiro.getDebilidades().get(j);
+            bw.write("NOMBRE_DEBILIDAD: ");
+            bw.write(debilidad.getNombre());
+            bw.newLine();
+
+            bw.write("VALOR_DEBILIDAD: ");
+            bw.write(String.valueOf(debilidad.getValor()));
+            bw.newLine();
+        }
+        bw.newLine();
+
+        //FORTALEZAS
+        bw.write("NUMERO_FORTALEZAS: ");
+        bw.write(String.valueOf(combate.getDesafiante().getPersonaje().getFortalezas().size()));
+        bw.newLine();
+        for (int j = 0; j < (combate.getDesafiante().getPersonaje().getFortalezas().size()); j++) {
+            Fortaleza fortaleza = vampiro.getFortalezas().get(j);
+            bw.write("NOMBRE_FORTALEZA: ");
+            bw.write(fortaleza.getNombre());
+            bw.newLine();
+
+            bw.write("VALOR_FORTALEZA: ");
+            bw.write(String.valueOf(fortaleza.getValor()));
+            bw.newLine();
+        }
+        bw.newLine();
+
 
         bw.write("FIN_USUARIO");
         bw.newLine();
@@ -484,7 +563,6 @@ public class EscrituraFicheroCombate {
     private void escrituraLicantropoDesafiante(Combate combate, BufferedWriter bw) throws IOException {
 
         Licantropo licantropo = (Licantropo) combate.getDesafiante().getPersonaje();
-        Disciplina disciplina = (Disciplina) licantropo.getHabilidad();
 
         //TIPO PERSONAJE
         bw.write("TIPO_PERSONAJE: ");
@@ -497,12 +575,12 @@ public class EscrituraFicheroCombate {
 
         //PUNTOS DE SANGRE
         bw.write("RABIA: ");
-        bw.write(licantropo.getRabia());
+        bw.write("0");
         bw.newLine();
 
         //NUMERO ARMAS
         bw.write("NUMERO_ARMAS: ");
-        bw.write(combate.getDesafiante().getPersonaje().getArmas().size());
+        bw.write(String.valueOf(combate.getDesafiante().getPersonaje().getArmas().size()));
         bw.newLine();
 
         for (int variableArma = 0; variableArma < (combate.getDesafiante().getPersonaje().getArmas().size()); variableArma++) {
@@ -512,11 +590,11 @@ public class EscrituraFicheroCombate {
             bw.newLine();
 
             bw.write("ATAQUE_ARMA: ");
-            bw.write(arma.getModAtaque());
+            bw.write(String.valueOf(arma.getModAtaque()));
             bw.newLine();
 
             bw.write("DEFENSA_ARMA: ");
-            bw.write(arma.getModDefensa());
+            bw.write(String.valueOf(arma.getModDefensa()));
             bw.newLine();
 
             //si es true es de 1 mano, si es false es de dos manos
@@ -533,21 +611,21 @@ public class EscrituraFicheroCombate {
 
         //NUMERO DE ARMAS ACTIVAS
         bw.write("NUMERO_ARMAS_ACTIVAS: ");
-        bw.write(combate.getDesafiante().getPersonaje().getArmasActivas().size());
+        bw.write(String.valueOf(combate.getDesafiante().getPersonaje().getArmasActivas().size()));
         bw.newLine();
         for (int variableArmaActiva = 0; variableArmaActiva < (combate.getDesafiante().getPersonaje().getArmasActivas().size()); variableArmaActiva++) {
-            Arma armaActiva = (Arma) licantropo.getArmasActivas().get(variableArmaActiva);
+            Arma armaActiva = licantropo.getArmasActivas().get(variableArmaActiva);
 
             bw.write("NOMBRE_ARMAS_ACTIVAS: ");
             bw.write(armaActiva.getNombre());
             bw.newLine();
 
-            bw.write("ATAQUE_ARMA_ACTIVAS:");
-            bw.write(armaActiva.getModAtaque());
+            bw.write("ATAQUE_ARMA_ACTIVAS: ");
+            bw.write(String.valueOf(armaActiva.getModAtaque()));
             bw.newLine();
 
             bw.write("DEFENSA_ARMA_ACTIVAS: ");
-            bw.write(armaActiva.getModDefensa());
+            bw.write(String.valueOf(armaActiva.getModDefensa()));
             bw.newLine();
 
             //si es true es de 1 mano, si es false es de dos manos
@@ -567,17 +645,17 @@ public class EscrituraFicheroCombate {
         bw.write(combate.getDesafiante().getPersonaje().getArmaduras().size());
         bw.newLine();
         for (int j = 0; j < (combate.getDesafiante().getPersonaje().getArmaduras().size()); j++) {
-            Armadura armadura = (Armadura) licantropo.getArmaduras().get(j);
+            Armadura armadura = licantropo.getArmaduras().get(j);
             bw.write("NOMBRE_ARMADURA: ");
             bw.write(armadura.getNombre());
             bw.newLine();
 
             bw.write("DEFENSA_ARMADURA: ");
-            bw.write(armadura.getModDefensa());
+            bw.write(String.valueOf(armadura.getModDefensa()));
             bw.newLine();
 
             bw.write("ATAQUE_ARMADURA: ");
-            bw.write(armadura.getModAtaque());
+            bw.write(String.valueOf(armadura.getModAtaque()));
             bw.newLine();
         }
         bw.newLine();
@@ -589,32 +667,32 @@ public class EscrituraFicheroCombate {
 
         //DEFENSA ARMADURA ACTIVA / EQUIPADA
         bw.write("DEFENSA_ARMADURA_ACTIVA: ");
-        bw.write(combate.getDesafiante().getPersonaje().getArmaduraActiva().getModDefensa());
+        bw.write(String.valueOf(combate.getDesafiante().getPersonaje().getArmaduraActiva().getModDefensa()));
         bw.newLine();
 
         //ATAQUE ARMADURA ACTIVA / EQUIPADA
         bw.write("ATAQUE_ARMADURA_ACTIVA: ");
-        bw.write(combate.getDesafiante().getPersonaje().getArmaduraActiva().getModAtaque());
+        bw.write(String.valueOf(combate.getDesafiante().getPersonaje().getArmaduraActiva().getModAtaque()));
         bw.newLine();
 
         //CANTIDAD ORO
         bw.write("ORO: ");
-        bw.write(combate.getDesafiante().getPersonaje().getOro());
+        bw.write(String.valueOf(combate.getDesafiante().getPersonaje().getOro()));
         bw.newLine();
 
         //DEBLIDADES
         //NUMERO DE DEBLIDADES
         bw.write("NUMERO_DEBILIDADES: ");
-        bw.write(combate.getDesafiante().getPersonaje().getDebilidades().size());
+        bw.write(String.valueOf(combate.getDesafiante().getPersonaje().getDebilidades().size()));
         bw.newLine();
         for (int j = 0; j < (combate.getDesafiante().getPersonaje().getArmaduras().size()); j++) {
-            Debilidad debilidad = (Debilidad) licantropo.getDebilidades().get(j);
+            Debilidad debilidad = licantropo.getDebilidades().get(j);
             bw.write("NOMBRE_DEBILIADAD: ");
             bw.write(debilidad.getNombre());
             bw.newLine();
 
-            bw.write("VALOR_DEBILIADAD:");
-            bw.write(debilidad.getValor());
+            bw.write("VALOR_DEBILIADAD: ");
+            bw.write(String.valueOf(debilidad.getValor()));
             bw.newLine();
         }
         bw.newLine();
@@ -622,16 +700,16 @@ public class EscrituraFicheroCombate {
         //FORTALEZAS
         //NUMERO DE FORTALEZAS
         bw.write("NUMERO_FORTALEZAS: ");
-        bw.write(combate.getDesafiante().getPersonaje().getFortalezas().size());
+        bw.write(String.valueOf(combate.getDesafiante().getPersonaje().getFortalezas().size()));
         bw.newLine();
         for (int j = 0; j < (combate.getDesafiante().getPersonaje().getArmaduras().size()); j++) {
-            Fortaleza fortaleza = (Fortaleza) licantropo.getFortalezas().get(j);
-            bw.write("NOMBRE_FORTALEZA:");
+            Fortaleza fortaleza = licantropo.getFortalezas().get(j);
+            bw.write("NOMBRE_FORTALEZA: ");
             bw.write(fortaleza.getNombre());
             bw.newLine();
 
-            bw.write("VALOR_FORTALEZA:");
-            bw.write(fortaleza.getValor());
+            bw.write("VALOR_FORTALEZA: ");
+            bw.write(String.valueOf(fortaleza.getValor()));
             bw.newLine();
         }
         bw.newLine();
@@ -639,7 +717,7 @@ public class EscrituraFicheroCombate {
         //ESBIRROS
         //NUMERO DE ESBIRROS
         bw.write("NUMERO_ESBIRROS: ");
-        bw.write(combate.getDesafiante().getPersonaje().getEsbirros().size());
+        bw.write(String.valueOf(combate.getDesafiante().getPersonaje().getEsbirros().size()));
         bw.newLine();
 
         //ESBIRROS
@@ -652,7 +730,6 @@ public class EscrituraFicheroCombate {
     private void escrituraCazadorDesafiante(Combate combate, BufferedWriter bw) throws IOException {
 
         Cazador cazador = (Cazador) combate.getDesafiante().getPersonaje();
-        Disciplina disciplina = (Disciplina) cazador.getHabilidad();
 
         //TIPO PERSONAJE
         bw.write("TIPO_PERSONAJE: ");
@@ -670,41 +747,41 @@ public class EscrituraFicheroCombate {
 
         //ATAQUE HABILIDAD
         bw.write("ATAQUE_HABILIDAD: ");
-        bw.write(cazador.getHabilidad().getAtaque());
+        bw.write(String.valueOf(cazador.getHabilidad().getAtaque()));
         bw.newLine();
 
         //DEBILIDAD HABILIDAD
         bw.write("DEFENSA_HABILIDAD: ");
-        bw.write(cazador.getHabilidad().getDefensa());
+        bw.write(String.valueOf(cazador.getHabilidad().getDefensa()));
         bw.newLine();
 
         //EDAD CAZADOR
         bw.write("EDAD_CAZADOR: ");
-        bw.write(cazador.getVoluntad());  //LA EDAD ES LA VOLUNTAD DEL CAZADOR
+        bw.write(String.valueOf(cazador.getVoluntad()));  //LA EDAD ES LA VOLUNTAD DEL CAZADOR
         bw.newLine();
 
         //ARMAS
         //NUMERO ARMAS
         bw.write("NUMERO_ARMAS: ");
-        bw.write(combate.getDesafiante().getPersonaje().getArmas().size());
+        bw.write(String.valueOf(combate.getDesafiante().getPersonaje().getArmas().size()));
         bw.newLine();
 
         for (int variableArma = 0; variableArma < (combate.getDesafiante().getPersonaje().getArmas().size()); variableArma++) {
             Arma arma = combate.getDesafiante().getPersonaje().getArmas().get(variableArma);
-            bw.write("NOMBRE_ARMA:");
+            bw.write("NOMBRE_ARMA: ");
             bw.write(arma.getNombre());
             bw.newLine();
 
-            bw.write("ATAQUE_ARMA:");
-            bw.write(arma.getModAtaque());
+            bw.write("ATAQUE_ARMA: ");
+            bw.write(String.valueOf(arma.getModAtaque()));
             bw.newLine();
 
-            bw.write("DEFENSA_ARMA:");
-            bw.write(arma.getModDefensa());
+            bw.write("DEFENSA_ARMA: ");
+            bw.write(String.valueOf(arma.getModDefensa()));
             bw.newLine();
 
             //si es true es de 1 mano, si es false es de dos manos
-            bw.write("EMPUÑADURA:");
+            bw.write("EMPUÑADURA: ");
             if (arma.isSingleHand()) {
                 bw.write("true");
             } else {
@@ -721,22 +798,22 @@ public class EscrituraFicheroCombate {
         bw.write(combate.getDesafiante().getPersonaje().getArmasActivas().size());
         bw.newLine();
         for (int variableArmaActiva = 0; variableArmaActiva < (combate.getDesafiante().getPersonaje().getArmasActivas().size()); variableArmaActiva++) {
-            Arma armaActiva = (Arma) cazador.getArmasActivas().get(variableArmaActiva);
+            Arma armaActiva = cazador.getArmasActivas().get(variableArmaActiva);
 
-            bw.write("NOMBRE_ARMAS_ACTIVAS:");
+            bw.write("NOMBRE_ARMAS_ACTIVAS: ");
             bw.write(armaActiva.getNombre());
             bw.newLine();
 
-            bw.write("ATAQUE_ARMA_ACTIVAS:");
-            bw.write(armaActiva.getModAtaque());
+            bw.write("ATAQUE_ARMA_ACTIVAS: ");
+            bw.write(String.valueOf(armaActiva.getModAtaque()));
             bw.newLine();
 
-            bw.write("DEFENSA_ARMA_ACTIVAS:");
-            bw.write(armaActiva.getModDefensa());
+            bw.write("DEFENSA_ARMA_ACTIVAS: ");
+            bw.write(String.valueOf(armaActiva.getModDefensa()));
             bw.newLine();
 
             //si es true es de 1 mano, si es false es de dos manos
-            bw.write("EMPUÑADURA:");
+            bw.write("EMPUÑADURA: ");
             if (armaActiva.isSingleHand()) {
                 bw.write("true");
             } else {
@@ -752,64 +829,64 @@ public class EscrituraFicheroCombate {
         bw.write(combate.getDesafiante().getPersonaje().getArmaduras().size());
         bw.newLine();
         for (int j = 0; j < (combate.getDesafiante().getPersonaje().getArmaduras().size()); j++) {
-            Armadura armadura = (Armadura) cazador.getArmaduras().get(j);
-            bw.write("NOMBRE_ARMADURA:");
+            Armadura armadura = cazador.getArmaduras().get(j);
+            bw.write("NOMBRE_ARMADURA: ");
             bw.write(armadura.getNombre());
             bw.newLine();
 
-            bw.write("DEFENSA_ARMADURA:");
-            bw.write(armadura.getModDefensa());
+            bw.write("DEFENSA_ARMADURA: ");
+            bw.write(String.valueOf(armadura.getModDefensa()));
             bw.newLine();
 
-            bw.write("ATAQUE_ARMADURA:");
-            bw.write(armadura.getModAtaque());
+            bw.write("ATAQUE_ARMADURA: ");
+            bw.write(String.valueOf(armadura.getModAtaque()));
             bw.newLine();
         }
         bw.newLine();
 
         //ARMADURAS EQUIPADA
-        bw.write("NOMBRE_ARMADURA_ACTIVA:");
+        bw.write("NOMBRE_ARMADURA_ACTIVA: ");
         bw.write(combate.getDesafiante().getPersonaje().getArmaduraActiva().getNombre());
         bw.newLine();
 
-        bw.write("DEFENSA_ARMADURA_ACTIVA:");
-        bw.write(combate.getDesafiante().getPersonaje().getArmaduraActiva().getModDefensa());
+        bw.write("DEFENSA_ARMADURA_ACTIVA: ");
+        bw.write(String.valueOf(combate.getDesafiante().getPersonaje().getArmaduraActiva().getModDefensa()));
         bw.newLine();
 
-        bw.write("ATAQUE_ARMADURA_ACTIVA:");
-        bw.write(combate.getDesafiante().getPersonaje().getArmaduraActiva().getModAtaque());
+        bw.write("ATAQUE_ARMADURA_ACTIVA: ");
+        bw.write(String.valueOf(combate.getDesafiante().getPersonaje().getArmaduraActiva().getModAtaque()));
         bw.newLine();
 
         bw.newLine();
 
         //CANTIDAD ORO
         bw.write("ORO: ");
-        bw.write(cazador.getOro());
+        bw.write(String.valueOf(cazador.getOro()));
         bw.newLine();
 
         //CANTIDAD VDA
         bw.write("VIDA: ");
-        bw.write(cazador.getHp());
+        bw.write(String.valueOf(cazador.getHp()));
         bw.newLine();
 
         //PODER
         bw.write("PODER: ");
-        bw.write(cazador.getPoder());
+        bw.write(String.valueOf(cazador.getPoder()));
         bw.newLine();
 
         //DEBILIDADES
         //NUMERO DE DEBILIDADES
         bw.write("NUMERO_DEBILIDADES: ");
-        bw.write(combate.getDesafiante().getPersonaje().getDebilidades().size());
+        bw.write(String.valueOf(combate.getDesafiante().getPersonaje().getDebilidades().size()));
         bw.newLine();
         for (int j = 0; j < (combate.getDesafiante().getPersonaje().getArmaduras().size()); j++) {
-            Debilidad debilidad = (Debilidad) cazador.getDebilidades().get(j);
-            bw.write("NOMBRE_DEBILIDAD:");
+            Debilidad debilidad = cazador.getDebilidades().get(j);
+            bw.write("NOMBRE_DEBILIDAD: ");
             bw.write(debilidad.getNombre());
             bw.newLine();
 
-            bw.write("VALOR_DEBILIDAD:");
-            bw.write(debilidad.getValor());
+            bw.write("VALOR_DEBILIDAD: ");
+            bw.write(String.valueOf(debilidad.getValor()));
             bw.newLine();
         }
         bw.newLine();
@@ -817,16 +894,16 @@ public class EscrituraFicheroCombate {
         //FORTALEZAS
         //NUMERO DE FORTALEZAS
         bw.write("NUMERO_FORTALEZAS: ");
-        bw.write(combate.getDesafiante().getPersonaje().getDebilidades().size());
+        bw.write(String.valueOf(combate.getDesafiante().getPersonaje().getDebilidades().size()));
         bw.newLine();
         for (int j = 0; j < (combate.getDesafiante().getPersonaje().getArmaduras().size()); j++) {
-            Fortaleza fortaleza = (Fortaleza) cazador.getFortalezas().get(j);
-            bw.write("NOMBRE_FORTALEZA:");
+            Fortaleza fortaleza = cazador.getFortalezas().get(j);
+            bw.write("NOMBRE_FORTALEZA: ");
             bw.write(fortaleza.getNombre());
             bw.newLine();
 
-            bw.write("VALOR_FORTALEZA:");
-            bw.write(fortaleza.getValor());
+            bw.write("VALOR_FORTALEZA: ");
+            bw.write(String.valueOf(fortaleza.getValor()));
             bw.newLine();
         }
         bw.newLine();
@@ -834,7 +911,7 @@ public class EscrituraFicheroCombate {
         //ESBIRROS
         //NUMERO DE ESBIRROS
         bw.write("NUMERO_ESBIRROS: ");
-        bw.write(combate.getDesafiante().getPersonaje().getEsbirros().size());
+        bw.write(String.valueOf(combate.getDesafiante().getPersonaje().getEsbirros().size()));
         bw.newLine();
 
         escrituraEsbirrosDesafiante(combate, cazador, bw);
@@ -850,7 +927,7 @@ public class EscrituraFicheroCombate {
                 //NUMERO DE ESBIRROS
                 bw.write("TIPO_ESBIRRO: ");
 
-                bw.write(personaje.getTipo());
+                bw.write(humano.getTipo());
                 bw.newLine();
 
                 //NOMBRE DE ESBIRROS
@@ -860,7 +937,7 @@ public class EscrituraFicheroCombate {
 
                 //VIDA DE ESBIRROS
                 bw.write("VIDA_ESBIRRO: ");
-                bw.write(humano.getHp());
+                bw.write(String.valueOf(humano.getHp()));
                 bw.newLine();
 
                 //LEALTAD ESBIRRO HUMANO
@@ -878,7 +955,7 @@ public class EscrituraFicheroCombate {
                 Ghoul ghoul = (Ghoul) personaje.getEsbirros().get(j);
                 //NUMERO DE ESBIRRO
                 bw.write("TIPO_ESBIRRO: ");
-                bw.write(personaje.getTipo());
+                bw.write(ghoul.getTipo());
                 bw.newLine();
 
                 //NOMBRE DE ESBIRRO
@@ -888,12 +965,12 @@ public class EscrituraFicheroCombate {
 
                 //VIDA DE ESBIRRO
                 bw.write("VIDA_ESBIRRO: ");
-                bw.write(ghoul.getHp());
+                bw.write(String.valueOf(ghoul.getHp()));
                 bw.newLine();
 
                 //DEPENDENCIA ESBIRRO
                 bw.write("DEPENDENCIA: ");
-                bw.write(ghoul.getDependencia());
+                bw.write(String.valueOf(ghoul.getDependencia()));
                 bw.newLine();
 
             } else if (personaje.getEsbirros().get(j).getTipo().equals("DEMONIO")) {
@@ -901,7 +978,7 @@ public class EscrituraFicheroCombate {
                 //TIPO DE ESBIRRO
                 bw.write("TIPO_ESBIRRO: ");
 
-                bw.write(personaje.getTipo());
+                bw.write(demonio.getTipo());
                 bw.newLine();
 
                 //NOMBRE DE ESBIRRO
@@ -911,7 +988,7 @@ public class EscrituraFicheroCombate {
 
                 //VIDA ESBIRRO
                 bw.write("VIDA_ESBIRRO: ");
-                bw.write(demonio.getHp());
+                bw.write(String.valueOf(demonio.getHp()));
                 bw.newLine();
 
                 //DESCRIPCION / PACTO
@@ -922,7 +999,7 @@ public class EscrituraFicheroCombate {
                 //ESBIRROS EXTRA
                 //NUMERO DE ESBIRROS EXTRA
                 bw.write("NUMERO_ESBIRROS_EXTRA: ");
-                bw.write(combate.getDesafiante().getPersonaje().getEsbirros().size());
+                bw.write(String.valueOf(combate.getDesafiante().getPersonaje().getEsbirros().size()));
                 bw.newLine();
                 escrituraEsbirrosDesafiante(combate, personaje, bw);
             }
@@ -944,7 +1021,7 @@ public class EscrituraFicheroCombate {
         bw.newLine();
         //PUNTOS DE SANGRE
         bw.write("SANGRE: ");
-        bw.write(vampiro.getSangre());
+        bw.write("0");
         bw.newLine();
         //NOMBRE DE HABILIDAD
         bw.write("NOMNRE_HABILIDAD: ");
@@ -953,22 +1030,22 @@ public class EscrituraFicheroCombate {
 
         //VALOR ATAQUE
         bw.write("VALOR_ATAQUE: ");
-        bw.write(disciplina.getAtaque());
+        bw.write(String.valueOf(disciplina.getAtaque()));
         bw.newLine();
 
         //VALOR DEFENSA
         bw.write("VALOR_DEFENSA: ");
-        bw.write(disciplina.getDefensa());
+        bw.write(String.valueOf(disciplina.getDefensa()));
         bw.newLine();
 
         //COSTE HABILIDAD
         bw.write("COSATE_HABILIDAD: ");
-        bw.write(disciplina.getCoste());
+        bw.write(String.valueOf(disciplina.getCoste()));
         bw.newLine();
 
         //ARMAS
         bw.write("NUMERO_ARMAS: ");
-        bw.write(combate.getContrincante().getPersonaje().getArmas().size());
+        bw.write(String.valueOf(combate.getContrincante().getPersonaje().getArmas().size()));
         bw.newLine();
 
         for (int variableArma = 0; variableArma < (combate.getContrincante().getPersonaje().getArmas().size()); variableArma++) {
@@ -978,11 +1055,11 @@ public class EscrituraFicheroCombate {
             bw.newLine();
 
             bw.write("ATAQUE_ARMA: ");
-            bw.write(arma.getModAtaque());
+            bw.write(String.valueOf(arma.getModAtaque()));
             bw.newLine();
 
-            bw.write("DEFENSA_ARMA:");
-            bw.write(arma.getModDefensa());
+            bw.write("DEFENSA_ARMA: ");
+            bw.write(String.valueOf(arma.getModDefensa()));
             bw.newLine();
 
             //si es true es de 1 mano, si es false es de dos manos
@@ -999,7 +1076,7 @@ public class EscrituraFicheroCombate {
 
         //NUMERO DE ARMAS ACTIVAS
         bw.write("NUMERO_ARMAS_ACTIVAS: ");
-        bw.write(combate.getContrincante().getPersonaje().getArmasActivas().size());
+        bw.write(String.valueOf(combate.getContrincante().getPersonaje().getArmasActivas().size()));
         bw.newLine();
         for (int variableArmaActiva = 0; variableArmaActiva < (combate.getContrincante().getPersonaje().getArmasActivas().size()); variableArmaActiva++) {
             Arma armaActiva = (Arma) vampiro.getArmasActivas().get(variableArmaActiva);
@@ -1008,12 +1085,12 @@ public class EscrituraFicheroCombate {
             bw.write(armaActiva.getNombre());
             bw.newLine();
 
-            bw.write("ATAQUE_ARMA_ACTIVAS:");
-            bw.write(armaActiva.getModAtaque());
+            bw.write("ATAQUE_ARMA_ACTIVAS: ");
+            bw.write(String.valueOf(armaActiva.getModAtaque()));
             bw.newLine();
 
             bw.write("DEFENSA_ARMA_ACTIVAS: ");
-            bw.write(armaActiva.getModDefensa());
+            bw.write(String.valueOf(armaActiva.getModDefensa()));
             bw.newLine();
 
             //si es true es de 1 mano, si es false es de dos manos
@@ -1030,7 +1107,7 @@ public class EscrituraFicheroCombate {
         //ARMADURAS
         //NUMERO DE ARMADURAS
         bw.write("NUMERO_ARMADURAS: ");
-        bw.write(combate.getContrincante().getPersonaje().getArmaduras().size());
+        bw.write(String.valueOf(combate.getContrincante().getPersonaje().getArmaduras().size()));
         bw.newLine();
         for (int j = 0; j < (combate.getContrincante().getPersonaje().getArmaduras().size()); j++) {
             Armadura armadura = (Armadura) vampiro.getArmaduras().get(j);
@@ -1039,28 +1116,89 @@ public class EscrituraFicheroCombate {
             bw.newLine();
 
             bw.write("DEFENSA_ARMADURA: ");
-            bw.write(armadura.getModDefensa());
+            bw.write(String.valueOf(armadura.getModDefensa()));
             bw.newLine();
 
             bw.write("ATAQUE_ARMADURA: ");
-            bw.write(armadura.getModAtaque());
+            bw.write(String.valueOf(armadura.getModAtaque()));
             bw.newLine();
         }
+        bw.newLine();
+        Armadura armadura = vampiro.getArmaduraActiva();
+        bw.write("NOMBRE_ARMADURA: ");
+        bw.write(armadura.getNombre());
+        bw.newLine();
+
+        bw.write("DEFENSA_ARMADURA: ");
+        bw.write(String.valueOf(armadura.getModDefensa()));
+        bw.newLine();
+
+        bw.write("ATAQUE_ARMADURA: ");
+        bw.write(String.valueOf(armadura.getModAtaque()));
+        bw.newLine();
+        vampiro.setArmaduraActiva(armadura);
         bw.newLine();
 
         //EDAD VAMPIRO
         bw.write("EDAD_VAMPIRO: ");
-        bw.write(vampiro.getEdad());
+        bw.write(String.valueOf(vampiro.getEdad()));
         bw.newLine();
 
         //ESBIRROS
         //NUMERO DE ESBIRROS
         bw.write("NUMERO_ESBIRROS: ");
-        bw.write(combate.getContrincante().getPersonaje().getEsbirros().size());
+        bw.write(String.valueOf(combate.getContrincante().getPersonaje().getEsbirros().size()));
         bw.newLine();
 
         //ESBIRROS
         escrituraEsbirrosContrincante(combate, vampiro, bw);
+
+        //CANTIDAD ORO
+        bw.write("CANTIDAD_ORO: ");
+        bw.write(String.valueOf(vampiro.getOro()));
+        bw.newLine();
+
+        //CANTIDAD VIDA
+        bw.write("CANTIDAD_VIDA: ");
+        bw.write(String.valueOf(vampiro.getHp()));
+        bw.newLine();
+
+        //PODER
+        bw.write("CANTIDAD_PODER: ");
+        bw.write(String.valueOf(vampiro.getPoder()));
+        bw.newLine();
+
+        //DEBILIDADES
+        bw.write("NUMERO_DEBILIDADES: ");
+        bw.write(String.valueOf(combate.getContrincante().getPersonaje().getDebilidades().size()));
+        bw.newLine();
+        for (int j = 0; j < (combate.getContrincante().getPersonaje().getDebilidades().size()); j++) {
+            Debilidad debilidad = vampiro.getDebilidades().get(j);
+            bw.write("NOMBRE_DEBILIDAD: ");
+            bw.write(debilidad.getNombre());
+            bw.newLine();
+
+            bw.write("VALOR_DEBILIDAD: ");
+            bw.write(String.valueOf(debilidad.getValor()));
+            bw.newLine();
+        }
+        bw.newLine();
+
+        //FORTALEZAS
+        bw.write("NUMERO_FORTALEZAS: ");
+        bw.write(String.valueOf(combate.getContrincante().getPersonaje().getFortalezas().size()));
+        bw.newLine();
+        for (int j = 0; j < (combate.getContrincante().getPersonaje().getFortalezas().size()); j++) {
+            Fortaleza fortaleza = vampiro.getFortalezas().get(j);
+            bw.write("NOMBRE_FORTALEZA: ");
+            bw.write(fortaleza.getNombre());
+            bw.newLine();
+
+            bw.write("VALOR_FORTALEZA: ");
+            bw.write(String.valueOf(fortaleza.getValor()));
+            bw.newLine();
+        }
+        bw.newLine();
 
         bw.write("FIN_USUARIO");
         bw.newLine();
@@ -1069,7 +1207,6 @@ public class EscrituraFicheroCombate {
     private void escrituraLicantropoContrincante(Combate combate, BufferedWriter bw) throws IOException {
 
         Licantropo licantropo = (Licantropo) combate.getContrincante().getPersonaje();
-        Disciplina disciplina = (Disciplina) licantropo.getHabilidad();
 
         //TIPO PERSONAJE
         bw.write("TIPO_PERSONAJE: ");
@@ -1082,12 +1219,12 @@ public class EscrituraFicheroCombate {
 
         //PUNTOS DE SANGRE
         bw.write("RABIA: ");
-        bw.write(licantropo.getRabia());
+        bw.write("0");
         bw.newLine();
 
         //NUMERO ARMAS
         bw.write("NUMERO_ARMAS: ");
-        bw.write(combate.getContrincante().getPersonaje().getArmas().size());
+        bw.write(String.valueOf(combate.getContrincante().getPersonaje().getArmas().size()));
         bw.newLine();
 
         for (int variableArma = 0; variableArma < (combate.getContrincante().getPersonaje().getArmas().size()); variableArma++) {
@@ -1097,11 +1234,11 @@ public class EscrituraFicheroCombate {
             bw.newLine();
 
             bw.write("ATAQUE_ARMA: ");
-            bw.write(arma.getModAtaque());
+            bw.write(String.valueOf(arma.getModAtaque()));
             bw.newLine();
 
             bw.write("DEFENSA_ARMA: ");
-            bw.write(arma.getModDefensa());
+            bw.write(String.valueOf(arma.getModDefensa()));
             bw.newLine();
 
             //si es true es de 1 mano, si es false es de dos manos
@@ -1127,12 +1264,12 @@ public class EscrituraFicheroCombate {
             bw.write(armaActiva.getNombre());
             bw.newLine();
 
-            bw.write("ATAQUE_ARMA_ACTIVAS:");
-            bw.write(armaActiva.getModAtaque());
+            bw.write("ATAQUE_ARMA_ACTIVAS: ");
+            bw.write(String.valueOf(armaActiva.getModAtaque()));
             bw.newLine();
 
             bw.write("DEFENSA_ARMA_ACTIVAS: ");
-            bw.write(armaActiva.getModDefensa());
+            bw.write(String.valueOf(armaActiva.getModDefensa()));
             bw.newLine();
 
             //si es true es de 1 mano, si es false es de dos manos
@@ -1158,11 +1295,11 @@ public class EscrituraFicheroCombate {
             bw.newLine();
 
             bw.write("DEFENSA_ARMADURA: ");
-            bw.write(armadura.getModDefensa());
+            bw.write(String.valueOf(armadura.getModDefensa()));
             bw.newLine();
 
             bw.write("ATAQUE_ARMADURA: ");
-            bw.write(armadura.getModAtaque());
+            bw.write(String.valueOf(armadura.getModAtaque()));
             bw.newLine();
         }
         bw.newLine();
@@ -1174,32 +1311,32 @@ public class EscrituraFicheroCombate {
 
         //DEFENSA ARMADURA ACTIVA / EQUIPADA
         bw.write("DEFENSA_ARMADURA_ACTIVA: ");
-        bw.write(combate.getContrincante().getPersonaje().getArmaduraActiva().getModDefensa());
+        bw.write(String.valueOf(combate.getContrincante().getPersonaje().getArmaduraActiva().getModDefensa()));
         bw.newLine();
 
         //ATAQUE ARMADURA ACTIVA / EQUIPADA
         bw.write("ATAQUE_ARMADURA_ACTIVA: ");
-        bw.write(combate.getContrincante().getPersonaje().getArmaduraActiva().getModAtaque());
+        bw.write(String.valueOf(combate.getContrincante().getPersonaje().getArmaduraActiva().getModAtaque()));
         bw.newLine();
 
         //CANTIDAD ORO
         bw.write("ORO: ");
-        bw.write(combate.getContrincante().getPersonaje().getOro());
+        bw.write(String.valueOf(combate.getContrincante().getPersonaje().getOro()));
         bw.newLine();
 
         //DEBLIDADES
         //NUMERO DE DEBLIDADES
         bw.write("NUMERO_DEBILIDADES: ");
-        bw.write(combate.getContrincante().getPersonaje().getDebilidades().size());
+        bw.write(String.valueOf(combate.getContrincante().getPersonaje().getDebilidades().size()));
         bw.newLine();
         for (int j = 0; j < (combate.getContrincante().getPersonaje().getArmaduras().size()); j++) {
-            Debilidad debilidad = (Debilidad) licantropo.getDebilidades().get(j);
+            Debilidad debilidad = licantropo.getDebilidades().get(j);
             bw.write("NOMBRE_DEBILIADAD: ");
             bw.write(debilidad.getNombre());
             bw.newLine();
 
-            bw.write("VALOR_DEBILIADAD:");
-            bw.write(debilidad.getValor());
+            bw.write("VALOR_DEBILIADAD: ");
+            bw.write(String.valueOf(debilidad.getValor()));
             bw.newLine();
         }
         bw.newLine();
@@ -1207,16 +1344,16 @@ public class EscrituraFicheroCombate {
         //FORTALEZAS
         //NUMERO DE FORTALEZAS
         bw.write("NUMERO_FORTALEZAS: ");
-        bw.write(combate.getContrincante().getPersonaje().getFortalezas().size());
+        bw.write(String.valueOf(combate.getContrincante().getPersonaje().getFortalezas().size()));
         bw.newLine();
         for (int j = 0; j < (combate.getContrincante().getPersonaje().getArmaduras().size()); j++) {
-            Fortaleza fortaleza = (Fortaleza) licantropo.getFortalezas().get(j);
-            bw.write("NOMBRE_FORTALEZA:");
+            Fortaleza fortaleza = licantropo.getFortalezas().get(j);
+            bw.write("NOMBRE_FORTALEZA: ");
             bw.write(fortaleza.getNombre());
             bw.newLine();
 
-            bw.write("VALOR_FORTALEZA:");
-            bw.write(fortaleza.getValor());
+            bw.write("VALOR_FORTALEZA: ");
+            bw.write(String.valueOf(fortaleza.getValor()));
             bw.newLine();
         }
         bw.newLine();
@@ -1237,7 +1374,6 @@ public class EscrituraFicheroCombate {
     private void escrituraCazadorContrincante(Combate combate, BufferedWriter bw) throws IOException {
 
         Cazador cazador = (Cazador) combate.getContrincante().getPersonaje();
-        Disciplina disciplina = (Disciplina) cazador.getHabilidad();
 
         //TIPO PERSONAJE
         bw.write("TIPO_PERSONAJE: ");
@@ -1255,41 +1391,41 @@ public class EscrituraFicheroCombate {
 
         //ATAQUE HABILIDAD
         bw.write("ATAQUE_HABILIDAD: ");
-        bw.write(cazador.getHabilidad().getAtaque());
+        bw.write(String.valueOf(cazador.getHabilidad().getAtaque()));
         bw.newLine();
 
         //DEBILIDAD HABILIDAD
         bw.write("DEFENSA_HABILIDAD: ");
-        bw.write(cazador.getHabilidad().getDefensa());
+        bw.write(String.valueOf(cazador.getHabilidad().getDefensa()));
         bw.newLine();
 
         //EDAD CAZADOR
         bw.write("EDAD_CAZADOR: ");
-        bw.write(cazador.getVoluntad());  //LA EDAD ES LA VOLUNTAD DEL CAZADOR
+        bw.write(String.valueOf(cazador.getVoluntad()));  //LA EDAD ES LA VOLUNTAD DEL CAZADOR
         bw.newLine();
 
         //ARMAS
         //NUMERO ARMAS
         bw.write("NUMERO_ARMAS: ");
-        bw.write(combate.getContrincante().getPersonaje().getArmas().size());
+        bw.write(String.valueOf(combate.getContrincante().getPersonaje().getArmas().size()));
         bw.newLine();
 
         for (int variableArma = 0; variableArma < (combate.getContrincante().getPersonaje().getArmas().size()); variableArma++) {
             Arma arma = combate.getContrincante().getPersonaje().getArmas().get(variableArma);
-            bw.write("NOMBRE_ARMA:");
+            bw.write("NOMBRE_ARMA: ");
             bw.write(arma.getNombre());
             bw.newLine();
 
-            bw.write("ATAQUE_ARMA:");
-            bw.write(arma.getModAtaque());
+            bw.write("ATAQUE_ARMA: ");
+            bw.write(String.valueOf(arma.getModAtaque()));
             bw.newLine();
 
-            bw.write("DEFENSA_ARMA:");
-            bw.write(arma.getModDefensa());
+            bw.write("DEFENSA_ARMA: ");
+            bw.write(String.valueOf(arma.getModDefensa()));
             bw.newLine();
 
             //si es true es de 1 mano, si es false es de dos manos
-            bw.write("EMPUÑADURA:");
+            bw.write("EMPUÑADURA: ");
             if (arma.isSingleHand()) {
                 bw.write("true");
             } else {
@@ -1308,20 +1444,20 @@ public class EscrituraFicheroCombate {
         for (int variableArmaActiva = 0; variableArmaActiva < (combate.getContrincante().getPersonaje().getArmasActivas().size()); variableArmaActiva++) {
             Arma armaActiva = (Arma) cazador.getArmasActivas().get(variableArmaActiva);
 
-            bw.write("NOMBRE_ARMAS_ACTIVAS:");
+            bw.write("NOMBRE_ARMAS_ACTIVAS: ");
             bw.write(armaActiva.getNombre());
             bw.newLine();
 
-            bw.write("ATAQUE_ARMA_ACTIVAS:");
-            bw.write(armaActiva.getModAtaque());
+            bw.write("ATAQUE_ARMA_ACTIVAS: ");
+            bw.write(String.valueOf(armaActiva.getModAtaque()));
             bw.newLine();
 
-            bw.write("DEFENSA_ARMA_ACTIVAS:");
-            bw.write(armaActiva.getModDefensa());
+            bw.write("DEFENSA_ARMA_ACTIVAS: ");
+            bw.write(String.valueOf(armaActiva.getModDefensa()));
             bw.newLine();
 
             //si es true es de 1 mano, si es false es de dos manos
-            bw.write("EMPUÑADURA:");
+            bw.write("EMPUÑADURA: ");
             if (armaActiva.isSingleHand()) {
                 bw.write("true");
             } else {
@@ -1334,67 +1470,67 @@ public class EscrituraFicheroCombate {
         //ARMADURAS
         //NUMERO DE ARMADURAS
         bw.write("NUMERO_ARMADURAS: ");
-        bw.write(combate.getContrincante().getPersonaje().getArmaduras().size());
+        bw.write(String.valueOf(combate.getContrincante().getPersonaje().getArmaduras().size()));
         bw.newLine();
         for (int j = 0; j < (combate.getContrincante().getPersonaje().getArmaduras().size()); j++) {
-            Armadura armadura = (Armadura) cazador.getArmaduras().get(j);
-            bw.write("NOMBRE_ARMADURA:");
+            Armadura armadura = cazador.getArmaduras().get(j);
+            bw.write("NOMBRE_ARMADURA: ");
             bw.write(armadura.getNombre());
             bw.newLine();
 
-            bw.write("DEFENSA_ARMADURA:");
-            bw.write(armadura.getModDefensa());
+            bw.write("DEFENSA_ARMADURA: ");
+            bw.write(String.valueOf(armadura.getModDefensa()));
             bw.newLine();
 
-            bw.write("ATAQUE_ARMADURA:");
-            bw.write(armadura.getModAtaque());
+            bw.write("ATAQUE_ARMADURA: ");
+            bw.write(String.valueOf(armadura.getModAtaque()));
             bw.newLine();
         }
         bw.newLine();
 
         //ARMADURAS EQUIPADA
-        bw.write("NOMBRE_ARMADURA_ACTIVA:");
-        bw.write(combate.getContrincante().getPersonaje().getArmaduraActiva().getNombre());
+        bw.write("NOMBRE_ARMADURA_ACTIVA: ");
+        bw.write(String.valueOf(combate.getContrincante().getPersonaje().getArmaduraActiva().getNombre()));
         bw.newLine();
 
-        bw.write("DEFENSA_ARMADURA_ACTIVA:");
-        bw.write(combate.getContrincante().getPersonaje().getArmaduraActiva().getModDefensa());
+        bw.write("DEFENSA_ARMADURA_ACTIVA: ");
+        bw.write(String.valueOf(combate.getContrincante().getPersonaje().getArmaduraActiva().getModDefensa()));
         bw.newLine();
 
-        bw.write("ATAQUE_ARMADURA_ACTIVA:");
-        bw.write(combate.getContrincante().getPersonaje().getArmaduraActiva().getModAtaque());
+        bw.write("ATAQUE_ARMADURA_ACTIVA: ");
+        bw.write(String.valueOf(combate.getContrincante().getPersonaje().getArmaduraActiva().getModAtaque()));
         bw.newLine();
 
         bw.newLine();
 
         //CANTIDAD ORO
         bw.write("ORO: ");
-        bw.write(cazador.getOro());
+        bw.write(String.valueOf(cazador.getOro()));
         bw.newLine();
 
         //CANTIDAD VDA
         bw.write("VIDA: ");
-        bw.write(cazador.getHp());
+        bw.write(String.valueOf(cazador.getHp()));
         bw.newLine();
 
         //PODER
         bw.write("PODER: ");
-        bw.write(cazador.getPoder());
+        bw.write(String.valueOf(cazador.getPoder()));
         bw.newLine();
 
         //DEBILIDADES
         //NUMERO DE DEBILIDADES
         bw.write("NUMERO_DEBILIDADES: ");
-        bw.write(combate.getContrincante().getPersonaje().getDebilidades().size());
+        bw.write(String.valueOf(combate.getContrincante().getPersonaje().getDebilidades().size()));
         bw.newLine();
         for (int j = 0; j < (combate.getContrincante().getPersonaje().getArmaduras().size()); j++) {
-            Debilidad debilidad = (Debilidad) cazador.getDebilidades().get(j);
-            bw.write("NOMBRE_DEBILIDAD:");
+            Debilidad debilidad = cazador.getDebilidades().get(j);
+            bw.write("NOMBRE_DEBILIDAD: ");
             bw.write(debilidad.getNombre());
             bw.newLine();
 
-            bw.write("VALOR_DEBILIDAD:");
-            bw.write(debilidad.getValor());
+            bw.write("VALOR_DEBILIDAD: ");
+            bw.write(String.valueOf(debilidad.getValor()));
             bw.newLine();
         }
         bw.newLine();
@@ -1402,16 +1538,16 @@ public class EscrituraFicheroCombate {
         //FORTALEZAS
         //NUMERO DE FORTALEZAS
         bw.write("NUMERO_FORTALEZAS: ");
-        bw.write(combate.getContrincante().getPersonaje().getDebilidades().size());
+        bw.write(String.valueOf(combate.getContrincante().getPersonaje().getDebilidades().size()));
         bw.newLine();
         for (int j = 0; j < (combate.getContrincante().getPersonaje().getArmaduras().size()); j++) {
-            Fortaleza fortaleza = (Fortaleza) cazador.getFortalezas().get(j);
-            bw.write("NOMBRE_FORTALEZA:");
+            Fortaleza fortaleza = cazador.getFortalezas().get(j);
+            bw.write("NOMBRE_FORTALEZA: ");
             bw.write(fortaleza.getNombre());
             bw.newLine();
 
-            bw.write("VALOR_FORTALEZA:");
-            bw.write(fortaleza.getValor());
+            bw.write("VALOR_FORTALEZA: ");
+            bw.write(String.valueOf(fortaleza.getValor()));
             bw.newLine();
         }
         bw.newLine();
@@ -1419,7 +1555,7 @@ public class EscrituraFicheroCombate {
         //ESBIRROS
         //NUMERO DE ESBIRROS
         bw.write("NUMERO_ESBIRROS: ");
-        bw.write(combate.getContrincante().getPersonaje().getEsbirros().size());
+        bw.write(String.valueOf(combate.getContrincante().getPersonaje().getEsbirros().size()));
         bw.newLine();
 
         escrituraEsbirrosContrincante(combate, cazador, bw);
@@ -1435,7 +1571,7 @@ public class EscrituraFicheroCombate {
                 //NUMERO DE ESBIRROS
                 bw.write("TIPO_ESBIRRO: ");
 
-                bw.write(personaje.getTipo());
+                bw.write(humano.getTipo());
                 bw.newLine();
 
                 //NOMBRE DE ESBIRROS
@@ -1445,7 +1581,7 @@ public class EscrituraFicheroCombate {
 
                 //VIDA DE ESBIRROS
                 bw.write("VIDA_ESBIRRO: ");
-                bw.write(humano.getHp());
+                bw.write(String.valueOf(humano.getHp()));
                 bw.newLine();
 
                 //LEALTAD ESBIRRO HUMANO
@@ -1463,7 +1599,7 @@ public class EscrituraFicheroCombate {
                 Ghoul ghoul = (Ghoul) personaje.getEsbirros().get(j);
                 //NUMERO DE ESBIRRO
                 bw.write("TIPO_ESBIRRO: ");
-                bw.write(personaje.getTipo());
+                bw.write(ghoul.getTipo());
                 bw.newLine();
 
                 //NOMBRE DE ESBIRRO
@@ -1473,12 +1609,12 @@ public class EscrituraFicheroCombate {
 
                 //VIDA DE ESBIRRO
                 bw.write("VIDA_ESBIRRO: ");
-                bw.write(ghoul.getHp());
+                bw.write(String.valueOf(ghoul.getHp()));
                 bw.newLine();
 
                 //DEPENDENCIA ESBIRRO
                 bw.write("DEPENDENCIA: ");
-                bw.write(ghoul.getDependencia());
+                bw.write(String.valueOf(ghoul.getDependencia()));
                 bw.newLine();
 
             } else if (personaje.getEsbirros().get(j).getTipo().equals("DEMONIO")) {
@@ -1486,7 +1622,7 @@ public class EscrituraFicheroCombate {
                 //TIPO DE ESBIRRO
                 bw.write("TIPO_ESBIRRO: ");
 
-                bw.write(personaje.getTipo());
+                bw.write(demonio.getTipo());
                 bw.newLine();
 
                 //NOMBRE DE ESBIRRO
@@ -1496,7 +1632,7 @@ public class EscrituraFicheroCombate {
 
                 //VIDA ESBIRRO
                 bw.write("VIDA_ESBIRRO: ");
-                bw.write(demonio.getHp());
+                bw.write(String.valueOf(demonio.getHp()));
                 bw.newLine();
 
                 //DESCRIPCION / PACTO
@@ -1507,7 +1643,7 @@ public class EscrituraFicheroCombate {
                 //ESBIRROS EXTRA
                 //NUMERO DE ESBIRROS EXTRA
                 bw.write("NUMERO_ESBIRROS_EXTRA: ");
-                bw.write(combate.getContrincante().getPersonaje().getEsbirros().size());
+                bw.write(String.valueOf(combate.getContrincante().getPersonaje().getEsbirros().size()));
                 bw.newLine();
                 escrituraEsbirrosContrincante(combate, personaje, bw);
             }

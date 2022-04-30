@@ -81,80 +81,65 @@ public class Operador extends User {
         Cliente desafiante, contrincante = new Cliente();
         LecturaFicheroDesafio lecturaFicheroDesafio = new LecturaFicheroDesafio();
         ArrayList<Desafio> listaDesafios = lecturaFicheroDesafio.lecturaFicheroDesafio();
+        boolean any = false;
 
         for (int i = 0; i < listaDesafios.size(); i++) {
             if (!listaDesafios.get(i).isValidated()) {
+                any = true;
                 desafiante = listaDesafios.get(i).getDesafiante();
                 contrincante = listaDesafios.get(i).getContrincante();
                 Date fechaDesafio = listaDesafios.get(i).getFecha();
                 boolean banear = comprobarBan(fechaDesafio, contrincante);
                 if (banear) {
                     banearUser(desafiante);
+                    listaDesafios.remove(i);
+                    EscrituraFicheroDesafio escrituraFicheroDesafio = new EscrituraFicheroDesafio();
+                    escrituraFicheroDesafio.sobreescribirFicheroDesafio(listaDesafios);
+                    break;
                 } else {
-                    terminal.mostrarModificadoresDesafio(desafiante, contrincante, i);
+                    ArrayList<Modificador> lista = terminal.mostrarModificadoresDesafio(desafiante, contrincante, i);
                     int opcion;
                     do {
                         terminal.validarDesafio();
                         opcion = sc.nextInt();
-                        if (opcion != 0 && opcion != 1) {
+                        if (opcion != 2 && opcion != 1) {
                             terminal.numValido();
                         }
-                    } while (opcion != 0 && opcion != 1);
-                    if (opcion == 0) {
+                    } while (opcion != 1 && opcion != 2);
+                    if (opcion == 1) {
                         listaDesafios.get(i).setValidated(true);
                         ArrayList<Modificador> listaMods = new ArrayList<>();
                         String modificacion;
-                        terminal.eleccionFortalezas();
+                        terminal.eleccionModificadores();
                         do {
-                            modificacion = sc.nextLine();
+                            Scanner sc2 = new Scanner(System.in);
+                            modificacion = sc2.nextLine();
                             boolean encontrado = false;
-                            for (int j = 0; j < desafiante.getPersonaje().getFortalezas().size(); j++) {
-                                if (desafiante.getPersonaje().getFortalezas().get(j).getNombre().equals(modificacion)) {
-                                    listaMods.add(desafiante.getPersonaje().getFortalezas().get(j));
+                            for (Modificador modificador : lista) {
+                                if (modificador.getNombre().equals(modificacion)) {
+                                    listaMods.add(modificador);
                                     encontrado = true;
+                                    break;
                                 }
                             }
-                            if (!encontrado) {
-                                for (int j = 0; j < contrincante.getPersonaje().getFortalezas().size(); j++) {
-                                    if (contrincante.getPersonaje().getFortalezas().get(j).getNombre().equals(modificacion)) {
-                                        listaMods.add(contrincante.getPersonaje().getFortalezas().get(j));
-                                        encontrado = true;
-                                    }
-                                }
-                            }
-                            if (!encontrado) {
-                                terminal.errorMod();
-                            }
-                        } while (!modificacion.equals("continuar"));
-
-                        terminal.eleccionDebilidades();
-                        do {
-                            modificacion = sc.nextLine();
-                            boolean encontrado = false;
-                            for (int j = 0; j < desafiante.getPersonaje().getDebilidades().size(); j++) {
-                                if (desafiante.getPersonaje().getDebilidades().get(j).getNombre().equals(modificacion)) {
-                                    listaMods.add(desafiante.getPersonaje().getDebilidades().get(j));
-                                    encontrado = true;
-                                }
-                            }
-                            if (!encontrado) {
-                                for (int j = 0; j < contrincante.getPersonaje().getDebilidades().size(); j++) {
-                                    if (contrincante.getPersonaje().getDebilidades().get(j).getNombre().equals(modificacion)) {
-                                        listaMods.add(contrincante.getPersonaje().getDebilidades().get(j));
-                                        encontrado = true;
-                                    }
-                                }
-                            }
-                            if (!encontrado) {
+                            if (!encontrado && !modificacion.equals("salir")) {
                                 terminal.errorMod();
                             }
                         } while (!modificacion.equals("salir"));
                         listaDesafios.get(i).setModificadores(listaMods);
+                        EscrituraFicheroDesafio escrituraFicheroDesafio = new EscrituraFicheroDesafio();
+                        escrituraFicheroDesafio.sobreescribirFicheroDesafio(listaDesafios);
                     } else {
                         listaDesafios.remove(i);
+                        EscrituraFicheroDesafio escrituraFicheroDesafio = new EscrituraFicheroDesafio();
+                        escrituraFicheroDesafio.sobreescribirFicheroDesafio(listaDesafios);
+                        break;
                     }
                 }
             }
+        }
+        if (!any){
+            terminal.noDesafiosParaValidar();
         }
     }
 
@@ -165,23 +150,26 @@ public class Operador extends User {
         ArrayList<Combate> listaCombates = lecturaFicheroCombate.lecturaFicheroCombate();
         boolean sugerirBan = false;
         boolean banear = false;
+        String nickDesafiante = null;
         for (Combate listaCombate : listaCombates) {
-            if (listaCombate.getDesafiante().equals(cliente) ||
-                    listaCombate.getContrincante().equals(cliente)) {
-                Date fechaDesafioAnterior = listaCombate.getFecha();
-                long diferencia = fechaDesafio.getTime() - fechaDesafioAnterior.getTime();
-                long horas = TimeUnit.MILLISECONDS.toHours(diferencia);
-                if (horas <= 24 && (!listaCombate.getVencedor().getNick().equals(cliente.getNick())
-                        || listaCombate.getVencedor() != null)) {
-                    sugerirBan = true;
-                    break;
+            if (listaCombate.getVencedor() != null) {
+                if (listaCombate.getDesafiante().getNick().equals(cliente.getNick()) ||
+                        listaCombate.getContrincante().getNick().equals(cliente.getNick())) {
+                    Date fechaDesafioAnterior = listaCombate.getFecha();
+                    long diferencia = fechaDesafio.getTime() - fechaDesafioAnterior.getTime();
+                    long horas = TimeUnit.MILLISECONDS.toHours(diferencia);
+                    if (horas <= 24 && (!listaCombate.getVencedor().getNick().equals(cliente.getNick()))) {
+                        sugerirBan = true;
+                        nickDesafiante = listaCombate.getDesafiante().getNick();
+                        break;
+                    }
                 }
             }
         }
         if (sugerirBan) {
             int opcion;
             do {
-                terminal.preguntarBan();
+                terminal.preguntarBan(nickDesafiante, cliente.getNick());
                 opcion = sc.nextInt();
             } while (opcion != 1 && opcion != 2);
             if (opcion == 1) {
