@@ -308,6 +308,12 @@ public class EscrituraFicheroUsuario {
         bw.write(listaCliente.get(i).getPersonaje().getNombre());
         bw.newLine();
 
+        //NOMBRE PERSONAJE
+        bw.write("NOMBRE_HABILIDAD: ");
+        bw.write(listaCliente.get(i).getPersonaje().getHabilidad().getNombre());
+        bw.newLine();
+
+
         //PUNTOS DE SANGRE
         bw.write("RABIA: ");
         bw.write("0");
@@ -411,9 +417,21 @@ public class EscrituraFicheroUsuario {
         bw.write(String.valueOf(listaCliente.get(i).getPersonaje().getArmaduraActiva().getModAtaque()));
         bw.newLine();
 
+
+
         //CANTIDAD ORO
         bw.write("ORO: ");
         bw.write(String.valueOf(listaCliente.get(i).getPersonaje().getOro()));
+        bw.newLine();
+
+        //CANTIDAD HP
+        bw.write("HP: ");
+        bw.write(String.valueOf(listaCliente.get(i).getPersonaje().getHp()));
+        bw.newLine();
+
+        //PODER
+        bw.write("PODER: ");
+        bw.write(String.valueOf(listaCliente.get(i).getPersonaje()));
         bw.newLine();
 
         //DEBLIDADES
@@ -494,7 +512,7 @@ public class EscrituraFicheroUsuario {
 
         //EDAD CAZADOR
         bw.write("EDAD_CAZADOR: ");
-        bw.write(String.valueOf(cazador.getVoluntad()));  //LA EDAD ES LA VOLUNTAD DEL CAZADOR
+        bw.write(String.valueOf(cazador.getVoluntad()));
         bw.newLine();
 
         //ARMAS
