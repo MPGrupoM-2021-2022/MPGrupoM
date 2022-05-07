@@ -371,15 +371,17 @@ public class LecturaFicheroUsuarios {
                 textoSeparado = linea.split(": ");
                 cazador.setNombre(textoSeparado[1]);
 
-                //VOLUNTAD CAZADOR
-                linea = br.readLine();
-                textoSeparado = linea.split(": ");
-                cazador.setNombre(textoSeparado[1]);
-
                 //NOMBRE HABILIDAD
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
                 talento.setNombre(textoSeparado[1]);
+
+                //VOLUNTAD CAZADOR
+                linea = br.readLine();
+                textoSeparado = linea.split(": ");
+                cazador.setVoluntad(Integer.parseInt(textoSeparado[1]));
+
+
 
                 //VALOR ATAQUE
                 linea = br.readLine();
@@ -391,7 +393,7 @@ public class LecturaFicheroUsuarios {
                 textoSeparado = linea.split(": ");
                 talento.setDefensa(Integer.parseInt(textoSeparado[1]));
 
-                //EDAD HABILIDAD
+                //EDAD
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
                 talento.setEdad(Integer.parseInt(textoSeparado[1]));

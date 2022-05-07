@@ -313,7 +313,7 @@ public class EscrituraFicheroUsuario {
         bw.write(listaCliente.get(i).getPersonaje().getHabilidad().getNombre());
         bw.newLine();
 
-        //PUNTOS DE SANGRE
+        //PUNTOS DE RABIA
         bw.write("RABIA: ");
         bw.write("0");
         bw.newLine();
@@ -417,7 +417,6 @@ public class EscrituraFicheroUsuario {
         bw.newLine();
 
 
-
         //CANTIDAD ORO
         bw.write("ORO: ");
         bw.write(String.valueOf(listaCliente.get(i).getPersonaje().getOro()));
@@ -430,7 +429,7 @@ public class EscrituraFicheroUsuario {
 
         //PODER
         bw.write("PODER: ");
-        bw.write(String.valueOf(listaCliente.get(i).getPersonaje()));
+        bw.write(String.valueOf(listaCliente.get(i).getPersonaje().getPoder()));
         bw.newLine();
 
         //DEBLIDADES
@@ -494,15 +493,16 @@ public class EscrituraFicheroUsuario {
         bw.write(listaCliente.get(i).getPersonaje().getNombre());
         bw.newLine();
 
+        //NOMBRE HABILDIAD
+        bw.write("NOMBRE_HABILIDAD: ");
+        bw.write(cazador.getHabilidad().getNombre());
+        bw.newLine();
+
         //VOLUNTAD CAZADOR
-        bw.write("RABIA: ");
+        bw.write("CAZADOR: ");
         bw.write("0");
         bw.newLine();
 
-        //NOMBRE HABILDIAD
-        bw.write("NOMBRE_HABILIDAD: ");
-        bw.write(cazador.getNombre());
-        bw.newLine();
 
         //ATAQUE HABILIDAD
         bw.write("ATAQUE_HABILIDAD: ");

@@ -743,7 +743,7 @@ public class EscrituraFicheroCombate {
         bw.newLine();
     }
 
-    private void escrituraCazadorDesafiante(Combate combate, BufferedWriter bw) throws IOException {
+    private void escrituraCazadorDesafiante(Combate combate, BufferedWriter bw) throws IOException  {
 
         Cazador cazador = (Cazador) combate.getDesafiante().getPersonaje();
 
@@ -763,7 +763,7 @@ public class EscrituraFicheroCombate {
 
         //NOMBRE HABILDIAD
         bw.write("NOMBRE_HABILIDAD: ");
-        bw.write(cazador.getNombre());
+        bw.write(cazador.getHabilidad().getNombre());
         bw.newLine();
 
         //ATAQUE HABILIDAD
@@ -1425,7 +1425,7 @@ public class EscrituraFicheroCombate {
         bw.newLine();
 
         //VOLUNTAD CAZADOR
-        bw.write("RABIA: ");
+        bw.write("VOLUNTAD: ");
         bw.write("0");
         bw.newLine();
 
