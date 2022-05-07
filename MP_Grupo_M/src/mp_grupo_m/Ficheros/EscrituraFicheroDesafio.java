@@ -650,6 +650,11 @@ public class EscrituraFicheroDesafio {
         bw.write(desafio.getDesafiante().getPersonaje().getNombre());
         bw.newLine();
 
+        //VOLUNTAD CAZADOR
+        bw.write("RABIA: ");
+        bw.write("0");
+        bw.newLine();
+
         //NOMBRE HABILDIAD
         bw.write("NOMBRE_HABILIDAD: ");
         bw.write(cazador.getNombre());
@@ -784,6 +789,23 @@ public class EscrituraFicheroDesafio {
         bw.write(String.valueOf(cazador.getPoder()));
         bw.newLine();
 
+        //FORTALEZAS
+        //NUMERO DE FORTALEZAS
+        bw.write("NUMERO_FORTALEZAS: ");
+        bw.write(String.valueOf(desafio.getDesafiante().getPersonaje().getDebilidades().size()));
+        bw.newLine();
+        for (int j = 0; j < (desafio.getDesafiante().getPersonaje().getArmaduras().size()); j++) {
+            Fortaleza fortaleza = cazador.getFortalezas().get(j);
+            bw.write("NOMBRE_FORTALEZA: ");
+            bw.write(fortaleza.getNombre());
+            bw.newLine();
+
+            bw.write("VALOR_FORTALEZA: ");
+            bw.write(String.valueOf(fortaleza.getValor()));
+            bw.newLine();
+        }
+        bw.newLine();
+
         //DEBILIDADES
         //NUMERO DE DEBILIDADES
         bw.write("NUMERO_DEBILIDADES: ");
@@ -801,22 +823,7 @@ public class EscrituraFicheroDesafio {
         }
         bw.newLine();
 
-        //FORTALEZAS
-        //NUMERO DE FORTALEZAS
-        bw.write("NUMERO_FORTALEZAS: ");
-        bw.write(String.valueOf(desafio.getDesafiante().getPersonaje().getDebilidades().size()));
-        bw.newLine();
-        for (int j = 0; j < (desafio.getDesafiante().getPersonaje().getArmaduras().size()); j++) {
-            Fortaleza fortaleza = cazador.getFortalezas().get(j);
-            bw.write("NOMBRE_FORTALEZA: ");
-            bw.write(fortaleza.getNombre());
-            bw.newLine();
 
-            bw.write("VALOR_FORTALEZA: ");
-            bw.write(String.valueOf(fortaleza.getValor()));
-            bw.newLine();
-        }
-        bw.newLine();
 
         //ESBIRROS
         //NUMERO DE ESBIRROS

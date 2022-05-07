@@ -573,6 +573,11 @@ public class EscrituraFicheroCombate {
         bw.write(combate.getDesafiante().getPersonaje().getNombre());
         bw.newLine();
 
+        //NOMBRE HABILIDAD
+        bw.write("NOMBRE_HABILIDAD: ");
+        bw.write(combate.getDesafiante().getPersonaje().getHabilidad().getNombre());
+        bw.newLine();
+
         //PUNTOS DE SANGRE
         bw.write("RABIA: ");
         bw.write("0");
@@ -680,6 +685,17 @@ public class EscrituraFicheroCombate {
         bw.write(String.valueOf(combate.getDesafiante().getPersonaje().getOro()));
         bw.newLine();
 
+        //CANTIDAD ORO
+        bw.write("HP: ");
+        bw.write(String.valueOf(combate.getDesafiante().getPersonaje().getHp()));
+        bw.newLine();
+
+        //CANTIDAD ORO
+        bw.write("PODER: ");
+        bw.write(String.valueOf(combate.getDesafiante().getPersonaje().getPoder()));
+        bw.newLine();
+
+
         //DEBLIDADES
         //NUMERO DE DEBLIDADES
         bw.write("NUMERO_DEBILIDADES: ");
@@ -738,6 +754,11 @@ public class EscrituraFicheroCombate {
         //NOMBRE PERSONAJE
         bw.write("NOMBRE_PERSONAJE: ");
         bw.write(combate.getDesafiante().getPersonaje().getNombre());
+        bw.newLine();
+
+        //VOLUNTAD CAZADOR
+        bw.write("RABIA: ");
+        bw.write("0");
         bw.newLine();
 
         //NOMBRE HABILDIAD
@@ -874,6 +895,24 @@ public class EscrituraFicheroCombate {
         bw.write(String.valueOf(cazador.getPoder()));
         bw.newLine();
 
+        //FORTALEZAS
+        //NUMERO DE FORTALEZAS
+        bw.write("NUMERO_FORTALEZAS: ");
+        bw.write(String.valueOf(combate.getDesafiante().getPersonaje().getDebilidades().size()));
+        bw.newLine();
+        for (int j = 0; j < (combate.getDesafiante().getPersonaje().getArmaduras().size()); j++) {
+            Fortaleza fortaleza = cazador.getFortalezas().get(j);
+            bw.write("NOMBRE_FORTALEZA: ");
+            bw.write(fortaleza.getNombre());
+            bw.newLine();
+
+            bw.write("VALOR_FORTALEZA: ");
+            bw.write(String.valueOf(fortaleza.getValor()));
+            bw.newLine();
+        }
+        bw.newLine();
+
+
         //DEBILIDADES
         //NUMERO DE DEBILIDADES
         bw.write("NUMERO_DEBILIDADES: ");
@@ -891,22 +930,7 @@ public class EscrituraFicheroCombate {
         }
         bw.newLine();
 
-        //FORTALEZAS
-        //NUMERO DE FORTALEZAS
-        bw.write("NUMERO_FORTALEZAS: ");
-        bw.write(String.valueOf(combate.getDesafiante().getPersonaje().getDebilidades().size()));
-        bw.newLine();
-        for (int j = 0; j < (combate.getDesafiante().getPersonaje().getArmaduras().size()); j++) {
-            Fortaleza fortaleza = cazador.getFortalezas().get(j);
-            bw.write("NOMBRE_FORTALEZA: ");
-            bw.write(fortaleza.getNombre());
-            bw.newLine();
 
-            bw.write("VALOR_FORTALEZA: ");
-            bw.write(String.valueOf(fortaleza.getValor()));
-            bw.newLine();
-        }
-        bw.newLine();
 
         //ESBIRROS
         //NUMERO DE ESBIRROS
@@ -1212,9 +1236,15 @@ public class EscrituraFicheroCombate {
         bw.write("TIPO_PERSONAJE: ");
         bw.write(combate.getContrincante().getPersonaje().getTipo());
         bw.newLine();
+
         //NOMBRE PERSONAJE
         bw.write("NOMBRE_PERSONAJE: ");
         bw.write(combate.getContrincante().getPersonaje().getNombre());
+        bw.newLine();
+
+        //NOMBRE HABILIDAD
+        bw.write("NOMBRE_HABILIDAD: ");
+        bw.write(combate.getContrincante().getPersonaje().getHabilidad().getNombre());
         bw.newLine();
 
         //PUNTOS DE SANGRE
@@ -1324,6 +1354,16 @@ public class EscrituraFicheroCombate {
         bw.write(String.valueOf(combate.getContrincante().getPersonaje().getOro()));
         bw.newLine();
 
+        //CANTIDAD HP
+        bw.write("HP: ");
+        bw.write(String.valueOf(combate.getContrincante().getPersonaje().getHp()));
+        bw.newLine();
+
+        //CANTIDAD PODER
+        bw.write("PODER: ");
+        bw.write(String.valueOf(combate.getContrincante().getPersonaje().getPoder()));
+        bw.newLine();
+
         //DEBLIDADES
         //NUMERO DE DEBLIDADES
         bw.write("NUMERO_DEBILIDADES: ");
@@ -1382,6 +1422,11 @@ public class EscrituraFicheroCombate {
         //NOMBRE PERSONAJE
         bw.write("NOMBRE_PERSONAJE: ");
         bw.write(combate.getContrincante().getPersonaje().getNombre());
+        bw.newLine();
+
+        //VOLUNTAD CAZADOR
+        bw.write("RABIA: ");
+        bw.write("0");
         bw.newLine();
 
         //NOMBRE HABILDIAD
@@ -1518,6 +1563,23 @@ public class EscrituraFicheroCombate {
         bw.write(String.valueOf(cazador.getPoder()));
         bw.newLine();
 
+        //FORTALEZAS
+        //NUMERO DE FORTALEZAS
+        bw.write("NUMERO_FORTALEZAS: ");
+        bw.write(String.valueOf(combate.getContrincante().getPersonaje().getDebilidades().size()));
+        bw.newLine();
+        for (int j = 0; j < (combate.getContrincante().getPersonaje().getArmaduras().size()); j++) {
+            Fortaleza fortaleza = cazador.getFortalezas().get(j);
+            bw.write("NOMBRE_FORTALEZA: ");
+            bw.write(fortaleza.getNombre());
+            bw.newLine();
+
+            bw.write("VALOR_FORTALEZA: ");
+            bw.write(String.valueOf(fortaleza.getValor()));
+            bw.newLine();
+        }
+        bw.newLine();
+
         //DEBILIDADES
         //NUMERO DE DEBILIDADES
         bw.write("NUMERO_DEBILIDADES: ");
@@ -1535,22 +1597,7 @@ public class EscrituraFicheroCombate {
         }
         bw.newLine();
 
-        //FORTALEZAS
-        //NUMERO DE FORTALEZAS
-        bw.write("NUMERO_FORTALEZAS: ");
-        bw.write(String.valueOf(combate.getContrincante().getPersonaje().getDebilidades().size()));
-        bw.newLine();
-        for (int j = 0; j < (combate.getContrincante().getPersonaje().getArmaduras().size()); j++) {
-            Fortaleza fortaleza = cazador.getFortalezas().get(j);
-            bw.write("NOMBRE_FORTALEZA: ");
-            bw.write(fortaleza.getNombre());
-            bw.newLine();
 
-            bw.write("VALOR_FORTALEZA: ");
-            bw.write(String.valueOf(fortaleza.getValor()));
-            bw.newLine();
-        }
-        bw.newLine();
 
         //ESBIRROS
         //NUMERO DE ESBIRROS

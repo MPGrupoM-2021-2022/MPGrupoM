@@ -308,11 +308,10 @@ public class EscrituraFicheroUsuario {
         bw.write(listaCliente.get(i).getPersonaje().getNombre());
         bw.newLine();
 
-        //NOMBRE PERSONAJE
+        //NOMBRE HABILIDAD
         bw.write("NOMBRE_HABILIDAD: ");
         bw.write(listaCliente.get(i).getPersonaje().getHabilidad().getNombre());
         bw.newLine();
-
 
         //PUNTOS DE SANGRE
         bw.write("RABIA: ");
@@ -495,6 +494,11 @@ public class EscrituraFicheroUsuario {
         bw.write(listaCliente.get(i).getPersonaje().getNombre());
         bw.newLine();
 
+        //VOLUNTAD CAZADOR
+        bw.write("RABIA: ");
+        bw.write("0");
+        bw.newLine();
+
         //NOMBRE HABILDIAD
         bw.write("NOMBRE_HABILIDAD: ");
         bw.write(cazador.getNombre());
@@ -633,23 +637,6 @@ public class EscrituraFicheroUsuario {
         bw.newLine();
 
 
-        //DEBILIDADES
-        //NUMERO DE DEBILIDADES
-        bw.write("NUMERO_DEBILIDADES: ");
-        bw.write(String.valueOf(listaCliente.get(i).getPersonaje().getDebilidades().size()));
-        bw.newLine();
-        for (int j = 0; j < (listaCliente.get(i).getPersonaje().getArmaduras().size()); j++) {
-            Debilidad debilidad = (Debilidad) cazador.getDebilidades().get(j);
-            bw.write("NOMBRE_DEBILIDAD:");
-            bw.write(debilidad.getNombre());
-            bw.newLine();
-
-            bw.write("VALOR_DEBILIDAD:");
-            bw.write(String.valueOf(debilidad.getValor()));
-            bw.newLine();
-        }
-        bw.newLine();
-
         //FORTALEZAS
         //NUMERO DE FORTALEZAS
         bw.write("NUMERO_FORTALEZAS: ");
@@ -663,6 +650,23 @@ public class EscrituraFicheroUsuario {
 
             bw.write("VALOR_FORTALEZA:");
             bw.write(String.valueOf(fortaleza.getValor()));
+            bw.newLine();
+        }
+        bw.newLine();
+
+        //DEBILIDADES
+        //NUMERO DE DEBILIDADES
+        bw.write("NUMERO_DEBILIDADES: ");
+        bw.write(String.valueOf(listaCliente.get(i).getPersonaje().getDebilidades().size()));
+        bw.newLine();
+        for (int j = 0; j < (listaCliente.get(i).getPersonaje().getArmaduras().size()); j++) {
+            Debilidad debilidad = (Debilidad) cazador.getDebilidades().get(j);
+            bw.write("NOMBRE_DEBILIDAD:");
+            bw.write(debilidad.getNombre());
+            bw.newLine();
+
+            bw.write("VALOR_DEBILIDAD:");
+            bw.write(String.valueOf(debilidad.getValor()));
             bw.newLine();
         }
         bw.newLine();

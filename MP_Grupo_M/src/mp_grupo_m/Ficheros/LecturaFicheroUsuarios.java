@@ -631,25 +631,17 @@ public class LecturaFicheroUsuarios {
                 textoSeparado = linea.split(": ");
                 licantropo.setNombre(textoSeparado[1]);
 
-                //RABIA LICANTROPO
-                linea = br.readLine();
-                textoSeparado = linea.split(": ");
-                licantropo.setRabia(Integer.parseInt(textoSeparado[1]));
-
                 //NOMBRE HABILIDAD
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
                 don.setNombre(textoSeparado[1]);
 
-                //VALOR ATAQUE
-                linea = br.readLine();
-                textoSeparado = linea.split(": ");
-                don.setAtaque(Integer.parseInt(textoSeparado[1]));
 
-                //VALOR DEFENSA
+                //VALOR MINIMO RABIA
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
-                don.setDefensa(Integer.parseInt(textoSeparado[1]));
+                licantropo.setRabia(Integer.parseInt(textoSeparado[1]));
+
 
                 //NUMERO DE ARMAS
                 linea = br.readLine();
@@ -778,28 +770,7 @@ public class LecturaFicheroUsuarios {
                 textoSeparado = linea.split(": ");
                 licantropo.setPoder(Integer.parseInt(textoSeparado[1]));
 
-                // FORTALEZAS
-                linea = br.readLine();
-                textoSeparado = linea.split(": ");
-                tope = Integer.parseInt(textoSeparado[1]);
-                ArrayList<Fortaleza> fortalezas = new ArrayList<>();
-                for (int i = 0; i < tope; i++) {
 
-                    Fortaleza fortaleza = new Fortaleza();
-
-                    //NOMBRE FORTALEZA
-                    linea = br.readLine();
-                    textoSeparado = linea.split(": ");
-                    fortaleza.setNombre(textoSeparado[1]);
-
-                    //VALOR FORTALEZA
-                    linea = br.readLine();
-                    textoSeparado = linea.split(": ");
-                    fortaleza.setValor((Integer.parseInt(textoSeparado[1])));
-
-                    fortalezas.add(fortaleza);
-                }
-                licantropo.setFortalezas(fortalezas);
 
                 // NUMERO DE DEBILIDADES
                 linea = br.readLine();
@@ -823,6 +794,30 @@ public class LecturaFicheroUsuarios {
                     debilidades.add(debilidad);
                 }
                 licantropo.setDebilidades(debilidades);
+
+                // FORTALEZAS
+                linea = br.readLine();
+                textoSeparado = linea.split(": ");
+                tope = Integer.parseInt(textoSeparado[1]);
+                ArrayList<Fortaleza> fortalezas = new ArrayList<>();
+                for (int i = 0; i < tope; i++) {
+
+                    Fortaleza fortaleza = new Fortaleza();
+
+                    //NOMBRE FORTALEZA
+                    linea = br.readLine();
+                    textoSeparado = linea.split(": ");
+                    fortaleza.setNombre(textoSeparado[1]);
+
+                    //VALOR FORTALEZA
+                    linea = br.readLine();
+                    textoSeparado = linea.split(": ");
+                    fortaleza.setValor((Integer.parseInt(textoSeparado[1])));
+
+                    fortalezas.add(fortaleza);
+                }
+                licantropo.setFortalezas(fortalezas);
+
 
                 //METODO ESBIRRO
                 ArrayList<EsbirrosComposite> listaEsbirros = new ArrayList<>();
