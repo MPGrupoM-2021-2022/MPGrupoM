@@ -162,8 +162,8 @@ public class Cliente extends User {
         LecturaFicheroUsuarios lecturaFicheroUsuarios = new LecturaFicheroUsuarios();
         EscrituraFicheroUsuario escrituraFicheroUsuario = new EscrituraFicheroUsuario();
         ArrayList<Cliente> listaClientes = lecturaFicheroUsuarios.lecturaFicheroUsuarios();
-        for (int numCliente = 0; numCliente < listaClientes.size(); numCliente++){
-            if (cliente.getNick().equals(listaClientes.get(numCliente).getNick())){
+        for (int numCliente = 0; numCliente < listaClientes.size(); numCliente++) {
+            if (cliente.getNick().equals(listaClientes.get(numCliente).getNick())) {
                 listaClientes.remove(numCliente);
                 listaClientes.add(cliente);
                 escrituraFicheroUsuario.sobreescribirFicheroUsuario(listaClientes);
@@ -691,6 +691,7 @@ public class Cliente extends User {
                 }
             } while (!rightValue);
         }
+        factoriaLicantropo.setArmasActivas(licantropo, armasActivas);
     }
 
     private void setNombreYHabilidadLicantropo(FactoriaLicantropos factoriaLicantropo, Terminal terminal, Licantropo licantropo, Don don) {

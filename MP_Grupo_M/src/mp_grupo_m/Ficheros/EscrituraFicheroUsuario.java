@@ -133,7 +133,7 @@ public class EscrituraFicheroUsuario {
         bw.newLine();
 
         //COSTE HABILIDAD
-        bw.write("COSATE_HABILIDAD: ");
+        bw.write("COSTE_HABILIDAD: ");
         bw.write(String.valueOf(disciplina.getCoste()));
         bw.newLine();
 
@@ -219,15 +219,15 @@ public class EscrituraFicheroUsuario {
         }
         bw.newLine();
 
-        bw.write("NOMBRE_ARMADURA: ");
+        bw.write("NOMBRE_ARMADURA_ACTIVA: ");
         bw.write(vampiro.getArmaduraActiva().getNombre());
         bw.newLine();
 
-        bw.write("DEFENSA_ARMADURA: ");
+        bw.write("DEFENSA_ARMADURA_ACTIVA: ");
         bw.write(String.valueOf(vampiro.getArmaduraActiva().getModDefensa()));
         bw.newLine();
 
-        bw.write("ATAQUE_ARMADURA: ");
+        bw.write("ATAQUE_ARMADURA_ACTIVA: ");
         bw.write(String.valueOf(vampiro.getArmaduraActiva().getModAtaque()));
         bw.newLine();
 
@@ -297,7 +297,7 @@ public class EscrituraFicheroUsuario {
     private void escrituraPersonajeLicantropo(ArrayList<Cliente> listaCliente, int i, BufferedWriter bw) throws IOException {
 
         Licantropo licantropo = (Licantropo) listaCliente.get(i).getPersonaje();
-        Disciplina disciplina = (Disciplina) licantropo.getHabilidad();
+        Don don = (Don) licantropo.getHabilidad();
 
         //TIPO PERSONAJE
         bw.write("TIPO_PERSONAJE: ");
@@ -313,9 +313,9 @@ public class EscrituraFicheroUsuario {
         bw.write("0");
         bw.newLine();
 
-        //NUMERO ARMAS
+        //ARMAS
         bw.write("NUMERO_ARMAS: ");
-        bw.write(listaCliente.get(i).getPersonaje().getArmas().size());
+        bw.write(String.valueOf(listaCliente.get(i).getPersonaje().getArmas().size()));
         bw.newLine();
 
         for (int variableArma = 0; variableArma < (listaCliente.get(i).getPersonaje().getArmas().size()); variableArma++) {
@@ -325,11 +325,11 @@ public class EscrituraFicheroUsuario {
             bw.newLine();
 
             bw.write("ATAQUE_ARMA: ");
-            bw.write(arma.getModAtaque());
+            bw.write(String.valueOf(arma.getModAtaque()));
             bw.newLine();
 
             bw.write("DEFENSA_ARMA: ");
-            bw.write(arma.getModDefensa());
+            bw.write(String.valueOf(arma.getModDefensa()));
             bw.newLine();
 
             //si es true es de 1 mano, si es false es de dos manos
@@ -346,8 +346,9 @@ public class EscrituraFicheroUsuario {
 
         //NUMERO DE ARMAS ACTIVAS
         bw.write("NUMERO_ARMAS_ACTIVAS: ");
-        bw.write(listaCliente.get(i).getPersonaje().getArmasActivas().size());
+        bw.write(String.valueOf(listaCliente.get(i).getPersonaje().getArmasActivas().size()));
         bw.newLine();
+
         for (int variableArmaActiva = 0; variableArmaActiva < (listaCliente.get(i).getPersonaje().getArmasActivas().size()); variableArmaActiva++) {
             Arma armaActiva = licantropo.getArmasActivas().get(variableArmaActiva);
 
@@ -356,11 +357,11 @@ public class EscrituraFicheroUsuario {
             bw.newLine();
 
             bw.write("ATAQUE_ARMA_ACTIVAS: ");
-            bw.write(armaActiva.getModAtaque());
+            bw.write(String.valueOf(armaActiva.getModAtaque()));
             bw.newLine();
 
             bw.write("DEFENSA_ARMA_ACTIVAS: ");
-            bw.write(armaActiva.getModDefensa());
+            bw.write(String.valueOf(armaActiva.getModDefensa()));
             bw.newLine();
 
             //si es true es de 1 mano, si es false es de dos manos
@@ -377,7 +378,7 @@ public class EscrituraFicheroUsuario {
         //ARMADURAS
         //NUMERO DE ARMADURAS
         bw.write("NUMERO_ARMADURAS: ");
-        bw.write(listaCliente.get(i).getPersonaje().getArmaduras().size());
+        bw.write(String.valueOf(listaCliente.get(i).getPersonaje().getArmaduras().size()));
         bw.newLine();
         for (int j = 0; j < (listaCliente.get(i).getPersonaje().getArmaduras().size()); j++) {
             Armadura armadura = (Armadura) licantropo.getArmaduras().get(j);
@@ -386,11 +387,11 @@ public class EscrituraFicheroUsuario {
             bw.newLine();
 
             bw.write("DEFENSA_ARMADURA: ");
-            bw.write(armadura.getModDefensa());
+            bw.write(String.valueOf(armadura.getModDefensa()));
             bw.newLine();
 
             bw.write("ATAQUE_ARMADURA: ");
-            bw.write(armadura.getModAtaque());
+            bw.write(String.valueOf(armadura.getModAtaque()));
             bw.newLine();
         }
         bw.newLine();
@@ -402,23 +403,23 @@ public class EscrituraFicheroUsuario {
 
         //DEFENSA ARMADURA ACTIVA / EQUIPADA
         bw.write("DEFENSA_ARMADURA_ACTIVA: ");
-        bw.write(listaCliente.get(i).getPersonaje().getArmaduraActiva().getModDefensa());
+        bw.write(String.valueOf(listaCliente.get(i).getPersonaje().getArmaduraActiva().getModDefensa()));
         bw.newLine();
 
         //ATAQUE ARMADURA ACTIVA / EQUIPADA
         bw.write("ATAQUE_ARMADURA_ACTIVA: ");
-        bw.write(listaCliente.get(i).getPersonaje().getArmaduraActiva().getModAtaque());
+        bw.write(String.valueOf(listaCliente.get(i).getPersonaje().getArmaduraActiva().getModAtaque()));
         bw.newLine();
 
         //CANTIDAD ORO
         bw.write("ORO: ");
-        bw.write(listaCliente.get(i).getPersonaje().getOro());
+        bw.write(String.valueOf(listaCliente.get(i).getPersonaje().getOro()));
         bw.newLine();
 
         //DEBLIDADES
         //NUMERO DE DEBLIDADES
         bw.write("NUMERO_DEBILIDADES: ");
-        bw.write(listaCliente.get(i).getPersonaje().getDebilidades().size());
+        bw.write(String.valueOf(listaCliente.get(i).getPersonaje().getDebilidades().size()));
         bw.newLine();
         for (int j = 0; j < (listaCliente.get(i).getPersonaje().getArmaduras().size()); j++) {
             Debilidad debilidad = (Debilidad) licantropo.getDebilidades().get(j);
@@ -427,7 +428,7 @@ public class EscrituraFicheroUsuario {
             bw.newLine();
 
             bw.write("VALOR_DEBILIADAD:");
-            bw.write(debilidad.getValor());
+            bw.write(String.valueOf(debilidad.getValor()));
             bw.newLine();
         }
         bw.newLine();
@@ -435,7 +436,7 @@ public class EscrituraFicheroUsuario {
         //FORTALEZAS
         //NUMERO DE FORTALEZAS
         bw.write("NUMERO_FORTALEZAS: ");
-        bw.write(listaCliente.get(i).getPersonaje().getFortalezas().size());
+        bw.write(String.valueOf(listaCliente.get(i).getPersonaje().getFortalezas().size()));
         bw.newLine();
         for (int j = 0; j < (listaCliente.get(i).getPersonaje().getArmaduras().size()); j++) {
             Fortaleza fortaleza = (Fortaleza) licantropo.getFortalezas().get(j);
@@ -444,7 +445,7 @@ public class EscrituraFicheroUsuario {
             bw.newLine();
 
             bw.write("VALOR_FORTALEZA:");
-            bw.write(fortaleza.getValor());
+            bw.write(String.valueOf(fortaleza.getValor()));
             bw.newLine();
         }
         bw.newLine();
@@ -452,7 +453,7 @@ public class EscrituraFicheroUsuario {
         //ESBIRROS
         //NUMERO DE ESBIRROS
         bw.write("NUMERO_ESBIRROS: ");
-        bw.write(listaCliente.get(i).getPersonaje().getEsbirros().size());
+        bw.write(String.valueOf(listaCliente.get(i).getPersonaje().getEsbirros().size()));
         bw.newLine();
 
         //ESBIRROS
@@ -465,7 +466,7 @@ public class EscrituraFicheroUsuario {
     private void escrituraPersonajeCazador(ArrayList<Cliente> listaCliente, int i, BufferedWriter bw) throws IOException {
 
         Cazador cazador = (Cazador) listaCliente.get(i).getPersonaje();
-        Disciplina disciplina = (Disciplina) cazador.getHabilidad();
+        Talento talento = (Talento) cazador.getHabilidad();
 
         //TIPO PERSONAJE
         bw.write("TIPO_PERSONAJE: ");
@@ -483,23 +484,23 @@ public class EscrituraFicheroUsuario {
 
         //ATAQUE HABILIDAD
         bw.write("ATAQUE_HABILIDAD: ");
-        bw.write(cazador.getHabilidad().getAtaque());
+        bw.write(String.valueOf(cazador.getHabilidad().getAtaque()));
         bw.newLine();
 
         //DEBILIDAD HABILIDAD
         bw.write("DEFENSA_HABILIDAD: ");
-        bw.write(cazador.getHabilidad().getDefensa());
+        bw.write(String.valueOf(cazador.getHabilidad().getDefensa()));
         bw.newLine();
 
         //EDAD CAZADOR
         bw.write("EDAD_CAZADOR: ");
-        bw.write(cazador.getVoluntad());  //LA EDAD ES LA VOLUNTAD DEL CAZADOR
+        bw.write(String.valueOf(cazador.getVoluntad()));  //LA EDAD ES LA VOLUNTAD DEL CAZADOR
         bw.newLine();
 
         //ARMAS
         //NUMERO ARMAS
         bw.write("NUMERO_ARMAS: ");
-        bw.write(listaCliente.get(i).getPersonaje().getArmas().size());
+        bw.write(String.valueOf(listaCliente.get(i).getPersonaje().getArmas().size()));
         bw.newLine();
 
         for (int variableArma = 0; variableArma < (listaCliente.get(i).getPersonaje().getArmas().size()); variableArma++) {
@@ -509,11 +510,11 @@ public class EscrituraFicheroUsuario {
             bw.newLine();
 
             bw.write("ATAQUE_ARMA:");
-            bw.write(arma.getModAtaque());
+            bw.write(String.valueOf(arma.getModAtaque()));
             bw.newLine();
 
             bw.write("DEFENSA_ARMA:");
-            bw.write(arma.getModDefensa());
+            bw.write(String.valueOf(arma.getModDefensa()));
             bw.newLine();
 
             //si es true es de 1 mano, si es false es de dos manos
@@ -532,7 +533,7 @@ public class EscrituraFicheroUsuario {
         //ARMAS ACTIVAS
         //NUMERO DE ARMAS ACTIVAS
         bw.write("NUMERO_ARMAS_ACTIVAS: ");
-        bw.write(listaCliente.get(i).getPersonaje().getArmasActivas().size());
+        bw.write(String.valueOf(listaCliente.get(i).getPersonaje().getArmasActivas().size()));
         bw.newLine();
         for (int variableArmaActiva = 0; variableArmaActiva < (listaCliente.get(i).getPersonaje().getArmasActivas().size()); variableArmaActiva++) {
             Arma armaActiva = (Arma) cazador.getArmasActivas().get(variableArmaActiva);
@@ -542,11 +543,11 @@ public class EscrituraFicheroUsuario {
             bw.newLine();
 
             bw.write("ATAQUE_ARMA_ACTIVAS:");
-            bw.write(armaActiva.getModAtaque());
+            bw.write(String.valueOf(armaActiva.getModAtaque()));
             bw.newLine();
 
             bw.write("DEFENSA_ARMA_ACTIVAS:");
-            bw.write(armaActiva.getModDefensa());
+            bw.write(String.valueOf(armaActiva.getModDefensa()));
             bw.newLine();
 
             //si es true es de 1 mano, si es false es de dos manos
@@ -563,7 +564,7 @@ public class EscrituraFicheroUsuario {
         //ARMADURAS
         //NUMERO DE ARMADURAS
         bw.write("NUMERO_ARMADURAS: ");
-        bw.write(listaCliente.get(i).getPersonaje().getArmaduras().size());
+        bw.write(String.valueOf(listaCliente.get(i).getPersonaje().getArmaduras().size()));
         bw.newLine();
         for (int j = 0; j < (listaCliente.get(i).getPersonaje().getArmaduras().size()); j++) {
             Armadura armadura = (Armadura) cazador.getArmaduras().get(j);
@@ -572,11 +573,11 @@ public class EscrituraFicheroUsuario {
             bw.newLine();
 
             bw.write("DEFENSA_ARMADURA:");
-            bw.write(armadura.getModDefensa());
+            bw.write(String.valueOf(armadura.getModDefensa()));
             bw.newLine();
 
             bw.write("ATAQUE_ARMADURA:");
-            bw.write(armadura.getModAtaque());
+            bw.write(String.valueOf(armadura.getModAtaque()));
             bw.newLine();
         }
         bw.newLine();
@@ -588,11 +589,11 @@ public class EscrituraFicheroUsuario {
         bw.newLine();
 
         bw.write("DEFENSA_ARMADURA_ACTIVA:");
-        bw.write(listaCliente.get(i).getPersonaje().getArmaduraActiva().getModDefensa());
+        bw.write(String.valueOf(listaCliente.get(i).getPersonaje().getArmaduraActiva().getModDefensa()));
         bw.newLine();
 
         bw.write("ATAQUE_ARMADURA_ACTIVA:");
-        bw.write(listaCliente.get(i).getPersonaje().getArmaduraActiva().getModAtaque());
+        bw.write(String.valueOf(listaCliente.get(i).getPersonaje().getArmaduraActiva().getModAtaque()));
         bw.newLine();
 
         bw.newLine();
@@ -600,24 +601,24 @@ public class EscrituraFicheroUsuario {
 
         //CANTIDAD ORO
         bw.write("ORO: ");
-        bw.write(cazador.getOro());
+        bw.write(String.valueOf(cazador.getOro()));
         bw.newLine();
 
         //CANTIDAD VDA
         bw.write("VIDA: ");
-        bw.write(cazador.getHp());
+        bw.write(String.valueOf(cazador.getHp()));
         bw.newLine();
 
         //PODER
         bw.write("PODER: ");
-        bw.write(cazador.getPoder());
+        bw.write(String.valueOf(cazador.getPoder()));
         bw.newLine();
 
 
         //DEBILIDADES
         //NUMERO DE DEBILIDADES
         bw.write("NUMERO_DEBILIDADES: ");
-        bw.write(listaCliente.get(i).getPersonaje().getDebilidades().size());
+        bw.write(String.valueOf(listaCliente.get(i).getPersonaje().getDebilidades().size()));
         bw.newLine();
         for (int j = 0; j < (listaCliente.get(i).getPersonaje().getArmaduras().size()); j++) {
             Debilidad debilidad = (Debilidad) cazador.getDebilidades().get(j);
@@ -626,7 +627,7 @@ public class EscrituraFicheroUsuario {
             bw.newLine();
 
             bw.write("VALOR_DEBILIDAD:");
-            bw.write(debilidad.getValor());
+            bw.write(String.valueOf(debilidad.getValor()));
             bw.newLine();
         }
         bw.newLine();
@@ -634,7 +635,7 @@ public class EscrituraFicheroUsuario {
         //FORTALEZAS
         //NUMERO DE FORTALEZAS
         bw.write("NUMERO_FORTALEZAS: ");
-        bw.write(listaCliente.get(i).getPersonaje().getDebilidades().size());
+        bw.write(String.valueOf(listaCliente.get(i).getPersonaje().getDebilidades().size()));
         bw.newLine();
         for (int j = 0; j < (listaCliente.get(i).getPersonaje().getArmaduras().size()); j++) {
             Fortaleza fortaleza = (Fortaleza) cazador.getFortalezas().get(j);
@@ -643,7 +644,7 @@ public class EscrituraFicheroUsuario {
             bw.newLine();
 
             bw.write("VALOR_FORTALEZA:");
-            bw.write(fortaleza.getValor());
+            bw.write(String.valueOf(fortaleza.getValor()));
             bw.newLine();
         }
         bw.newLine();
@@ -652,15 +653,14 @@ public class EscrituraFicheroUsuario {
         //ESBIRROS
         //NUMERO DE ESBIRROS
         bw.write("NUMERO_ESBIRROS: ");
-        bw.write(listaCliente.get(i).getPersonaje().getEsbirros().size());
+        bw.write(String.valueOf(listaCliente.get(i).getPersonaje().getEsbirros().size()));
         bw.newLine();
         listaCliente.get(i).getPersonaje().getTipo();
-
         escrituraEsbirros(listaCliente, i, cazador, bw);
-
 
         bw.write("FIN_USUARIO");
         bw.newLine();
+        bw.close();
     }
 
     private void escrituraEsbirros(ArrayList<Cliente> listaCliente, int i, Personaje persona, BufferedWriter bw) throws IOException {

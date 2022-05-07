@@ -225,7 +225,8 @@ public class Terminal {
         System.out.println("Introduce la edad a la que el cazador adquirio el talento:");
     }
 
-    public void preguntarRabiaHabilidad() {
+    public void
+    preguntarRabiaHabilidad() {
         System.out.println("Introduce el valor minimo para activar la rabia:");
     }
 
