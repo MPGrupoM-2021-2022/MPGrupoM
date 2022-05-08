@@ -499,8 +499,8 @@ public class EscrituraFicheroUsuario {
         bw.newLine();
 
         //VOLUNTAD CAZADOR
-        bw.write("CAZADOR: ");
-        bw.write("0");
+        bw.write("VOLUNTAD: ");
+        bw.write("3");
         bw.newLine();
 
 
@@ -516,7 +516,7 @@ public class EscrituraFicheroUsuario {
 
         //EDAD CAZADOR
         bw.write("EDAD_CAZADOR: ");
-        bw.write(String.valueOf(cazador.getVoluntad()));
+        bw.write(String.valueOf(talento.getEdad()));
         bw.newLine();
 
         //ARMAS
@@ -526,21 +526,21 @@ public class EscrituraFicheroUsuario {
         bw.newLine();
 
         for (int variableArma = 0; variableArma < (listaCliente.get(i).getPersonaje().getArmas().size()); variableArma++) {
-            Arma arma = cazador.getArmas().get(i);
-            bw.write("NOMBRE_ARMA:");
+            Arma arma = cazador.getArmas().get(variableArma);
+            bw.write("NOMBRE_ARMA: ");
             bw.write(arma.getNombre());
             bw.newLine();
 
-            bw.write("ATAQUE_ARMA:");
+            bw.write("ATAQUE_ARMA: ");
             bw.write(String.valueOf(arma.getModAtaque()));
             bw.newLine();
 
-            bw.write("DEFENSA_ARMA:");
+            bw.write("DEFENSA_ARMA: ");
             bw.write(String.valueOf(arma.getModDefensa()));
             bw.newLine();
 
             //si es true es de 1 mano, si es false es de dos manos
-            bw.write("EMPUÑADURA:");
+            bw.write("EMPUÑADURA: ");
             if (arma.isSingleHand()) {
                 bw.write("true");
             } else {
@@ -558,22 +558,22 @@ public class EscrituraFicheroUsuario {
         bw.write(String.valueOf(listaCliente.get(i).getPersonaje().getArmasActivas().size()));
         bw.newLine();
         for (int variableArmaActiva = 0; variableArmaActiva < (listaCliente.get(i).getPersonaje().getArmasActivas().size()); variableArmaActiva++) {
-            Arma armaActiva = (Arma) cazador.getArmasActivas().get(variableArmaActiva);
+            Arma armaActiva = cazador.getArmasActivas().get(variableArmaActiva);
 
-            bw.write("NOMBRE_ARMAS_ACTIVAS:");
+            bw.write("NOMBRE_ARMAS_ACTIVAS: ");
             bw.write(armaActiva.getNombre());
             bw.newLine();
 
-            bw.write("ATAQUE_ARMA_ACTIVAS:");
+            bw.write("ATAQUE_ARMA_ACTIVAS: ");
             bw.write(String.valueOf(armaActiva.getModAtaque()));
             bw.newLine();
 
-            bw.write("DEFENSA_ARMA_ACTIVAS:");
+            bw.write("DEFENSA_ARMA_ACTIVAS: ");
             bw.write(String.valueOf(armaActiva.getModDefensa()));
             bw.newLine();
 
             //si es true es de 1 mano, si es false es de dos manos
-            bw.write("EMPUÑADURA:");
+            bw.write("EMPUÑADURA: ");
             if (armaActiva.isSingleHand()) {
                 bw.write("true");
             } else {
@@ -589,16 +589,16 @@ public class EscrituraFicheroUsuario {
         bw.write(String.valueOf(listaCliente.get(i).getPersonaje().getArmaduras().size()));
         bw.newLine();
         for (int j = 0; j < (listaCliente.get(i).getPersonaje().getArmaduras().size()); j++) {
-            Armadura armadura = (Armadura) cazador.getArmaduras().get(j);
-            bw.write("NOMBRE_ARMADURA:");
+            Armadura armadura = cazador.getArmaduras().get(j);
+            bw.write("NOMBRE_ARMADURA: ");
             bw.write(armadura.getNombre());
             bw.newLine();
 
-            bw.write("DEFENSA_ARMADURA:");
+            bw.write("DEFENSA_ARMADURA: ");
             bw.write(String.valueOf(armadura.getModDefensa()));
             bw.newLine();
 
-            bw.write("ATAQUE_ARMADURA:");
+            bw.write("ATAQUE_ARMADURA: ");
             bw.write(String.valueOf(armadura.getModAtaque()));
             bw.newLine();
         }
@@ -606,15 +606,15 @@ public class EscrituraFicheroUsuario {
 
         //ARMADURAS EQUIPADA
 
-        bw.write("NOMBRE_ARMADURA_ACTIVA:");
+        bw.write("NOMBRE_ARMADURA_ACTIVA: ");
         bw.write(listaCliente.get(i).getPersonaje().getArmaduraActiva().getNombre());
         bw.newLine();
 
-        bw.write("DEFENSA_ARMADURA_ACTIVA:");
+        bw.write("DEFENSA_ARMADURA_ACTIVA: ");
         bw.write(String.valueOf(listaCliente.get(i).getPersonaje().getArmaduraActiva().getModDefensa()));
         bw.newLine();
 
-        bw.write("ATAQUE_ARMADURA_ACTIVA:");
+        bw.write("ATAQUE_ARMADURA_ACTIVA: ");
         bw.write(String.valueOf(listaCliente.get(i).getPersonaje().getArmaduraActiva().getModAtaque()));
         bw.newLine();
 
@@ -640,15 +640,15 @@ public class EscrituraFicheroUsuario {
         //FORTALEZAS
         //NUMERO DE FORTALEZAS
         bw.write("NUMERO_FORTALEZAS: ");
-        bw.write(String.valueOf(listaCliente.get(i).getPersonaje().getDebilidades().size()));
+        bw.write(String.valueOf(listaCliente.get(i).getPersonaje().getFortalezas().size()));
         bw.newLine();
         for (int j = 0; j < (listaCliente.get(i).getPersonaje().getArmaduras().size()); j++) {
-            Fortaleza fortaleza = (Fortaleza) cazador.getFortalezas().get(j);
-            bw.write("NOMBRE_FORTALEZA:");
+            Fortaleza fortaleza = cazador.getFortalezas().get(j);
+            bw.write("NOMBRE_FORTALEZA: ");
             bw.write(fortaleza.getNombre());
             bw.newLine();
 
-            bw.write("VALOR_FORTALEZA:");
+            bw.write("VALOR_FORTALEZA: ");
             bw.write(String.valueOf(fortaleza.getValor()));
             bw.newLine();
         }
@@ -660,12 +660,12 @@ public class EscrituraFicheroUsuario {
         bw.write(String.valueOf(listaCliente.get(i).getPersonaje().getDebilidades().size()));
         bw.newLine();
         for (int j = 0; j < (listaCliente.get(i).getPersonaje().getArmaduras().size()); j++) {
-            Debilidad debilidad = (Debilidad) cazador.getDebilidades().get(j);
-            bw.write("NOMBRE_DEBILIDAD:");
+            Debilidad debilidad = cazador.getDebilidades().get(j);
+            bw.write("NOMBRE_DEBILIDAD: ");
             bw.write(debilidad.getNombre());
             bw.newLine();
 
-            bw.write("VALOR_DEBILIDAD:");
+            bw.write("VALOR_DEBILIDAD: ");
             bw.write(String.valueOf(debilidad.getValor()));
             bw.newLine();
         }

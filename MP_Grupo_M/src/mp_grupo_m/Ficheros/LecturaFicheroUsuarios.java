@@ -361,14 +361,10 @@ public class LecturaFicheroUsuarios {
             while (!linea.equals("FIN_USUARIO")) {
 
                 //TIPO PERSONAJE
-                linea = br.readLine();
-                System.out.println(linea);
                 String[] textoSeparado = linea.split(": ");
-                cazador.setTipo(textoSeparado[1]);
+                cazador.setTipo("CAZADOR");
 
                 //NOMBRE PERSONAJE
-                linea = br.readLine();
-                textoSeparado = linea.split(": ");
                 cazador.setNombre(textoSeparado[1]);
 
                 //NOMBRE HABILIDAD
@@ -554,6 +550,7 @@ public class LecturaFicheroUsuarios {
                 }
                 cazador.setFortalezas(listaFortalezas);
 
+                br.readLine();
                 // NUMERO DE DEBILIDADES
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
@@ -577,7 +574,7 @@ public class LecturaFicheroUsuarios {
                 }
                 cazador.setDebilidades(listaDebilidades);
 
-
+                br.readLine();
 
                 //METODO ESBIRRO
                 ArrayList<EsbirrosComposite> listaEsbirros = new ArrayList<>();
