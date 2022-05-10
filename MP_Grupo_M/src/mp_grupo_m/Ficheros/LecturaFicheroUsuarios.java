@@ -611,41 +611,36 @@ public class LecturaFicheroUsuarios {
 
         FileReader fr = null;
         ArrayList<Cliente> listaVampiro = new ArrayList<>();
+
         try {
             // Lectura del fichero
             String linea;
-
             linea = br.readLine();
 
             while (!linea.equals("FIN_USUARIO")) {
-
-                //TIPO PERSONAJE
-                linea = br.readLine();
-                System.out.println(linea);
+                //NOMBRE VAMPIRO
                 String[] textoSeparado = linea.split(": ");
-                licantropo.setTipo(textoSeparado[1]);
-
-                //NOMBRE PERSONAJE
-                linea = br.readLine();
-                textoSeparado = linea.split(": ");
+                licantropo.setTipo("VAMPIRO");
                 licantropo.setNombre(textoSeparado[1]);
 
-                //NOMBRE HABILIDAD
-                linea = br.readLine();
-                textoSeparado = linea.split(": ");
-                don.setNombre(textoSeparado[1]);
-
-
-                //VALOR MINIMO RABIA
+                //RABIA
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
                 licantropo.setRabia(Integer.parseInt(textoSeparado[1]));
 
+                //NOMBRE HABILIDAD
+                linea = br.readLine();
+                textoSeparado = linea.split(": ");
+                licantropo.setNombre(textoSeparado[1]);
+
+
+
+                licantropo.setHabilidad(don);
 
                 //NUMERO DE ARMAS
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
-                ArrayList<Arma> listaArmas = new ArrayList<>();
+                ArrayList<Arma> armas = new ArrayList<>();
                 int tope = Integer.parseInt(textoSeparado[1]);
                 for (int i = 0; i < tope; i++) {
 
@@ -671,12 +666,12 @@ public class LecturaFicheroUsuarios {
                     textoSeparado = linea.split(": ");
                     arma.setSingleHand(textoSeparado[1].equals("true"));
 
-                    listaArmas.add(arma);
+                    armas.add(arma);
                 }
-                licantropo.setArmas(listaArmas);
+                licantropo.setArmas(armas);
 
-                //NUMERO DE ARMAS ACTIVAS
                 ArrayList<Arma> armasActivas = new ArrayList<>();
+                //NUMERO DE ARMAS ACTIVAS
                 br.readLine();
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
@@ -733,31 +728,33 @@ public class LecturaFicheroUsuarios {
                 }
                 licantropo.setArmaduras(armaduras);
 
-                //ARMADURA ACTIVA
+                br.readLine();
+                Armadura armadura = new Armadura();
 
-                    //NOMBRE ARMADURA
-                    br.readLine();
-                    Armadura armadura = new Armadura();
-                    linea = br.readLine();
-                    textoSeparado = linea.split(": ");
-                    armadura.setNombre(textoSeparado[1]);
+                //NOMBRE ARMADURA
+                linea = br.readLine();
+                textoSeparado = linea.split(": ");
+                armadura.setNombre(textoSeparado[1]);
 
-                    //DEFENSA ARMADURA
-                    linea = br.readLine();
-                    textoSeparado = linea.split(": ");
-                    armadura.setModDefensa((Integer.parseInt(textoSeparado[1])));
+                //DEFENSA ARMADURA
+                linea = br.readLine();
+                textoSeparado = linea.split(": ");
+                armadura.setModDefensa((Integer.parseInt(textoSeparado[1])));
 
-                    //ATAQUE ARMADURA
-                    linea = br.readLine();
-                    textoSeparado = linea.split(": ");
-                    armadura.setModAtaque((Integer.parseInt(textoSeparado[1])));
-                    licantropo.setArmaduraActiva(armadura);
-                    br.readLine();
+                //ATAQUE ARMADURA
+                linea = br.readLine();
+                textoSeparado = linea.split(": ");
+                armadura.setModAtaque((Integer.parseInt(textoSeparado[1])));
 
+                licantropo.setArmaduraActiva(armadura);
+
+                br.readLine();
                 //CANTIDAD ORO
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
                 licantropo.setOro(Integer.parseInt(textoSeparado[1]));
+
+
 
                 //CANTIDAD VIDA
                 linea = br.readLine();
@@ -768,31 +765,6 @@ public class LecturaFicheroUsuarios {
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
                 licantropo.setPoder(Integer.parseInt(textoSeparado[1]));
-
-
-
-                // NUMERO DE DEBILIDADES
-                linea = br.readLine();
-                textoSeparado = linea.split(": ");
-                tope = Integer.parseInt(textoSeparado[1]);
-                ArrayList<Debilidad> debilidades = new ArrayList<>();
-                for (int i = 0; i < tope; i++) {
-
-                    Debilidad debilidad = new Debilidad();
-
-                    //NOMBRE DE DEBILIADAD
-                    linea = br.readLine();
-                    textoSeparado = linea.split(": ");
-                    debilidad.setNombre((textoSeparado[1]));
-
-                    //VALOR DEBILIDAD
-                    linea = br.readLine();
-                    textoSeparado = linea.split(": ");
-                    debilidad.setValor((Integer.parseInt(textoSeparado[1])));
-
-                    debilidades.add(debilidad);
-                }
-                licantropo.setDebilidades(debilidades);
 
                 // FORTALEZAS
                 linea = br.readLine();
@@ -817,6 +789,28 @@ public class LecturaFicheroUsuarios {
                 }
                 licantropo.setFortalezas(fortalezas);
 
+                // NUMERO DE DEBILIDADES
+                linea = br.readLine();
+                textoSeparado = linea.split(": ");
+                tope = Integer.parseInt(textoSeparado[1]);
+                ArrayList<Debilidad> debilidades = new ArrayList<>();
+                for (int i = 0; i < tope; i++) {
+
+                    Debilidad debilidad = new Debilidad();
+
+                    //NOMBRE DE DEBILIADAD
+                    linea = br.readLine();
+                    textoSeparado = linea.split(": ");
+                    debilidad.setNombre((textoSeparado[1]));
+
+                    //VALOR DEBILIDAD
+                    linea = br.readLine();
+                    textoSeparado = linea.split(": ");
+                    debilidad.setValor((Integer.parseInt(textoSeparado[1])));
+
+                    debilidades.add(debilidad);
+                }
+                licantropo.setDebilidades(debilidades);
 
                 //METODO ESBIRRO
                 ArrayList<EsbirrosComposite> listaEsbirros = new ArrayList<>();
@@ -830,6 +824,7 @@ public class LecturaFicheroUsuarios {
                 licantropo.setEsbirros(listaEsbirros);
                 linea = "FIN_USUARIO";
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
