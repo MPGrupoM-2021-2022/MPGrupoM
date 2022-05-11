@@ -651,7 +651,7 @@ public class EscrituraFicheroUsuario {
         bw.write("NUMERO_FORTALEZAS: ");
         bw.write(String.valueOf(listaCliente.get(i).getPersonaje().getFortalezas().size()));
         bw.newLine();
-        for (int j = 0; j < (listaCliente.get(i).getPersonaje().getArmaduras().size()); j++) {
+        for (int j = 0; j < (listaCliente.get(i).getPersonaje().getFortalezas().size()); j++) {
             Fortaleza fortaleza = cazador.getFortalezas().get(j);
             bw.write("NOMBRE_FORTALEZA: ");
             bw.write(fortaleza.getNombre());
@@ -686,12 +686,10 @@ public class EscrituraFicheroUsuario {
         bw.write("NUMERO_ESBIRROS: ");
         bw.write(String.valueOf(listaCliente.get(i).getPersonaje().getEsbirros().size()));
         bw.newLine();
-        listaCliente.get(i).getPersonaje().getTipo();
         escrituraEsbirros(listaCliente, i, cazador, bw);
 
         bw.write("FIN_USUARIO");
         bw.newLine();
-        bw.close();
     }
 
     private void escrituraEsbirros(ArrayList<Cliente> listaCliente, int i, Personaje persona, BufferedWriter bw) throws IOException {
