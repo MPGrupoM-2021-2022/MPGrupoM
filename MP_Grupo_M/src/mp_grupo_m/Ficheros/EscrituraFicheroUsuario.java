@@ -319,8 +319,20 @@ public class EscrituraFicheroUsuario {
 
 
         //NOMBRE DE HABILIDAD
-        bw.write("NOMNRE_HABILIDAD: ");
+        bw.write("NOMBRE_HABILIDAD: ");
         bw.write(don.getNombre());
+        bw.newLine();
+
+        bw.write("ATAQUE_HABILIDAD: ");
+        bw.write(String.valueOf(don.getAtaque()));
+        bw.newLine();
+
+        bw.write("DEFENSA_HABILIADAD: ");
+        bw.write(String.valueOf(don.getDefensa()));
+        bw.newLine();
+
+        bw.write("COSTE_MINIMO_HABILIDAD: ");
+        bw.write(String.valueOf(don.getValorMinimo()));
         bw.newLine();
 
         //ARMAS

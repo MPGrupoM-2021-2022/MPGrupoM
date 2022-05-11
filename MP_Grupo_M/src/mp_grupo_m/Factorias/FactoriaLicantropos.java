@@ -19,6 +19,26 @@ public class FactoriaLicantropos {
         don.setNombre(nombre);
     }
 
+    public boolean inicializarAtaqueHabilidad(Don don) {
+        Scanner sc = new Scanner(System.in);
+        int ataque = sc.nextInt();
+        if ((ataque < 1) || (ataque > 3)) {
+            return false;
+        }
+        don.setAtaque(ataque);
+        return true;
+    }
+
+    public boolean inicializarDefensaHabilidad(Don don) {
+        Scanner sc = new Scanner(System.in);
+        int defensa = sc.nextInt();
+        if ((defensa < 1) || (defensa > 3)) {
+            return false;
+        }
+        don.setDefensa(defensa);
+        return true;
+    }
+
     public boolean inicializarRabiaHabilidad(Don don) {
         Scanner sc = new Scanner(System.in);
         int rabia = sc.nextInt();

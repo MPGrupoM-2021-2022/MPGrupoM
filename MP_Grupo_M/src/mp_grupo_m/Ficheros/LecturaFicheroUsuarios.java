@@ -620,7 +620,7 @@ public class LecturaFicheroUsuarios {
             while (!linea.equals("FIN_USUARIO")) {
                 //NOMBRE VAMPIRO
                 String[] textoSeparado = linea.split(": ");
-                licantropo.setTipo("VAMPIRO");
+                licantropo.setTipo("LICANTROPO");
                 licantropo.setNombre(textoSeparado[1]);
 
                 //RABIA
@@ -628,12 +628,22 @@ public class LecturaFicheroUsuarios {
                 textoSeparado = linea.split(": ");
                 licantropo.setRabia(Integer.parseInt(textoSeparado[1]));
 
-                //NOMBRE HABILIDAD
+                //HABILIDAD
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
-                licantropo.setNombre(textoSeparado[1]);
+                don.setNombre(textoSeparado[1]);
 
+                linea = br.readLine();
+                textoSeparado = linea.split(": ");
+                don.setAtaque(Integer.parseInt(textoSeparado[1]));
 
+                linea = br.readLine();
+                textoSeparado = linea.split(": ");
+                don.setDefensa(Integer.parseInt(textoSeparado[1]));
+
+                linea = br.readLine();
+                textoSeparado = linea.split(": ");
+                don.setValorMinimo(Integer.parseInt(textoSeparado[1]));
 
                 licantropo.setHabilidad(don);
 

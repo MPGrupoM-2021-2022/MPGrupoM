@@ -45,10 +45,6 @@ public class Cliente extends User {
         ArrayList<Arma> armas = new ArrayList<>();
         ArrayList<Arma> armasActivas = new ArrayList<>();
         ArrayList<Armadura> armaduras = new ArrayList<>();
-        Debilidad debilidad = new Debilidad();
-        Fortaleza fortaleza = new Fortaleza();
-        ArrayList<Debilidad> debilidades = new ArrayList<>();
-        ArrayList<Fortaleza> fortalezas = new ArrayList<>();
         Armadura armadura = new Armadura();
         ArrayList<EsbirrosComposite> esbirros = new ArrayList<>();
 
@@ -56,7 +52,7 @@ public class Cliente extends User {
         setAllArmasVampiro(aux1, aux2, factoriaVampiros, terminal, vampiro, armas, armasActivas);
         setAllAmadurasVampiro(factoriaVampiros, terminal, vampiro, armaduras, armadura);
         setOroHpPoderVampiro(factoriaVampiros, terminal, vampiro);
-        setModificadoresVampiro(factoriaVampiros, terminal, vampiro, debilidad, fortaleza, debilidades, fortalezas);
+        setModificadoresVampiro(factoriaVampiros, terminal, vampiro);
         terminal.preguntarEdadVampiro();
         factoriaVampiros.setEdad(vampiro);
         vampiro.setSangre(0);
@@ -77,10 +73,6 @@ public class Cliente extends User {
         ArrayList<Arma> armas = new ArrayList<>();
         ArrayList<Arma> armasActivas = new ArrayList<>();
         ArrayList<Armadura> armaduras = new ArrayList<>();
-        Debilidad debilidad = new Debilidad();
-        Fortaleza fortaleza = new Fortaleza();
-        ArrayList<Debilidad> debilidades = new ArrayList<>();
-        ArrayList<Fortaleza> fortalezas = new ArrayList<>();
         Armadura armadura = new Armadura();
         ArrayList<EsbirrosComposite> esbirros = new ArrayList<>();
 
@@ -88,7 +80,7 @@ public class Cliente extends User {
         setAllArmasCazador(aux1, aux2, factoriaCazadores, terminal, cazador, armas, armasActivas);
         setAllArmadurasCazador(factoriaCazadores, terminal, cazador, armaduras, armadura);
         setOroHpPoderCazador(factoriaCazadores, terminal, cazador);
-        setModificadoresCazador(factoriaCazadores, terminal, cazador, debilidad, fortaleza, debilidades, fortalezas);
+        setModificadoresCazador(factoriaCazadores, terminal, cazador);
         setEsbirrosCazador(factoriaCazadores, cazador, esbirros);
         cazador.setVoluntad(3);
         cazador.setTipo("CAZADOR");
@@ -108,17 +100,13 @@ public class Cliente extends User {
         ArrayList<Arma> armasActivas = new ArrayList<>();
         Armadura armadura = new Armadura();
         ArrayList<Armadura> armaduras = new ArrayList<>();
-        Debilidad debilidad = new Debilidad();
-        Fortaleza fortaleza = new Fortaleza();
-        ArrayList<Debilidad> debilidades = new ArrayList<>();
-        ArrayList<Fortaleza> fortalezas = new ArrayList<>();
         ArrayList<EsbirrosComposite> esbirros = new ArrayList<>();
 
         setNombreYHabilidadLicantropo(factoriaLicantropo, terminal, licantropo, don);
         setAllArmasLicantropo(aux1, aux2, factoriaLicantropo, terminal, licantropo, armas, armasActivas);
         setAllArmadurasLicantropo(factoriaLicantropo, terminal, licantropo, armadura, armaduras);
         setOroHpPoderLicantropo(factoriaLicantropo, terminal, licantropo);
-        setModificadoresLicantropo(factoriaLicantropo, terminal, licantropo, debilidad, fortaleza, debilidades, fortalezas, esbirros);
+        setModificadoresLicantropo(factoriaLicantropo, terminal, licantropo);
         setEsbirrosLicantropo(factoriaLicantropo, licantropo, esbirros);
         licantropo.setTipo("LICANTROPO");
         return licantropo;
@@ -307,10 +295,12 @@ public class Cliente extends User {
         vampiro.setEsbirros(esbirros);
     }
 
-    private void setModificadoresVampiro(FactoriaVampiros factoriaVampiros, Terminal terminal, Vampiro vampiro, Debilidad debilidad, Fortaleza fortaleza, ArrayList<Debilidad> debilidades, ArrayList<Fortaleza> fortalezas) {
+    private void setModificadoresVampiro(FactoriaVampiros factoriaVampiros, Terminal terminal, Vampiro vampiro) {
         terminal.peguntarNumDebilidades();
+        ArrayList<Debilidad> debilidades = new ArrayList<>();
         int numDebilidades = factoriaVampiros.askNum();
         for (int iterator = 1; iterator <= numDebilidades; iterator++) {
+            Debilidad debilidad = new Debilidad();
             terminal.preguntarNombreDebilidad();
             factoriaVampiros.inicializarNombreDebilidad(debilidad);
             terminal.preguntarValorDebilidad();
@@ -318,9 +308,11 @@ public class Cliente extends User {
             factoriaVampiros.addDebilidad(debilidades, debilidad);
         }
         factoriaVampiros.setDebilidades(vampiro, debilidades);
+        ArrayList<Fortaleza> fortalezas = new ArrayList<>();
         terminal.peguntarNumFortalezas();
         int numFortalezas = factoriaVampiros.askNum();
         for (int iterator = 1; iterator <= numFortalezas; iterator++) {
+            Fortaleza fortaleza = new Fortaleza();
             terminal.preguntarNombreFortaleza();
             factoriaVampiros.inicializarNombreFortaleza(fortaleza);
             terminal.preguntarValorFortaleza();
@@ -448,10 +440,12 @@ public class Cliente extends User {
         cazador.setEsbirros(esbirros);
     }
 
-    private void setModificadoresCazador(FactoriaCazadores factoriaCazadores, Terminal terminal, Cazador cazador, Debilidad debilidad, Fortaleza fortaleza, ArrayList<Debilidad> debilidades, ArrayList<Fortaleza> fortalezas) {
+    private void setModificadoresCazador(FactoriaCazadores factoriaCazadores, Terminal terminal, Cazador cazador) {
         terminal.peguntarNumDebilidades();
+        ArrayList<Debilidad> debilidades = new ArrayList<>();
         int numDebilidades = factoriaCazadores.askNum();
         for (int iterator = 1; iterator <= numDebilidades; iterator++) {
+            Debilidad debilidad = new Debilidad();
             terminal.preguntarNombreDebilidad();
             factoriaCazadores.inicializarNombreDebilidad(debilidad);
             terminal.preguntarValorDebilidad();
@@ -459,9 +453,11 @@ public class Cliente extends User {
             factoriaCazadores.addDebilidad(debilidades, debilidad);
         }
         factoriaCazadores.setDebilidades(cazador, debilidades);
+        ArrayList<Fortaleza> fortalezas = new ArrayList<>();
         terminal.peguntarNumFortalezas();
         int numFortalezas = factoriaCazadores.askNum();
         for (int iterator = 1; iterator <= numFortalezas; iterator++) {
+            Fortaleza fortaleza = new Fortaleza();
             terminal.preguntarNombreFortaleza();
             factoriaCazadores.inicializarNombreFortaleza(fortaleza);
             terminal.preguntarValorFortaleza();
@@ -591,10 +587,12 @@ public class Cliente extends User {
         licantropo.setEsbirros(esbirros);
     }
 
-    private void setModificadoresLicantropo(FactoriaLicantropos factoriaLicantropo, Terminal terminal, Licantropo licantropo, Debilidad debilidad, Fortaleza fortaleza, ArrayList<Debilidad> debilidades, ArrayList<Fortaleza> fortalezas, ArrayList<EsbirrosComposite> esbirros) {
+    private void setModificadoresLicantropo(FactoriaLicantropos factoriaLicantropo, Terminal terminal, Licantropo licantropo) {
         terminal.peguntarNumDebilidades();
+        ArrayList<Debilidad> debilidades = new ArrayList<>();
         int numDebilidades = factoriaLicantropo.askNum();
         for (int iterator = 1; iterator <= numDebilidades; iterator++) {
+            Debilidad debilidad = new Debilidad();
             terminal.preguntarNombreDebilidad();
             factoriaLicantropo.inicializarNombreDebilidad(debilidad);
             terminal.preguntarValorDebilidad();
@@ -602,9 +600,11 @@ public class Cliente extends User {
             factoriaLicantropo.addDebilidad(debilidades, debilidad);
         }
         factoriaLicantropo.setDebilidades(licantropo, debilidades);
+        ArrayList<Fortaleza> fortalezas = new ArrayList<>();
         terminal.peguntarNumFortalezas();
         int numFortalezas = factoriaLicantropo.askNum();
         for (int iterator = 1; iterator <= numFortalezas; iterator++) {
+            Fortaleza fortaleza = new Fortaleza();
             terminal.preguntarNombreFortaleza();
             factoriaLicantropo.inicializarNombreFortaleza(fortaleza);
             terminal.preguntarValorFortaleza();
@@ -701,6 +701,14 @@ public class Cliente extends User {
         terminal.preguntarNombreHabilidad();
         factoriaLicantropo.inicializarNombreHabilidad(don);
         licantropo.setRabia(0);
+        do {
+            terminal.preguntarAtaqueHabilidad();
+            rightValue = factoriaLicantropo.inicializarAtaqueHabilidad(don);
+        } while (!rightValue);
+        do {
+            terminal.preguntarDefensaHabilidad();
+            rightValue = factoriaLicantropo.inicializarDefensaHabilidad(don);
+        } while (!rightValue);
         do {
             terminal.preguntarRabiaHabilidad();
             rightValue = factoriaLicantropo.inicializarRabiaHabilidad(don);
