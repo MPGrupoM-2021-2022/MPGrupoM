@@ -462,7 +462,6 @@ public class EscrituraFicheroDesafio {
         bw.write("FIN_USUARIO");
         bw.newLine();
     }
-
     private void escrituraLicantropoDesafiante(Desafio desafio, BufferedWriter bw) throws IOException {
 
         Licantropo licantropo = (Licantropo) desafio.getDesafiante().getPersonaje();
