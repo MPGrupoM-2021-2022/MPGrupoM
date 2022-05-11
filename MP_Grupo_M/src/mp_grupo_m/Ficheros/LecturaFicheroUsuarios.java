@@ -618,6 +618,8 @@ public class LecturaFicheroUsuarios {
             linea = br.readLine();
 
             while (!linea.equals("FIN_USUARIO")) {
+
+
                 //NOMBRE VAMPIRO
                 String[] textoSeparado = linea.split(": ");
                 licantropo.setTipo("LICANTROPO");

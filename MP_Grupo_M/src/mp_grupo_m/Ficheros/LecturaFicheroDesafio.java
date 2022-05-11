@@ -472,26 +472,27 @@ public class LecturaFicheroDesafio {
             String linea;
             linea = br.readLine();
 
+
             while (!linea.equals("FIN_USUARIO")) {
 
                 //TIPO PERSONAJE
                 String[] textoSeparado = linea.split(": ");
-                cazador.setTipo(textoSeparado[1]);
+                cazador.setTipo("CAZADOR");
 
                 //NOMBRE PERSONAJE
-                linea = br.readLine();
-                textoSeparado = linea.split(": ");
-                cazador.setNombre(textoSeparado[1]);
-
-                //VOLUNTAD CAZADOR
-                linea = br.readLine();
-                textoSeparado = linea.split(": ");
                 cazador.setNombre(textoSeparado[1]);
 
                 //NOMBRE HABILIDAD
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
                 talento.setNombre(textoSeparado[1]);
+
+                //VOLUNTAD CAZADOR
+                linea = br.readLine();
+                textoSeparado = linea.split(": ");
+                cazador.setVoluntad(Integer.parseInt(textoSeparado[1]));
+
+
 
                 //VALOR ATAQUE
                 linea = br.readLine();
@@ -503,7 +504,7 @@ public class LecturaFicheroDesafio {
                 textoSeparado = linea.split(": ");
                 talento.setDefensa(Integer.parseInt(textoSeparado[1]));
 
-                //EDAD HABILIDAD
+                //EDAD
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
                 talento.setEdad(Integer.parseInt(textoSeparado[1]));
@@ -513,6 +514,7 @@ public class LecturaFicheroDesafio {
                 //NUMERO DE ARMAS
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
+                ArrayList<Arma> listaArmas = new ArrayList<>();
                 int tope = Integer.parseInt(textoSeparado[1]);
                 for (int i = 0; i < tope; i++) {
 
@@ -538,12 +540,19 @@ public class LecturaFicheroDesafio {
                     textoSeparado = linea.split(": ");
                     arma.setSingleHand(textoSeparado[1].equals("true"));
 
-                    cazador.getArmas().add(arma);
+                    listaArmas.add(arma);
                 }
 
+                cazador.setArmas(listaArmas);
+
                 //NUMERO DE ARMAS ACTIVAS
+                ArrayList<Arma> armasActivas = new ArrayList<>();
+                br.readLine();
+                linea = br.readLine();
+                textoSeparado = linea.split(": ");
                 tope = Integer.parseInt(textoSeparado[1]);
                 for (int i = 0; i < tope; i++) {
+
                     Arma arma = new Arma();
 
                     linea = br.readLine();
@@ -561,37 +570,42 @@ public class LecturaFicheroDesafio {
                     linea = br.readLine();
                     textoSeparado = linea.split(": ");
                     arma.setSingleHand(textoSeparado[1].equals("true"));
-                    cazador.getArmasActivas().add(arma);
+                    armasActivas.add(arma);
                 }
+                cazador.setArmasActivas(armasActivas);
 
                 //ARMADURAS
+                br.readLine();
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
+                ArrayList<Armadura> armaduras = new ArrayList<>();
                 tope = Integer.parseInt(textoSeparado[1]);
                 for (int i = 0; i < tope; i++) {
+
                     Armadura armadura = new Armadura();
 
-                    //NOMBRE ARMADURA
+                    //NOMBRE ARMA
                     linea = br.readLine();
                     textoSeparado = linea.split(": ");
                     armadura.setNombre(textoSeparado[1]);
 
-                    //NIVEL DEFENSA ARMADURA
+                    //NIVEL DEFENSA ARMA
                     linea = br.readLine();
                     textoSeparado = linea.split(": ");
                     armadura.setModDefensa((Integer.parseInt(textoSeparado[1])));
 
-                    //NIVEL ATAQUE ARMADURA
+                    //NIVEL ATAQUE ARMA
                     linea = br.readLine();
                     textoSeparado = linea.split(": ");
                     armadura.setModAtaque((Integer.parseInt(textoSeparado[1])));
 
-                    cazador.getArmaduras().add(armadura);
+                    armaduras.add(armadura);
                 }
+                cazador.setArmaduras(armaduras);
+
 
                 //ARMADURA ACTIVA
-                linea = br.readLine();
-                textoSeparado = linea.split(": ");
+                br.readLine();
                 Armadura armadura = new Armadura();
 
                 //NOMBRE ARMADURA
@@ -599,17 +613,18 @@ public class LecturaFicheroDesafio {
                 textoSeparado = linea.split(": ");
                 armadura.setNombre(textoSeparado[1]);
 
-                //NIVEL DEFENSA ARMA
+                //DEFENSA ARMADURA
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
                 armadura.setModDefensa((Integer.parseInt(textoSeparado[1])));
 
-                //NIVEL ATAQUE ARMA
+                //ATAQUE ARMADURA
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
                 armadura.setModAtaque((Integer.parseInt(textoSeparado[1])));
-
+                br.readLine();
                 cazador.setArmaduraActiva(armadura);
+
 
                 //CANTIDAD ORO
                 linea = br.readLine();
@@ -626,31 +641,14 @@ public class LecturaFicheroDesafio {
                 textoSeparado = linea.split(": ");
                 cazador.setPoder(Integer.parseInt(textoSeparado[1]));
 
-                // NUMERO DE DEBILIDADES
-                linea = br.readLine();
-                textoSeparado = linea.split(": ");
-                tope = Integer.parseInt(textoSeparado[1]);
-                for (int i = 0; i < tope; i++) {
-                    Debilidad debilidad = new Debilidad();
-
-                    //NOMBRE DE DEBILIADAD
-                    linea = br.readLine();
-                    textoSeparado = linea.split(": ");
-                    debilidad.setNombre((textoSeparado[1]));
-
-                    //VALOR DEBILIDAD
-                    linea = br.readLine();
-                    textoSeparado = linea.split(": ");
-                    debilidad.setValor((Integer.parseInt(textoSeparado[1])));
-
-                    cazador.getDebilidades().add(debilidad);
-                }
 
                 // FORTALEZAS
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
                 tope = Integer.parseInt(textoSeparado[1]);
+                ArrayList<Fortaleza> listaFortalezas = new ArrayList<>();
                 for (int i = 0; i < tope; i++) {
+
                     Fortaleza fortaleza = new Fortaleza();
 
                     //NOMBRE FORTALEZA
@@ -663,19 +661,50 @@ public class LecturaFicheroDesafio {
                     textoSeparado = linea.split(": ");
                     fortaleza.setValor((Integer.parseInt(textoSeparado[1])));
 
-                    cazador.getFortalezas().add(fortaleza);
+                    listaFortalezas.add(fortaleza);
                 }
+                cazador.setFortalezas(listaFortalezas);
+
+                br.readLine();
+                // NUMERO DE DEBILIDADES
+                linea = br.readLine();
+                textoSeparado = linea.split(": ");
+                tope = Integer.parseInt(textoSeparado[1]);
+                ArrayList<Debilidad> listaDebilidades = new ArrayList<>();
+                for (int i = 0; i < tope; i++) {
+
+                    Debilidad debilidad = new Debilidad();
+
+                    //NOMBRE DE DEBILIADAD
+                    linea = br.readLine();
+                    textoSeparado = linea.split(": ");
+                    debilidad.setNombre((textoSeparado[1]));
+
+                    //VALOR DEBILIDAD
+                    linea = br.readLine();
+                    textoSeparado = linea.split(": ");
+                    debilidad.setValor((Integer.parseInt(textoSeparado[1])));
+
+                    listaDebilidades.add(debilidad);
+                }
+                cazador.setDebilidades(listaDebilidades);
+
+                br.readLine();
 
                 //METODO ESBIRRO
                 ArrayList<EsbirrosComposite> listaEsbirros = new ArrayList<>();
-
+                linea = br.readLine();
+                textoSeparado = linea.split(": ");
                 tope = Integer.parseInt(textoSeparado[1]);
                 for (int i = 0; i < tope; i++) {
                     EsbirrosComposite esbirro = esbirroFichero(linea, br, textoSeparado);
                     listaEsbirros.add(esbirro);
                 }
                 cazador.setEsbirros(listaEsbirros);
+                linea = "FIN_USUARIO";
             }
+
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -707,40 +736,43 @@ public class LecturaFicheroDesafio {
 
             while (!linea.equals("FIN_USUARIO")) {
 
-                //TIPO PERSONAJE
-                String[] textoSeparado = linea.split(": ");
-                licantropo.setTipo(textoSeparado[1]);
 
-                //NOMBRE PERSONAJE
-                linea = br.readLine();
-                textoSeparado = linea.split(": ");
+                //NOMBRE VAMPIRO
+                String[] textoSeparado = linea.split(": ");
+                licantropo.setTipo("LICANTROPO");
                 licantropo.setNombre(textoSeparado[1]);
 
-                //RABIA LICANTROPO
+                //RABIA
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
                 licantropo.setRabia(Integer.parseInt(textoSeparado[1]));
 
-                //NOMBRE HABILIDAD
+                //HABILIDAD
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
                 don.setNombre(textoSeparado[1]);
 
-                //VALOR ATAQUE
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
                 don.setAtaque(Integer.parseInt(textoSeparado[1]));
 
-                //VALOR DEFENSA
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
                 don.setDefensa(Integer.parseInt(textoSeparado[1]));
 
+                linea = br.readLine();
+                textoSeparado = linea.split(": ");
+                don.setValorMinimo(Integer.parseInt(textoSeparado[1]));
+
+                licantropo.setHabilidad(don);
+
                 //NUMERO DE ARMAS
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
+                ArrayList<Arma> armas = new ArrayList<>();
                 int tope = Integer.parseInt(textoSeparado[1]);
                 for (int i = 0; i < tope; i++) {
+
                     Arma arma = new Arma();
 
                     //NOMBRE ARMA
@@ -763,40 +795,50 @@ public class LecturaFicheroDesafio {
                     textoSeparado = linea.split(": ");
                     arma.setSingleHand(textoSeparado[1].equals("true"));
 
-                    licantropo.getArmas().add(arma);
+                    armas.add(arma);
                 }
+                licantropo.setArmas(armas);
 
+                ArrayList<Arma> armasActivas = new ArrayList<>();
                 //NUMERO DE ARMAS ACTIVAS
-                tope = Integer.parseInt(textoSeparado[1]);
-                for (int i = 0; i < tope; i++) {
-                    Arma arma = new Arma();
-                    //NOMBRE ARMA
-                    linea = br.readLine();
-                    textoSeparado = linea.split(": ");
-                    arma.setNombre(textoSeparado[1]);
-                    //VALOR ATAQUE
-                    linea = br.readLine();
-                    textoSeparado = linea.split(": ");
-                    arma.setModAtaque((Integer.parseInt(textoSeparado[1])));
-                    //VALOR DEFENSA
-                    linea = br.readLine();
-                    textoSeparado = linea.split(": ");
-                    arma.setModDefensa((Integer.parseInt(textoSeparado[1])));
-                    //EMPULADURA DE ARMA
-                    linea = br.readLine();
-                    textoSeparado = linea.split(": ");
-                    arma.setSingleHand(textoSeparado[1].equals("true"));
-                    licantropo.getArmasActivas().add(arma);
-                }
-
-                //ARMADURAS
+                br.readLine();
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
                 tope = Integer.parseInt(textoSeparado[1]);
                 for (int i = 0; i < tope; i++) {
+
+                    Arma arma = new Arma();
+
+                    linea = br.readLine();
+                    textoSeparado = linea.split(": ");
+                    arma.setNombre(textoSeparado[1]);
+
+                    linea = br.readLine();
+                    textoSeparado = linea.split(": ");
+                    arma.setModAtaque((Integer.parseInt(textoSeparado[1])));
+
+                    linea = br.readLine();
+                    textoSeparado = linea.split(": ");
+                    arma.setModDefensa((Integer.parseInt(textoSeparado[1])));
+
+                    linea = br.readLine();
+                    textoSeparado = linea.split(": ");
+                    arma.setSingleHand(textoSeparado[1].equals("true"));
+                    armasActivas.add(arma);
+                }
+                licantropo.setArmasActivas(armasActivas);
+
+                //ARMADURAS
+                br.readLine();
+                linea = br.readLine();
+                textoSeparado = linea.split(": ");
+                ArrayList<Armadura> armaduras = new ArrayList<>();
+                tope = Integer.parseInt(textoSeparado[1]);
+                for (int i = 0; i < tope; i++) {
+
                     Armadura armadura = new Armadura();
 
-                    //NOMBRE ARMADURA
+                    //NOMBRE ARMA
                     linea = br.readLine();
                     textoSeparado = linea.split(": ");
                     armadura.setNombre(textoSeparado[1]);
@@ -811,35 +853,37 @@ public class LecturaFicheroDesafio {
                     textoSeparado = linea.split(": ");
                     armadura.setModAtaque((Integer.parseInt(textoSeparado[1])));
 
-                    licantropo.getArmaduras().add(armadura);
+                    armaduras.add(armadura);
                 }
+                licantropo.setArmaduras(armaduras);
 
-                //ARMADURA ACTIVA
+                br.readLine();
                 Armadura armadura = new Armadura();
-                linea = br.readLine();
-                textoSeparado = linea.split(": ");
 
-                //NOMBRE ARMADURA      *********MIRAR ESTO***** POSIBLEMENTE SE ME HAYA COLADO Y HAY QUE QUITARLO
+                //NOMBRE ARMADURA
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
                 armadura.setNombre(textoSeparado[1]);
 
-                //NIVEL DEFENSA ARMA
+                //DEFENSA ARMADURA
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
                 armadura.setModDefensa((Integer.parseInt(textoSeparado[1])));
 
-                //NIVEL ATAQUE ARMA
+                //ATAQUE ARMADURA
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
                 armadura.setModAtaque((Integer.parseInt(textoSeparado[1])));
 
                 licantropo.setArmaduraActiva(armadura);
 
+                br.readLine();
                 //CANTIDAD ORO
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
                 licantropo.setOro(Integer.parseInt(textoSeparado[1]));
+
+
 
                 //CANTIDAD VIDA
                 linea = br.readLine();
@@ -851,31 +895,13 @@ public class LecturaFicheroDesafio {
                 textoSeparado = linea.split(": ");
                 licantropo.setPoder(Integer.parseInt(textoSeparado[1]));
 
-                // NUMERO DE DEBILIDADES
-                linea = br.readLine();
-                textoSeparado = linea.split(": ");
-                tope = Integer.parseInt(textoSeparado[1]);
-                for (int i = 0; i < tope; i++) {
-                    Debilidad debilidad = new Debilidad();
-
-                    //NOMBRE DE DEBILIADAD
-                    linea = br.readLine();
-                    textoSeparado = linea.split(": ");
-                    debilidad.setNombre((textoSeparado[1]));
-
-                    //VALOR DEBILIDAD
-                    linea = br.readLine();
-                    textoSeparado = linea.split(": ");
-                    debilidad.setValor((Integer.parseInt(textoSeparado[1])));
-
-                    licantropo.getDebilidades().add(debilidad);
-                }
-
                 // FORTALEZAS
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
                 tope = Integer.parseInt(textoSeparado[1]);
+                ArrayList<Fortaleza> fortalezas = new ArrayList<>();
                 for (int i = 0; i < tope; i++) {
+
                     Fortaleza fortaleza = new Fortaleza();
 
                     //NOMBRE FORTALEZA
@@ -888,19 +914,47 @@ public class LecturaFicheroDesafio {
                     textoSeparado = linea.split(": ");
                     fortaleza.setValor((Integer.parseInt(textoSeparado[1])));
 
-                    licantropo.getFortalezas().add(fortaleza);
+                    fortalezas.add(fortaleza);
                 }
+                licantropo.setFortalezas(fortalezas);
+
+                // NUMERO DE DEBILIDADES
+                linea = br.readLine();
+                textoSeparado = linea.split(": ");
+                tope = Integer.parseInt(textoSeparado[1]);
+                ArrayList<Debilidad> debilidades = new ArrayList<>();
+                for (int i = 0; i < tope; i++) {
+
+                    Debilidad debilidad = new Debilidad();
+
+                    //NOMBRE DE DEBILIADAD
+                    linea = br.readLine();
+                    textoSeparado = linea.split(": ");
+                    debilidad.setNombre((textoSeparado[1]));
+
+                    //VALOR DEBILIDAD
+                    linea = br.readLine();
+                    textoSeparado = linea.split(": ");
+                    debilidad.setValor((Integer.parseInt(textoSeparado[1])));
+
+                    debilidades.add(debilidad);
+                }
+                licantropo.setDebilidades(debilidades);
 
                 //METODO ESBIRRO
                 ArrayList<EsbirrosComposite> listaEsbirros = new ArrayList<>();
-
+                linea = br.readLine();
+                textoSeparado = linea.split(": ");
                 tope = Integer.parseInt(textoSeparado[1]);
                 for (int i = 0; i < tope; i++) {
                     EsbirrosComposite esbirro = esbirroFichero(linea, br, textoSeparado);
                     listaEsbirros.add(esbirro);
                 }
                 licantropo.setEsbirros(listaEsbirros);
+                linea = "FIN_USUARIO";
             }
+
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
