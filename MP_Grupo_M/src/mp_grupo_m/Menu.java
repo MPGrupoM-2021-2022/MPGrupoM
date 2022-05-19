@@ -2,6 +2,7 @@ package mp_grupo_m;
 
 import mp_grupo_m.Entidades.*;
 import mp_grupo_m.Ficheros.EscrituraFicheroUsuario;
+import mp_grupo_m.Ficheros.LecturaFicheroCombate;
 import mp_grupo_m.Ficheros.LecturaFicheroUsuarios;
 
 import java.util.ArrayList;
@@ -108,14 +109,11 @@ public class Menu {
 
     private void consultarCombates(Cliente cliente) {
         Terminal terminal = new Terminal();
-        terminal.WIP();
-        //leer fichero combates
-        ArrayList<Combate> listaCombates = new ArrayList<>();
-        Combate combate = new Combate();
-        listaCombates.add(combate);
-        for (int i = 0; i < listaCombates.size(); i++){
-            if (listaCombates.get(i).getDesafiante().getNick().equals(cliente.getNick()) || listaCombates.get(i).getContrincante().getNick().equals(cliente.getNick())){
-                terminal.mostrarCombate(listaCombates.get(i));
+        LecturaFicheroCombate lecturaFicheroCombate = new LecturaFicheroCombate();
+        ArrayList<Combate> listaCombates = lecturaFicheroCombate.lecturaFicheroCombate();
+        for (Combate listaCombate : listaCombates) {
+            if (listaCombate.getDesafiante().getNick().equals(cliente.getNick()) || listaCombate.getContrincante().getNick().equals(cliente.getNick())) {
+                terminal.mostrarCombate(listaCombate);
             }
         } // FALTA IMPLEMENTACIÓN DEL MÉTODO
     }
