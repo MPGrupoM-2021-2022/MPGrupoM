@@ -259,7 +259,6 @@ public class EscrituraFicheroDesafio {
 
                 bw.write("FIN USUARIO");
                 bw.newLine();
-
             }
             bw.close();
         } catch (Exception e) {
@@ -852,95 +851,93 @@ public class EscrituraFicheroDesafio {
         bw.write("NUMERO_ESBIRROS: ");
         bw.write(String.valueOf(cazador.getEsbirros().size()));
         bw.newLine();
-        cazador.getTipo();
         escrituraEsbirrosDesafiante(desafio, cazador, bw);
 
         bw.write("FIN_USUARIO");
         bw.newLine();
-        bw.close();
     }
     private void escrituraEsbirrosDesafiante(Desafio desafio, Personaje personaje, BufferedWriter bw) throws IOException {
         for (int j = 0; j < (desafio.getDesafiante().getPersonaje().getEsbirros().size()); j++) {
-            if (personaje.getEsbirros().get(j).getTipo().equals("HUMANO")) {
-                Humano humano = (Humano) personaje.getEsbirros().get(j);
-                //NUMERO DE ESBIRROS
-                bw.write("TIPO_ESBIRRO: ");
+            switch (personaje.getEsbirros().get(j).getTipo()) {
+                case "HUMANO" -> {
+                    Humano humano = (Humano) personaje.getEsbirros().get(j);
+                    //NUMERO DE ESBIRROS
+                    bw.write("TIPO_ESBIRRO: ");
+                    bw.write(humano.getTipo());
+                    bw.newLine();
 
-                bw.write(humano.getTipo());
-                bw.newLine();
+                    //NOMBRE DE ESBIRROS
+                    bw.write("NOMBRE_ESBIRRO: ");
+                    bw.write(humano.getNombre());
+                    bw.newLine();
 
-                //NOMBRE DE ESBIRROS
-                bw.write("NOMBRE_ESBIRRO: ");
-                bw.write(humano.getNombre());
-                bw.newLine();
+                    //VIDA DE ESBIRROS
+                    bw.write("VIDA_ESBIRRO: ");
+                    bw.write(String.valueOf(humano.getHp()));
+                    bw.newLine();
 
-                //VIDA DE ESBIRROS
-                bw.write("VIDA_ESBIRRO: ");
-                bw.write(String.valueOf(humano.getHp()));
-                bw.newLine();
-
-                //LEALTAD ESBIRRO HUMANO
-                bw.write("LELTAD: ");
-                if (humano.getLealtad() == Humano.Lealtad.ALTA) {
-                    bw.write("ALTA");
-                } else if (humano.getLealtad() == Humano.Lealtad.MEDIA) {
-                    bw.write("MEDIA");
-                } else if (humano.getLealtad() == Humano.Lealtad.BAJA) {
-                    bw.write("BAJA");
+                    //LEALTAD ESBIRRO HUMANO
+                    bw.write("LELTAD: ");
+                    if (humano.getLealtad() == Humano.Lealtad.ALTA) {
+                        bw.write("ALTA");
+                    } else if (humano.getLealtad() == Humano.Lealtad.MEDIA) {
+                        bw.write("MEDIA");
+                    } else if (humano.getLealtad() == Humano.Lealtad.BAJA) {
+                        bw.write("BAJA");
+                    }
+                    bw.newLine();
                 }
-                bw.newLine();
+                case "GHOUL" -> {
+                    Ghoul ghoul = (Ghoul) personaje.getEsbirros().get(j);
+                    //NUMERO DE ESBIRRO
+                    bw.write("TIPO_ESBIRRO: ");
+                    bw.write(ghoul.getTipo());
+                    bw.newLine();
 
-            } else if (personaje.getEsbirros().get(j).getTipo().equals("GHOUL")) {
-                Ghoul ghoul = (Ghoul) personaje.getEsbirros().get(j);
-                //NUMERO DE ESBIRRO
-                bw.write("TIPO_ESBIRRO: ");
-                bw.write(ghoul.getTipo());
-                bw.newLine();
+                    //NOMBRE DE ESBIRRO
+                    bw.write("NOMBRE_ESBIRRO: ");
+                    bw.write(ghoul.getNombre());
+                    bw.newLine();
 
-                //NOMBRE DE ESBIRRO
-                bw.write("NOMBRE_ESBIRRO: ");
-                bw.write(ghoul.getNombre());
-                bw.newLine();
+                    //VIDA DE ESBIRRO
+                    bw.write("VIDA_ESBIRRO: ");
+                    bw.write(String.valueOf(ghoul.getHp()));
+                    bw.newLine();
 
-                //VIDA DE ESBIRRO
-                bw.write("VIDA_ESBIRRO: ");
-                bw.write(String.valueOf(ghoul.getHp()));
-                bw.newLine();
+                    //DEPENDENCIA ESBIRRO
+                    bw.write("DEPENDENCIA: ");
+                    bw.write(String.valueOf(ghoul.getDependencia()));
+                    bw.newLine();
+                }
+                case "DEMONIO" -> {
+                    Demonio demonio = (Demonio) personaje.getEsbirros().get(j);
+                    //TIPO DE ESBIRRO
+                    bw.write("TIPO_ESBIRRO: ");
+                    bw.write(demonio.getTipo());
+                    bw.newLine();
 
-                //DEPENDENCIA ESBIRRO
-                bw.write("DEPENDENCIA: ");
-                bw.write(String.valueOf(ghoul.getDependencia()));
-                bw.newLine();
+                    //NOMBRE DE ESBIRRO
+                    bw.write("NOMBRE_ESBIRRO: ");
+                    bw.write(demonio.getNombre());
+                    bw.newLine();
 
-            } else if (personaje.getEsbirros().get(j).getTipo().equals("DEMONIO")) {
-                Demonio demonio = (Demonio) personaje.getEsbirros().get(j);
-                //TIPO DE ESBIRRO
-                bw.write("TIPO_ESBIRRO: ");
+                    //VIDA ESBIRRO
+                    bw.write("VIDA_ESBIRRO: ");
+                    bw.write(String.valueOf(demonio.getHp()));
+                    bw.newLine();
 
-                bw.write(demonio.getTipo());
-                bw.newLine();
+                    //DESCRIPCION / PACTO
+                    bw.write("DESCRIPCION: ");
+                    bw.write(demonio.getDescripcion());
+                    bw.newLine();
 
-                //NOMBRE DE ESBIRRO
-                bw.write("NOMBRE_ESBIRRO: ");
-                bw.write(demonio.getNombre());
-                bw.newLine();
-
-                //VIDA ESBIRRO
-                bw.write("VIDA_ESBIRRO: ");
-                bw.write(String.valueOf(demonio.getHp()));
-                bw.newLine();
-
-                //DESCRIPCION / PACTO
-                bw.write("DESCRIPCION: ");
-                bw.write(demonio.getDescripcion());
-                bw.newLine();
-
-                //ESBIRROS EXTRA
-                //NUMERO DE ESBIRROS EXTRA
-                bw.write("NUMERO_ESBIRROS_EXTRA: ");
-                bw.write(String.valueOf(desafio.getDesafiante().getPersonaje().getEsbirros().size()));
-                bw.newLine();
-                escrituraEsbirrosDesafiante(desafio, personaje, bw);
+                    //ESBIRROS EXTRA
+                    //NUMERO DE ESBIRROS EXTRA
+                    bw.write("NUMERO_ESBIRROS_EXTRA: ");
+                    bw.write(String.valueOf(desafio.getDesafiante().getPersonaje().getEsbirros().size()));
+                    bw.newLine();
+                    escrituraEsbirrosDesafiante(desafio, personaje, bw);
+                }
             }
         }
     }
@@ -1528,12 +1525,10 @@ public class EscrituraFicheroDesafio {
         bw.write("NUMERO_ESBIRROS: ");
         bw.write(String.valueOf(cazador.getEsbirros().size()));
         bw.newLine();
-        cazador.getTipo();
         escrituraEsbirrosContrincante(desafio, cazador, bw);
 
         bw.write("FIN_USUARIO");
         bw.newLine();
-        bw.close();
     }
     private void escrituraEsbirrosContrincante(Desafio desafio, Personaje personaje, BufferedWriter bw) throws IOException {
         for (int j = 0; j < (desafio.getContrincante().getPersonaje().getEsbirros().size()); j++) {
