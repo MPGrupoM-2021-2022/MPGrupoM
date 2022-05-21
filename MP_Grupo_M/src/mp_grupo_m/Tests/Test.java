@@ -44,5 +44,9 @@ public class Test {
             }
             return listaCombates;
         }
+
+
+        assertNull(Cliente);
+        assertNull(combates);
     }
 }
