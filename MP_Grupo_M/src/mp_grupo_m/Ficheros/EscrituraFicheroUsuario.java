@@ -42,7 +42,7 @@ public class EscrituraFicheroUsuario {
             bw.newLine();
 
 
-            bw.write("FIN USUARIO");
+            bw.write("FIN_USUARIO");
             bw.newLine();
             bw.close();
 
@@ -82,6 +82,8 @@ public class EscrituraFicheroUsuario {
 
                 if (listaCliente.get(i).getPersonaje() == null) {
                     bw.write("TIPO_PERSONAJE: null");
+                    bw.newLine();
+                    bw.write("FIN_USUARIO");
                     bw.newLine();
                 } else {
                     String tipoPersonaje = listaCliente.get(i).getPersonaje().getTipo();
@@ -772,7 +774,93 @@ public class EscrituraFicheroUsuario {
                     bw.write("NUMERO_ESBIRROS_EXTRA: ");
                     bw.write(String.valueOf(listaCliente.get(i).getPersonaje().getEsbirros().size()));
                     bw.newLine();
-                    escrituraEsbirros(listaCliente, i, persona, bw);
+                    escrituraEsbirrosComposite(listaCliente, i, demonio, bw);
+                }
+            }
+        }
+    }
+
+    private void escrituraEsbirrosComposite(ArrayList<Cliente> listaCliente, int i, Demonio demonioComposite, BufferedWriter bw) throws IOException {
+        for (int j = 0; j < demonioComposite.getEsbirrosComposites().size(); j++) {
+            switch (demonioComposite.getEsbirrosComposites().get(j).getTipo()) {
+                case "HUMANO" -> {
+                    Humano humano = (Humano) demonioComposite.getEsbirrosComposites().get(j);
+                    //NUMERO DE ESBIRROS
+                    bw.write("TIPO_ESBIRRO: ");
+                    bw.write(humano.getTipo());
+                    bw.newLine();
+
+                    //NOMBRE DE ESBIRROS
+                    bw.write("NOMBRE_ESBIRRO: ");
+                    bw.write(humano.getNombre());
+                    bw.newLine();
+
+                    //VIDA DE ESBIRROS
+                    bw.write("VIDA_ESBIRRO: ");
+                    bw.write(String.valueOf(humano.getHp()));
+                    bw.newLine();
+
+                    //LEALTAD ESBIRRO HUMANO
+                    bw.write("LELTAD: ");
+                    if (humano.getLealtad() == Humano.Lealtad.ALTA) {
+                        bw.write("ALTA");
+                    } else if (humano.getLealtad() == Humano.Lealtad.MEDIA) {
+                        bw.write("MEDIA");
+                    } else if (humano.getLealtad() == Humano.Lealtad.BAJA) {
+                        bw.write("BAJA");
+                    }
+                    bw.newLine();
+                }
+                case "GHOUL" -> {
+                    Ghoul ghoul = (Ghoul) demonioComposite.getEsbirrosComposites().get(j);
+                    //NUMERO DE ESBIRRO
+                    bw.write("TIPO_ESBIRRO: ");
+                    bw.write(ghoul.getTipo());
+                    bw.newLine();
+
+                    //NOMBRE DE ESBIRRO
+                    bw.write("NOMBRE_ESBIRRO: ");
+                    bw.write(ghoul.getNombre());
+                    bw.newLine();
+
+                    //VIDA DE ESBIRRO
+                    bw.write("VIDA_ESBIRRO: ");
+                    bw.write(String.valueOf(ghoul.getHp()));
+                    bw.newLine();
+
+                    //DEPENDENCIA ESBIRRO
+                    bw.write("DEPENDENCIA: ");
+                    bw.write(String.valueOf(ghoul.getDependencia()));
+                    bw.newLine();
+                }
+                case "DEMONIO" -> {
+                    Demonio demonio = (Demonio) demonioComposite.getEsbirrosComposites().get(j);
+                    //TIPO DE ESBIRRO
+                    bw.write("TIPO_ESBIRRO: ");
+                    bw.write(demonio.getTipo());
+                    bw.newLine();
+
+                    //NOMBRE DE ESBIRRO
+                    bw.write("NOMBRE_ESBIRRO: ");
+                    bw.write(demonio.getNombre());
+                    bw.newLine();
+
+                    //VIDA ESBIRRO
+                    bw.write("VIDA_ESBIRRO: ");
+                    bw.write(String.valueOf(demonio.getHp()));
+                    bw.newLine();
+
+                    //DESCRIPCION / PACTO
+                    bw.write("DESCRIPCION: ");
+                    bw.write(demonio.getDescripcion());
+                    bw.newLine();
+
+                    //ESBIRROS EXTRA
+                    //NUMERO DE ESBIRROS EXTRA
+                    bw.write("NUMERO_ESBIRROS_EXTRA: ");
+                    bw.write(String.valueOf(demonio.getEsbirrosComposites().size()));
+                    bw.newLine();
+                    escrituraEsbirrosComposite(listaCliente, i, demonio, bw);
                 }
             }
         }

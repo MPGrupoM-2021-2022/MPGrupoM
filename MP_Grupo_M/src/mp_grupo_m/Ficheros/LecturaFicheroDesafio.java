@@ -214,235 +214,229 @@ public class LecturaFicheroDesafio {
             String linea;
             linea = br.readLine();
 
-            while (!linea.equals("FIN_USUARIO")) {
+            //TIPO USUARIO
+            String[] textoSeparado = linea.split(": ");
+            vampiro.setTipo("VAMPIRO");
 
-                //TIPO USUARIO
-                String[] textoSeparado = linea.split(": ");
-                vampiro.setTipo("VAMPIRO");
+            //NOMBRE VAMPIRO
+            vampiro.setNombre(textoSeparado[1]);
 
-                //NOMBRE VAMPIRO
-                vampiro.setNombre(textoSeparado[1]);
+            //SANGRE
+            linea = br.readLine();
+            textoSeparado = linea.split(": ");
+            vampiro.setSangre(Integer.parseInt(textoSeparado[1]));
 
-                //SANGRE
+            //NOMBRE HABILIDAD
+            linea = br.readLine();
+            textoSeparado = linea.split(": ");
+            disciplina.setNombre(textoSeparado[1]);
+
+            //VALOR ATAQUE
+            linea = br.readLine();
+            textoSeparado = linea.split(": ");
+            disciplina.setAtaque(Integer.parseInt(textoSeparado[1]));
+
+            //VALOR DEFENSA
+            linea = br.readLine();
+            textoSeparado = linea.split(": ");
+            disciplina.setDefensa(Integer.parseInt(textoSeparado[1]));
+
+            //COSTE HABILIDAD
+            linea = br.readLine();
+            textoSeparado = linea.split(": ");
+            disciplina.setCoste(Integer.parseInt(textoSeparado[1]));
+
+            vampiro.setHabilidad(disciplina);
+
+            //NUMERO DE ARMAS
+            linea = br.readLine();
+            textoSeparado = linea.split(": ");
+            ArrayList<Arma> armas = new ArrayList<>();
+            int tope = Integer.parseInt(textoSeparado[1]);
+            for (int i = 0; i < tope; i++) {
+
+                Arma arma = new Arma();
+
+                //NOMBRE ARMA
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
-                vampiro.setSangre(Integer.parseInt(textoSeparado[1]));
+                arma.setNombre(textoSeparado[1]);
 
-                //NOMBRE HABILIDAD
+                //NIVEL ATAQUE ARMA
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
-                disciplina.setNombre(textoSeparado[1]);
+                arma.setModAtaque((Integer.parseInt(textoSeparado[1])));
 
-                //VALOR ATAQUE
+                //NIVEL DEFENSA ARMA
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
-                disciplina.setAtaque(Integer.parseInt(textoSeparado[1]));
+                arma.setModDefensa((Integer.parseInt(textoSeparado[1])));
 
-                //VALOR DEFENSA
+                //EMPUÑADURA DE ARMA: si es de 1 o 2 manos
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
-                disciplina.setDefensa(Integer.parseInt(textoSeparado[1]));
+                arma.setSingleHand(textoSeparado[1].equals("true"));
+                armas.add(arma);
+            }
+            vampiro.setArmas(armas);
+            br.readLine();
+            linea = br.readLine();
+            textoSeparado = linea.split(": ");
 
-                //COSTE HABILIDAD
+            //NUMERO DE ARMAS ACTIVAS
+            ArrayList<Arma> armasActiva = new ArrayList<>();
+            tope = Integer.parseInt(textoSeparado[1]);
+            for (int i = 0; i < tope; i++) {
+
+                Arma arma = new Arma();
+
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
-                disciplina.setCoste(Integer.parseInt(textoSeparado[1]));
+                arma.setNombre(textoSeparado[1]);
 
-                vampiro.setHabilidad(disciplina);
-
-                //NUMERO DE ARMAS
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
-                ArrayList<Arma> armas = new ArrayList<>();
-                int tope = Integer.parseInt(textoSeparado[1]);
-                for (int i = 0; i < tope; i++) {
+                arma.setModAtaque((Integer.parseInt(textoSeparado[1])));
 
-                    Arma arma = new Arma();
-
-                    //NOMBRE ARMA
-                    linea = br.readLine();
-                    textoSeparado = linea.split(": ");
-                    arma.setNombre(textoSeparado[1]);
-
-                    //NIVEL ATAQUE ARMA
-                    linea = br.readLine();
-                    textoSeparado = linea.split(": ");
-                    arma.setModAtaque((Integer.parseInt(textoSeparado[1])));
-
-                    //NIVEL DEFENSA ARMA
-                    linea = br.readLine();
-                    textoSeparado = linea.split(": ");
-                    arma.setModDefensa((Integer.parseInt(textoSeparado[1])));
-
-                    //EMPUÑADURA DE ARMA: si es de 1 o 2 manos
-                    linea = br.readLine();
-                    textoSeparado = linea.split(": ");
-                    arma.setSingleHand(textoSeparado[1].equals("true"));
-                    armas.add(arma);
-                }
-                vampiro.setArmas(armas);
-                br.readLine();
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
+                arma.setModDefensa((Integer.parseInt(textoSeparado[1])));
 
-                //NUMERO DE ARMAS ACTIVAS
-                ArrayList<Arma> armasActiva = new ArrayList<>();
-                tope = Integer.parseInt(textoSeparado[1]);
-                for (int i = 0; i < tope; i++) {
-
-                    Arma arma = new Arma();
-
-                    linea = br.readLine();
-                    textoSeparado = linea.split(": ");
-                    arma.setNombre(textoSeparado[1]);
-
-                    linea = br.readLine();
-                    textoSeparado = linea.split(": ");
-                    arma.setModAtaque((Integer.parseInt(textoSeparado[1])));
-
-                    linea = br.readLine();
-                    textoSeparado = linea.split(": ");
-                    arma.setModDefensa((Integer.parseInt(textoSeparado[1])));
-
-                    linea = br.readLine();
-                    textoSeparado = linea.split(": ");
-                    arma.setSingleHand(textoSeparado[1].equals("true"));
-                    armasActiva.add(arma);
-                }
-                vampiro.setArmasActivas(armasActiva);
-
-                //ARMADURAS
-                br.readLine();
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
-                ArrayList<Armadura> armaduras = new ArrayList<>();
-                tope = Integer.parseInt(textoSeparado[1]);
-                for (int i = 0; i < tope; i++) {
+                arma.setSingleHand(textoSeparado[1].equals("true"));
+                armasActiva.add(arma);
+            }
+            vampiro.setArmasActivas(armasActiva);
 
-                    Armadura armadura = new Armadura();
+            //ARMADURAS
+            br.readLine();
+            linea = br.readLine();
+            textoSeparado = linea.split(": ");
+            ArrayList<Armadura> armaduras = new ArrayList<>();
+            tope = Integer.parseInt(textoSeparado[1]);
+            for (int i = 0; i < tope; i++) {
 
-                    //NOMBRE ARMA
-                    linea = br.readLine();
-                    textoSeparado = linea.split(": ");
-                    armadura.setNombre(textoSeparado[1]);
-
-                    //NIVEL DEFENSA ARMA
-                    linea = br.readLine();
-                    textoSeparado = linea.split(": ");
-                    armadura.setModDefensa((Integer.parseInt(textoSeparado[1])));
-
-                    //NIVEL ATAQUE ARMA
-                    linea = br.readLine();
-                    textoSeparado = linea.split(": ");
-                    armadura.setModAtaque((Integer.parseInt(textoSeparado[1])));
-
-                    armaduras.add(armadura);
-                }
-                vampiro.setArmaduras(armaduras);
-
-                //ARMADURA ACTIVA
-                linea = br.readLine();
-                textoSeparado = linea.split(": ");
                 Armadura armadura = new Armadura();
 
-                //NOMBRE ARMADURA
+                //NOMBRE ARMA
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
                 armadura.setNombre(textoSeparado[1]);
 
-                //NIVEL DEFENSA ARMADURA
+                //NIVEL DEFENSA ARMA
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
                 armadura.setModDefensa((Integer.parseInt(textoSeparado[1])));
 
-                //NIVEL ATAQUE ARMADURA
+                //NIVEL ATAQUE ARMA
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
                 armadura.setModAtaque((Integer.parseInt(textoSeparado[1])));
 
-                vampiro.setArmaduraActiva(armadura);
-                br.readLine();
-
-                //EDAD VAMPIRO
-                linea = br.readLine();
-                textoSeparado = linea.split(": ");
-                vampiro.setEdad(Integer.parseInt(textoSeparado[1]));
-
-                //METODO ESBIRRO
-                linea = br.readLine();
-                textoSeparado = linea.split(": ");
-                ArrayList<EsbirrosComposite> listaEsbirros = new ArrayList<>();
-                tope = Integer.parseInt(textoSeparado[1]);
-                for (int i = 0; i < tope; i++) {
-                    EsbirrosComposite esbirro = esbirroFichero(linea, br, textoSeparado);
-                    listaEsbirros.add(esbirro);
-                }
-                vampiro.setEsbirros(listaEsbirros);
-
-                //CANTIDAD ORO
-                do {
-                    linea = br.readLine();
-                    textoSeparado = linea.split(": ");
-                } while (!textoSeparado[0].equals("CANTIDAD_ORO"));
-                vampiro.setOro(Integer.parseInt(textoSeparado[1]));
-
-                //CANTIDAD VIDA
-                linea = br.readLine();
-                textoSeparado = linea.split(": ");
-                vampiro.setHp(Integer.parseInt(textoSeparado[1]));
-
-                //PODER
-                linea = br.readLine();
-                textoSeparado = linea.split(": ");
-                vampiro.setPoder(Integer.parseInt(textoSeparado[1]));
-
-                // NUMERO DE DEBILIDADES
-                linea = br.readLine();
-                textoSeparado = linea.split(": ");
-                tope = Integer.parseInt(textoSeparado[1]);
-                ArrayList<Debilidad> debilidades = new ArrayList<>();
-                for (int i = 0; i < tope; i++) {
-
-                    Debilidad debilidad = new Debilidad();
-
-                    //NOMBRE DE DEBILIADAD
-                    linea = br.readLine();
-                    textoSeparado = linea.split(": ");
-                    debilidad.setNombre((textoSeparado[1]));
-
-                    //VALOR DEBILIDAD
-                    linea = br.readLine();
-                    textoSeparado = linea.split(": ");
-                    debilidad.setValor((Integer.parseInt(textoSeparado[1])));
-
-                    debilidades.add(debilidad);
-                }
-                vampiro.setDebilidades(debilidades);
-                br.readLine();
-                // FORTALEZAS
-                linea = br.readLine();
-                textoSeparado = linea.split(": ");
-                tope = Integer.parseInt(textoSeparado[1]);
-                ArrayList<Fortaleza> fortalezas = new ArrayList<>();
-                for (int i = 0; i < tope; i++) {
-                    Fortaleza fortaleza = new Fortaleza();
-
-                    //NOMBRE FORTALEZA
-                    linea = br.readLine();
-                    textoSeparado = linea.split(": ");
-                    fortaleza.setNombre(textoSeparado[1]);
-
-                    //VALOR FORTALEZA
-                    linea = br.readLine();
-                    textoSeparado = linea.split(": ");
-                    fortaleza.setValor((Integer.parseInt(textoSeparado[1])));
-
-                    fortalezas.add(fortaleza);
-                }
-                vampiro.setFortalezas(fortalezas);
-                br.readLine();
-                linea = br.readLine();
+                armaduras.add(armadura);
             }
+            vampiro.setArmaduras(armaduras);
+
+            //ARMADURA ACTIVA
+            linea = br.readLine();
+            textoSeparado = linea.split(": ");
+            Armadura armadura = new Armadura();
+
+            //NOMBRE ARMADURA
+            linea = br.readLine();
+            textoSeparado = linea.split(": ");
+            armadura.setNombre(textoSeparado[1]);
+
+            //NIVEL DEFENSA ARMADURA
+            linea = br.readLine();
+            textoSeparado = linea.split(": ");
+            armadura.setModDefensa((Integer.parseInt(textoSeparado[1])));
+
+            //NIVEL ATAQUE ARMADURA
+            linea = br.readLine();
+            textoSeparado = linea.split(": ");
+            armadura.setModAtaque((Integer.parseInt(textoSeparado[1])));
+
+            vampiro.setArmaduraActiva(armadura);
+            br.readLine();
+
+            //CANTIDAD ORO
+            linea = br.readLine();
+            textoSeparado = linea.split(": ");
+            vampiro.setOro(Integer.parseInt(textoSeparado[1]));
+
+            //EDAD VAMPIRO
+            linea = br.readLine();
+            textoSeparado = linea.split(": ");
+            vampiro.setEdad(Integer.parseInt(textoSeparado[1]));
+
+            //CANTIDAD VIDA
+            linea = br.readLine();
+            textoSeparado = linea.split(": ");
+            vampiro.setHp(Integer.parseInt(textoSeparado[1]));
+
+            //PODER
+            linea = br.readLine();
+            textoSeparado = linea.split(": ");
+            vampiro.setPoder(Integer.parseInt(textoSeparado[1]));
+
+            // NUMERO DE FORTALEZAS
+            linea = br.readLine();
+            textoSeparado = linea.split(": ");
+            tope = Integer.parseInt(textoSeparado[1]);
+            ArrayList<Fortaleza> fortalezas = new ArrayList<>();
+            for (int i = 0; i < tope; i++) {
+                Fortaleza fortaleza = new Fortaleza();
+
+                //NOMBRE FORTALEZA
+                linea = br.readLine();
+                textoSeparado = linea.split(": ");
+                fortaleza.setNombre(textoSeparado[1]);
+
+                //VALOR FORTALEZA
+                linea = br.readLine();
+                textoSeparado = linea.split(": ");
+                fortaleza.setValor((Integer.parseInt(textoSeparado[1])));
+
+                fortalezas.add(fortaleza);
+            }
+            vampiro.setFortalezas(fortalezas);
+
+            // NUMERO DE DEBILIDADES
+            linea = br.readLine();
+            textoSeparado = linea.split(": ");
+            tope = Integer.parseInt(textoSeparado[1]);
+            ArrayList<Debilidad> debilidades = new ArrayList<>();
+            for (int i = 0; i < tope; i++) {
+
+                Debilidad debilidad = new Debilidad();
+
+                //NOMBRE DE DEBILIADAD
+                linea = br.readLine();
+                textoSeparado = linea.split(": ");
+                debilidad.setNombre((textoSeparado[1]));
+
+                //VALOR DEBILIDAD
+                linea = br.readLine();
+                textoSeparado = linea.split(": ");
+                debilidad.setValor((Integer.parseInt(textoSeparado[1])));
+
+                debilidades.add(debilidad);
+            }
+            vampiro.setDebilidades(debilidades);
+
+            //METODO ESBIRRO
+            linea = br.readLine();
+            textoSeparado = linea.split(": ");
+            ArrayList<EsbirrosComposite> listaEsbirros = new ArrayList<>();
+            tope = Integer.parseInt(textoSeparado[1]);
+            for (int i = 0; i < tope; i++) {
+                EsbirrosComposite esbirro = esbirroFichero(linea, br, textoSeparado);
+                listaEsbirros.add(esbirro);
+            }
+            vampiro.setEsbirros(listaEsbirros);
+
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -491,8 +485,6 @@ public class LecturaFicheroDesafio {
                 linea = br.readLine();
                 textoSeparado = linea.split(": ");
                 cazador.setVoluntad(Integer.parseInt(textoSeparado[1]));
-
-
 
                 //VALOR ATAQUE
                 linea = br.readLine();
@@ -1030,7 +1022,7 @@ public class LecturaFicheroDesafio {
                     ghoul.setDependencia((Integer.parseInt(textoSeparado[1])));
                     return ghoul;
                 }
-                case "DEMONIOS" -> {
+                case "DEMONIO" -> {
                     Demonio demonio = new Demonio();
 
                     //TIPO ESBIRRO

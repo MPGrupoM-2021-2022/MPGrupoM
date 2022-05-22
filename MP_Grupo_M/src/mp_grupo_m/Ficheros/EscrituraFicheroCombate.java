@@ -201,7 +201,7 @@ public class EscrituraFicheroCombate {
                 bw.write("***** COMBATE *****");
                 bw.newLine();
 
-///////////  INICIO DESAFIANTE ///////////
+                ///////////  INICIO DESAFIANTE ///////////
                 bw.write("DESAFIANTE: ");
                 bw.write(combate.getDesafiante().getNombre());
                 bw.newLine();
@@ -229,9 +229,9 @@ public class EscrituraFicheroCombate {
                 } else if (tipoPersonajeDesafiante.equals("CAZADOR")) {
                     escrituraCazadorDesafiante(combate, bw);
                 }
-/////////// FIN DESAFIANTE ///////////
+                /////////// FIN DESAFIANTE ///////////
 
-/////////// INICIO CONTRINCANTE  ///////////
+                /////////// INICIO CONTRINCANTE  ///////////
                 bw.write("CONTRINCANTE: ");
                 bw.write(combate.getContrincante().getNombre());
                 bw.newLine();
@@ -259,7 +259,7 @@ public class EscrituraFicheroCombate {
                 } else if (tipoPersonajeContrincante.equals("CAZADOR")) {
                     escrituraCazadorContrincante(combate, bw);
                 }
-/////////// FIN CONTRINCANTE  ///////////
+                /////////// FIN CONTRINCANTE  ///////////
 
                 //RONDAS
                 bw.write("RONDAS: ");
@@ -285,7 +285,7 @@ public class EscrituraFicheroCombate {
                 bw.write(date);
                 bw.newLine();
 
-// INICIO VENCEDOR  ///////////
+                // INICIO VENCEDOR  ///////////
                 bw.write("VENCEDOR: ");
                 if (combate.getVencedor()!= null) {
                     bw.write(combate.getVencedor().getNick());
@@ -293,7 +293,7 @@ public class EscrituraFicheroCombate {
                     bw.write("null");
                 }
                 bw.newLine();
-// FIN  VENCEDOR  ///////////
+                // FIN  VENCEDOR  ///////////
                 //ESBIRRO DESAFIANTE
                 bw.write("ESBIRRO_DESAFIANTE: ");
                 if (combate.isEsbirrosDesafiante()) {
@@ -316,7 +316,7 @@ public class EscrituraFicheroCombate {
                 bw.write(String.valueOf(combate.getOro()));
                 bw.newLine();
 
-//MODIFICADOR
+                //MODIFICADOR
                 bw.write("CANTIDAD_MODIFICADORES: ");
                 bw.write(String.valueOf(combate.getModificadores().size()));
                 bw.newLine();
@@ -331,7 +331,7 @@ public class EscrituraFicheroCombate {
                     bw.newLine();
                 }
                 bw.newLine();
-// FIN MODIFICADOR
+                // FIN MODIFICADOR
                 bw.write("REGISTRO: ");
                 bw.write(combate.getRegistro());
                 bw.newLine();
@@ -348,8 +348,8 @@ public class EscrituraFicheroCombate {
 
                 bw.write("FIN COMBATE");
                 bw.newLine();
-                bw.close();
             }
+            bw.close();
         } catch (Exception e) {
             Sistema sistema = new Sistema();
             sistema.selector();
@@ -366,7 +366,7 @@ public class EscrituraFicheroCombate {
 
         //TIPO PERSONAJE
         bw.write("TIPO_PERSONAJE: ");
-        bw.write(vampiro.getNombre());
+        bw.write(vampiro.getTipo());
         bw.newLine();
         //NOMBRE PERSONAJE
         bw.write("NOMBRE_PERSONAJE: ");
@@ -1030,7 +1030,7 @@ public class EscrituraFicheroCombate {
                     bw.write("NUMERO_ESBIRROS_EXTRA: ");
                     bw.write(String.valueOf(combate.getDesafiante().getPersonaje().getEsbirros().size()));
                     bw.newLine();
-                    escrituraEsbirrosDesafiante(combate, personaje, bw);
+                    escrituraEsbirrosComposite(demonio, bw);
                 }
             }
         }
@@ -1043,7 +1043,7 @@ public class EscrituraFicheroCombate {
 
         //TIPO PERSONAJE
         bw.write("TIPO_PERSONAJE: ");
-        bw.write(vampiro.getNombre());
+        bw.write(vampiro.getTipo());
         bw.newLine();
         //NOMBRE PERSONAJE
         bw.write("NOMBRE_PERSONAJE: ");
@@ -1712,7 +1712,92 @@ public class EscrituraFicheroCombate {
                 bw.write("NUMERO_ESBIRROS_EXTRA: ");
                 bw.write(String.valueOf(combate.getContrincante().getPersonaje().getEsbirros().size()));
                 bw.newLine();
-                escrituraEsbirrosContrincante(combate, personaje, bw);
+                escrituraEsbirrosComposite(demonio, bw);
+            }
+        }
+    }
+    private void escrituraEsbirrosComposite(Demonio demonioComposite, BufferedWriter bw) throws IOException {
+        for (int j = 0; j < demonioComposite.getEsbirrosComposites().size(); j++) {
+            switch (demonioComposite.getEsbirrosComposites().get(j).getTipo()) {
+                case "HUMANO" -> {
+                    Humano humano = (Humano) demonioComposite.getEsbirrosComposites().get(j);
+                    //NUMERO DE ESBIRROS
+                    bw.write("TIPO_ESBIRRO: ");
+                    bw.write(humano.getTipo());
+                    bw.newLine();
+
+                    //NOMBRE DE ESBIRROS
+                    bw.write("NOMBRE_ESBIRRO: ");
+                    bw.write(humano.getNombre());
+                    bw.newLine();
+
+                    //VIDA DE ESBIRROS
+                    bw.write("VIDA_ESBIRRO: ");
+                    bw.write(String.valueOf(humano.getHp()));
+                    bw.newLine();
+
+                    //LEALTAD ESBIRRO HUMANO
+                    bw.write("LELTAD: ");
+                    if (humano.getLealtad() == Humano.Lealtad.ALTA) {
+                        bw.write("ALTA");
+                    } else if (humano.getLealtad() == Humano.Lealtad.MEDIA) {
+                        bw.write("MEDIA");
+                    } else if (humano.getLealtad() == Humano.Lealtad.BAJA) {
+                        bw.write("BAJA");
+                    }
+                    bw.newLine();
+                }
+                case "GHOUL" -> {
+                    Ghoul ghoul = (Ghoul) demonioComposite.getEsbirrosComposites().get(j);
+                    //NUMERO DE ESBIRRO
+                    bw.write("TIPO_ESBIRRO: ");
+                    bw.write(ghoul.getTipo());
+                    bw.newLine();
+
+                    //NOMBRE DE ESBIRRO
+                    bw.write("NOMBRE_ESBIRRO: ");
+                    bw.write(ghoul.getNombre());
+                    bw.newLine();
+
+                    //VIDA DE ESBIRRO
+                    bw.write("VIDA_ESBIRRO: ");
+                    bw.write(String.valueOf(ghoul.getHp()));
+                    bw.newLine();
+
+                    //DEPENDENCIA ESBIRRO
+                    bw.write("DEPENDENCIA: ");
+                    bw.write(String.valueOf(ghoul.getDependencia()));
+                    bw.newLine();
+                }
+                case "DEMONIO" -> {
+                    Demonio demonio = (Demonio) demonioComposite.getEsbirrosComposites().get(j);
+                    //TIPO DE ESBIRRO
+                    bw.write("TIPO_ESBIRRO: ");
+                    bw.write(demonio.getTipo());
+                    bw.newLine();
+
+                    //NOMBRE DE ESBIRRO
+                    bw.write("NOMBRE_ESBIRRO: ");
+                    bw.write(demonio.getNombre());
+                    bw.newLine();
+
+                    //VIDA ESBIRRO
+                    bw.write("VIDA_ESBIRRO: ");
+                    bw.write(String.valueOf(demonio.getHp()));
+                    bw.newLine();
+
+                    //DESCRIPCION / PACTO
+                    bw.write("DESCRIPCION: ");
+                    bw.write(demonio.getDescripcion());
+                    bw.newLine();
+
+                    //ESBIRROS EXTRA
+                    //NUMERO DE ESBIRROS EXTRA
+                    bw.write("NUMERO_ESBIRROS_EXTRA: ");
+                    bw.write(String.valueOf(demonio.getEsbirrosComposites().size()));
+                    bw.newLine();
+                    escrituraEsbirrosComposite(demonio, bw);
+                }
             }
         }
     }

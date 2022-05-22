@@ -89,7 +89,7 @@ public class Operador extends User {
                 desafiante = listaDesafios.get(i).getDesafiante();
                 contrincante = listaDesafios.get(i).getContrincante();
                 Date fechaDesafio = listaDesafios.get(i).getFecha();
-                boolean banear = comprobarBan(fechaDesafio, contrincante);
+                boolean banear = comprobarBan(fechaDesafio, desafiante, contrincante);
                 if (banear) {
                     banearUser(desafiante);
                     listaDesafios.remove(i);
@@ -143,24 +143,24 @@ public class Operador extends User {
         }
     }
 
-    private boolean comprobarBan(Date fechaDesafio, Cliente cliente) {
+    private boolean comprobarBan(Date fechaDesafio, Cliente desafiante, Cliente contrincante) {
         Terminal terminal = new Terminal();
         Scanner sc = new Scanner(System.in);
         LecturaFicheroCombate lecturaFicheroCombate = new LecturaFicheroCombate();
-        ArrayList<Combate> listaCombates = lecturaFicheroCombate.lecturaFicheroCombate();
+        ArrayList<Combate> listaCombate = lecturaFicheroCombate.lecturaFicheroCombate();
         boolean sugerirBan = false;
         boolean banear = false;
-        String nickDesafiante = null;
-        for (Combate listaCombate : listaCombates) {
-            if (listaCombate.getVencedor() != null) {
-                if (listaCombate.getDesafiante().getNick().equals(cliente.getNick()) ||
-                        listaCombate.getContrincante().getNick().equals(cliente.getNick())) {
-                    Date fechaDesafioAnterior = listaCombate.getFecha();
+//        String nickDesafiante = null;
+        for (int i = 0; i < listaCombate.size(); i++) {
+            if (listaCombate.get(i).getVencedor() != null) {
+                if (listaCombate.get(i).getDesafiante().getNick().equals(contrincante.getNick()) ||
+                        listaCombate.get(i).getContrincante().getNick().equals(contrincante.getNick())) {
+                    Date fechaDesafioAnterior = listaCombate.get(i).getFecha();
                     long diferencia = fechaDesafio.getTime() - fechaDesafioAnterior.getTime();
                     long horas = TimeUnit.MILLISECONDS.toHours(diferencia);
-                    if (horas <= 24 && (!listaCombate.getVencedor().getNick().equals(cliente.getNick()))) {
+                    if (horas <= 24 && (!listaCombate.get(i).getVencedor().getNick().equals(contrincante.getNick()))) {
                         sugerirBan = true;
-                        nickDesafiante = listaCombate.getDesafiante().getNick();
+//                        nickDesafiante = listaCombate.get(i).getDesafiante().getNick();
                         break;
                     }
                 }
@@ -169,7 +169,7 @@ public class Operador extends User {
         if (sugerirBan) {
             int opcion;
             do {
-                terminal.preguntarBan(nickDesafiante, cliente.getNick());
+                terminal.preguntarBan(desafiante.getNick(), contrincante.getNick());
                 opcion = sc.nextInt();
             } while (opcion != 1 && opcion != 2);
             if (opcion == 1) {

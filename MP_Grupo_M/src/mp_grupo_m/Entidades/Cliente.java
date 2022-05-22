@@ -138,7 +138,7 @@ public class Cliente extends User {
         } while (!Arrays.equals(rightWeapon, aux1) && !Arrays.equals(rightWeapon, aux2));
         if (Arrays.equals(rightWeapon, aux1)) {
             do {
-                terminal.otroArma(cliente.getPersonaje().getArmas(), cliente.getPersonaje().getArmasActivas().get(0));
+                terminal.otroArma(cliente.getPersonaje().getArmas(), armasActivas.get(0));
                 rightValue = addArmaActiva2(cliente.getPersonaje().getArmas(), armasActivas);
             } while (!rightValue);
         }
@@ -163,7 +163,12 @@ public class Cliente extends User {
 
     public void desafiar(Cliente cliente) {
         Desafio desafio = new Desafio();
-        desafio.crearDesafio(cliente);
+        Terminal terminal = new Terminal();
+        if(cliente.getPersonaje() != null) {
+            desafio.crearDesafio(cliente);
+        }else{
+            terminal.noHayPersonaje();
+        }
     }
 
     public void eliminarCuenta(Cliente cliente, Sistema sistema) {
@@ -206,7 +211,7 @@ public class Cliente extends User {
         if (opcion == 0) {
             return true;
         }
-        if (!armas.get(opcion + 1).getNombre().equals(armasActivas.get(0).getNombre()) && armas.get(opcion + 1).isSingleHand()) {
+        if (!armas.get(opcion - 1).getNombre().equals(armasActivas.get(0).getNombre()) && armas.get(opcion - 1).isSingleHand()) {
             armasActivas.add(armas.get(opcion - 1));
             return true;
         }
@@ -277,7 +282,7 @@ public class Cliente extends User {
                     break;
                 }
             }
-            if (!encontrado) {
+            if (!encontrado && lista.get(i).getPersonaje() != null) {
                 listaAux.add(lista.get(i));
             }
         }

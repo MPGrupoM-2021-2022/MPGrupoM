@@ -73,9 +73,10 @@ public class LecturaFicheroUsuarios {
                 listaCliente.add(cliente);
                 br.readLine();
                 linea = br.readLine();
-                if (linea != null && linea.equals("***** USUARIO *****")) {
+                while (linea != null && !linea.equals("***** USUARIO *****")) {
                     linea = br.readLine();
                 }
+                linea = br.readLine();
             }
 
         } catch (Exception e) {
