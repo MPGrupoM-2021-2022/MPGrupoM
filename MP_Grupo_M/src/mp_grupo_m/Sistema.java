@@ -32,11 +32,11 @@ public class Sistema {
 
                     LecturaFicheroCombate lecturaFicheroCombate = new LecturaFicheroCombate();
                     ArrayList<Combate> listaCombates = lecturaFicheroCombate.lecturaFicheroCombate();
-                    for (Combate listaCombate : listaCombates) {
-                        if (!listaCombate.isVisto() && listaCombate.getDesafiante().getNick().equals(cliente.getNick())) {
+                    for (int i = 0; i < listaCombates.size(); i++) {
+                        if (!listaCombates.get(i).isVisto() && listaCombates.get(i).getDesafiante().getNick().equals(cliente.getNick())) {
                             GestorNotificaciones gestorNotificaciones = new GestorNotificaciones();
-                            gestorNotificaciones.notifyCombate(listaCombate);
-                            listaCombate.setVisto(true);
+                            gestorNotificaciones.notifyCombate(listaCombates.get(i));
+                            listaCombates.get(i).setVisto(true);
                         }
                     }
                     EscrituraFicheroCombate escrituraFicheroCombate = new EscrituraFicheroCombate();
@@ -162,6 +162,7 @@ public class Sistema {
             }
         }
         if (!encontrado) {
+            terminal.noExisteUsuario();
             return null;
         }
         LecturaFicheroBans lecturaFicheroBans = new LecturaFicheroBans();
@@ -207,6 +208,7 @@ public class Sistema {
             }
         }
         if (!encontrado) {
+            terminal.noExisteUsuario();
             return null;
         }
         boolean passCorrect = false;
@@ -221,10 +223,4 @@ public class Sistema {
         } while (!passCorrect);
         return operador;
     }
-    //devolver el valor de la password (se que hay intentos infinitos pero por si se quitan y se limitan los intentos)
-//        if(passCorrect){
-//            return true;
-//        }else{
-//            return false;
-//        }
 }

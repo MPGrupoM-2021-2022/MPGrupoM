@@ -118,7 +118,7 @@ public class Terminal {
         System.out.println("Quiere equipar otro arma de una sola mano?");
         System.out.println("0: NO");
         for (int numArma = 0; numArma < armas.size(); numArma++) {
-            if (armas.get(numArma).isSingleHand() && armas.get(numArma) != arma) {
+            if (armas.get(numArma).isSingleHand() && !armas.get(numArma).getNombre().equals(arma.getNombre())) {
                 System.out.println(numArma + 1 + ": " + armas.get(numArma).getNombre());
             }
         }
@@ -330,8 +330,12 @@ public class Terminal {
     }
 
     public void mostrarRanking(ArrayList<Cliente> lista) {
+        int contador = 0;
         for (int numCliente = 0; numCliente < lista.size(); numCliente++) {
-            System.out.println(numCliente + 1 + ": " + lista.get(numCliente).getNick() + "\t\t" + lista.get(numCliente).getPersonaje().getOro() + " Oro");
+            if(lista.get(numCliente).getPersonaje()!=null){
+                contador ++;
+                System.out.println(contador + ": " + lista.get(numCliente).getNick() + "\t\t" + lista.get(numCliente).getPersonaje().getOro() + " Oro");
+            }
         }
     }
 
@@ -642,5 +646,17 @@ public class Terminal {
     }
     public void usoHabilidadAtaque(String nombrePersonaje, String nombreHabilidad) {
         System.out.println(nombrePersonaje + " usa " + nombreHabilidad + " para potenciar su ataque");
+    }
+
+    public void noHayPersonaje() {
+        System.out.println("No has creado personaje");
+    }
+
+    public void noExisteUsuario() {
+        System.out.println("El usuario no se ha encontrado o no existe");
+    }
+
+    public void noHayCombates() {
+        System.out.println("No hay combates en tu registro");
     }
 }

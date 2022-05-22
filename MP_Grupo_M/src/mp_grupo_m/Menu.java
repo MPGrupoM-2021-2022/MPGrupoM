@@ -34,7 +34,11 @@ public class Menu {
                         terminal.error();
                     break;
                 case 3:
-                    cliente.seleccionarEquipo(cliente);
+                    if(cliente.getPersonaje()!=null) {
+                        cliente.seleccionarEquipo(cliente);
+                    }else{
+                        terminal.noHayPersonaje();
+                    }
                     break;
                 case 4:
                     //Llamada a lectura del fichero de todos los clientes
@@ -111,11 +115,16 @@ public class Menu {
         Terminal terminal = new Terminal();
         LecturaFicheroCombate lecturaFicheroCombate = new LecturaFicheroCombate();
         ArrayList<Combate> listaCombates = lecturaFicheroCombate.lecturaFicheroCombate();
+        boolean encontrado = false;
         for (Combate listaCombate : listaCombates) {
             if (listaCombate.getDesafiante().getNick().equals(cliente.getNick()) || listaCombate.getContrincante().getNick().equals(cliente.getNick())) {
+                encontrado = true;
                 terminal.mostrarCombate(listaCombate);
             }
-        } // FALTA IMPLEMENTACIÓN DEL MÉTODO
+        }
+        if(!encontrado){
+            terminal.noHayCombates();
+        }
     }
 
     private void consultarRanking(Cliente cliente) {
